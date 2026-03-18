@@ -31,3 +31,7 @@
   for = "/articles*"
   [headers.values]
     Cache-Control = "no-cache, no-store, must-revalidate"
+
+[[edge_functions]]
+  function = "og-meta"
+  path = "/articles/:slug"
