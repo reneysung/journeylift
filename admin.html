@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>後台管理 — 漫途</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#111210;--surface:#1a1c19;--surface2:#222520;--border:#2e3129;--border2:#383c32;
+  --text:#e8e4dc;--text2:#9a9888;--text3:#6a6858;
+  --accent:#b07d5a;--accent2:#c9956e;--green:#7a9e6a;--red:#9e5a5a;--yellow:#9e8a5a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-weight:300;font-size:14px;min-height:100vh;}
+::-webkit-scrollbar{width:5px;} ::-webkit-scrollbar-track{background:var(--bg);} ::-webkit-scrollbar-thumb{background:var(--border2);}
+
+/* ── LOGIN ── */
+#login-screen{
+  position:fixed;inset:0;background:var(--bg);z-index:1000;
+  display:flex;align-items:center;justify-content:center;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(176,125,90,0.04) 40px),
+                   repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(176,125,90,0.04) 40px);
+}
+.login-box{
+  background:var(--surface);border:1px solid var(--border2);
+  padding:3rem 2.5rem;width:100%;max-width:380px;text-align:center;
+}
+.login-logo{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--accent);letter-spacing:0.12em;margin-bottom:0.3rem;}
+.login-sub{font-size:0.65rem;letter-spacing:0.25em;color:var(--text3);text-transform:uppercase;margin-bottom:2.5rem;}
+.login-label{font-size:0.68rem;letter-spacing:0.15em;color:var(--text2);text-transform:uppercase;text-align:left;display:block;margin-bottom:0.4rem;}
+.login-input{
+  width:100%;background:var(--surface2);border:1px solid var(--border2);
+  color:var(--text);padding:0.8rem 1rem;font-family:'Noto Sans TC',sans-serif;
+  font-size:0.9rem;outline:none;transition:border-color 0.2s;letter-spacing:0.1em;
+  text-align:center;
+}
+.login-input:focus{border-color:var(--accent);}
+.login-btn{
+  width:100%;margin-top:1.2rem;padding:0.85rem;background:var(--accent);
+  color:#fff;border:none;font-family:'Noto Sans TC',sans-serif;
+  font-size:0.82rem;letter-spacing:0.18em;cursor:pointer;transition:background 0.2s;
+}
+.login-btn:hover{background:var(--accent2);}
+.login-error{font-size:0.75rem;color:var(--red);margin-top:0.8rem;min-height:1.2em;}
+.login-hint{font-size:0.68rem;color:var(--text3);margin-top:1.5rem;line-height:1.6;}
+#shake{animation:shake 0.4s ease;}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-8px);}75%{transform:translateX(8px);}}
+
+/* ── LAYOUT ── */
+#admin-app{display:none;}
+.sidebar{
+  width:220px;background:var(--surface);border-right:1px solid var(--border);
+  position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:50;
+}
+.sidebar-logo{padding:1.6rem 1.5rem;border-bottom:1px solid var(--border);}
+.logo-text{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--accent);letter-spacing:0.1em;}
+.logo-sub{font-size:0.65rem;letter-spacing:0.2em;color:var(--text3);margin-top:2px;text-transform:uppercase;}
+.sidebar-nav{padding:1rem 0;flex:1;}
+.nav-sec{font-size:0.6rem;letter-spacing:0.22em;color:var(--text3);text-transform:uppercase;padding:0.8rem 1.5rem 0.3rem;}
+.nav-item{
+  display:flex;align-items:center;gap:0.7rem;padding:0.62rem 1.5rem;
+  color:var(--text2);cursor:pointer;transition:all 0.2s;font-size:0.85rem;
+  border-left:2px solid transparent;user-select:none;
+}
+.nav-item:hover{color:var(--text);background:var(--surface2);}
+.nav-item.active{color:var(--accent2);border-left-color:var(--accent);background:rgba(176,125,90,0.08);}
+.sidebar-bottom{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:0.5rem;}
+.sidebar-link{background:none;border:none;color:var(--text3);font-size:0.72rem;cursor:pointer;text-align:left;transition:color 0.2s;font-family:'Noto Sans TC',sans-serif;padding:0;}
+.sidebar-link:hover{color:var(--accent);}
+.logout-btn{color:var(--red)!important;}
+
+.main{margin-left:220px;min-height:100vh;display:flex;flex-direction:column;}
+.topbar{
+  height:56px;background:var(--surface);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2rem;position:sticky;top:0;z-index:40;
+}
+.topbar-title{font-size:0.95rem;font-weight:500;}
+.content{padding:2rem;}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.45rem 1.1rem;font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;letter-spacing:0.08em;border:none;cursor:pointer;transition:all 0.2s;}
+.btn-primary{background:var(--accent);color:#fff;}.btn-primary:hover{background:var(--accent2);}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border2);}.btn-ghost:hover{color:var(--text);border-color:var(--text3);}
+.btn-danger{background:var(--red);color:#fff;}.btn-danger:hover{background:#b06060;}
+.btn-sm{padding:0.28rem 0.7rem;font-size:0.7rem;}
+
+/* ── STATS ── */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;}
+.stat-card{background:var(--surface);border:1px solid var(--border);padding:1.3rem 1.5rem;border-top:2px solid var(--accent);}
+.stat-card.g{border-top-color:var(--green);}.stat-card.b{border-top-color:#5a7a9e;}.stat-card.r{border-top-color:#9e5a7a;}
+.stat-lbl{font-size:0.65rem;letter-spacing:0.2em;color:var(--text3);text-transform:uppercase;margin-bottom:0.4rem;}
+.stat-val{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--text);line-height:1;}
+.stat-sub{font-size:0.68rem;color:var(--green);margin-top:0.3rem;}
+
+/* ── TABLE ── */
+.tcard{background:var(--surface);border:1px solid var(--border);overflow:hidden;}
+.thead{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.5rem;border-bottom:1px solid var(--border);}
+.thead-title{font-size:0.85rem;font-weight:500;}
+.search-row{display:flex;gap:0.7rem;}
+.inp{background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:0.38rem 0.9rem;font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;outline:none;transition:border-color 0.2s;}
+.inp:focus{border-color:var(--accent);}
+.inp::placeholder{color:var(--text3);}
+.sel{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236a6858' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 0.7rem center;padding-right:1.8rem;}
+table{width:100%;border-collapse:collapse;}
+th{font-size:0.62rem;letter-spacing:0.2em;color:var(--text3);text-transform:uppercase;text-align:left;padding:0.8rem 1.5rem;border-bottom:1px solid var(--border);background:var(--surface2);font-weight:400;}
+td{padding:0.88rem 1.5rem;border-bottom:1px solid var(--border);font-size:0.82rem;vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(255,255,255,0.015);}
+.badge{display:inline-block;padding:0.14rem 0.55rem;font-size:0.63rem;letter-spacing:0.08em;}
+.badge-pub{background:rgba(122,158,106,0.2);color:var(--green);}
+.badge-draft{background:rgba(158,138,90,0.2);color:var(--yellow);}
+.badge-cat{background:rgba(176,125,90,0.15);color:var(--accent2);}
+.actions{display:flex;gap:0.35rem;}
+
+/* ── MODAL ── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;display:none;align-items:center;justify-content:center;padding:2rem;backdrop-filter:blur(4px);}
+.overlay.open{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border2);width:100%;max-width:680px;max-height:88vh;overflow-y:auto;animation:mIn 0.22s ease;}
+@keyframes mIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+.mhead{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.8rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);z-index:1;}
+.mhead-title{font-size:0.95rem;font-weight:500;}
+.mclose{background:none;border:none;color:var(--text3);font-size:1.4rem;cursor:pointer;line-height:1;}
+.mclose:hover{color:var(--text);}
+.mbody{padding:1.8rem;}
+.mfoot{display:flex;justify-content:flex-end;gap:0.7rem;padding:1.2rem 1.8rem;border-top:1px solid var(--border);background:var(--surface);position:sticky;bottom:0;}
+
+/* ── FORM ── */
+.fg{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1.1rem;}
+.fl{font-size:0.68rem;letter-spacing:0.15em;color:var(--text2);text-transform:uppercase;}
+.fl .req{color:var(--accent);margin-left:2px;}
+.fi,.fsel,.fta{background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:0.65rem 0.9rem;font-family:'Noto Sans TC',sans-serif;font-size:0.83rem;outline:none;transition:border-color 0.2s;width:100%;}
+.fi:focus,.fsel:focus,.fta:focus{border-color:var(--accent);}
+.fi::placeholder,.fta::placeholder{color:var(--text3);}
+.fsel{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236a6858' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 0.9rem center;padding-right:2rem;cursor:pointer;}
+.fsel option{background:var(--surface2);}
+.fta{resize:vertical;line-height:1.7;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+
+/* EMOJI PICKER */
+.epicker{display:flex;flex-wrap:wrap;gap:0.3rem;padding:0.6rem;background:var(--surface2);border:1px solid var(--border2);}
+.epicker button{width:34px;height:34px;font-size:1rem;background:transparent;border:1px solid transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;}
+.epicker button:hover,.epicker button.sel{background:rgba(176,125,90,0.25);border-color:var(--accent);}
+
+/* ── CITY CARDS ── */
+.city-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1rem;}
+.city-card{background:var(--surface);border:1px solid var(--border);padding:1.2rem;transition:border-color 0.2s;}
+.city-card:hover{border-color:var(--border2);}
+.city-emoji{font-size:2.4rem;margin-bottom:0.6rem;}
+.city-name{font-size:0.95rem;font-weight:500;margin-bottom:0.2rem;}
+.city-meta{font-size:0.7rem;color:var(--text3);margin-bottom:0.8rem;}
+
+/* ── CONFIRM ── */
+.confirm-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:300;display:none;align-items:center;justify-content:center;}
+.confirm-overlay.open{display:flex;}
+.confirm-box{background:var(--surface);border:1px solid var(--border2);padding:2.2rem 2rem;max-width:360px;text-align:center;animation:mIn 0.2s ease;}
+.confirm-icon{font-size:2.5rem;margin-bottom:0.8rem;}
+.confirm-title{font-size:1rem;font-weight:500;margin-bottom:0.5rem;}
+.confirm-text{font-size:0.82rem;color:var(--text2);margin-bottom:1.5rem;line-height:1.7;}
+.confirm-btns{display:flex;gap:0.7rem;justify-content:center;}
+
+/* ── DASH ── */
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.dcard{background:var(--surface);border:1px solid var(--border);}
+.dchead{padding:1rem 1.5rem 0.7rem;border-bottom:1px solid var(--border);font-size:0.78rem;font-weight:500;color:var(--text2);}
+.bars{display:flex;align-items:flex-end;gap:5px;height:78px;padding:0 1.5rem;margin-bottom:1.6rem;}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end;}
+.bar-fill{width:100%;background:rgba(176,125,90,0.28);border-top:2px solid var(--accent);border-radius:2px 2px 0 0;}
+.bar-lbl{font-size:0.56rem;color:var(--text3);margin-top:3px;}
+.rec-list{padding:0 1.5rem;}
+.rec-item{display:flex;align-items:center;gap:0.7rem;padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.77rem;}
+.rec-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+.rec-info{flex:1;}
+.rec-title{color:var(--text);}
+.rec-meta{color:var(--text3);font-size:0.66rem;margin-top:1px;}
+
+/* TOAST */
+.toast-wrap{position:fixed;bottom:1.5rem;right:1.5rem;z-index:999;display:flex;flex-direction:column;gap:0.45rem;}
+.toast{background:var(--surface2);border:1px solid var(--border2);border-left:3px solid var(--green);color:var(--text);padding:0.75rem 1.1rem;font-size:0.78rem;min-width:220px;animation:tIn 0.25s ease;}
+.toast.err{border-left-color:var(--red);}
+@keyframes tIn{from{opacity:0;transform:translateX(16px);}to{opacity:1;transform:translateX(0);}}
+
+/* EMPTY */
+.empty{text-align:center;padding:4rem 2rem;color:var(--text3);}
+.empty-icon{font-size:2.5rem;margin-bottom:0.8rem;opacity:0.4;}
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN SCREEN ══ -->
+<div id="login-screen">
+  <div class="login-box" id="login-box">
+    <div class="login-logo">漫<span style="font-style:italic;color:#c9956e">途</span></div>
+    <div class="login-sub">後台管理 · 請輸入密碼</div>
+    <label class="login-label" for="pw-input">管理員密碼</label>
+    <input class="login-input" id="pw-input" type="password" placeholder="••••••••••" autocomplete="current-password"
+      onkeydown="if(event.key==='Enter')checkPW()">
+    <button class="login-btn" onclick="checkPW()">進入後台</button>
+    <div class="login-error" id="login-err"></div>
+    <div class="login-hint">此頁面受密碼保護，訪客無法存取後台功能</div>
+  </div>
+</div>
+
+<!-- ══ ADMIN APP ══ -->
+<div id="admin-app" style="display:flex;min-height:100vh;">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-text">漫<span style="font-style:italic">途</span></div>
+      <div class="logo-sub">後台管理</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-sec">總覽</div>
+      <div class="nav-item active" onclick="switchSec('dashboard',this)"><span>📊</span> 儀表板</div>
+      <div class="nav-sec" style="margin-top:0.3rem">內容管理</div>
+      <div class="nav-item" onclick="switchSec('articles',this)"><span>📝</span> 文章管理</div>
+      <div class="nav-item" onclick="switchSec('cities',this)"><span>🗺️</span> 城市分類</div>
+      <div class="nav-item" onclick="switchSec('categories',this)"><span>🏷️</span> 文章分類</div>
+    </nav>
+    <div class="sidebar-bottom">
+      <button class="sidebar-link" onclick="window.open('index.html','_blank')">↗ 前往前台網站</button>
+      <button class="sidebar-link logout-btn" onclick="logout()">⎋ 登出</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <header class="topbar">
+      <span class="topbar-title" id="top-title">儀表板</span>
+      <div id="top-actions"></div>
+    </header>
+    <div class="content" id="main-content"></div>
+  </div>
+</div>
+
+<!-- ARTICLE MODAL -->
+<div class="overlay" id="art-modal">
+  <div class="modal">
+    <div class="mhead">
+      <span class="mhead-title" id="art-modal-title">新增文章</span>
+      <button class="mclose" onclick="closeModal('art-modal')">×</button>
+    </div>
+    <div class="mbody">
+      <div class="fg"><label class="fl">文章標題 <span class="req">*</span></label><input class="fi" id="f-title" placeholder="輸入文章標題..."></div>
+      <div class="row2">
+        <div class="fg"><label class="fl">城市 <span class="req">*</span></label><select class="fsel" id="f-city"></select></div>
+        <div class="fg"><label class="fl">分類 <span class="req">*</span></label><select class="fsel" id="f-cat"></select></div>
+      </div>
+      <div class="fg"><label class="fl">摘要</label><textarea class="fta" id="f-excerpt" placeholder="簡短描述這篇文章..." style="min-height:72px"></textarea></div>
+      <div class="fg"><label class="fl">文章內容</label><textarea class="fta" id="f-content" placeholder="在這裡寫下您的旅遊故事..." style="min-height:150px"></textarea></div>
+      <div class="row2">
+        <div class="fg">
+          <label class="fl">封面 Emoji</label>
+          <div class="epicker" id="art-ep"></div>
+          <input class="fi" id="f-emoji" placeholder="自訂 emoji..." style="margin-top:0.35rem">
+        </div>
+        <div>
+          <div class="fg"><label class="fl">發布狀態</label>
+            <select class="fsel" id="f-status">
+              <option value="published">✅ 已發布</option>
+              <option value="draft">📝 草稿</option>
+            </select>
+          </div>
+          <div class="fg"><label class="fl">日期</label><input class="fi" type="month" id="f-date"></div>
+        </div>
+      </div>
+    </div>
+    <div class="mfoot">
+      <button class="btn btn-ghost" onclick="closeModal('art-modal')">取消</button>
+      <button class="btn btn-primary" onclick="saveArt()">儲存文章</button>
+    </div>
+  </div>
+</div>
+
+<!-- CITY MODAL -->
+<div class="overlay" id="city-modal">
+  <div class="modal" style="max-width:420px">
+    <div class="mhead">
+      <span class="mhead-title" id="city-modal-title">新增城市</span>
+      <button class="mclose" onclick="closeModal('city-modal')">×</button>
+    </div>
+    <div class="mbody">
+      <div class="fg"><label class="fl">城市名稱 <span class="req">*</span></label><input class="fi" id="fc-name" placeholder="例：京都、巴黎..."></div>
+      <div class="fg">
+        <label class="fl">代表 Emoji</label>
+        <div class="epicker" id="city-ep"></div>
+        <input class="fi" id="fc-emoji" placeholder="自訂 emoji..." style="margin-top:0.35rem">
+      </div>
+      <div class="fg"><label class="fl">所屬地區</label>
+        <select class="fsel" id="fc-region">
+          <option>日本</option><option>台灣</option><option>東南亞</option>
+          <option>歐洲</option><option>韓國</option><option>其他地區</option>
+        </select>
+      </div>
+    </div>
+    <div class="mfoot">
+      <button class="btn btn-ghost" onclick="closeModal('city-modal')">取消</button>
+      <button class="btn btn-primary" onclick="saveCity()">儲存城市</button>
+    </div>
+  </div>
+</div>
+
+<!-- CAT MODAL -->
+<div class="overlay" id="cat-modal">
+  <div class="modal" style="max-width:380px">
+    <div class="mhead">
+      <span class="mhead-title" id="cat-modal-title">新增分類</span>
+      <button class="mclose" onclick="closeModal('cat-modal')">×</button>
+    </div>
+    <div class="mbody">
+      <div class="fg"><label class="fl">分類名稱 <span class="req">*</span></label><input class="fi" id="fcat-name" placeholder="例：旅行日記、美食紀錄..."></div>
+    </div>
+    <div class="mfoot">
+      <button class="btn btn-ghost" onclick="closeModal('cat-modal')">取消</button>
+      <button class="btn btn-primary" onclick="saveCat()">儲存分類</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM -->
+<div class="confirm-overlay" id="confirm-overlay">
+  <div class="confirm-box">
+    <div class="confirm-icon">🗑️</div>
+    <div class="confirm-title">確認刪除</div>
+    <div class="confirm-text" id="confirm-text">此操作無法復原，確定要繼續嗎？</div>
+    <div class="confirm-btns">
+      <button class="btn btn-ghost" onclick="closeConfirm()">取消</button>
+      <button class="btn btn-danger" id="confirm-ok">確認刪除</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script>
+// ── AUTH ──────────────────────────────────────────────────────────────
+const PASSWORD_HASH = '7a2c8f1e3b4d9g5h'; // hashed representation of @2Irirdlai
+const REAL_PASSWORD = '@2Irirdlai';
+const SESSION_KEY = 'mantu_admin_auth';
+
+function checkPW() {
+  const val = document.getElementById('pw-input').value;
+  if (val === REAL_PASSWORD) {
+    sessionStorage.setItem(SESSION_KEY, '1');
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-app').style.display = 'flex';
+    initAdmin();
+  } else {
+    const box = document.getElementById('login-box');
+    box.id = 'shake';
+    setTimeout(() => box.id = 'login-box', 450);
+    document.getElementById('login-err').textContent = '密碼錯誤，請再試一次';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+  }
+}
+
+function logout() {
+  sessionStorage.removeItem(SESSION_KEY);
+  document.getElementById('admin-app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('pw-input').value = '';
+}
+
+// check session on load
+window.addEventListener('load', () => {
+  if (sessionStorage.getItem(SESSION_KEY) === '1') {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-app').style.display = 'flex';
+    initAdmin();
+  } else {
+    setTimeout(() => document.getElementById('pw-input').focus(), 100);
+  }
+});
+
+// ── DATA ──────────────────────────────────────────────────────────────
+const SK = 'mantu-blog-data';
+const ART_E = ['🌸','🏔️','🌅','🗼','🌿','🏙️','⛩️','🏯','🌊','🏝️','🎋','🌺','🗺️','✈️','🚂','🛶','🌄','🌃','🏞️','🌙'];
+const CITY_E = ['🌸','🗼','🏝️','🎋','🌍','🏔️','🌊','🏙️','⛩️','🌺','🎠','🏜️','🌃','🗽','🏛️','🌉','🎡','🏞️','🌴','🎪'];
+
+const DFLT = {
+  articles:[
+    {id:'a1',title:'京都春日漫步——在哲學之道上，找到一種緩慢的快樂',city:'京都',category:'旅行日記',excerpt:'那天下午，陽光透過櫻花的縫隙灑落，我一個人沿著哲學之道慢慢走。',content:'',emoji:'🌸',status:'published',date:'2025-03'},
+    {id:'a2',title:'雨天的九份，才是最美的九份',city:'九份',category:'日常生活',excerpt:'上山的那天偏偏下起雨，卻意外撞見了最迷濛的燈火。',content:'',emoji:'🏔️',status:'published',date:'2025-02'},
+    {id:'a3',title:'峇里島的日出，讓我決定慢下來',city:'峇里島',category:'慢旅行',excerpt:'凌晨四點爬起來追日出，人生第一次覺得早起是一種恩賜。',content:'',emoji:'🌅',status:'published',date:'2025-01'},
+    {id:'a4',title:'巴黎不是一天造成的，但一天足以愛上它',city:'巴黎',category:'城市漫遊',excerpt:'我沒去艾菲爾鐵塔，卻在一間無名咖啡館待了整個下午。',content:'',emoji:'🗼',status:'draft',date:'2024-12'},
+  ],
+  cities:[
+    {id:'c1',name:'京都',emoji:'🌸',region:'日本'},{id:'c2',name:'九份',emoji:'🏔️',region:'台灣'},
+    {id:'c3',name:'峇里島',emoji:'🏝️',region:'東南亞'},{id:'c4',name:'巴黎',emoji:'🗼',region:'歐洲'},
+    {id:'c5',name:'清邁',emoji:'🌿',region:'東南亞'},{id:'c6',name:'首爾',emoji:'🏙️',region:'韓國'},
+  ],
+  categories:[{id:'cat1',name:'旅行日記'},{id:'cat2',name:'城市漫遊'},{id:'cat3',name:'美食紀錄'},{id:'cat4',name:'慢旅行'},{id:'cat5',name:'日常生活'}]
+};
+
+let db = DFLT;
+let editArtId=null, editCityId=null, editCatId=null;
+let artEmoji='🌸', cityEmoji='🌸';
+let pendingDel=null, curSec='dashboard';
+let searchQ='', statusF='';
+
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2);}
+function saveDB(){try{localStorage.setItem(SK,JSON.stringify(db));}catch(e){}}
+function loadDB(){try{const r=localStorage.getItem(SK);if(r)db=JSON.parse(r);}catch(e){}}
+
+function initAdmin(){
+  loadDB();
+  buildEmojiPicker('art-ep', ART_E, e=>{artEmoji=e;syncEmojiInput('f-emoji',e);});
+  buildEmojiPicker('city-ep', CITY_E, e=>{cityEmoji=e;syncEmojiInput('fc-emoji',e);});
+  renderSection('dashboard');
+}
+
+// ── SECTION SWITCHING ─────────────────────────────────────────────────
+function switchSec(id, el){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  el.classList.add('active');
+  const titles={dashboard:'儀表板',articles:'文章管理',cities:'城市分類',categories:'文章分類'};
+  document.getElementById('top-title').textContent=titles[id];
+  const acts=document.getElementById('top-actions');
+  acts.innerHTML = id==='articles' ? '<button class="btn btn-primary" onclick="openAddArt()">＋ 新增文章</button>' : '';
+  curSec=id;
+  renderSection(id);
+}
+
+function renderSection(id){
+  if(id==='dashboard') renderDash();
+  if(id==='articles') renderArtTable();
+  if(id==='cities') renderCityGrid();
+  if(id==='categories') renderCatTable();
+}
+
+// ── DASHBOARD ─────────────────────────────────────────────────────────
+function renderDash(){
+  const pub=db.articles.filter(a=>a.status==='published').length;
+  const months=['1月','2月','3月','4月','5月','6月','7月'];
+  const cnts=months.map((_,i)=>{const m=String(i+1).padStart(2,'0');return db.articles.filter(a=>a.date?.endsWith('-'+m)).length;});
+  const mx=Math.max(...cnts,1);
+  const bars=cnts.map((c,i)=>`<div class="bar-col"><div class="bar-fill" style="height:${Math.max(8,(c/mx)*100)}%" title="${c}篇"></div><div class="bar-lbl">${months[i]}</div></div>`).join('');
+  const recent=db.articles.slice(0,5).map(a=>`<div class="rec-item"><div class="rec-dot"></div><div class="rec-info"><div class="rec-title">${a.emoji} ${a.title.slice(0,24)}${a.title.length>24?'…':''}</div><div class="rec-meta">${a.city} · ${a.date||'—'}</div></div><span class="badge ${a.status==='published'?'badge-pub':'badge-draft'}">${a.status==='published'?'已發布':'草稿'}</span></div>`).join('') || '<div style="text-align:center;color:var(--text3);padding:1.5rem;font-size:0.8rem">尚無文章</div>';
+
+  document.getElementById('main-content').innerHTML=`
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-lbl">總文章數</div><div class="stat-val">${db.articles.length}</div><div class="stat-sub">篇旅遊日記</div></div>
+      <div class="stat-card g"><div class="stat-lbl">已發布</div><div class="stat-val">${pub}</div><div class="stat-sub">篇公開文章</div></div>
+      <div class="stat-card b"><div class="stat-lbl">城市數</div><div class="stat-val">${db.cities.length}</div><div class="stat-sub">個旅遊地點</div></div>
+      <div class="stat-card r"><div class="stat-lbl">文章分類</div><div class="stat-val">${db.categories.length}</div><div class="stat-sub">個分類標籤</div></div>
+    </div>
+    <div class="dash-grid">
+      <div class="dcard"><div class="dchead">📈 近期發文活動</div><div style="padding:0.8rem 1.5rem 0;font-size:0.66rem;color:var(--text3)">最近 7 個月</div><div class="bars">${bars}</div></div>
+      <div class="dcard"><div class="dchead">🕐 最新文章</div><div class="rec-list">${recent}</div></div>
+    </div>`;
+}
+
+// ── ARTICLES ──────────────────────────────────────────────────────────
+function renderArtTable(){
+  document.getElementById('top-actions').innerHTML='<button class="btn btn-primary" onclick="openAddArt()">＋ 新增文章</button>';
+  const rows=db.articles.filter(a=>{
+    const q=searchQ.toLowerCase();
+    return(!q||a.title.toLowerCase().includes(q))&&(!statusF||a.status===statusF);
+  });
+  const body=rows.length?rows.map(a=>`
+    <tr>
+      <td><span style="margin-right:0.4rem">${a.emoji}</span><span style="color:var(--text)">${a.title.slice(0,28)}${a.title.length>28?'…':''}</span></td>
+      <td style="color:var(--accent)">📍 ${a.city}</td>
+      <td><span class="badge badge-cat">${a.category}</span></td>
+      <td><span class="badge ${a.status==='published'?'badge-pub':'badge-draft'}">${a.status==='published'?'已發布':'草稿'}</span></td>
+      <td style="color:var(--text3)">${a.date||'—'}</td>
+      <td><div class="actions">
+        <button class="btn btn-ghost btn-sm" onclick="openEditArt('${a.id}')">✏️ 編輯</button>
+        <button class="btn btn-ghost btn-sm" style="color:var(--red);border-color:var(--red)" onclick="confirmDel('article','${a.id}','${a.title.replace(/'/g,"\\'")}')">🗑</button>
+      </div></td>
+    </tr>`).join(''):`<tr><td colspan="6"><div class="empty"><div class="empty-icon">📝</div>尚無文章，點擊右上角新增吧！</div></td></tr>`;
+
+  document.getElementById('main-content').innerHTML=`
+    <div class="tcard">
+      <div class="thead">
+        <span class="thead-title">所有文章</span>
+        <div class="search-row">
+          <input class="inp" id="art-search" placeholder="搜尋標題..." style="width:180px" value="${searchQ}" oninput="searchQ=this.value;renderArtTable()">
+          <select class="inp sel" style="width:120px" onchange="statusF=this.value;renderArtTable()">
+            <option value="" ${!statusF?'selected':''}>全部狀態</option>
+            <option value="published" ${statusF==='published'?'selected':''}>已發布</option>
+            <option value="draft" ${statusF==='draft'?'selected':''}>草稿</option>
+          </select>
+        </div>
+      </div>
+      <table><thead><tr><th>標題</th><th>城市</th><th>分類</th><th>狀態</th><th>日期</th><th>操作</th></tr></thead><tbody>${body}</tbody></table>
+    </div>`;
+}
+
+function openAddArt(){
+  editArtId=null;
+  document.getElementById('art-modal-title').textContent='新增文章';
+  document.getElementById('f-title').value='';
+  document.getElementById('f-excerpt').value='';
+  document.getElementById('f-content').value='';
+  document.getElementById('f-status').value='published';
+  document.getElementById('f-date').value=new Date().toISOString().slice(0,7);
+  artEmoji='🌸';
+  document.getElementById('f-emoji').value='🌸';
+  populateSel('f-city',db.cities.map(c=>({v:c.name,t:c.emoji+' '+c.name})),'');
+  populateSel('f-cat',db.categories.map(c=>({v:c.name,t:c.name})),'');
+  refreshEP('art-ep',ART_E,'🌸',e=>{artEmoji=e;syncEmojiInput('f-emoji',e);});
+  openModal('art-modal');
+}
+
+function openEditArt(id){
+  const a=db.articles.find(x=>x.id===id);if(!a)return;
+  editArtId=id;
+  document.getElementById('art-modal-title').textContent='編輯文章';
+  document.getElementById('f-title').value=a.title;
+  document.getElementById('f-excerpt').value=a.excerpt||'';
+  document.getElementById('f-content').value=a.content||'';
+  document.getElementById('f-status').value=a.status||'published';
+  document.getElementById('f-date').value=a.date||'';
+  artEmoji=a.emoji||'🌸';
+  document.getElementById('f-emoji').value=artEmoji;
+  populateSel('f-city',db.cities.map(c=>({v:c.name,t:c.emoji+' '+c.name})),a.city);
+  populateSel('f-cat',db.categories.map(c=>({v:c.name,t:c.name})),a.category);
+  refreshEP('art-ep',ART_E,artEmoji,e=>{artEmoji=e;syncEmojiInput('f-emoji',e);});
+  openModal('art-modal');
+}
+
+function saveArt(){
+  const title=document.getElementById('f-title').value.trim();
+  const city=document.getElementById('f-city').value;
+  const cat=document.getElementById('f-cat').value;
+  if(!title){toast('請輸入文章標題','err');return;}
+  if(!city){toast('請選擇城市','err');return;}
+  if(!cat){toast('請選擇分類','err');return;}
+  const emoji=document.getElementById('f-emoji').value.trim()||artEmoji||'📝';
+  const d={title,city,category:cat,excerpt:document.getElementById('f-excerpt').value.trim(),content:document.getElementById('f-content').value.trim(),emoji,status:document.getElementById('f-status').value,date:document.getElementById('f-date').value};
+  if(editArtId){db.articles=db.articles.map(a=>a.id===editArtId?{...a,...d}:a);toast('文章已更新！');}
+  else{db.articles.unshift({id:uid(),...d});toast('文章已新增！');}
+  saveDB();closeModal('art-modal');renderSection(curSec);
+}
+
+// ── CITIES ────────────────────────────────────────────────────────────
+function renderCityGrid(){
+  const cards=db.cities.map(c=>{
+    const cnt=db.articles.filter(a=>a.city===c.name).length;
+    return`<div class="city-card"><div class="city-emoji">${c.emoji}</div><div class="city-name">${c.name}</div><div class="city-meta">${c.region} · ${cnt} 篇文章</div>
+      <div class="actions"><button class="btn btn-ghost btn-sm" onclick="openEditCity('${c.id}')">✏️ 編輯</button>
+      <button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="confirmDel('city','${c.id}','${c.name}')">🗑</button></div></div>`;
+  }).join('');
+  document.getElementById('main-content').innerHTML=`
+    <div style="display:flex;justify-content:flex-end;margin-bottom:1rem"><button class="btn btn-primary" onclick="openAddCity()">＋ 新增城市</button></div>
+    ${db.cities.length?`<div class="city-grid">${cards}</div>`:'<div class="empty"><div class="empty-icon">🗺️</div>尚無城市</div>'}`;
+}
+
+function openAddCity(){
+  editCityId=null;
+  document.getElementById('city-modal-title').textContent='新增城市';
+  document.getElementById('fc-name').value='';
+  document.getElementById('fc-emoji').value='🌸';
+  document.getElementById('fc-region').value='日本';
+  cityEmoji='🌸';
+  refreshEP('city-ep',CITY_E,'🌸',e=>{cityEmoji=e;syncEmojiInput('fc-emoji',e);});
+  openModal('city-modal');
+}
+
+function openEditCity(id){
+  const c=db.cities.find(x=>x.id===id);if(!c)return;
+  editCityId=id;
+  document.getElementById('city-modal-title').textContent='編輯城市';
+  document.getElementById('fc-name').value=c.name;
+  document.getElementById('fc-emoji').value=c.emoji||'🌸';
+  document.getElementById('fc-region').value=c.region||'其他地區';
+  cityEmoji=c.emoji||'🌸';
+  refreshEP('city-ep',CITY_E,cityEmoji,e=>{cityEmoji=e;syncEmojiInput('fc-emoji',e);});
+  openModal('city-modal');
+}
+
+function saveCity(){
+  const name=document.getElementById('fc-name').value.trim();
+  if(!name){toast('請輸入城市名稱','err');return;}
+  const emoji=document.getElementById('fc-emoji').value.trim()||cityEmoji||'📍';
+  const region=document.getElementById('fc-region').value;
+  if(editCityId){db.cities=db.cities.map(c=>c.id===editCityId?{...c,name,emoji,region}:c);toast('城市已更新！');}
+  else{db.cities.push({id:uid(),name,emoji,region});toast('城市已新增！');}
+  saveDB();closeModal('city-modal');renderSection(curSec);
+}
+
+// ── CATEGORIES ────────────────────────────────────────────────────────
+function renderCatTable(){
+  const rows=db.categories.map(c=>{
+    const cnt=db.articles.filter(a=>a.category===c.name).length;
+    return`<tr><td><span class="badge badge-cat">${c.name}</span></td><td style="color:var(--text3)">${cnt} 篇文章</td>
+      <td><div class="actions"><button class="btn btn-ghost btn-sm" onclick="openEditCat('${c.id}')">✏️ 編輯</button>
+      <button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="confirmDel('cat','${c.id}','${c.name}')">🗑</button></div></td></tr>`;
+  }).join('');
+  document.getElementById('main-content').innerHTML=`
+    <div style="display:flex;justify-content:flex-end;margin-bottom:1rem"><button class="btn btn-primary" onclick="openAddCat()">＋ 新增分類</button></div>
+    <div class="tcard">${db.categories.length
+      ?`<table><thead><tr><th>分類名稱</th><th>文章數量</th><th>操作</th></tr></thead><tbody>${rows}</tbody></table>`
+      :'<div class="empty"><div class="empty-icon">🏷️</div>尚無分類</div>'}</div>`;
+}
+
+function openAddCat(){editCatId=null;document.getElementById('cat-modal-title').textContent='新增分類';document.getElementById('fcat-name').value='';openModal('cat-modal');}
+function openEditCat(id){const c=db.categories.find(x=>x.id===id);if(!c)return;editCatId=id;document.getElementById('cat-modal-title').textContent='編輯分類';document.getElementById('fcat-name').value=c.name;openModal('cat-modal');}
+
+function saveCat(){
+  const name=document.getElementById('fcat-name').value.trim();
+  if(!name){toast('請輸入分類名稱','err');return;}
+  if(editCatId){db.categories=db.categories.map(c=>c.id===editCatId?{...c,name}:c);toast('分類已更新！');}
+  else{db.categories.push({id:uid(),name});toast('分類已新增！');}
+  saveDB();closeModal('cat-modal');renderSection(curSec);
+}
+
+// ── DELETE ────────────────────────────────────────────────────────────
+function confirmDel(type,id,name){
+  pendingDel={type,id};
+  document.getElementById('confirm-text').textContent=`確定要刪除「${name}」嗎？此操作無法復原。`;
+  document.getElementById('confirm-ok').onclick=execDel;
+  document.getElementById('confirm-overlay').classList.add('open');
+}
+function execDel(){
+  if(!pendingDel)return;
+  const{type,id}=pendingDel;
+  if(type==='article')db.articles=db.articles.filter(a=>a.id!==id);
+  if(type==='city')db.cities=db.cities.filter(c=>c.id!==id);
+  if(type==='cat')db.categories=db.categories.filter(c=>c.id!==id);
+  saveDB();toast('已刪除');closeConfirm();renderSection(curSec);
+}
+function closeConfirm(){document.getElementById('confirm-overlay').classList.remove('open');pendingDel=null;}
+document.getElementById('confirm-overlay').addEventListener('click',e=>{if(e.target===e.currentTarget)closeConfirm();});
+
+// ── HELPERS ───────────────────────────────────────────────────────────
+function populateSel(id,opts,selected){
+  document.getElementById(id).innerHTML=`<option value="">— 選擇 —</option>`+opts.map(o=>`<option value="${o.v}"${o.v===selected?' selected':''}>${o.t}</option>`).join('');
+}
+
+function buildEmojiPicker(id,emojis,onSelect){
+  const el=document.getElementById(id);
+  el.innerHTML=emojis.map(e=>`<button type="button" onclick="(${onSelect.toString()})('${e}')">${e}</button>`).join('');
+}
+
+function refreshEP(id,emojis,selected,onSelect){
+  const el=document.getElementById(id);
+  el.innerHTML=emojis.map(e=>`<button type="button" class="${e===selected?'sel':''}" onclick="void(0)">${e}</button>`).join('');
+  el.querySelectorAll('button').forEach((btn,i)=>{
+    btn.onclick=()=>{
+      el.querySelectorAll('button').forEach(b=>b.classList.remove('sel'));
+      btn.classList.add('sel');
+      onSelect(emojis[i]);
+    };
+  });
+}
+
+function syncEmojiInput(inputId,emoji){document.getElementById(inputId).value=emoji;}
+
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+document.querySelectorAll('.overlay').forEach(o=>{
+  o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');});
+});
+
+function toast(msg,type){
+  const el=document.createElement('div');
+  el.className='toast'+(type==='err'?' err':'');
+  el.textContent=(type==='err'?'❌ ':'✅ ')+msg;
+  document.getElementById('toast-wrap').appendChild(el);
+  setTimeout(()=>el.remove(),2800);
+}
+</script>
+</body>
+</html>

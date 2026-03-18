@@ -1,0 +1,7 @@
+[functions]
+  directory = "netlify/functions"
+
+[[headers]]
+  for = "/tools/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
