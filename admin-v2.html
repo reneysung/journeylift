@@ -291,7 +291,31 @@ tr:hover td{background:var(--surface2)}
                 <input type="file" id="ai-img-file" accept="image/*" multiple style="display:none" onchange="handleAiImgs(event)">
                 <div id="ai-img-previews" style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem"></div>
               </div>
-              <div id="ai-key-warn" style="display:none;font-size:0.72rem;color:var(--red);margin-bottom:0.8rem">⚠️ 請先設定 Anthropic API Key</div>
+              
+              <div style="border-top:1px solid var(--border2);margin:1rem 0;padding-top:1rem">
+                <div style="font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:0.8rem">店家資訊（選填，發布後顯示在文末）</div>
+                <div class="fg-row">
+                  <div class="fg"><label class="fl">地址</label><input class="fi" id="ai-shop-address" placeholder="例：南投縣仁愛鄉..."></div>
+                  <div class="fg"><label class="fl">電話</label><input class="fi" id="ai-shop-phone" placeholder="049-123456"></div>
+                </div>
+                <div class="fg-row">
+                  <div class="fg"><label class="fl">營業時間</label><input class="fi" id="ai-shop-hours" placeholder="例：11:00-21:00（週二公休）"></div>
+                  <div class="fg"><label class="fl">消費備註</label><input class="fi" id="ai-shop-price-note" placeholder="例：平均消費 $200-400"></div>
+                </div>
+                <div class="fg-row">
+                  <div class="fg"><label class="fl">停車資訊</label><input class="fi" id="ai-shop-parking" placeholder="例：門口有停車場"></div>
+                  <div class="fg"><label class="fl">官網</label><input class="fi" id="ai-shop-website" placeholder="https://..."></div>
+                </div>
+                <div class="fg-row">
+                  <div class="fg"><label class="fl">Google Maps 連結</label><input class="fi" id="ai-shop-maps" placeholder="https://maps.google.com/..."></div>
+                  <div class="fg"><label class="fl">Facebook</label><input class="fi" id="ai-shop-fb" placeholder="https://fb.com/..."></div>
+                </div>
+                <div class="fg-row">
+                  <div class="fg"><label class="fl">Instagram</label><input class="fi" id="ai-shop-ig" placeholder="https://instagram.com/..."></div>
+                  <div class="fg"><label class="fl">LINE</label><input class="fi" id="ai-shop-line" placeholder="https://line.me/..."></div>
+                </div>
+              </div>
+<div id="ai-key-warn" style="display:none;font-size:0.72rem;color:var(--red);margin-bottom:0.8rem">⚠️ 請先設定 Anthropic API Key</div>
               <button class="btn-primary" id="ai-gen-btn" onclick="genAiArticle()" style="width:100%">✨ AI 生成開箱文</button>
             </div>
           </div>
@@ -963,7 +987,20 @@ async function publishAiArticle(){
   const pubAt=document.getElementById('ai-pub-time').value;
   const name=document.getElementById('ai-name').value.trim();
   const type=document.getElementById('ai-type').value;
-  const articleData={title,slug:aiGenSlug,city:city||document.getElementById('ai-city').value||null,category:cat||type||null,excerpt:document.getElementById('ai-pub-excerpt').value.trim()||body.slice(0,120)+'...',content:htmlContent,keywords:[name,type,city].filter(Boolean),emoji:{咖啡廳:'☕',餐廳:'🍽️',甜點:'🍰',景點:'🏔️',住宿:'🏠',酒吧:'🍸'}[type]||'✍️',cover_image:coverImage,status,published_at:pubAt?new Date(pubAt).toISOString():new Date().toISOString()};
+  const articleData={title,slug:aiGenSlug,city:city||document.getElementById('ai-city').value||null,category:cat||type||null,excerpt:document.getElementById('ai-pub-excerpt').value.trim()||body.slice(0,120)+'...',content:htmlContent,keywords:[name,type,city].filter(Boolean),emoji:{咖啡廳:'☕',餐廳:'🍽️',甜點:'🍰',景點:'🏔️',住宿:'🏠',酒吧:'🍸'}[type]||'✍️',cover_image:coverImage,status,published_at:pubAt?new Date(pubAt).toISOString():new Date().toISOString(),
+    shop_info:{
+      name:document.getElementById('ai-name')?.value?.trim()||null,
+      address:document.getElementById('ai-shop-address')?.value?.trim()||null,
+      phone:document.getElementById('ai-shop-phone')?.value?.trim()||null,
+      hours:document.getElementById('ai-shop-hours')?.value?.trim()||null,
+      price_note:document.getElementById('ai-shop-price-note')?.value?.trim()||null,
+      parking:document.getElementById('ai-shop-parking')?.value?.trim()||null,
+      website:document.getElementById('ai-shop-website')?.value?.trim()||null,
+      maps:document.getElementById('ai-shop-maps')?.value?.trim()||null,
+      fb:document.getElementById('ai-shop-fb')?.value?.trim()||null,
+      ig:document.getElementById('ai-shop-ig')?.value?.trim()||null,
+      line:document.getElementById('ai-shop-line')?.value?.trim()||null
+    }};
   const{error}=await sb.from('articles').insert(articleData);
   btn.disabled=false;btn.textContent='🚀 發布到前台';
   if(error){msg.style.color='var(--red)';msg.textContent='發布失敗：'+error.message;return;}
