@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>æ¼«é â çæ´»æéèªï½ç¨æå­è¨éæ¯ä¸æ®µæç¨</title>
-<meta name="description" content="æ¼«éæéèªï¼ç¨æå­è¨éæ¯ä¸æ®µå¼å¾è¢«è¨ä½çæç¨ã">
+<title>漫途 — 生活旅遊誌｜用文字記錄每一段旅程</title>
+<meta name="description" content="漫途旅遊誌，用文字記錄每一段值得被記住的旅程。">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Noto+Serif+TC:wght@300;400&family=Noto+Sans+TC:wght@300;400&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -27,7 +27,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 /* header */
 header{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 3rem;height:68px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(200,169,110,0.12);background:rgba(18,16,14,0.94);backdrop-filter:blur(16px)}
 .logo{font-family:var(--ff-d);font-size:1.5rem;font-weight:400;letter-spacing:0.08em;color:var(--paper)}
-.logo em{color:var(--gold);font-style:italic}
+.logo{color:var(--gold)}
 .logo small{font-size:0.42em;letter-spacing:0.3em;color:var(--mist2);vertical-align:super;margin-left:0.6em;font-style:normal}
 .hnav{display:flex;align-items:center;gap:2.5rem}
 .hnav a{font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--mist2);transition:color 0.3s;position:relative}
@@ -140,33 +140,33 @@ footer{border-top:1px solid rgba(200,169,110,0.08);padding:4rem 3rem;background:
 <body>
 
 <header>
-  <a href="/" class="logo"><em>æ¼«</em>é<small>æéèª</small></a>
+  <a href="/" class="logo">漫途 <small>旅遊誌</small></a>
   <nav class="hnav">
-    <a href="/">é¦é </a>
-    <a href="/articles">æç« </a>
-    <a href="/tools/unboxing.html">å·¥å·</a>
-    <a href="/admin">å¾å°</a>
+    <a href="/">首頁</a>
+    <a href="/articles">文章</a>
+    <a href="/tools/unboxing.html">工具</a>
+    <a href="/admin">後台</a>
   </nav>
 </header>
 
 <section class="hero">
   <div class="hero-l">
-    <div class="kicker">Travel Â· Life Â· Story</div>
-    <h1 class="h1">æ¢æè¡<br><em>å¿«è¨æ¶</em></h1>
-    <p class="h2">æ¯ä¸æ®µæç¨ï¼é½å¼å¾è¢«æå­çä½</p>
-    <p class="desc">æ¼«éæ¯ä¸æ¬éæ¼æè¡çèªï¼è¨éé£äºå¼å¾è¢«è¨ä½çé¢¨æ¯ãæ»å³èæåãç¨ç·©æ¢çæ­¥ä¼ï¼æ·±å»çç¼åï¼æ¸å¯«æ¯ä¸æ®µå±¬æ¼èªå·±çæäºã</p>
+    <div class="kicker">Travel · Life · Story</div>
+    <h1 class="h1">慢旅行<br><span style="font-style:italic;color:var(--gold)">快記憶</span></h1>
+    <p class="h2">每一段旅程，都值得被文字留住</p>
+    <p class="desc">漫途是一本關於旅行的誌，記錄那些值得被記住的風景、滋味與感受。用緩慢的步伐，深刻的眼光，書寫每一段屬於自己的故事。</p>
     <div class="cta">
-      <a href="/articles" class="btn-p">æ¢ç´¢æç« </a>
-      <a href="/tools/unboxing.html" class="btn-t">éç®±æå·¥å· <span>â</span></a>
+      <a href="/articles" class="btn-p">探索文章</a>
+      <a href="/tools/unboxing.html" class="btn-t">開箱文工具 <span>→</span></a>
     </div>
   </div>
   <div class="hero-r">
     <div class="big-num">01</div>
     <div class="hero-r-inner">
-      <div class="feat-label">ææ°åç»</div>
+      <div class="feat-label">最新刊登</div>
       <div class="feat-card" id="hero-feat">
-        <span class="feat-emoji">âï¸</span>
-        <div class="feat-meta">è¼å¥ä¸­...</div>
+        <span class="feat-emoji">✍️</span>
+        <div class="feat-meta">載入中...</div>
         <div class="feat-title"> </div>
       </div>
     </div>
@@ -175,18 +175,18 @@ footer{border-top:1px solid rgba(200,169,110,0.08);padding:4rem 3rem;background:
 
 <div class="mq">
   <div class="mq-t">
-    <div class="mq-i">æè¡æ¥è¨ <b>â¦</b></div>
-    <div class="mq-i">åå¡å»³æ¢è¨ª <b>â¦</b></div>
-    <div class="mq-i">åå¸æ¼«é <b>â¦</b></div>
-    <div class="mq-i">ç¾é£ç´é <b>â¦</b></div>
-    <div class="mq-i">æ¥å¸¸æé <b>â¦</b></div>
-    <div class="mq-i">æå­é¢¨æ¯ <b>â¦</b></div>
-    <div class="mq-i">æè¡æ¥è¨ <b>â¦</b></div>
-    <div class="mq-i">åå¡å»³æ¢è¨ª <b>â¦</b></div>
-    <div class="mq-i">åå¸æ¼«é <b>â¦</b></div>
-    <div class="mq-i">ç¾é£ç´é <b>â¦</b></div>
-    <div class="mq-i">æ¥å¸¸æé <b>â¦</b></div>
-    <div class="mq-i">æå­é¢¨æ¯ <b>â¦</b></div>
+    <div class="mq-i">旅行日記 <span style="color:var(--gold);font-size:0.45rem">✦</span></div>
+    <div class="mq-i">咖啡廳探訪 <span style="color:var(--gold);font-size:0.45rem">✦</span></div>
+    <div class="mq-i">城市漫遊 <span style="color:var(--gold);font-size:0.45rem">✦</span></div>
+    <div class="mq-i">美食紀錄 <span style="color:var(--gold);font-size:0.45rem">✦</span></div>
+    <div class="mq-i">日常旅途 <span style="color:var(--gold);font-size:0.45rem">✦</span></div>
+    <div class="mq-i">文字風景 <span style="color:var(--gold);font-size:0.45rem">✦</span></div>
+    <div class="mq-i">旅行日記 <span style="color:var(--gold);font-size:0.45rem">✦</span></div>
+    <div class="mq-i">咖啡廳探訪 <span style="color:var(--gold);font-size:0.45rem">✦</span></div>
+    <div class="mq-i">城市漫遊 <span style="color:var(--gold);font-size:0.45rem">✦</span></div>
+    <div class="mq-i">美食紀錄 <span style="color:var(--gold);font-size:0.45rem">✦</span></div>
+    <div class="mq-i">日常旅途 <span style="color:var(--gold);font-size:0.45rem">✦</span></div>
+    <div class="mq-i">文字風景 <span style="color:var(--gold);font-size:0.45rem">✦</span></div>
   </div>
 </div>
 
@@ -194,36 +194,36 @@ footer{border-top:1px solid rgba(200,169,110,0.08);padding:4rem 3rem;background:
   <div class="sec-hd">
     <div>
       <div class="sec-lbl">Latest Stories</div>
-      <h2 class="sec-ttl">ææ°æç« </h2>
+      <h2 class="sec-ttl">最新文章</h2>
     </div>
-    <a href="/articles" class="sec-all">æææç«  <span>â</span></a>
+    <a href="/articles" class="sec-all">所有文章 <span>→</span></a>
   </div>
   <div id="ac-container"><div class="loading">Loading...</div></div>
 </section>
 
-<div class="ornament">â§</div>
+<div class="ornament">❧</div>
 
 <footer>
   <div class="ft-in">
     <div class="ft-brand">
-      <a href="/" class="logo"><em>æ¼«</em>é<small>æéèª</small></a>
-      <p>ç¨æå­è¨éæ¯ä¸æ®µå¼å¾è¢«è¨ä½çæç¨ãæ¢æè¡ï¼æ·±å»çç¼åã</p>
+      <a href="/" class="logo">漫途 <small>旅遊誌</small></a>
+      <p>用文字記錄每一段值得被記住的旅程。慢旅行，深刻的眼光。</p>
     </div>
     <div>
-      <div class="ft-ttl">å°è¦½</div>
+      <div class="ft-ttl">導覽</div>
       <div class="ft-links">
-        <a href="/">é¦é </a>
-        <a href="/articles">æææç« </a>
-        <a href="/tools/unboxing.html">éç®±æå·¥å·</a>
+        <a href="/">首頁</a>
+        <a href="/articles">所有文章</a>
+        <a href="/tools/unboxing.html">開箱文工具</a>
       </div>
     </div>
     <div>
-      <div class="ft-ttl">ç®¡ç</div>
+      <div class="ft-ttl">管理</div>
       <div class="ft-links">
-        <a href="/admin">å¾å°ç®¡ç</a>
+        <a href="/admin">後台管理</a>
       </div>
     </div>
-    <div class="ft-copy">Â© 2026 æ¼«éæéèª Â· ä¿çæææ¬å©</div>
+    <div class="ft-copy">© 2026 漫途旅遊誌 · 保留所有權利</div>
   </div>
 </footer>
 
@@ -243,8 +243,8 @@ async function load(){
     const a = list[0];
     const fc = document.getElementById('hero-feat');
     fc.onclick = ()=>location.href=`/articles/${a.slug}`;
-    fc.querySelector('.feat-emoji').textContent = a.emoji||'âï¸';
-    fc.querySelector('.feat-meta').textContent = [a.city,a.category].filter(Boolean).join(' Â· ')||'æ¼«é';
+    fc.querySelector('.feat-emoji').textContent = a.emoji||'✍️';
+    fc.querySelector('.feat-meta').textContent = [a.city,a.category].filter(Boolean).join(' · ')||'漫途';
     fc.querySelector('.feat-title').textContent = a.title;
     if(a.excerpt){
       const el = document.createElement('div');
@@ -255,7 +255,7 @@ async function load(){
 
   const c = document.getElementById('ac-container');
   if(!list.length){
-    c.innerHTML=`<div class="empty"><span class="empty-num">æ¼«é</span>æç« å³å°ç»å ´ï¼æ¬è«æå¾</div>`;
+    c.innerHTML=`<div class="empty"><span class="empty-num">漫途</span>文章即將登場，敬請期待</div>`;
     return;
   }
 
@@ -278,13 +278,13 @@ function fmtS(d){ return d?new Date(d).toLocaleDateString('zh-TW'):''; }
 function card(a,n,big){
   return `<a href="/articles/${a.slug}" class="ac${big?' ac-big':''}">
     <div class="ac-n">No.${String(n).padStart(2,'0')}</div>
-    <span class="ac-emoji">${a.emoji||'âï¸'}</span>
-    <div class="ac-meta">${[a.city,a.category].filter(Boolean).join(' Â· ')||'æ¼«é'}</div>
+    <span class="ac-emoji">${a.emoji||'✍️'}</span>
+    <div class="ac-meta">${[a.city,a.category].filter(Boolean).join(' · ')||'漫途'}</div>
     <div class="ac-ttl">${a.title}</div>
     <div class="ac-exc">${a.excerpt||''}</div>
     <div class="ac-ft">
       <span class="ac-dt">${big?fmt(a.published_at):fmtS(a.published_at)}</span>
-      <span class="ac-arr">${big?'é±è®å¨æ â':'â'}</span>
+      <span class="ac-arr">${big?'閱讀全文 →':'→'}</span>
     </div>
   </a>`;
 }
