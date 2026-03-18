@@ -940,6 +940,7 @@ function handleAiImgs(e){
   e.target.value='';
 }
 
+const KEY_SK = 'mantu-api-key';
 async function genAiArticle(){
   const name=document.getElementById('ai-name').value.trim();
   if(!name){toast('請填寫店家名稱','err');return;}
