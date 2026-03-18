@@ -262,6 +262,61 @@ tr:hover td{background:var(--surface2)}
         </div>
       </div>
 
+
+      <!-- AI PAGE -->
+      <div class="page" id="page-ai">
+        <div class="page-hd"><div class="page-title">✨ AI 開箱文</div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start">
+          <div>
+            <div style="background:var(--surface);border:1px solid var(--border);padding:1.5rem;margin-bottom:1rem">
+              <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem">店家資料</div>
+              <div class="fg"><label class="fl">店家名稱 <span class="req">*</span></label><input class="fi" id="ai-name" placeholder="例：珈琲時光"></div>
+              <div class="fg-row">
+                <div class="fg"><label class="fl">城市</label><input class="fi" id="ai-city" placeholder="例：台南"></div>
+                <div class="fg"><label class="fl">類型</label><select class="fsel" id="ai-type"><option value="咖啡廳">☕ 咖啡廳</option><option value="餐廳">🍽️ 餐廳</option><option value="甜點">🍰 甜點</option><option value="景點">🏔️ 景點</option><option value="住宿">🏠 住宿</option><option value="酒吧">🍸 酒吧</option></select></div>
+              </div>
+              <div class="fg"><label class="fl">招牌品項 / 特色亮點</label><input class="fi" id="ai-feature" placeholder="例：手沖咖啡、老屋改造"></div>
+              <div class="fg"><label class="fl">個人體驗心得</label><textarea class="fta" id="ai-note" placeholder="你的感受..." style="min-height:80px"></textarea></div>
+              <div class="fg-row">
+                <div class="fg"><label class="fl">評分</label><select class="fsel" id="ai-rating"><option value="5">⭐⭐⭐⭐⭐ 極力推薦</option><option value="4">⭐⭐⭐⭐ 推薦</option><option value="3">⭐⭐⭐ 還不錯</option></select></div>
+                <div class="fg"><label class="fl">價位</label><select class="fsel" id="ai-price"><option value="$">$ 平價</option><option value="$">$ 中價</option><option value="$$">$$ 高價</option></select></div>
+              </div>
+              <div class="fg">
+                <label class="fl">上傳圖片（AI 分析用）</label>
+                <div id="ai-img-area" style="border:2px dashed var(--border2);padding:1rem;text-align:center;cursor:pointer;background:var(--surface2);font-size:0.78rem;color:var(--text3)" onclick="document.getElementById('ai-img-file').click()">📷 點擊上傳圖片（可多張）</div>
+                <input type="file" id="ai-img-file" accept="image/*" multiple style="display:none" onchange="handleAiImgs(event)">
+                <div id="ai-img-previews" style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem"></div>
+              </div>
+              <div id="ai-key-warn" style="display:none;font-size:0.72rem;color:var(--red);margin-bottom:0.8rem">⚠️ 請先設定 Anthropic API Key</div>
+              <button class="btn-primary" id="ai-gen-btn" onclick="genAiArticle()" style="width:100%">✨ AI 生成開箱文</button>
+            </div>
+          </div>
+          <div>
+            <div style="background:var(--surface);border:1px solid var(--border);padding:1.5rem;margin-bottom:1rem">
+              <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;justify-content:space-between">
+                <span>生成結果</span><span id="ai-status" style="color:var(--text3);font-size:0.68rem;letter-spacing:0">等待生成...</span>
+              </div>
+              <div id="ai-title-preview" style="font-family:var(--font-serif);font-size:1.2rem;color:var(--accent2);margin-bottom:0.8rem;min-height:1.5em"></div>
+              <div id="ai-body-preview" contenteditable="true" style="min-height:200px;font-size:0.82rem;line-height:1.9;color:var(--text2);white-space:pre-wrap;outline:none;border:1px dashed var(--border2);padding:0.5rem"></div>
+            </div>
+            <div style="background:var(--surface);border:1px solid var(--border);padding:1.5rem" id="ai-publish-panel">
+              <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem">發布設定</div>
+              <div class="fg-row">
+                <div class="fg"><label class="fl">城市</label><select class="fsel" id="ai-pub-city"></select></div>
+                <div class="fg"><label class="fl">分類</label><select class="fsel" id="ai-pub-cat"></select></div>
+              </div>
+              <div class="fg"><label class="fl">摘要</label><textarea class="fta" id="ai-pub-excerpt" style="min-height:56px" placeholder="簡短描述..."></textarea></div>
+              <div class="fg-row">
+                <div class="fg"><label class="fl">狀態</label><select class="fsel" id="ai-pub-status"><option value="published">✅ 立即發布</option><option value="draft">📝 存為草稿</option></select></div>
+                <div class="fg"><label class="fl">發布時間</label><input class="fi" type="datetime-local" id="ai-pub-time"></div>
+              </div>
+              <button class="btn-primary" id="ai-pub-btn" onclick="publishAiArticle()" style="width:100%;margin-top:0.5rem">🚀 發布到前台</button>
+              <div id="ai-pub-msg" style="font-size:0.78rem;margin-top:0.8rem;min-height:1em"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- SETTINGS PAGE -->
       <div class="page" id="page-settings">
         <div class="page-hd">
