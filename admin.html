@@ -250,6 +250,12 @@ tr:hover td{background:rgba(255,255,255,0.015);}
         <div class="fg"><label class="fl">分類 <span class="req">*</span></label><select class="fsel" id="f-cat"></select></div>
       </div>
       <div class="fg"><label class="fl">摘要</label><textarea class="fta" id="f-excerpt" placeholder="簡短描述這篇文章..." style="min-height:72px"></textarea></div>
+      <div class="fg">
+        <label class="fl">SEO 關鍵字</label>
+        <div id="art-kw-tags" style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.4rem"></div>
+        <input class="fi" id="f-keywords-input" placeholder="輸入關鍵字後按 Enter..." onkeydown="addArtKw(event)">
+        <input type="hidden" id="f-keywords">
+      </div>
 
       <!-- 圖片上傳 -->
       <div class="fg">
@@ -528,6 +534,25 @@ function renderArtTable(){
     </div>`;
 }
 
+// ── ARTICLE KEYWORDS ──────────────────────────────────────────────────────
+let artKws = [];
+function addArtKw(e){
+  if(e.key!=='Enter')return;
+  e.preventDefault();
+  const v=document.getElementById('f-keywords-input').value.trim();
+  if(!v||artKws.includes(v))return;
+  artKws.push(v);
+  document.getElementById('f-keywords-input').value='';
+  renderArtKws();
+}
+function removeArtKw(k){ artKws=artKws.filter(x=>x!==k); renderArtKws(); }
+function renderArtKws(){
+  document.getElementById('art-kw-tags').innerHTML=artKws.map(k=>
+    `<span style="background:var(--surface2);border:1px solid var(--border2);padding:0.15rem 0.5rem;font-size:0.72rem;display:flex;align-items:center;gap:0.3rem">${k}<button onclick="removeArtKw('${k}')" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:0.8rem;padding:0">×</button></span>`
+  ).join('');
+  document.getElementById('f-keywords').value=artKws.join(',');
+}
+
 // ── IMAGE UPLOAD ──────────────────────────────────────────────────────
 let artImages = []; // [{url, name}]
 
@@ -574,12 +599,14 @@ function setEditorContent(html){ document.getElementById('f-content-editor').inn
 
 function openAddArt(){
   editArtId=null;
+  artKws=[];
   artImages=[];
   document.getElementById('art-modal-title').textContent='新增文章';
   document.getElementById('f-title').value='';
   document.getElementById('f-excerpt').value='';
   document.getElementById('f-content').value='';
   setEditorContent('');
+  renderArtKws();
   renderImgPreviews();
   document.getElementById('f-status').value='published';
   document.getElementById('f-date').value=new Date().toISOString().slice(0,7);
@@ -594,12 +621,14 @@ function openAddArt(){
 function openEditArt(id){
   const a=db.articles.find(x=>x.id===id);if(!a)return;
   editArtId=id;
+  artKws = a.keywords ? (Array.isArray(a.keywords) ? a.keywords : a.keywords.split(',').filter(Boolean)) : [];
   artImages=[];
   document.getElementById('art-modal-title').textContent='編輯文章';
   document.getElementById('f-title').value=a.title;
   document.getElementById('f-excerpt').value=a.excerpt||'';
   document.getElementById('f-content').value=a.content||'';
   setEditorContent(a.content||'');
+  renderArtKws();
   renderImgPreviews();
   document.getElementById('f-status').value=a.status||'published';
   document.getElementById('f-date').value=a.date||'';
@@ -620,7 +649,7 @@ function saveArt(){
   if(!cat){toast('請選擇分類','err');return;}
   const emoji=document.getElementById('f-emoji').value.trim()||artEmoji||'📝';
   const content = getEditorContent();
-  const d={title,city,category:cat,excerpt:document.getElementById('f-excerpt').value.trim(),content,emoji,status:document.getElementById('f-status').value,date:document.getElementById('f-date').value};
+  const d={title,city,category:cat,excerpt:document.getElementById('f-excerpt').value.trim(),content,emoji,status:document.getElementById('f-status').value,date:document.getElementById('f-date').value,keywords:artKws};
   if(editArtId){db.articles=db.articles.map(a=>a.id===editArtId?{...a,...d}:a);toast('文章已更新！');}
   else{db.articles.unshift({id:uid(),...d});toast('文章已新增！');}
   saveDB();closeModal('art-modal');renderSection(curSec);
