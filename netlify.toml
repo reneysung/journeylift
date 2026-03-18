@@ -5,7 +5,15 @@
 [functions."claude-proxy"]
   timeout = 26
 
+[functions."deploy-article"]
+  timeout = 26
+
 [[headers]]
   for = "/tools/*"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
+[[headers]]
+  for = "/*"
   [headers.values]
     X-Frame-Options = "SAMEORIGIN"
