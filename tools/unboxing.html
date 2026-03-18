@@ -658,9 +658,9 @@ async function publish(){
   document.getElementById('pubBtn').disabled=true;
 
   try{
-    const deployRes = await fetch('/.netlify/functions/claude-proxy', {
+    const deployRes = await fetch('/.netlify/functions/deploy-article', {
       method:'POST',
-      headers:{'Content-Type':'application/json','x-action':'deploy'},
+      headers:{'Content-Type':'application/json'},
       body:JSON.stringify({filename:`articles/${slug}.html`, content:articleHTML})
     });
     const deployData = await deployRes.json();
