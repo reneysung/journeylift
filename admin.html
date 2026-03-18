@@ -250,7 +250,43 @@ tr:hover td{background:rgba(255,255,255,0.015);}
         <div class="fg"><label class="fl">分類 <span class="req">*</span></label><select class="fsel" id="f-cat"></select></div>
       </div>
       <div class="fg"><label class="fl">摘要</label><textarea class="fta" id="f-excerpt" placeholder="簡短描述這篇文章..." style="min-height:72px"></textarea></div>
-      <div class="fg"><label class="fl">文章內容</label><textarea class="fta" id="f-content" placeholder="在這裡寫下您的旅遊故事..." style="min-height:150px"></textarea></div>
+
+      <!-- 圖片上傳 -->
+      <div class="fg">
+        <label class="fl">圖片上傳</label>
+        <div id="img-upload-area" style="border:2px dashed var(--border2);border-radius:4px;padding:1rem;text-align:center;cursor:pointer;transition:border-color 0.2s;background:var(--surface2)"
+          onclick="document.getElementById('img-file-input').click()"
+          ondragover="event.preventDefault();this.style.borderColor='var(--accent)'"
+          ondragleave="this.style.borderColor='var(--border2)'"
+          ondrop="handleImgDrop(event)">
+          <div style="font-size:1.5rem">📷</div>
+          <div style="font-size:0.75rem;color:var(--text2);margin-top:0.3rem">點擊或拖曳上傳圖片（可多張）</div>
+        </div>
+        <input type="file" id="img-file-input" multiple accept="image/*" style="display:none" onchange="handleImgFiles(this.files)">
+        <div id="img-preview-list" style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.5rem"></div>
+      </div>
+
+      <!-- 富文本編輯器 -->
+      <div class="fg">
+        <label class="fl">文章內容</label>
+        <div id="editor-toolbar" style="display:flex;flex-wrap:wrap;gap:0.3rem;padding:0.4rem;background:var(--surface2);border:1px solid var(--border2);border-bottom:none">
+          <button type="button" onclick="execCmd('bold')" title="粗體" style="background:none;border:1px solid var(--border2);color:var(--text);padding:0.2rem 0.5rem;cursor:pointer;font-weight:bold;font-size:0.85rem">B</button>
+          <button type="button" onclick="execCmd('italic')" title="斜體" style="background:none;border:1px solid var(--border2);color:var(--text);padding:0.2rem 0.5rem;cursor:pointer;font-style:italic;font-size:0.85rem">I</button>
+          <button type="button" onclick="execCmd('formatBlock','h2')" title="標題" style="background:none;border:1px solid var(--border2);color:var(--text);padding:0.2rem 0.5rem;cursor:pointer;font-size:0.85rem">H2</button>
+          <button type="button" onclick="execCmd('formatBlock','h3')" title="小標題" style="background:none;border:1px solid var(--border2);color:var(--text);padding:0.2rem 0.5rem;cursor:pointer;font-size:0.85rem">H3</button>
+          <button type="button" onclick="execCmd('formatBlock','p')" title="段落" style="background:none;border:1px solid var(--border2);color:var(--text);padding:0.2rem 0.5rem;cursor:pointer;font-size:0.85rem">¶</button>
+          <button type="button" onclick="execCmd('insertUnorderedList')" title="清單" style="background:none;border:1px solid var(--border2);color:var(--text);padding:0.2rem 0.5rem;cursor:pointer;font-size:0.85rem">≡</button>
+          <button type="button" onclick="insertLink()" title="連結" style="background:none;border:1px solid var(--border2);color:var(--text);padding:0.2rem 0.5rem;cursor:pointer;font-size:0.85rem">🔗</button>
+          <button type="button" onclick="insertImgToEditor()" title="插入圖片到文章" style="background:none;border:1px solid var(--border2);color:var(--text);padding:0.2rem 0.5rem;cursor:pointer;font-size:0.85rem">📷</button>
+          <button type="button" onclick="execCmd('removeFormat')" title="清除格式" style="background:none;border:1px solid var(--border2);color:var(--text);padding:0.2rem 0.5rem;cursor:pointer;font-size:0.75rem">清除</button>
+        </div>
+        <div id="f-content-editor"
+          contenteditable="true"
+          style="min-height:200px;padding:0.75rem;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-size:0.85rem;line-height:1.8;outline:none;overflow-y:auto"
+          placeholder="在這裡寫下您的旅遊故事..."
+        ></div>
+        <textarea id="f-content" style="display:none"></textarea>
+      </div>
       <div class="row2">
         <div class="fg">
           <label class="fl">封面 Emoji</label>
@@ -492,12 +528,59 @@ function renderArtTable(){
     </div>`;
 }
 
+// ── IMAGE UPLOAD ──────────────────────────────────────────────────────
+let artImages = []; // [{url, name}]
+
+function handleImgFiles(files){
+  Array.from(files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      artImages.push({url: e.target.result, name: file.name});
+      renderImgPreviews();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+function handleImgDrop(e){
+  e.preventDefault();
+  document.getElementById('img-upload-area').style.borderColor='var(--border2)';
+  handleImgFiles(e.dataTransfer.files);
+}
+function renderImgPreviews(){
+  const el = document.getElementById('img-preview-list');
+  el.innerHTML = artImages.map((img,i)=>`
+    <div style="position:relative;display:inline-block">
+      <img src="${img.url}" style="width:80px;height:80px;object-fit:cover;border:1px solid var(--border2)">
+      <button onclick="removeImg(${i})" style="position:absolute;top:2px;right:2px;background:rgba(0,0,0,0.7);color:#fff;border:none;border-radius:50%;width:18px;height:18px;font-size:10px;cursor:pointer;line-height:1">×</button>
+    </div>`).join('');
+}
+function removeImg(i){ artImages.splice(i,1); renderImgPreviews(); }
+function insertImgToEditor(){
+  if(!artImages.length){ toast('請先上傳圖片','err'); return; }
+  artImages.forEach(img => {
+    document.getElementById('f-content-editor').focus();
+    document.execCommand('insertHTML', false, `<img src="${img.url}" style="max-width:100%;margin:0.5rem 0;display:block"><br>`);
+  });
+}
+
+// ── RICH EDITOR ───────────────────────────────────────────────────────
+function execCmd(cmd, val=null){ document.getElementById('f-content-editor').focus(); document.execCommand(cmd, false, val); }
+function insertLink(){
+  const url = prompt('請輸入連結網址：','https://');
+  if(url){ document.getElementById('f-content-editor').focus(); document.execCommand('createLink', false, url); }
+}
+function getEditorContent(){ return document.getElementById('f-content-editor').innerHTML; }
+function setEditorContent(html){ document.getElementById('f-content-editor').innerHTML = html||''; }
+
 function openAddArt(){
   editArtId=null;
+  artImages=[];
   document.getElementById('art-modal-title').textContent='新增文章';
   document.getElementById('f-title').value='';
   document.getElementById('f-excerpt').value='';
   document.getElementById('f-content').value='';
+  setEditorContent('');
+  renderImgPreviews();
   document.getElementById('f-status').value='published';
   document.getElementById('f-date').value=new Date().toISOString().slice(0,7);
   artEmoji='🌸';
@@ -511,10 +594,13 @@ function openAddArt(){
 function openEditArt(id){
   const a=db.articles.find(x=>x.id===id);if(!a)return;
   editArtId=id;
+  artImages=[];
   document.getElementById('art-modal-title').textContent='編輯文章';
   document.getElementById('f-title').value=a.title;
   document.getElementById('f-excerpt').value=a.excerpt||'';
   document.getElementById('f-content').value=a.content||'';
+  setEditorContent(a.content||'');
+  renderImgPreviews();
   document.getElementById('f-status').value=a.status||'published';
   document.getElementById('f-date').value=a.date||'';
   artEmoji=a.emoji||'🌸';
@@ -533,11 +619,13 @@ function saveArt(){
   if(!city){toast('請選擇城市','err');return;}
   if(!cat){toast('請選擇分類','err');return;}
   const emoji=document.getElementById('f-emoji').value.trim()||artEmoji||'📝';
-  const d={title,city,category:cat,excerpt:document.getElementById('f-excerpt').value.trim(),content:document.getElementById('f-content').value.trim(),emoji,status:document.getElementById('f-status').value,date:document.getElementById('f-date').value};
+  const content = getEditorContent();
+  const d={title,city,category:cat,excerpt:document.getElementById('f-excerpt').value.trim(),content,emoji,status:document.getElementById('f-status').value,date:document.getElementById('f-date').value};
   if(editArtId){db.articles=db.articles.map(a=>a.id===editArtId?{...a,...d}:a);toast('文章已更新！');}
   else{db.articles.unshift({id:uid(),...d});toast('文章已新增！');}
   saveDB();closeModal('art-modal');renderSection(curSec);
 }
+
 
 // ── CITIES ────────────────────────────────────────────────────────────
 function renderCityGrid(){
