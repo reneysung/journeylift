@@ -880,7 +880,7 @@ function handleAiImgs(e){
 async function genAiArticle(){
   const name=document.getElementById('ai-name').value.trim();
   if(!name){toast('請填寫店家名稱','err');return;}
-  const apiKey=localStorage.getItem(KEY_SK);
+  const apiKey=localStorage.getItem('mantu-api-key');
   if(!apiKey){document.getElementById('ai-key-warn').style.display='block';return;}
   document.getElementById('ai-key-warn').style.display='none';
   const btn=document.getElementById('ai-gen-btn');
