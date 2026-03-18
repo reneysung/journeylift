@@ -250,7 +250,7 @@ async function load(){
     }
     if(a.excerpt){const el=document.createElement('div');el.className='feat-exc';el.textContent=a.excerpt;fc.appendChild(el);}
   }
-  const cities=[...new Set(_all.map(a=>a.city).filter(Boolean))];
+  const KNOWN=new Set(['台北','台南','台中','高雄','花蓮','宜蘭','南投','嘉義','屏東','台東','澎湖','金門','基隆','新竹','苗栗','彰化','雲林','新北','桃園']);const cities=[...new Set(_all.map(a=>a.city).filter(c=>c&&KNOWN.has(c)))];
   const bar=document.getElementById('city-bar');
   if(cities.length>1){
     bar.innerHTML='<button class="city-btn on" onclick="fc(\'\')">全部</button>'+cities.map(c=>`<button class="city-btn" onclick="fc('${c}')">${c}</button>`).join('');
