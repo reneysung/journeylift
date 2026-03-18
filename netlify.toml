@@ -12,12 +12,21 @@
   status = 200
 
 [[headers]]
-  for = "/tools/*"
+  for = "/admin"
   [headers.values]
-    Cache-Control = "no-cache, no-store, must-revalidate"
+    Cache-Control = "no-cache, no-store, must-revalidate, max-age=0"
+    Pragma = "no-cache"
+    Expires = "0"
 
 [[headers]]
-  for = "/admin*"
+  for = "/admin.html"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate, max-age=0"
+    Pragma = "no-cache"
+    Expires = "0"
+
+[[headers]]
+  for = "/tools/*"
   [headers.values]
     Cache-Control = "no-cache, no-store, must-revalidate"
 
