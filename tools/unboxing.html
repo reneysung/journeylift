@@ -366,14 +366,20 @@ textarea.eta:focus{border-color:var(--accent)}
 <!-- ── API KEY MODAL ── -->
 <div id="key-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:300;align-items:center;justify-content:center;backdrop-filter:blur(4px)">
   <div style="background:var(--surface);border:1px solid var(--border2);padding:2rem 2rem;width:100%;max-width:460px;animation:mIn 0.2s ease">
-    <div style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--accent);margin-bottom:0.3rem">API Key 設定</div>
-    <div style="font-size:0.72rem;color:var(--text3);margin-bottom:1.2rem;line-height:1.7">
-      Key 存在本機瀏覽器，不會上傳到任何伺服器。<br>
-      尚未取得？前往 <a href="https://platform.claude.com/settings/keys" target="_blank" style="color:var(--accent2)">platform.claude.com</a> 建立。
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--accent);margin-bottom:0.3rem">設定</div>
+    <div style="font-size:0.72rem;color:var(--text3);margin-bottom:1rem;line-height:1.7">
+      Key 存在本機瀏覽器，不會上傳到任何伺服器。
     </div>
+    <div style="font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text2);margin-bottom:0.3rem">Anthropic API Key</div>
     <input id="key-modal-input" type="password"
-      style="width:100%;background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:0.65rem 0.9rem;font-size:0.83rem;outline:none;font-family:'Noto Sans TC',sans-serif;margin-bottom:0.4rem"
+      style="width:100%;background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:0.65rem 0.9rem;font-size:0.83rem;outline:none;font-family:'Noto Sans TC',sans-serif;margin-bottom:0.8rem"
       placeholder="sk-ant-api03-..."
+      onkeydown="if(event.key==='Enter')saveKeyModal()">
+    <div style="font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text2);margin-bottom:0.3rem">GitHub Token（用於一鍵發布）</div>
+    <div style="font-size:0.7rem;color:var(--text3);margin-bottom:0.4rem">前往 <a href="https://github.com/settings/tokens" target="_blank" style="color:var(--accent2)">github.com/settings/tokens</a> 建立，勾選 repo 權限。</div>
+    <input id="gh-token-input" type="password"
+      style="width:100%;background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:0.65rem 0.9rem;font-size:0.83rem;outline:none;font-family:'Noto Sans TC',sans-serif;margin-bottom:0.8rem"
+      placeholder="ghp_..."
       onkeydown="if(event.key==='Enter')saveKeyModal()">
     <div id="key-modal-err" style="font-size:0.7rem;color:var(--red);min-height:1.2em;margin-bottom:0.8rem"></div>
     <div style="display:flex;gap:0.7rem;justify-content:flex-end">
@@ -393,6 +399,8 @@ function getKey(){ return localStorage.getItem(KEY_SK); }
 function openKeyModal(){
   const cur = getKey()||'';
   document.getElementById('key-modal-input').value = cur;
+  const ghEl = document.getElementById('gh-token-input');
+  if(ghEl) ghEl.value = localStorage.getItem('mantu-gh-token')||'';
   document.getElementById('key-modal-err').textContent = '';
   document.getElementById('key-modal').style.display = 'flex';
   setTimeout(()=>document.getElementById('key-modal-input').focus(),100);
@@ -405,9 +413,11 @@ function saveKeyModal(){
     return;
   }
   localStorage.setItem(KEY_SK, v);
+  const ghToken = document.getElementById('gh-token-input')?.value.trim();
+  if(ghToken) localStorage.setItem('mantu-gh-token', ghToken);
   closeKeyModal();
   document.getElementById('key-status-dot').style.color = 'var(--green)';
-  toast('API Key 已更新！');
+  toast('設定已更新！');
 }
 
 window.addEventListener('load', () => {
@@ -658,10 +668,27 @@ async function publish(){
   document.getElementById('pubBtn').disabled=true;
 
   try{
-    const deployRes = await fetch('/.netlify/functions/deploy-article', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({filename:`articles/${slug}.html`, content:articleHTML})
+    // 直接呼叫 GitHub API 發布文章
+  const GITHUB_TOKEN = localStorage.getItem('mantu-gh-token');
+  if(!GITHUB_TOKEN){ setP(0,'請先設定 GitHub Token（在 ⚙ 設定）'); return; }
+  const OWNER = 'reneysung', REPO = 'journeylift';
+  const filepath = `articles/${slug}.html`;
+  let sha = null;
+  try {
+    const chk = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${filepath}`,{
+      headers:{'Authorization':'Bearer '+GITHUB_TOKEN,'Accept':'application/vnd.github.v3+json'}
+    });
+    if(chk.ok){ const d=await chk.json(); sha=d.sha; }
+  } catch(e){}
+
+  const encodedContent = btoa(unescape(encodeURIComponent(articleHTML)));
+  const body2 = {message:`發布文章：${genTitle}`,content:encodedContent};
+  if(sha) body2.sha = sha;
+
+  const deployRes = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${filepath}`,{
+      method:'PUT',
+      headers:{'Authorization':'Bearer '+GITHUB_TOKEN,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},
+      body:JSON.stringify(body2)
     });
     const deployData = await deployRes.json();
 
