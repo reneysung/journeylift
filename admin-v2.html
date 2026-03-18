@@ -287,7 +287,15 @@ tr:hover td{background:var(--surface2)}
               </div>
               <div class="fg">
                 <label class="fl">上傳圖片（AI 分析用）</label>
-                <div id="ai-img-area" style="border:2px dashed var(--border2);padding:1rem;text-align:center;cursor:pointer;background:var(--surface2);font-size:0.78rem;color:var(--text3)" onclick="document.getElementById('ai-img-file').click()">📷 點擊上傳圖片（可多張）</div>
+                <div class="fg">
+                <label class="fl">封面圖（單張，顯示於文章列表）</label>
+                <div id="ai-cover-area" style="border:2px dashed var(--border2);padding:0.8rem;text-align:center;cursor:pointer;background:var(--surface2);font-size:0.78rem;color:var(--text3)" onclick="document.getElementById('ai-cover-file').click()">
+                  🖼️ 點擊上傳封面圖
+                </div>
+                <img id="ai-cover-preview" style="display:none;width:100%;max-height:120px;object-fit:cover;margin-top:0.5rem;border-radius:4px">
+                <input type="file" id="ai-cover-file" accept="image/*" style="display:none" onchange="handleAiCover(event)">
+              </div>
+              <div id="ai-img-area" style="border:2px dashed var(--border2);padding:1rem;text-align:center;cursor:pointer;background:var(--surface2);font-size:0.78rem;color:var(--text3)" onclick="document.getElementById('ai-img-file').click()">📷 點擊上傳圖片（可多張）</div>
                 <input type="file" id="ai-img-file" accept="image/*" multiple style="display:none" onchange="handleAiImgs(event)">
                 <div id="ai-img-previews" style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem"></div>
               </div>
@@ -899,6 +907,18 @@ function saveKeyModal(){
 }
 
 // ── AI UNBOXING ────────────────────────────────────────────────────────────
+let aiCoverBase64=null;
+function handleAiCover(e){
+  const file=e.target.files?.[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    aiCoverBase64={data:ev.target.result.split(',')[1],type:file.type};
+    const prev=document.getElementById('ai-cover-preview');
+    prev.src=ev.target.result;prev.style.display='block';
+    document.getElementById('ai-cover-area').innerHTML='✅ 封面已選擇';
+  };
+  reader.readAsDataURL(file);e.target.value='';
+}
 let aiImgBase64=[], aiGenTitle='', aiGenSlug='';
 
 function handleAiImgs(e){
@@ -987,7 +1007,7 @@ async function publishAiArticle(){
   const pubAt=document.getElementById('ai-pub-time').value;
   const name=document.getElementById('ai-name').value.trim();
   const type=document.getElementById('ai-type').value;
-  const articleData={title,slug:aiGenSlug,city:city||document.getElementById('ai-city').value||null,category:cat||type||null,excerpt:document.getElementById('ai-pub-excerpt').value.trim()||body.slice(0,120)+'...',content:htmlContent,keywords:[name,type,city].filter(Boolean),emoji:{咖啡廳:'☕',餐廳:'🍽️',甜點:'🍰',景點:'🏔️',住宿:'🏠',酒吧:'🍸'}[type]||'✍️',cover_image:coverImage,status,published_at:pubAt?new Date(pubAt).toISOString():new Date().toISOString(),
+  const articleData={title,slug:aiGenSlug,city:city||document.getElementById('ai-city').value||null,category:cat||type||null,excerpt:document.getElementById('ai-pub-excerpt').value.trim()||body.slice(0,120)+'...',content:htmlContent,keywords:[name,type,city].filter(Boolean),emoji:{咖啡廳:'☕',餐廳:'🍽️',甜點:'🍰',景點:'🏔️',住宿:'🏠',酒吧:'🍸'}[type]||'✍️',cover_image:window._coverImageUrl||coverImage,status,published_at:pubAt?new Date(pubAt).toISOString():new Date().toISOString(),
     shop_info:{
       name:document.getElementById('ai-name')?.value?.trim()||null,
       address:document.getElementById('ai-shop-address')?.value?.trim()||null,
