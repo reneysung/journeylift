@@ -83,7 +83,7 @@ const sb = supabase.createClient(
 );
 
 async function load(){
-  const slug = location.pathname.split('/').filter(Boolean).pop();
+  const slug = decodeURIComponent(location.pathname.split('/').filter(Boolean).pop());
   if(!slug){ notFound(); return; }
 
   const {data} = await sb.from('articles')
