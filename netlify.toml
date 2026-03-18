@@ -6,6 +6,11 @@
   to = "/articles/article.html"
   status = 200
 
+[[redirects]]
+  from = "/articles"
+  to = "/articles/index.html"
+  status = 200
+
 [[headers]]
   for = "/tools/*"
   [headers.values]
@@ -13,5 +18,10 @@
 
 [[headers]]
   for = "/admin*"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
+[[headers]]
+  for = "/articles*"
   [headers.values]
     Cache-Control = "no-cache, no-store, must-revalidate"
