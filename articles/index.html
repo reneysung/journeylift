@@ -87,7 +87,7 @@ const sb = supabase.createClient(
 
 let allArts = [], activeFilter = 'all';
 
-async function load(){
+async function load(initCity){
   const {data} = await sb.from('articles')
     .select('*')
     .eq('status','published')
@@ -138,7 +138,16 @@ function render(){
     </a>`).join('')}</div>`;
 }
 
-load();
+// Read ?city= param from URL and apply filter
+const _urlCity = decodeURIComponent(new URLSearchParams(location.search).get('city')||'');
+if(_urlCity){
+  // Update page title for SEO
+  document.title = _urlCity + ' 旅遊文章 — 漫途旅遊誌';
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if(metaDesc) metaDesc.content = '漫途旅遊誌 '+_urlCity+' 的旅遊開箱文章，記錄每一段旅程。';
+}
+// Also highlight active city button after load
+load(_urlCity);
 </script>
 </body>
 </html>
