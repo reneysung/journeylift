@@ -2,788 +2,769 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>後台管理 — 漫途</title>
-<meta name="robots" content="noindex, nofollow">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
-  --bg:#111210;--surface:#1a1c19;--surface2:#222520;--border:#2e3129;--border2:#383c32;
-  --text:#e8e4dc;--text2:#9a9888;--text3:#6a6858;
-  --accent:#b07d5a;--accent2:#c9956e;--green:#7a9e6a;--red:#9e5a5a;--yellow:#9e8a5a;
+  --bg:#0f0e0d;--surface:#1a1815;--surface2:#222018;--border:#2e2c28;--border2:#3a3830;
+  --text:#e8e0d0;--text2:#a89880;--text3:#6b6055;
+  --accent:#c4956a;--accent2:#e8b98a;--green:#6a9e7a;--red:#c47a6a;
+  --font-serif:'Cormorant Garamond',serif;--font-sans:'Noto Sans TC',sans-serif;
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-weight:300;font-size:14px;min-height:100vh;}
-::-webkit-scrollbar{width:5px;} ::-webkit-scrollbar-track{background:var(--bg);} ::-webkit-scrollbar-thumb{background:var(--border2);}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:14px;min-height:100vh}
 
-/* ── LOGIN ── */
-#login-screen{
-  position:fixed;inset:0;background:var(--bg);z-index:1000;
-  display:flex;align-items:center;justify-content:center;
-  background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(176,125,90,0.04) 40px),
-                   repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(176,125,90,0.04) 40px);
-}
-.login-box{
-  background:var(--surface);border:1px solid var(--border2);
-  padding:3rem 2.5rem;width:100%;max-width:380px;text-align:center;
-}
-.login-logo{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--accent);letter-spacing:0.12em;margin-bottom:0.3rem;}
-.login-sub{font-size:0.65rem;letter-spacing:0.25em;color:var(--text3);text-transform:uppercase;margin-bottom:2.5rem;}
-.login-label{font-size:0.68rem;letter-spacing:0.15em;color:var(--text2);text-transform:uppercase;text-align:left;display:block;margin-bottom:0.4rem;}
-.login-input{
-  width:100%;background:var(--surface2);border:1px solid var(--border2);
-  color:var(--text);padding:0.8rem 1rem;font-family:'Noto Sans TC',sans-serif;
-  font-size:0.9rem;outline:none;transition:border-color 0.2s;letter-spacing:0.1em;
-  text-align:center;
-}
-.login-input:focus{border-color:var(--accent);}
-.login-btn{
-  width:100%;margin-top:1.2rem;padding:0.85rem;background:var(--accent);
-  color:#fff;border:none;font-family:'Noto Sans TC',sans-serif;
-  font-size:0.82rem;letter-spacing:0.18em;cursor:pointer;transition:background 0.2s;
-}
-.login-btn:hover{background:var(--accent2);}
-.login-error{font-size:0.75rem;color:var(--red);margin-top:0.8rem;min-height:1.2em;}
-.login-hint{font-size:0.68rem;color:var(--text3);margin-top:1.5rem;line-height:1.6;}
-#shake{animation:shake 0.4s ease;}
-@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-8px);}75%{transform:translateX(8px);}}
+/* LOGIN */
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--bg)}
+.login-box{background:var(--surface);border:1px solid var(--border);padding:2.5rem;width:360px}
+.login-logo{font-family:var(--font-serif);font-size:1.8rem;color:var(--accent);text-align:center;margin-bottom:0.3rem}
+.login-sub{font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text3);text-align:center;margin-bottom:2rem}
+.login-box input{width:100%;background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:0.8rem 1rem;font-size:0.85rem;font-family:var(--font-sans);outline:none;margin-bottom:0.8rem}
+.login-box input:focus{border-color:var(--accent)}
+.login-btn{width:100%;background:var(--accent);color:#1a1410;border:none;padding:0.8rem;font-size:0.82rem;letter-spacing:0.1em;font-family:var(--font-sans);cursor:pointer;font-weight:500}
+.login-err{font-size:0.72rem;color:var(--red);text-align:center;min-height:1.2em;margin-bottom:0.5rem}
 
-/* ── LAYOUT ── */
-#admin-app{display:none;}
-.sidebar{
-  width:220px;background:var(--surface);border-right:1px solid var(--border);
-  position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:50;
-}
-.sidebar-logo{padding:1.6rem 1.5rem;border-bottom:1px solid var(--border);}
-.logo-text{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--accent);letter-spacing:0.1em;}
-.logo-sub{font-size:0.65rem;letter-spacing:0.2em;color:var(--text3);margin-top:2px;text-transform:uppercase;}
-.sidebar-nav{padding:1rem 0;flex:1;}
-.nav-sec{font-size:0.6rem;letter-spacing:0.22em;color:var(--text3);text-transform:uppercase;padding:0.8rem 1.5rem 0.3rem;}
-.nav-item{
-  display:flex;align-items:center;gap:0.7rem;padding:0.62rem 1.5rem;
-  color:var(--text2);cursor:pointer;transition:all 0.2s;font-size:0.85rem;
-  border-left:2px solid transparent;user-select:none;
-}
-.nav-item:hover{color:var(--text);background:var(--surface2);}
-.nav-item.active{color:var(--accent2);border-left-color:var(--accent);background:rgba(176,125,90,0.08);}
-.sidebar-bottom{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:0.5rem;}
-.sidebar-link{background:none;border:none;color:var(--text3);font-size:0.72rem;cursor:pointer;text-align:left;transition:color 0.2s;font-family:'Noto Sans TC',sans-serif;padding:0;}
-.sidebar-link:hover{color:var(--accent);}
-.logout-btn{color:var(--red)!important;}
+/* LAYOUT */
+#app{display:none}
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 2rem;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.header-logo{font-family:var(--font-serif);font-size:1.3rem;color:var(--accent)}
+.header-right{display:flex;align-items:center;gap:1rem}
+.btn-logout{background:none;border:1px solid var(--border2);color:var(--text2);padding:0.35rem 0.8rem;font-size:0.72rem;letter-spacing:0.08em;cursor:pointer;font-family:var(--font-sans)}
+.btn-logout:hover{border-color:var(--accent);color:var(--accent)}
 
-.main{margin-left:220px;min-height:100vh;display:flex;flex-direction:column;}
-.topbar{
-  height:56px;background:var(--surface);border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 2rem;position:sticky;top:0;z-index:40;
-}
-.topbar-title{font-size:0.95rem;font-weight:500;}
-.content{padding:2rem;}
+.main-layout{display:flex;min-height:calc(100vh - 56px)}
+nav{width:200px;background:var(--surface);border-right:1px solid var(--border);padding:1.5rem 0;flex-shrink:0}
+.nav-item{display:flex;align-items:center;gap:0.7rem;padding:0.65rem 1.5rem;font-size:0.8rem;color:var(--text2);cursor:pointer;transition:all 0.15s;letter-spacing:0.05em}
+.nav-item:hover,.nav-item.active{color:var(--text);background:var(--surface2)}
+.nav-item.active{border-left:2px solid var(--accent);padding-left:calc(1.5rem - 2px)}
+.nav-icon{font-size:1rem;width:18px;text-align:center}
 
-/* ── BUTTONS ── */
-.btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.45rem 1.1rem;font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;letter-spacing:0.08em;border:none;cursor:pointer;transition:all 0.2s;}
-.btn-primary{background:var(--accent);color:#fff;}.btn-primary:hover{background:var(--accent2);}
-.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border2);}.btn-ghost:hover{color:var(--text);border-color:var(--text3);}
-.btn-danger{background:var(--red);color:#fff;}.btn-danger:hover{background:#b06060;}
-.btn-sm{padding:0.28rem 0.7rem;font-size:0.7rem;}
+main{flex:1;padding:2rem;overflow-y:auto}
+.page{display:none}
+.page.active{display:block}
 
-/* ── STATS ── */
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;}
-.stat-card{background:var(--surface);border:1px solid var(--border);padding:1.3rem 1.5rem;border-top:2px solid var(--accent);}
-.stat-card.g{border-top-color:var(--green);}.stat-card.b{border-top-color:#5a7a9e;}.stat-card.r{border-top-color:#9e5a7a;}
-.stat-lbl{font-size:0.65rem;letter-spacing:0.2em;color:var(--text3);text-transform:uppercase;margin-bottom:0.4rem;}
-.stat-val{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--text);line-height:1;}
-.stat-sub{font-size:0.68rem;color:var(--green);margin-top:0.3rem;}
+/* PAGE HEADER */
+.page-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.8rem}
+.page-title{font-family:var(--font-serif);font-size:1.6rem;color:var(--text)}
+.btn-primary{background:var(--accent);color:#1a1410;border:none;padding:0.55rem 1.2rem;font-size:0.78rem;letter-spacing:0.08em;cursor:pointer;font-family:var(--font-sans);font-weight:500}
+.btn-primary:hover{background:var(--accent2)}
+.btn-secondary{background:none;border:1px solid var(--border2);color:var(--text2);padding:0.5rem 1rem;font-size:0.75rem;cursor:pointer;font-family:var(--font-sans)}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
 
-/* ── TABLE ── */
-.tcard{background:var(--surface);border:1px solid var(--border);overflow:hidden;}
-.thead{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.5rem;border-bottom:1px solid var(--border);}
-.thead-title{font-size:0.85rem;font-weight:500;}
-.search-row{display:flex;gap:0.7rem;}
-.inp{background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:0.38rem 0.9rem;font-family:'Noto Sans TC',sans-serif;font-size:0.78rem;outline:none;transition:border-color 0.2s;}
-.inp:focus{border-color:var(--accent);}
-.inp::placeholder{color:var(--text3);}
-.sel{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236a6858' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 0.7rem center;padding-right:1.8rem;}
-table{width:100%;border-collapse:collapse;}
-th{font-size:0.62rem;letter-spacing:0.2em;color:var(--text3);text-transform:uppercase;text-align:left;padding:0.8rem 1.5rem;border-bottom:1px solid var(--border);background:var(--surface2);font-weight:400;}
-td{padding:0.88rem 1.5rem;border-bottom:1px solid var(--border);font-size:0.82rem;vertical-align:middle;}
-tr:last-child td{border-bottom:none;}
-tr:hover td{background:rgba(255,255,255,0.015);}
-.badge{display:inline-block;padding:0.14rem 0.55rem;font-size:0.63rem;letter-spacing:0.08em;}
-.badge-pub{background:rgba(122,158,106,0.2);color:var(--green);}
-.badge-draft{background:rgba(158,138,90,0.2);color:var(--yellow);}
-.badge-cat{background:rgba(176,125,90,0.15);color:var(--accent2);}
-.actions{display:flex;gap:0.35rem;}
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+.stat-card{background:var(--surface);border:1px solid var(--border);padding:1.2rem}
+.stat-lbl{font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text3);margin-bottom:0.5rem}
+.stat-val{font-family:var(--font-serif);font-size:2rem;color:var(--text);line-height:1}
+.stat-sub{font-size:0.7rem;color:var(--text3);margin-top:0.3rem}
 
-/* ── MODAL ── */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;display:none;align-items:center;justify-content:center;padding:2rem;backdrop-filter:blur(4px);}
-.overlay.open{display:flex;}
-.modal{background:var(--surface);border:1px solid var(--border2);width:100%;max-width:680px;max-height:88vh;overflow-y:auto;animation:mIn 0.22s ease;}
-@keyframes mIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
-.mhead{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.8rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);z-index:1;}
-.mhead-title{font-size:0.95rem;font-weight:500;}
-.mclose{background:none;border:none;color:var(--text3);font-size:1.4rem;cursor:pointer;line-height:1;}
-.mclose:hover{color:var(--text);}
-.mbody{padding:1.8rem;}
-.mfoot{display:flex;justify-content:flex-end;gap:0.7rem;padding:1.2rem 1.8rem;border-top:1px solid var(--border);background:var(--surface);position:sticky;bottom:0;}
+/* TABLE */
+.tbl-wrap{background:var(--surface);border:1px solid var(--border);overflow:hidden}
+.tbl-toolbar{padding:0.8rem 1rem;border-bottom:1px solid var(--border);display:flex;gap:0.5rem;align-items:center}
+.tbl-search{background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:0.45rem 0.8rem;font-size:0.78rem;font-family:var(--font-sans);outline:none;width:220px}
+.tbl-search:focus{border-color:var(--accent)}
+.filter-btn{background:none;border:1px solid var(--border2);color:var(--text3);padding:0.4rem 0.8rem;font-size:0.72rem;cursor:pointer;font-family:var(--font-sans)}
+.filter-btn.active{border-color:var(--accent);color:var(--accent)}
+table{width:100%;border-collapse:collapse}
+th{background:var(--surface2);padding:0.65rem 1rem;text-align:left;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);font-weight:400;border-bottom:1px solid var(--border)}
+td{padding:0.75rem 1rem;font-size:0.8rem;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--surface2)}
+.badge{display:inline-block;padding:0.15rem 0.55rem;font-size:0.66rem;letter-spacing:0.08em}
+.badge-pub{background:#1a2e1f;color:#6a9e7a;border:1px solid #2a4a2f}
+.badge-draft{background:#2a2218;color:#8a7a5a;border:1px solid #3a3228}
+.tbl-actions{display:flex;gap:0.4rem}
+.act-btn{background:none;border:none;color:var(--text3);cursor:pointer;padding:0.3rem;font-size:0.8rem;transition:color 0.15s}
+.act-btn:hover{color:var(--accent)}
+.act-btn.del:hover{color:var(--red)}
+.empty-state{text-align:center;padding:3rem;color:var(--text3);font-size:0.85rem}
 
-/* ── FORM ── */
-.fg{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1.1rem;}
-.fl{font-size:0.68rem;letter-spacing:0.15em;color:var(--text2);text-transform:uppercase;}
-.fl .req{color:var(--accent);margin-left:2px;}
-.fi,.fsel,.fta{background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:0.65rem 0.9rem;font-family:'Noto Sans TC',sans-serif;font-size:0.83rem;outline:none;transition:border-color 0.2s;width:100%;}
-.fi:focus,.fsel:focus,.fta:focus{border-color:var(--accent);}
-.fi::placeholder,.fta::placeholder{color:var(--text3);}
-.fsel{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236a6858' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 0.9rem center;padding-right:2rem;cursor:pointer;}
-.fsel option{background:var(--surface2);}
-.fta{resize:vertical;line-height:1.7;}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+/* MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;overflow-y:auto;padding:2rem 1rem}
+.modal-bg.open{display:flex;align-items:flex-start;justify-content:center}
+.modal{background:var(--surface);border:1px solid var(--border);width:100%;max-width:780px;margin:auto}
+.modal-hd{padding:1.2rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-title{font-family:var(--font-serif);font-size:1.2rem;color:var(--accent)}
+.modal-close{background:none;border:none;color:var(--text3);font-size:1.2rem;cursor:pointer;line-height:1}
+.modal-close:hover{color:var(--text)}
+.modal-body{padding:1.5rem}
+.modal-ft{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:0.6rem}
+
+/* FORM */
+.fg{margin-bottom:1.1rem}
+.fl{display:block;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:0.4rem}
+.req{color:var(--accent)}
+.fi{width:100%;background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:0.65rem 0.9rem;font-size:0.83rem;font-family:var(--font-sans);outline:none}
+.fi:focus{border-color:var(--accent)}
+.fta{width:100%;background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:0.65rem 0.9rem;font-size:0.83rem;font-family:var(--font-sans);outline:none;resize:vertical;min-height:80px}
+.fta:focus{border-color:var(--accent)}
+.fsel{width:100%;background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:0.65rem 0.9rem;font-size:0.83rem;font-family:var(--font-sans);outline:none;appearance:none;cursor:pointer}
+.fsel:focus{border-color:var(--accent)}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.fg-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+
+/* RICH EDITOR */
+.editor-toolbar{background:var(--surface2);border:1px solid var(--border2);border-bottom:none;padding:0.4rem 0.5rem;display:flex;gap:0.2rem;flex-wrap:wrap}
+.ed-btn{background:none;border:1px solid transparent;color:var(--text2);padding:0.25rem 0.5rem;font-size:0.78rem;cursor:pointer;font-family:var(--font-sans)}
+.ed-btn:hover{border-color:var(--border2);color:var(--text)}
+.ed-btn.active{background:var(--border2);color:var(--text)}
+#f-content-editor{width:100%;background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:0.8rem;font-size:0.85rem;font-family:var(--font-sans);outline:none;min-height:200px;line-height:1.8}
+#f-content-editor:focus{border-color:var(--accent)}
+#f-content-editor h2{font-family:var(--font-serif);font-size:1.3rem;color:var(--accent);margin:1rem 0 0.5rem}
+#f-content-editor h3{font-family:var(--font-serif);font-size:1.1rem;color:var(--text2);margin:0.8rem 0 0.4rem}
+#f-content-editor p{margin-bottom:0.6rem}
+#f-content-editor a{color:var(--accent2)}
+#f-content-editor ul,#f-content-editor ol{padding-left:1.5rem;margin-bottom:0.6rem}
+#f-content-editor blockquote{border-left:3px solid var(--accent);padding-left:1rem;color:var(--text2);margin:0.5rem 0}
+
+/* IMAGE UPLOAD */
+#img-upload-area{border:2px dashed var(--border2);padding:1.5rem;text-align:center;cursor:pointer;transition:border-color 0.2s;background:var(--surface2)}
+#img-upload-area:hover{border-color:var(--accent)}
+#img-upload-area p{font-size:0.78rem;color:var(--text3);margin-top:0.4rem}
+.img-preview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:0.5rem;margin-top:0.8rem}
+.img-preview-item{position:relative;aspect-ratio:1;overflow:hidden;background:var(--surface2)}
+.img-preview-item img{width:100%;height:100%;object-fit:cover}
+.img-preview-item .img-del{position:absolute;top:3px;right:3px;background:rgba(0,0,0,0.7);border:none;color:#fff;width:20px;height:20px;font-size:0.7rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.img-preview-item .img-insert{position:absolute;bottom:3px;left:3px;background:rgba(196,149,106,0.85);border:none;color:#fff;font-size:0.6rem;padding:2px 5px;cursor:pointer}
+
+/* KEYWORDS */
+.kw-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.5rem}
+.kw-tag{background:var(--surface2);border:1px solid var(--border2);padding:0.2rem 0.6rem;font-size:0.72rem;display:flex;align-items:center;gap:0.3rem}
+.kw-tag button{background:none;border:none;color:var(--text3);cursor:pointer;font-size:0.8rem;padding:0;line-height:1}
+.kw-tag button:hover{color:var(--red)}
 
 /* EMOJI PICKER */
-.epicker{display:flex;flex-wrap:wrap;gap:0.3rem;padding:0.6rem;background:var(--surface2);border:1px solid var(--border2);}
-.epicker button{width:34px;height:34px;font-size:1rem;background:transparent;border:1px solid transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;}
-.epicker button:hover,.epicker button.sel{background:rgba(176,125,90,0.25);border-color:var(--accent);}
+.emoji-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:0.4rem}
+.emoji-btn{background:var(--surface2);border:2px solid transparent;font-size:1.4rem;padding:0.4rem;cursor:pointer;transition:all 0.15s;line-height:1;text-align:center}
+.emoji-btn:hover,.emoji-btn.selected{border-color:var(--accent);background:var(--border)}
+.emoji-preview{background:var(--surface2);border:1px solid var(--border2);padding:0.6rem;display:flex;align-items:center;gap:0.8rem;margin-top:0.6rem}
+.emoji-preview span{font-size:2rem}
+.emoji-preview input{flex:1;background:none;border:none;color:var(--text);font-size:0.85rem;font-family:var(--font-sans);outline:none}
 
-/* ── CITY CARDS ── */
-.city-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1rem;}
-.city-card{background:var(--surface);border:1px solid var(--border);padding:1.2rem;transition:border-color 0.2s;}
-.city-card:hover{border-color:var(--border2);}
-.city-emoji{font-size:2.4rem;margin-bottom:0.6rem;}
-.city-name{font-size:0.95rem;font-weight:500;margin-bottom:0.2rem;}
-.city-meta{font-size:0.7rem;color:var(--text3);margin-bottom:0.8rem;}
-
-/* ── CONFIRM ── */
-.confirm-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:300;display:none;align-items:center;justify-content:center;}
-.confirm-overlay.open{display:flex;}
-.confirm-box{background:var(--surface);border:1px solid var(--border2);padding:2.2rem 2rem;max-width:360px;text-align:center;animation:mIn 0.2s ease;}
-.confirm-icon{font-size:2.5rem;margin-bottom:0.8rem;}
-.confirm-title{font-size:1rem;font-weight:500;margin-bottom:0.5rem;}
-.confirm-text{font-size:0.82rem;color:var(--text2);margin-bottom:1.5rem;line-height:1.7;}
-.confirm-btns{display:flex;gap:0.7rem;justify-content:center;}
-
-/* ── DASH ── */
-.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
-.dcard{background:var(--surface);border:1px solid var(--border);}
-.dchead{padding:1rem 1.5rem 0.7rem;border-bottom:1px solid var(--border);font-size:0.78rem;font-weight:500;color:var(--text2);}
-.bars{display:flex;align-items:flex-end;gap:5px;height:78px;padding:0 1.5rem;margin-bottom:1.6rem;}
-.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end;}
-.bar-fill{width:100%;background:rgba(176,125,90,0.28);border-top:2px solid var(--accent);border-radius:2px 2px 0 0;}
-.bar-lbl{font-size:0.56rem;color:var(--text3);margin-top:3px;}
-.rec-list{padding:0 1.5rem;}
-.rec-item{display:flex;align-items:center;gap:0.7rem;padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.77rem;}
-.rec-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;}
-.rec-info{flex:1;}
-.rec-title{color:var(--text);}
-.rec-meta{color:var(--text3);font-size:0.66rem;margin-top:1px;}
+/* VIDEO PREVIEW */
+.video-preview{margin-top:0.6rem;background:var(--surface2);border:1px solid var(--border2);padding:0.8rem;font-size:0.78rem;color:var(--text2)}
+.video-embed-preview{margin-top:0.5rem;aspect-ratio:16/9;background:#000}
+.video-embed-preview iframe{width:100%;height:100%;border:none}
 
 /* TOAST */
-.toast-wrap{position:fixed;bottom:1.5rem;right:1.5rem;z-index:999;display:flex;flex-direction:column;gap:0.45rem;}
-.toast{background:var(--surface2);border:1px solid var(--border2);border-left:3px solid var(--green);color:var(--text);padding:0.75rem 1.1rem;font-size:0.78rem;min-width:220px;animation:tIn 0.25s ease;}
-.toast.err{border-left-color:var(--red);}
-@keyframes tIn{from{opacity:0;transform:translateX(16px);}to{opacity:1;transform:translateX(0);}}
+#toast{position:fixed;bottom:2rem;right:2rem;background:var(--surface);border:1px solid var(--border2);padding:0.8rem 1.2rem;font-size:0.8rem;z-index:9999;display:none;max-width:300px}
+#toast.ok{border-left:3px solid var(--green)}
+#toast.err{border-left:3px solid var(--red)}
 
-/* EMPTY */
-.empty{text-align:center;padding:4rem 2rem;color:var(--text3);}
-.empty-icon{font-size:2.5rem;margin-bottom:0.8rem;opacity:0.4;}
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2)}
 </style>
 </head>
 <body>
 
-<!-- ══ LOGIN SCREEN ══ -->
+<!-- LOGIN -->
 <div id="login-screen">
-  <div class="login-box" id="login-box">
-    <div class="login-logo">漫<span style="font-style:italic;color:#c9956e">途</span></div>
-    <div class="login-sub">後台管理 · 請輸入密碼</div>
-    <label class="login-label" for="pw-input">管理員密碼</label>
-    <input class="login-input" id="pw-input" type="password" placeholder="••••••••••" autocomplete="current-password"
-      onkeydown="if(event.key==='Enter')checkPW()">
-    <button class="login-btn" onclick="checkPW()">進入後台</button>
-    <div class="login-error" id="login-err"></div>
-    <div class="login-hint">此頁面受密碼保護，訪客無法存取後台功能</div>
+  <div class="login-box">
+    <div class="login-logo">漫途</div>
+    <div class="login-sub">後台管理系統</div>
+    <div class="login-err" id="login-err"></div>
+    <input type="password" id="pw-input" placeholder="輸入密碼" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">進入後台</button>
   </div>
 </div>
 
-<!-- ══ ADMIN APP ══ -->
-<div id="admin-app" style="display:flex;min-height:100vh;">
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sidebar-logo">
-      <div class="logo-text">漫<span style="font-style:italic">途</span></div>
-      <div class="logo-sub">後台管理</div>
+<!-- APP -->
+<div id="app">
+  <header>
+    <div class="header-logo">漫途 · 後台</div>
+    <div class="header-right">
+      <span id="hd-stats" style="font-size:0.72rem;color:var(--text3)"></span>
+      <button class="btn-logout" onclick="doLogout()">登出</button>
     </div>
-    <nav class="sidebar-nav">
-      <div class="nav-sec">總覽</div>
-      <div class="nav-item active" onclick="switchSec('dashboard',this)"><span>📊</span> 儀表板</div>
-      <div class="nav-sec" style="margin-top:0.3rem">內容管理</div>
-      <div class="nav-item" onclick="switchSec('articles',this)"><span>📝</span> 文章管理</div>
-      <div class="nav-item" onclick="switchSec('cities',this)"><span>🗺️</span> 城市分類</div>
-      <div class="nav-item" onclick="switchSec('categories',this)"><span>🏷️</span> 文章分類</div>
+  </header>
+  <div class="main-layout">
+    <nav>
+      <div class="nav-item active" onclick="showPage('articles')" id="nav-articles">
+        <span class="nav-icon">📝</span>文章管理
+      </div>
+      <div class="nav-item" onclick="showPage('settings')" id="nav-settings">
+        <span class="nav-icon">⚙️</span>分類設定
+      </div>
     </nav>
-    <div class="sidebar-bottom">
-      <button class="sidebar-link" onclick="window.open('index.html','_blank')">↗ 前往前台網站</button>
-      <button class="sidebar-link logout-btn" onclick="logout()">⎋ 登出</button>
-    </div>
-  </aside>
+    <main>
 
-  <!-- MAIN -->
-  <div class="main">
-    <header class="topbar">
-      <span class="topbar-title" id="top-title">儀表板</span>
-      <div id="top-actions"></div>
-    </header>
-    <div class="content" id="main-content"></div>
+      <!-- ARTICLES PAGE -->
+      <div class="page active" id="page-articles">
+        <div class="page-hd">
+          <div class="page-title">文章管理</div>
+          <button class="btn-primary" onclick="openAddArt()">＋ 新增文章</button>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-lbl">總文章數</div><div class="stat-val" id="st-total">0</div><div class="stat-sub">篇文章</div></div>
+          <div class="stat-card"><div class="stat-lbl">已發布</div><div class="stat-val" id="st-pub">0</div><div class="stat-sub">篇文章</div></div>
+          <div class="stat-card"><div class="stat-lbl">草稿</div><div class="stat-val" id="st-draft">0</div><div class="stat-sub">篇文章</div></div>
+          <div class="stat-card"><div class="stat-lbl">城市數</div><div class="stat-val" id="st-cities">0</div><div class="stat-sub">個城市</div></div>
+        </div>
+        <div class="tbl-wrap">
+          <div class="tbl-toolbar">
+            <input class="tbl-search" id="art-search" placeholder="搜尋文章..." oninput="filterArts()">
+            <button class="filter-btn active" onclick="setFilter('all',this)">全部</button>
+            <button class="filter-btn" onclick="setFilter('published',this)">已發布</button>
+            <button class="filter-btn" onclick="setFilter('draft',this)">草稿</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>封面</th><th>標題</th><th>城市</th><th>分類</th><th>狀態</th><th>發布時間</th><th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="art-tbody"></tbody>
+          </table>
+          <div class="empty-state" id="art-empty" style="display:none">尚無文章，點擊「新增文章」開始創作</div>
+        </div>
+      </div>
+
+      <!-- SETTINGS PAGE -->
+      <div class="page" id="page-settings">
+        <div class="page-hd">
+          <div class="page-title">分類設定</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);padding:1.5rem;max-width:500px">
+          <div class="fg">
+            <label class="fl">城市列表</label>
+            <div id="cities-list" style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.5rem"></div>
+            <div style="display:flex;gap:0.5rem">
+              <input class="fi" id="new-city" placeholder="新增城市..." style="flex:1" onkeydown="if(event.key==='Enter')addCity()">
+              <button class="btn-primary" onclick="addCity()">新增</button>
+            </div>
+          </div>
+          <div class="fg" style="margin-top:1.5rem">
+            <label class="fl">分類列表</label>
+            <div id="cats-list" style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.5rem"></div>
+            <div style="display:flex;gap:0.5rem">
+              <input class="fi" id="new-cat" placeholder="新增分類..." style="flex:1" onkeydown="if(event.key==='Enter')addCat()">
+              <button class="btn-primary" onclick="addCat()">新增</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
   </div>
 </div>
 
 <!-- ARTICLE MODAL -->
-<div class="overlay" id="art-modal">
+<div class="modal-bg" id="art-modal">
   <div class="modal">
-    <div class="mhead">
-      <span class="mhead-title" id="art-modal-title">新增文章</span>
-      <button class="mclose" onclick="closeModal('art-modal')">×</button>
+    <div class="modal-hd">
+      <div class="modal-title" id="art-modal-title">新增文章</div>
+      <button class="modal-close" onclick="closeArtModal()">✕</button>
     </div>
-    <div class="mbody">
-      <div class="fg"><label class="fl">文章標題 <span class="req">*</span></label><input class="fi" id="f-title" placeholder="輸入文章標題..."></div>
-      <div class="row2">
-        <div class="fg"><label class="fl">城市 <span class="req">*</span></label><select class="fsel" id="f-city"></select></div>
-        <div class="fg"><label class="fl">分類 <span class="req">*</span></label><select class="fsel" id="f-cat"></select></div>
+    <div class="modal-body">
+
+      <div class="fg">
+        <label class="fl">文章標題 <span class="req">*</span></label>
+        <input class="fi" id="f-title" placeholder="輸入文章標題...">
       </div>
-      <div class="fg"><label class="fl">摘要</label><textarea class="fta" id="f-excerpt" placeholder="簡短描述這篇文章..." style="min-height:72px"></textarea></div>
+
+      <div class="fg-row">
+        <div class="fg">
+          <label class="fl">城市 <span class="req">*</span></label>
+          <select class="fsel" id="f-city"></select>
+        </div>
+        <div class="fg">
+          <label class="fl">分類 <span class="req">*</span></label>
+          <select class="fsel" id="f-cat"></select>
+        </div>
+      </div>
+
+      <div class="fg">
+        <label class="fl">摘要（SEO description）</label>
+        <textarea class="fta" id="f-excerpt" placeholder="簡短描述這篇文章..." style="min-height:60px"></textarea>
+      </div>
+
       <div class="fg">
         <label class="fl">SEO 關鍵字</label>
-        <div id="art-kw-tags" style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.4rem"></div>
-        <input class="fi" id="f-keywords-input" placeholder="輸入關鍵字後按 Enter..." onkeydown="addArtKw(event)">
-        <input type="hidden" id="f-keywords">
+        <div class="kw-tags" id="art-kw-tags"></div>
+        <input class="fi" id="f-kw-input" placeholder="輸入關鍵字後按 Enter..." onkeydown="addArtKw(event)">
       </div>
 
-      <!-- 圖片上傳 -->
-      <div class="fg">
-        <label class="fl">圖片上傳</label>
-        <div id="img-upload-area" style="border:2px dashed var(--border2);border-radius:4px;padding:1rem;text-align:center;cursor:pointer;transition:border-color 0.2s;background:var(--surface2)"
-          onclick="document.getElementById('img-file-input').click()"
-          ondragover="event.preventDefault();this.style.borderColor='var(--accent)'"
-          ondragleave="this.style.borderColor='var(--border2)'"
-          ondrop="handleImgDrop(event)">
-          <div style="font-size:1.5rem">📷</div>
-          <div style="font-size:0.75rem;color:var(--text2);margin-top:0.3rem">點擊或拖曳上傳圖片（可多張）</div>
-        </div>
-        <input type="file" id="img-file-input" multiple accept="image/*" style="display:none" onchange="handleImgFiles(this.files)">
-        <div id="img-preview-list" style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.5rem"></div>
-      </div>
-
-      <!-- 富文本編輯器 -->
       <div class="fg">
         <label class="fl">文章內容</label>
-        <div id="editor-toolbar" style="display:flex;flex-wrap:wrap;gap:0.3rem;padding:0.4rem;background:var(--surface2);border:1px solid var(--border2);border-bottom:none">
-          <button type="button" onclick="execCmd('bold')" title="粗體" style="background:none;border:1px solid var(--border2);color:var(--text);padding:0.2rem 0.5rem;cursor:pointer;font-weight:bold;font-size:0.85rem">B</button>
-          <button type="button" onclick="execCmd('italic')" title="斜體" style="background:none;border:1px solid var(--border2);color:var(--text);padding:0.2rem 0.5rem;cursor:pointer;font-style:italic;font-size:0.85rem">I</button>
-          <button type="button" onclick="execCmd('formatBlock','h2')" title="標題" style="background:none;border:1px solid var(--border2);color:var(--text);padding:0.2rem 0.5rem;cursor:pointer;font-size:0.85rem">H2</button>
-          <button type="button" onclick="execCmd('formatBlock','h3')" title="小標題" style="background:none;border:1px solid var(--border2);color:var(--text);padding:0.2rem 0.5rem;cursor:pointer;font-size:0.85rem">H3</button>
-          <button type="button" onclick="execCmd('formatBlock','p')" title="段落" style="background:none;border:1px solid var(--border2);color:var(--text);padding:0.2rem 0.5rem;cursor:pointer;font-size:0.85rem">¶</button>
-          <button type="button" onclick="execCmd('insertUnorderedList')" title="清單" style="background:none;border:1px solid var(--border2);color:var(--text);padding:0.2rem 0.5rem;cursor:pointer;font-size:0.85rem">≡</button>
-          <button type="button" onclick="insertLink()" title="連結" style="background:none;border:1px solid var(--border2);color:var(--text);padding:0.2rem 0.5rem;cursor:pointer;font-size:0.85rem">🔗</button>
-          <button type="button" onclick="insertImgToEditor()" title="插入圖片到文章" style="background:none;border:1px solid var(--border2);color:var(--text);padding:0.2rem 0.5rem;cursor:pointer;font-size:0.85rem">📷</button>
-          <button type="button" onclick="execCmd('removeFormat')" title="清除格式" style="background:none;border:1px solid var(--border2);color:var(--text);padding:0.2rem 0.5rem;cursor:pointer;font-size:0.75rem">清除</button>
+        <div class="editor-toolbar">
+          <button class="ed-btn" onclick="execCmd('bold')" title="粗體"><b>B</b></button>
+          <button class="ed-btn" onclick="execCmd('italic')" title="斜體"><i>I</i></button>
+          <button class="ed-btn" onclick="execCmd('underline')" title="底線"><u>U</u></button>
+          <span style="color:var(--border2);padding:0 0.2rem">|</span>
+          <button class="ed-btn" onclick="execFmt('h2')" title="H2">H2</button>
+          <button class="ed-btn" onclick="execFmt('h3')" title="H3">H3</button>
+          <button class="ed-btn" onclick="execCmd('formatBlock','p')" title="段落">¶</button>
+          <span style="color:var(--border2);padding:0 0.2rem">|</span>
+          <button class="ed-btn" onclick="execCmd('insertUnorderedList')" title="清單">• 清單</button>
+          <button class="ed-btn" onclick="execCmd('insertOrderedList')" title="編號">1. 清單</button>
+          <button class="ed-btn" onclick="execFmt('blockquote')" title="引用">❝</button>
+          <span style="color:var(--border2);padding:0 0.2rem">|</span>
+          <button class="ed-btn" onclick="insertLink()" title="連結">🔗</button>
+          <button class="ed-btn" onclick="triggerImgInsert()" title="插入圖片">🖼</button>
         </div>
-        <div id="f-content-editor"
-          contenteditable="true"
-          style="min-height:200px;padding:0.75rem;border:1px solid var(--border2);background:var(--surface);color:var(--text);font-size:0.85rem;line-height:1.8;outline:none;overflow-y:auto"
-          placeholder="在這裡寫下您的旅遊故事..."
-        ></div>
-        <textarea id="f-content" style="display:none"></textarea>
+        <div id="f-content-editor" contenteditable="true" onpaste="handlePaste(event)"></div>
       </div>
-      <div class="row2">
+
+      <div class="fg">
+        <label class="fl">圖片上傳</label>
+        <div id="img-upload-area" onclick="document.getElementById('img-file-input').click()">
+          <div style="font-size:1.5rem">📷</div>
+          <p>點擊或拖曳上傳圖片（可多張）</p>
+          <p style="font-size:0.68rem;margin-top:0.2rem">上傳後可插入文章或設為封面</p>
+        </div>
+        <input type="file" id="img-file-input" accept="image/*" multiple style="display:none" onchange="handleImgUpload(event)">
+        <div class="img-preview-grid" id="img-preview-grid"></div>
+      </div>
+
+      <div class="fg">
+        <label class="fl">嵌入影片（YouTube / Vimeo URL）</label>
+        <input class="fi" id="f-video" placeholder="https://www.youtube.com/watch?v=..." oninput="previewVideo(this.value)">
+        <div id="video-preview-box" style="display:none" class="video-preview">
+          <div style="font-size:0.75rem;color:var(--text2);margin-bottom:0.4rem">預覽：</div>
+          <div class="video-embed-preview" id="video-embed-preview"></div>
+        </div>
+      </div>
+
+      <div class="fg-row3">
         <div class="fg">
           <label class="fl">封面 Emoji</label>
-          <div class="epicker" id="art-ep"></div>
-          <input class="fi" id="f-emoji" placeholder="自訂 emoji..." style="margin-top:0.35rem">
-        </div>
-        <div>
-          <div class="fg"><label class="fl">發布狀態</label>
-            <select class="fsel" id="f-status">
-              <option value="published">✅ 已發布</option>
-              <option value="draft">📝 草稿</option>
-            </select>
+          <div class="emoji-grid" id="emoji-grid"></div>
+          <div class="emoji-preview">
+            <span id="emoji-sel-display">✍️</span>
+            <input id="f-emoji-custom" placeholder="自訂 emoji..." oninput="setEmoji(this.value)" maxlength="2">
           </div>
-          <div class="fg"><label class="fl">日期</label><input class="fi" type="month" id="f-date"></div>
         </div>
-      </div>
-    </div>
-    <div class="mfoot">
-      <button class="btn btn-ghost" onclick="closeModal('art-modal')">取消</button>
-      <button class="btn btn-primary" onclick="saveArt()">儲存文章</button>
-    </div>
-  </div>
-</div>
-
-<!-- CITY MODAL -->
-<div class="overlay" id="city-modal">
-  <div class="modal" style="max-width:420px">
-    <div class="mhead">
-      <span class="mhead-title" id="city-modal-title">新增城市</span>
-      <button class="mclose" onclick="closeModal('city-modal')">×</button>
-    </div>
-    <div class="mbody">
-      <div class="fg"><label class="fl">城市名稱 <span class="req">*</span></label><input class="fi" id="fc-name" placeholder="例：京都、巴黎..."></div>
-      <div class="fg">
-        <label class="fl">代表 Emoji</label>
-        <div class="epicker" id="city-ep"></div>
-        <input class="fi" id="fc-emoji" placeholder="自訂 emoji..." style="margin-top:0.35rem">
-      </div>
-      <div class="fg"><label class="fl">所屬地區</label>
-        <select class="fsel" id="fc-region">
-          <option>日本</option><option>台灣</option><option>東南亞</option>
-          <option>歐洲</option><option>韓國</option><option>其他地區</option>
-        </select>
-      </div>
-    </div>
-    <div class="mfoot">
-      <button class="btn btn-ghost" onclick="closeModal('city-modal')">取消</button>
-      <button class="btn btn-primary" onclick="saveCity()">儲存城市</button>
-    </div>
-  </div>
-</div>
-
-<!-- CAT MODAL -->
-<div class="overlay" id="cat-modal">
-  <div class="modal" style="max-width:380px">
-    <div class="mhead">
-      <span class="mhead-title" id="cat-modal-title">新增分類</span>
-      <button class="mclose" onclick="closeModal('cat-modal')">×</button>
-    </div>
-    <div class="mbody">
-      <div class="fg"><label class="fl">分類名稱 <span class="req">*</span></label><input class="fi" id="fcat-name" placeholder="例：旅行日記、美食紀錄..."></div>
-    </div>
-    <div class="mfoot">
-      <button class="btn btn-ghost" onclick="closeModal('cat-modal')">取消</button>
-      <button class="btn btn-primary" onclick="saveCat()">儲存分類</button>
-    </div>
-  </div>
-</div>
-
-<!-- CONFIRM -->
-<div class="confirm-overlay" id="confirm-overlay">
-  <div class="confirm-box">
-    <div class="confirm-icon">🗑️</div>
-    <div class="confirm-title">確認刪除</div>
-    <div class="confirm-text" id="confirm-text">此操作無法復原，確定要繼續嗎？</div>
-    <div class="confirm-btns">
-      <button class="btn btn-ghost" onclick="closeConfirm()">取消</button>
-      <button class="btn btn-danger" id="confirm-ok">確認刪除</button>
-    </div>
-  </div>
-</div>
-
-<!-- TOAST -->
-<div class="toast-wrap" id="toast-wrap"></div>
-
-<script>
-// ── AUTH ──────────────────────────────────────────────────────────────
-const PASSWORD_HASH = '7a2c8f1e3b4d9g5h'; // hashed representation of @2Irirdlai
-const REAL_PASSWORD = '@2Irirdlai';
-const SESSION_KEY = 'mantu_admin_auth';
-
-function checkPW() {
-  const val = document.getElementById('pw-input').value;
-  if (val === REAL_PASSWORD) {
-    sessionStorage.setItem(SESSION_KEY, '1');
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('admin-app').style.display = 'flex';
-    initAdmin();
-  } else {
-    const box = document.getElementById('login-box');
-    box.id = 'shake';
-    setTimeout(() => box.id = 'login-box', 450);
-    document.getElementById('login-err').textContent = '密碼錯誤，請再試一次';
-    document.getElementById('pw-input').value = '';
-    document.getElementById('pw-input').focus();
-  }
-}
-
-function logout() {
-  sessionStorage.removeItem(SESSION_KEY);
-  document.getElementById('admin-app').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'flex';
-  document.getElementById('pw-input').value = '';
-}
-
-// check session on load
-window.addEventListener('load', () => {
-  if (sessionStorage.getItem(SESSION_KEY) === '1') {
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('admin-app').style.display = 'flex';
-    initAdmin();
-  } else {
-    setTimeout(() => document.getElementById('pw-input').focus(), 100);
-  }
-});
-
-// ── DATA ──────────────────────────────────────────────────────────────
-const SK = 'mantu-blog-data';
-const ART_E = ['🌸','🏔️','🌅','🗼','🌿','🏙️','⛩️','🏯','🌊','🏝️','🎋','🌺','🗺️','✈️','🚂','🛶','🌄','🌃','🏞️','🌙'];
-const CITY_E = ['🌸','🗼','🏝️','🎋','🌍','🏔️','🌊','🏙️','⛩️','🌺','🎠','🏜️','🌃','🗽','🏛️','🌉','🎡','🏞️','🌴','🎪'];
-
-const DFLT = {
-  articles:[
-    {id:'a1',title:'京都春日漫步——在哲學之道上，找到一種緩慢的快樂',city:'京都',category:'旅行日記',excerpt:'那天下午，陽光透過櫻花的縫隙灑落，我一個人沿著哲學之道慢慢走。',content:'',emoji:'🌸',status:'published',date:'2025-03'},
-    {id:'a2',title:'雨天的九份，才是最美的九份',city:'九份',category:'日常生活',excerpt:'上山的那天偏偏下起雨，卻意外撞見了最迷濛的燈火。',content:'',emoji:'🏔️',status:'published',date:'2025-02'},
-    {id:'a3',title:'峇里島的日出，讓我決定慢下來',city:'峇里島',category:'慢旅行',excerpt:'凌晨四點爬起來追日出，人生第一次覺得早起是一種恩賜。',content:'',emoji:'🌅',status:'published',date:'2025-01'},
-    {id:'a4',title:'巴黎不是一天造成的，但一天足以愛上它',city:'巴黎',category:'城市漫遊',excerpt:'我沒去艾菲爾鐵塔，卻在一間無名咖啡館待了整個下午。',content:'',emoji:'🗼',status:'draft',date:'2024-12'},
-  ],
-  cities:[
-    {id:'c1',name:'京都',emoji:'🌸',region:'日本'},{id:'c2',name:'九份',emoji:'🏔️',region:'台灣'},
-    {id:'c3',name:'峇里島',emoji:'🏝️',region:'東南亞'},{id:'c4',name:'巴黎',emoji:'🗼',region:'歐洲'},
-    {id:'c5',name:'清邁',emoji:'🌿',region:'東南亞'},{id:'c6',name:'首爾',emoji:'🏙️',region:'韓國'},
-  ],
-  categories:[{id:'cat1',name:'旅行日記'},{id:'cat2',name:'城市漫遊'},{id:'cat3',name:'美食紀錄'},{id:'cat4',name:'慢旅行'},{id:'cat5',name:'日常生活'}]
-};
-
-let db = DFLT;
-let editArtId=null, editCityId=null, editCatId=null;
-let artEmoji='🌸', cityEmoji='🌸';
-let pendingDel=null, curSec='dashboard';
-let searchQ='', statusF='';
-
-function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2);}
-function saveDB(){try{localStorage.setItem(SK,JSON.stringify(db));}catch(e){}}
-function loadDB(){try{const r=localStorage.getItem(SK);if(r)db=JSON.parse(r);}catch(e){}}
-
-function initAdmin(){
-  loadDB();
-  buildEmojiPicker('art-ep', ART_E, e=>{artEmoji=e;syncEmojiInput('f-emoji',e);});
-  buildEmojiPicker('city-ep', CITY_E, e=>{cityEmoji=e;syncEmojiInput('fc-emoji',e);});
-  renderSection('dashboard');
-}
-
-// ── SECTION SWITCHING ─────────────────────────────────────────────────
-function switchSec(id, el){
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  el.classList.add('active');
-  const titles={dashboard:'儀表板',articles:'文章管理',cities:'城市分類',categories:'文章分類'};
-  document.getElementById('top-title').textContent=titles[id];
-  const acts=document.getElementById('top-actions');
-  acts.innerHTML = id==='articles' ? '<button class="btn btn-primary" onclick="openAddArt()">＋ 新增文章</button>' : '';
-  curSec=id;
-  renderSection(id);
-}
-
-function renderSection(id){
-  if(id==='dashboard') renderDash();
-  if(id==='articles') renderArtTable();
-  if(id==='cities') renderCityGrid();
-  if(id==='categories') renderCatTable();
-}
-
-// ── DASHBOARD ─────────────────────────────────────────────────────────
-function renderDash(){
-  const pub=db.articles.filter(a=>a.status==='published').length;
-  const months=['1月','2月','3月','4月','5月','6月','7月'];
-  const cnts=months.map((_,i)=>{const m=String(i+1).padStart(2,'0');return db.articles.filter(a=>a.date?.endsWith('-'+m)).length;});
-  const mx=Math.max(...cnts,1);
-  const bars=cnts.map((c,i)=>`<div class="bar-col"><div class="bar-fill" style="height:${Math.max(8,(c/mx)*100)}%" title="${c}篇"></div><div class="bar-lbl">${months[i]}</div></div>`).join('');
-  const recent=db.articles.slice(0,5).map(a=>`<div class="rec-item"><div class="rec-dot"></div><div class="rec-info"><div class="rec-title">${a.emoji} ${a.title.slice(0,24)}${a.title.length>24?'…':''}</div><div class="rec-meta">${a.city} · ${a.date||'—'}</div></div><span class="badge ${a.status==='published'?'badge-pub':'badge-draft'}">${a.status==='published'?'已發布':'草稿'}</span></div>`).join('') || '<div style="text-align:center;color:var(--text3);padding:1.5rem;font-size:0.8rem">尚無文章</div>';
-
-  document.getElementById('main-content').innerHTML=`
-    <div class="stats-grid">
-      <div class="stat-card"><div class="stat-lbl">總文章數</div><div class="stat-val">${db.articles.length}</div><div class="stat-sub">篇旅遊日記</div></div>
-      <div class="stat-card g"><div class="stat-lbl">已發布</div><div class="stat-val">${pub}</div><div class="stat-sub">篇公開文章</div></div>
-      <div class="stat-card b"><div class="stat-lbl">城市數</div><div class="stat-val">${db.cities.length}</div><div class="stat-sub">個旅遊地點</div></div>
-      <div class="stat-card r"><div class="stat-lbl">文章分類</div><div class="stat-val">${db.categories.length}</div><div class="stat-sub">個分類標籤</div></div>
-    </div>
-    <div class="dash-grid">
-      <div class="dcard"><div class="dchead">📈 近期發文活動</div><div style="padding:0.8rem 1.5rem 0;font-size:0.66rem;color:var(--text3)">最近 7 個月</div><div class="bars">${bars}</div></div>
-      <div class="dcard"><div class="dchead">🕐 最新文章</div><div class="rec-list">${recent}</div></div>
-    </div>`;
-}
-
-// ── ARTICLES ──────────────────────────────────────────────────────────
-function renderArtTable(){
-  document.getElementById('top-actions').innerHTML='<button class="btn btn-primary" onclick="openAddArt()">＋ 新增文章</button>';
-  const rows=db.articles.filter(a=>{
-    const q=searchQ.toLowerCase();
-    return(!q||a.title.toLowerCase().includes(q))&&(!statusF||a.status===statusF);
-  });
-  const body=rows.length?rows.map(a=>`
-    <tr>
-      <td><span style="margin-right:0.4rem">${a.emoji}</span><span style="color:var(--text)">${a.title.slice(0,28)}${a.title.length>28?'…':''}</span></td>
-      <td style="color:var(--accent)">📍 ${a.city}</td>
-      <td><span class="badge badge-cat">${a.category}</span></td>
-      <td><span class="badge ${a.status==='published'?'badge-pub':'badge-draft'}">${a.status==='published'?'已發布':'草稿'}</span></td>
-      <td style="color:var(--text3)">${a.date||'—'}</td>
-      <td><div class="actions">
-        <button class="btn btn-ghost btn-sm" onclick="openEditArt('${a.id}')">✏️ 編輯</button>
-        <button class="btn btn-ghost btn-sm" style="color:var(--red);border-color:var(--red)" onclick="confirmDel('article','${a.id}','${a.title.replace(/'/g,"\\'")}')">🗑</button>
-      </div></td>
-    </tr>`).join(''):`<tr><td colspan="6"><div class="empty"><div class="empty-icon">📝</div>尚無文章，點擊右上角新增吧！</div></td></tr>`;
-
-  document.getElementById('main-content').innerHTML=`
-    <div class="tcard">
-      <div class="thead">
-        <span class="thead-title">所有文章</span>
-        <div class="search-row">
-          <input class="inp" id="art-search" placeholder="搜尋標題..." style="width:180px" value="${searchQ}" oninput="searchQ=this.value;renderArtTable()">
-          <select class="inp sel" style="width:120px" onchange="statusF=this.value;renderArtTable()">
-            <option value="" ${!statusF?'selected':''}>全部狀態</option>
-            <option value="published" ${statusF==='published'?'selected':''}>已發布</option>
-            <option value="draft" ${statusF==='draft'?'selected':''}>草稿</option>
+        <div class="fg">
+          <label class="fl">發布狀態</label>
+          <select class="fsel" id="f-status">
+            <option value="draft">📝 草稿</option>
+            <option value="published">✅ 已發布</option>
           </select>
         </div>
+        <div class="fg">
+          <label class="fl">發布時間</label>
+          <input class="fi" type="datetime-local" id="f-published-at">
+          <div style="font-size:0.68rem;color:var(--text3);margin-top:0.3rem">可設定過去或未來的時間</div>
+        </div>
       </div>
-      <table><thead><tr><th>標題</th><th>城市</th><th>分類</th><th>狀態</th><th>日期</th><th>操作</th></tr></thead><tbody>${body}</tbody></table>
-    </div>`;
+
+    </div>
+    <div class="modal-ft">
+      <button class="btn-secondary" onclick="closeArtModal()">取消</button>
+      <button class="btn-primary" id="save-btn" onclick="saveArt()">儲存文章</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ── SUPABASE ───────────────────────────────────────────────────────────────
+const SUPA_URL = 'https://zsebcpfblecwumbaxeaz.supabase.co';
+const SUPA_KEY = 'sb_publishable_L2DOfeM0cAJqwlVCr1LwtA_jE9MBNDn';
+const sb = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+// ── CONFIG ─────────────────────────────────────────────────────────────────
+const ADMIN_PW = '@2Irirdlai';
+const EMOJIS = ['✍️','🌸','🏔️','🌅','🏮','⛩️','🚢','🌊','🏝️','🎋','🌺','🖼️','✈️','🚂','🌄','🎑','🌙','📸','🍵','🍜','🏯','🎭'];
+
+let allArts = [];
+let artKws = [];
+let artImages = [];
+let editingId = null;
+let selectedEmoji = '✍️';
+let filterStatus = 'all';
+let cities = [], cats = [];
+
+// ── AUTH ───────────────────────────────────────────────────────────────────
+function doLogin(){
+  const v = document.getElementById('pw-input').value;
+  if(v === ADMIN_PW){
+    sessionStorage.setItem('mantu_auth','1');
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app').style.display='block';
+    init();
+  } else {
+    document.getElementById('login-err').textContent='密碼錯誤，請再試一次';
+    document.getElementById('pw-input').value='';
+  }
+}
+function doLogout(){
+  sessionStorage.removeItem('mantu_auth');
+  location.reload();
+}
+if(sessionStorage.getItem('mantu_auth')==='1'){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app').style.display='block';
 }
 
-// ── ARTICLE KEYWORDS ──────────────────────────────────────────────────────
-let artKws = [];
-function addArtKw(e){
-  if(e.key!=='Enter')return;
+// ── INIT ───────────────────────────────────────────────────────────────────
+async function init(){
+  loadSettings();
+  renderEmojiGrid();
+  setupDragDrop();
+  await loadArticles();
+}
+
+function loadSettings(){
+  cities = JSON.parse(localStorage.getItem('mantu-cities')||'["台南","台北","高雄","台中","花蓮","宜蘭"]');
+  cats = JSON.parse(localStorage.getItem('mantu-cats')||'["咖啡廳","餐廳","景點","住宿","小吃","伴手禮"]');
+  renderCitySelect(); renderCatSelect();
+  renderCitiesList(); renderCatsList();
+}
+
+// ── ARTICLES ───────────────────────────────────────────────────────────────
+async function loadArticles(){
+  const {data,error} = await sb.from('articles').select('*').order('created_at',{ascending:false});
+  if(error){ toast('載入失敗：'+error.message,'err'); return; }
+  allArts = data||[];
+  renderArts();
+  updateStats();
+}
+
+function updateStats(){
+  const pub = allArts.filter(a=>a.status==='published');
+  const draft = allArts.filter(a=>a.status==='draft');
+  const citySet = new Set(allArts.map(a=>a.city).filter(Boolean));
+  document.getElementById('st-total').textContent = allArts.length;
+  document.getElementById('st-pub').textContent = pub.length;
+  document.getElementById('st-draft').textContent = draft.length;
+  document.getElementById('st-cities').textContent = citySet.size;
+  document.getElementById('hd-stats').textContent = `${pub.length} 篇已發布`;
+}
+
+function renderArts(){
+  const q = document.getElementById('art-search').value.toLowerCase();
+  let list = allArts.filter(a=>{
+    if(filterStatus!=='all' && a.status!==filterStatus) return false;
+    if(q && !a.title?.toLowerCase().includes(q) && !a.city?.includes(q)) return false;
+    return true;
+  });
+  const tbody = document.getElementById('art-tbody');
+  if(!list.length){
+    tbody.innerHTML='';
+    document.getElementById('art-empty').style.display='block';
+    return;
+  }
+  document.getElementById('art-empty').style.display='none';
+  tbody.innerHTML = list.map(a=>`
+    <tr>
+      <td style="font-size:1.4rem;width:50px">${a.emoji||'✍️'}</td>
+      <td><div style="font-weight:500;color:var(--text)">${a.title}</div><div style="font-size:0.7rem;color:var(--text3);margin-top:2px">${a.excerpt||''}</div></td>
+      <td>${a.city||'—'}</td>
+      <td>${a.category||'—'}</td>
+      <td><span class="badge ${a.status==='published'?'badge-pub':'badge-draft'}">${a.status==='published'?'已發布':'草稿'}</span></td>
+      <td style="font-size:0.75rem;color:var(--text3)">${a.published_at?new Date(a.published_at).toLocaleString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}):'—'}</td>
+      <td>
+        <div class="tbl-actions">
+          <button class="act-btn" onclick="openEditArt(${a.id})" title="編輯">✏️</button>
+          <button class="act-btn" onclick="togglePub(${a.id},'${a.status}')" title="${a.status==='published'?'下線':'發布'}">${a.status==='published'?'⬇️':'🚀'}</button>
+          <button class="act-btn del" onclick="delArt(${a.id})" title="刪除">🗑️</button>
+        </div>
+      </td>
+    </tr>`).join('');
+}
+
+function filterArts(){ renderArts(); }
+function setFilter(s,el){
+  filterStatus=s;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderArts();
+}
+
+async function togglePub(id,cur){
+  const newStatus = cur==='published'?'draft':'published';
+  const upd = {status:newStatus};
+  if(newStatus==='published' && !allArts.find(a=>a.id===id)?.published_at){
+    upd.published_at = new Date().toISOString();
+  }
+  const {error} = await sb.from('articles').update(upd).eq('id',id);
+  if(error){ toast('更新失敗','err'); return; }
+  toast(newStatus==='published'?'🚀 文章已發布！':'文章已下線');
+  await loadArticles();
+}
+
+async function delArt(id){
+  if(!confirm('確定要刪除這篇文章？')) return;
+  const {error} = await sb.from('articles').delete().eq('id',id);
+  if(error){ toast('刪除失敗','err'); return; }
+  toast('文章已刪除');
+  await loadArticles();
+}
+
+// ── ARTICLE MODAL ──────────────────────────────────────────────────────────
+function openAddArt(){
+  editingId=null; artKws=[]; artImages=[];
+  document.getElementById('art-modal-title').textContent='新增文章';
+  document.getElementById('f-title').value='';
+  document.getElementById('f-excerpt').value='';
+  document.getElementById('f-video').value='';
+  document.getElementById('video-preview-box').style.display='none';
+  document.getElementById('f-status').value='draft';
+  document.getElementById('f-published-at').value=fmtDateLocal(new Date());
+  setEmoji('✍️');
+  setEditorContent('');
+  renderArtKws();
+  renderImgPreviews();
+  document.getElementById('art-modal').classList.add('open');
+}
+
+function openEditArt(id){
+  const a = allArts.find(x=>x.id===id);
+  if(!a) return;
+  editingId=id;
+  artKws = Array.isArray(a.keywords) ? [...a.keywords] : (a.keywords||'').split(',').filter(Boolean);
+  artImages=[];
+  document.getElementById('art-modal-title').textContent='編輯文章';
+  document.getElementById('f-title').value=a.title||'';
+  document.getElementById('f-excerpt').value=a.excerpt||'';
+  document.getElementById('f-video').value=a.video_url||'';
+  document.getElementById('f-status').value=a.status||'draft';
+  document.getElementById('f-published-at').value=a.published_at?fmtDateLocal(new Date(a.published_at)):fmtDateLocal(new Date());
+  if(a.city) document.getElementById('f-city').value=a.city;
+  if(a.category) document.getElementById('f-cat').value=a.category;
+  setEmoji(a.emoji||'✍️');
+  setEditorContent(a.content||'');
+  previewVideo(a.video_url||'');
+  renderArtKws();
+  renderImgPreviews();
+  document.getElementById('art-modal').classList.add('open');
+}
+
+function closeArtModal(){
+  document.getElementById('art-modal').classList.remove('open');
+}
+
+async function saveArt(){
+  const title = document.getElementById('f-title').value.trim();
+  const city = document.getElementById('f-city').value;
+  const cat = document.getElementById('f-cat').value;
+  if(!title){ toast('請填寫文章標題','err'); return; }
+  if(!city){ toast('請選擇城市','err'); return; }
+
+  const btn = document.getElementById('save-btn');
+  btn.disabled=true; btn.textContent='儲存中...';
+
+  const slug = editingId
+    ? allArts.find(a=>a.id===editingId)?.slug
+    : title.replace(/[^\u4e00-\u9fff\w\s-]/g,'').trim().replace(/[\s_]+/g,'-').substring(0,60).toLowerCase() + '-' + Date.now();
+
+  const pubAt = document.getElementById('f-published-at').value;
+  const data = {
+    title,
+    slug: slug||title,
+    city,
+    category: cat,
+    excerpt: document.getElementById('f-excerpt').value.trim(),
+    content: getEditorContent(),
+    keywords: artKws,
+    emoji: selectedEmoji,
+    video_url: document.getElementById('f-video').value.trim()||null,
+    status: document.getElementById('f-status').value,
+    published_at: pubAt ? new Date(pubAt).toISOString() : null
+  };
+
+  let error;
+  if(editingId){
+    ({error} = await sb.from('articles').update(data).eq('id',editingId));
+  } else {
+    ({error} = await sb.from('articles').insert(data));
+  }
+
+  btn.disabled=false; btn.textContent='儲存文章';
+  if(error){ toast('儲存失敗：'+error.message,'err'); return; }
+  toast(editingId?'文章已更新 ✅':'文章已建立 ✅');
+  closeArtModal();
+  await loadArticles();
+}
+
+// ── EDITOR ─────────────────────────────────────────────────────────────────
+function execCmd(cmd,val=null){
+  document.getElementById('f-content-editor').focus();
+  document.execCommand(cmd,false,val);
+}
+function execFmt(tag){
+  document.getElementById('f-content-editor').focus();
+  document.execCommand('formatBlock',false,tag);
+}
+function insertLink(){
+  const url = prompt('輸入連結網址：');
+  if(url){ execCmd('createLink',url); }
+}
+function getEditorContent(){ return document.getElementById('f-content-editor').innerHTML; }
+function setEditorContent(html){ document.getElementById('f-content-editor').innerHTML=html||''; }
+function handlePaste(e){
   e.preventDefault();
-  const v=document.getElementById('f-keywords-input').value.trim();
-  if(!v||artKws.includes(v))return;
+  const text = e.clipboardData.getData('text/plain');
+  document.execCommand('insertText',false,text);
+}
+function triggerImgInsert(){
+  document.getElementById('img-file-input').click();
+}
+
+// ── IMAGE UPLOAD ───────────────────────────────────────────────────────────
+function setupDragDrop(){
+  const area = document.getElementById('img-upload-area');
+  area.addEventListener('dragover',e=>{e.preventDefault();area.style.borderColor='var(--accent)'});
+  area.addEventListener('dragleave',()=>area.style.borderColor='var(--border2)');
+  area.addEventListener('drop',e=>{
+    e.preventDefault();
+    area.style.borderColor='var(--border2)';
+    handleImgUpload({target:{files:e.dataTransfer.files}});
+  });
+}
+
+async function handleImgUpload(e){
+  const files = Array.from(e.target.files||[]);
+  if(!files.length) return;
+  toast('上傳中...');
+  for(const file of files){
+    const ext = file.name.split('.').pop();
+    const fname = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+    const {data,error} = await sb.storage.from('article-images').upload(fname,file,{contentType:file.type});
+    if(error){ toast('上傳失敗：'+error.message,'err'); continue; }
+    const {data:{publicUrl}} = sb.storage.from('article-images').getPublicUrl(fname);
+    artImages.push({url:publicUrl,name:fname});
+  }
+  renderImgPreviews();
+  toast('圖片上傳完成 ✅');
+  e.target.value='';
+}
+
+function renderImgPreviews(){
+  const grid = document.getElementById('img-preview-grid');
+  grid.innerHTML = artImages.map((img,i)=>`
+    <div class="img-preview-item">
+      <img src="${img.url}" alt="">
+      <button class="img-del" onclick="removeImg(${i})">✕</button>
+      <button class="img-insert" onclick="insertImgToEditor('${img.url}')">插入</button>
+    </div>`).join('');
+}
+
+function removeImg(i){ artImages.splice(i,1); renderImgPreviews(); }
+function insertImgToEditor(url){
+  document.getElementById('f-content-editor').focus();
+  document.execCommand('insertHTML',false,`<img src="${url}" style="max-width:100%;margin:0.5rem 0" alt="">`);
+  toast('圖片已插入文章');
+}
+
+// ── KEYWORDS ───────────────────────────────────────────────────────────────
+function addArtKw(e){
+  if(e.key!=='Enter') return;
+  e.preventDefault();
+  const v=document.getElementById('f-kw-input').value.trim();
+  if(!v||artKws.includes(v)) return;
   artKws.push(v);
-  document.getElementById('f-keywords-input').value='';
+  document.getElementById('f-kw-input').value='';
   renderArtKws();
 }
 function removeArtKw(k){ artKws=artKws.filter(x=>x!==k); renderArtKws(); }
 function renderArtKws(){
   document.getElementById('art-kw-tags').innerHTML=artKws.map(k=>
-    `<span style="background:var(--surface2);border:1px solid var(--border2);padding:0.15rem 0.5rem;font-size:0.72rem;display:flex;align-items:center;gap:0.3rem">${k}<button onclick="removeArtKw('${k}')" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:0.8rem;padding:0">×</button></span>`
+    `<span class="kw-tag">${k}<button onclick="removeArtKw('${k}')">×</button></span>`
   ).join('');
-  document.getElementById('f-keywords').value=artKws.join(',');
 }
 
-// ── IMAGE UPLOAD ──────────────────────────────────────────────────────
-let artImages = []; // [{url, name}]
-
-function handleImgFiles(files){
-  Array.from(files).forEach(file => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      artImages.push({url: e.target.result, name: file.name});
-      renderImgPreviews();
-    };
-    reader.readAsDataURL(file);
-  });
+// ── EMOJI ──────────────────────────────────────────────────────────────────
+function renderEmojiGrid(){
+  document.getElementById('emoji-grid').innerHTML=EMOJIS.map(e=>
+    `<button class="emoji-btn${e===selectedEmoji?' selected':''}" onclick="setEmoji('${e}')">${e}</button>`
+  ).join('');
 }
-function handleImgDrop(e){
-  e.preventDefault();
-  document.getElementById('img-upload-area').style.borderColor='var(--border2)';
-  handleImgFiles(e.dataTransfer.files);
-}
-function renderImgPreviews(){
-  const el = document.getElementById('img-preview-list');
-  el.innerHTML = artImages.map((img,i)=>`
-    <div style="position:relative;display:inline-block">
-      <img src="${img.url}" style="width:80px;height:80px;object-fit:cover;border:1px solid var(--border2)">
-      <button onclick="removeImg(${i})" style="position:absolute;top:2px;right:2px;background:rgba(0,0,0,0.7);color:#fff;border:none;border-radius:50%;width:18px;height:18px;font-size:10px;cursor:pointer;line-height:1">×</button>
-    </div>`).join('');
-}
-function removeImg(i){ artImages.splice(i,1); renderImgPreviews(); }
-function insertImgToEditor(){
-  if(!artImages.length){ toast('請先上傳圖片','err'); return; }
-  artImages.forEach(img => {
-    document.getElementById('f-content-editor').focus();
-    document.execCommand('insertHTML', false, `<img src="${img.url}" style="max-width:100%;margin:0.5rem 0;display:block"><br>`);
+function setEmoji(e){
+  if(!e) return;
+  selectedEmoji=e;
+  document.getElementById('emoji-sel-display').textContent=e;
+  document.getElementById('f-emoji-custom').value=e;
+  document.querySelectorAll('.emoji-btn').forEach(b=>{
+    b.classList.toggle('selected',b.textContent===e);
   });
 }
 
-// ── RICH EDITOR ───────────────────────────────────────────────────────
-function execCmd(cmd, val=null){ document.getElementById('f-content-editor').focus(); document.execCommand(cmd, false, val); }
-function insertLink(){
-  const url = prompt('請輸入連結網址：','https://');
-  if(url){ document.getElementById('f-content-editor').focus(); document.execCommand('createLink', false, url); }
+// ── VIDEO ──────────────────────────────────────────────────────────────────
+function previewVideo(url){
+  const box = document.getElementById('video-preview-box');
+  const embed = document.getElementById('video-embed-preview');
+  if(!url){ box.style.display='none'; return; }
+  const embedUrl = getEmbedUrl(url);
+  if(embedUrl){
+    box.style.display='block';
+    embed.innerHTML=`<iframe src="${embedUrl}" allowfullscreen></iframe>`;
+  } else { box.style.display='none'; }
 }
-function getEditorContent(){ return document.getElementById('f-content-editor').innerHTML; }
-function setEditorContent(html){ document.getElementById('f-content-editor').innerHTML = html||''; }
-
-function openAddArt(){
-  editArtId=null;
-  artKws=[];
-  artImages=[];
-  document.getElementById('art-modal-title').textContent='新增文章';
-  document.getElementById('f-title').value='';
-  document.getElementById('f-excerpt').value='';
-  document.getElementById('f-content').value='';
-  setEditorContent('');
-  renderArtKws();
-  renderImgPreviews();
-  document.getElementById('f-status').value='published';
-  document.getElementById('f-date').value=new Date().toISOString().slice(0,7);
-  artEmoji='🌸';
-  document.getElementById('f-emoji').value='🌸';
-  populateSel('f-city',db.cities.map(c=>({v:c.name,t:c.emoji+' '+c.name})),'');
-  populateSel('f-cat',db.categories.map(c=>({v:c.name,t:c.name})),'');
-  refreshEP('art-ep',ART_E,'🌸',e=>{artEmoji=e;syncEmojiInput('f-emoji',e);});
-  openModal('art-modal');
+function getEmbedUrl(url){
+  let m;
+  if((m=url.match(/youtube\.com\/watch\?v=([^&]+)/))) return `https://www.youtube.com/embed/${m[1]}`;
+  if((m=url.match(/youtu\.be\/([^?]+)/))) return `https://www.youtube.com/embed/${m[1]}`;
+  if((m=url.match(/vimeo\.com\/(\d+)/))) return `https://player.vimeo.com/video/${m[1]}`;
+  return null;
 }
 
-function openEditArt(id){
-  const a=db.articles.find(x=>x.id===id);if(!a)return;
-  editArtId=id;
-  artKws = a.keywords ? (Array.isArray(a.keywords) ? a.keywords : a.keywords.split(',').filter(Boolean)) : [];
-  artImages=[];
-  document.getElementById('art-modal-title').textContent='編輯文章';
-  document.getElementById('f-title').value=a.title;
-  document.getElementById('f-excerpt').value=a.excerpt||'';
-  document.getElementById('f-content').value=a.content||'';
-  setEditorContent(a.content||'');
-  renderArtKws();
-  renderImgPreviews();
-  document.getElementById('f-status').value=a.status||'published';
-  document.getElementById('f-date').value=a.date||'';
-  artEmoji=a.emoji||'🌸';
-  document.getElementById('f-emoji').value=artEmoji;
-  populateSel('f-city',db.cities.map(c=>({v:c.name,t:c.emoji+' '+c.name})),a.city);
-  populateSel('f-cat',db.categories.map(c=>({v:c.name,t:c.name})),a.category);
-  refreshEP('art-ep',ART_E,artEmoji,e=>{artEmoji=e;syncEmojiInput('f-emoji',e);});
-  openModal('art-modal');
+// ── SETTINGS ───────────────────────────────────────────────────────────────
+function renderCitySelect(){
+  const sel=document.getElementById('f-city');
+  sel.innerHTML='<option value="">— 選擇城市 —</option>'+cities.map(c=>`<option value="${c}">${c}</option>`).join('');
+}
+function renderCatSelect(){
+  const sel=document.getElementById('f-cat');
+  sel.innerHTML='<option value="">— 選擇分類 —</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('');
+}
+function renderCitiesList(){
+  document.getElementById('cities-list').innerHTML=cities.map(c=>
+    `<span class="kw-tag">${c}<button onclick="removeCity('${c}')">×</button></span>`).join('');
+}
+function renderCatsList(){
+  document.getElementById('cats-list').innerHTML=cats.map(c=>
+    `<span class="kw-tag">${c}<button onclick="removeCat('${c}')">×</button></span>`).join('');
+}
+function addCity(){
+  const v=document.getElementById('new-city').value.trim();
+  if(!v||cities.includes(v)) return;
+  cities.push(v); document.getElementById('new-city').value='';
+  saveSettings(); renderCitySelect(); renderCitiesList();
+}
+function removeCity(c){ cities=cities.filter(x=>x!==c); saveSettings(); renderCitySelect(); renderCitiesList(); }
+function addCat(){
+  const v=document.getElementById('new-cat').value.trim();
+  if(!v||cats.includes(v)) return;
+  cats.push(v); document.getElementById('new-cat').value='';
+  saveSettings(); renderCatSelect(); renderCatsList();
+}
+function removeCat(c){ cats=cats.filter(x=>x!==c); saveSettings(); renderCatSelect(); renderCatsList(); }
+function saveSettings(){
+  localStorage.setItem('mantu-cities',JSON.stringify(cities));
+  localStorage.setItem('mantu-cats',JSON.stringify(cats));
 }
 
-function saveArt(){
-  const title=document.getElementById('f-title').value.trim();
-  const city=document.getElementById('f-city').value;
-  const cat=document.getElementById('f-cat').value;
-  if(!title){toast('請輸入文章標題','err');return;}
-  if(!city){toast('請選擇城市','err');return;}
-  if(!cat){toast('請選擇分類','err');return;}
-  const emoji=document.getElementById('f-emoji').value.trim()||artEmoji||'📝';
-  const content = getEditorContent();
-  const d={title,city,category:cat,excerpt:document.getElementById('f-excerpt').value.trim(),content,emoji,status:document.getElementById('f-status').value,date:document.getElementById('f-date').value,keywords:artKws};
-  if(editArtId){db.articles=db.articles.map(a=>a.id===editArtId?{...a,...d}:a);toast('文章已更新！');}
-  else{db.articles.unshift({id:uid(),...d});toast('文章已新增！');}
-  saveDB();closeModal('art-modal');renderSection(curSec);
+// ── PAGES ──────────────────────────────────────────────────────────────────
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('nav-'+name).classList.add('active');
 }
 
-
-// ── CITIES ────────────────────────────────────────────────────────────
-function renderCityGrid(){
-  const cards=db.cities.map(c=>{
-    const cnt=db.articles.filter(a=>a.city===c.name).length;
-    return`<div class="city-card"><div class="city-emoji">${c.emoji}</div><div class="city-name">${c.name}</div><div class="city-meta">${c.region} · ${cnt} 篇文章</div>
-      <div class="actions"><button class="btn btn-ghost btn-sm" onclick="openEditCity('${c.id}')">✏️ 編輯</button>
-      <button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="confirmDel('city','${c.id}','${c.name}')">🗑</button></div></div>`;
-  }).join('');
-  document.getElementById('main-content').innerHTML=`
-    <div style="display:flex;justify-content:flex-end;margin-bottom:1rem"><button class="btn btn-primary" onclick="openAddCity()">＋ 新增城市</button></div>
-    ${db.cities.length?`<div class="city-grid">${cards}</div>`:'<div class="empty"><div class="empty-icon">🗺️</div>尚無城市</div>'}`;
+// ── HELPERS ────────────────────────────────────────────────────────────────
+function fmtDateLocal(d){
+  const pad=n=>String(n).padStart(2,'0');
+  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
-function openAddCity(){
-  editCityId=null;
-  document.getElementById('city-modal-title').textContent='新增城市';
-  document.getElementById('fc-name').value='';
-  document.getElementById('fc-emoji').value='🌸';
-  document.getElementById('fc-region').value='日本';
-  cityEmoji='🌸';
-  refreshEP('city-ep',CITY_E,'🌸',e=>{cityEmoji=e;syncEmojiInput('fc-emoji',e);});
-  openModal('city-modal');
+let toastTimer;
+function toast(msg,type='ok'){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.className=type; el.style.display='block';
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.style.display='none',3000);
 }
 
-function openEditCity(id){
-  const c=db.cities.find(x=>x.id===id);if(!c)return;
-  editCityId=id;
-  document.getElementById('city-modal-title').textContent='編輯城市';
-  document.getElementById('fc-name').value=c.name;
-  document.getElementById('fc-emoji').value=c.emoji||'🌸';
-  document.getElementById('fc-region').value=c.region||'其他地區';
-  cityEmoji=c.emoji||'🌸';
-  refreshEP('city-ep',CITY_E,cityEmoji,e=>{cityEmoji=e;syncEmojiInput('fc-emoji',e);});
-  openModal('city-modal');
-}
-
-function saveCity(){
-  const name=document.getElementById('fc-name').value.trim();
-  if(!name){toast('請輸入城市名稱','err');return;}
-  const emoji=document.getElementById('fc-emoji').value.trim()||cityEmoji||'📍';
-  const region=document.getElementById('fc-region').value;
-  if(editCityId){db.cities=db.cities.map(c=>c.id===editCityId?{...c,name,emoji,region}:c);toast('城市已更新！');}
-  else{db.cities.push({id:uid(),name,emoji,region});toast('城市已新增！');}
-  saveDB();closeModal('city-modal');renderSection(curSec);
-}
-
-// ── CATEGORIES ────────────────────────────────────────────────────────
-function renderCatTable(){
-  const rows=db.categories.map(c=>{
-    const cnt=db.articles.filter(a=>a.category===c.name).length;
-    return`<tr><td><span class="badge badge-cat">${c.name}</span></td><td style="color:var(--text3)">${cnt} 篇文章</td>
-      <td><div class="actions"><button class="btn btn-ghost btn-sm" onclick="openEditCat('${c.id}')">✏️ 編輯</button>
-      <button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="confirmDel('cat','${c.id}','${c.name}')">🗑</button></div></td></tr>`;
-  }).join('');
-  document.getElementById('main-content').innerHTML=`
-    <div style="display:flex;justify-content:flex-end;margin-bottom:1rem"><button class="btn btn-primary" onclick="openAddCat()">＋ 新增分類</button></div>
-    <div class="tcard">${db.categories.length
-      ?`<table><thead><tr><th>分類名稱</th><th>文章數量</th><th>操作</th></tr></thead><tbody>${rows}</tbody></table>`
-      :'<div class="empty"><div class="empty-icon">🏷️</div>尚無分類</div>'}</div>`;
-}
-
-function openAddCat(){editCatId=null;document.getElementById('cat-modal-title').textContent='新增分類';document.getElementById('fcat-name').value='';openModal('cat-modal');}
-function openEditCat(id){const c=db.categories.find(x=>x.id===id);if(!c)return;editCatId=id;document.getElementById('cat-modal-title').textContent='編輯分類';document.getElementById('fcat-name').value=c.name;openModal('cat-modal');}
-
-function saveCat(){
-  const name=document.getElementById('fcat-name').value.trim();
-  if(!name){toast('請輸入分類名稱','err');return;}
-  if(editCatId){db.categories=db.categories.map(c=>c.id===editCatId?{...c,name}:c);toast('分類已更新！');}
-  else{db.categories.push({id:uid(),name});toast('分類已新增！');}
-  saveDB();closeModal('cat-modal');renderSection(curSec);
-}
-
-// ── DELETE ────────────────────────────────────────────────────────────
-function confirmDel(type,id,name){
-  pendingDel={type,id};
-  document.getElementById('confirm-text').textContent=`確定要刪除「${name}」嗎？此操作無法復原。`;
-  document.getElementById('confirm-ok').onclick=execDel;
-  document.getElementById('confirm-overlay').classList.add('open');
-}
-function execDel(){
-  if(!pendingDel)return;
-  const{type,id}=pendingDel;
-  if(type==='article')db.articles=db.articles.filter(a=>a.id!==id);
-  if(type==='city')db.cities=db.cities.filter(c=>c.id!==id);
-  if(type==='cat')db.categories=db.categories.filter(c=>c.id!==id);
-  saveDB();toast('已刪除');closeConfirm();renderSection(curSec);
-}
-function closeConfirm(){document.getElementById('confirm-overlay').classList.remove('open');pendingDel=null;}
-document.getElementById('confirm-overlay').addEventListener('click',e=>{if(e.target===e.currentTarget)closeConfirm();});
-
-// ── HELPERS ───────────────────────────────────────────────────────────
-function populateSel(id,opts,selected){
-  document.getElementById(id).innerHTML=`<option value="">— 選擇 —</option>`+opts.map(o=>`<option value="${o.v}"${o.v===selected?' selected':''}>${o.t}</option>`).join('');
-}
-
-function buildEmojiPicker(id,emojis,onSelect){
-  const el=document.getElementById(id);
-  el.innerHTML=emojis.map(e=>`<button type="button" onclick="(${onSelect.toString()})('${e}')">${e}</button>`).join('');
-}
-
-function refreshEP(id,emojis,selected,onSelect){
-  const el=document.getElementById(id);
-  el.innerHTML=emojis.map(e=>`<button type="button" class="${e===selected?'sel':''}" onclick="void(0)">${e}</button>`).join('');
-  el.querySelectorAll('button').forEach((btn,i)=>{
-    btn.onclick=()=>{
-      el.querySelectorAll('button').forEach(b=>b.classList.remove('sel'));
-      btn.classList.add('sel');
-      onSelect(emojis[i]);
-    };
-  });
-}
-
-function syncEmojiInput(inputId,emoji){document.getElementById(inputId).value=emoji;}
-
-function openModal(id){document.getElementById(id).classList.add('open');}
-function closeModal(id){document.getElementById(id).classList.remove('open');}
-
-document.querySelectorAll('.overlay').forEach(o=>{
-  o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');});
-});
-
-function toast(msg,type){
-  const el=document.createElement('div');
-  el.className='toast'+(type==='err'?' err':'');
-  el.textContent=(type==='err'?'❌ ':'✅ ')+msg;
-  document.getElementById('toast-wrap').appendChild(el);
-  setTimeout(()=>el.remove(),2800);
-}
+// Auto init if logged in
+if(sessionStorage.getItem('mantu_auth')==='1') init();
 </script>
 </body>
 </html>
