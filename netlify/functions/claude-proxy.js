@@ -7,51 +7,49 @@ exports.handler = async function(event) {
   const action = event.headers['x-action'] || 'generate';
   const CORS = {'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'Content-Type, x-api-key, x-action','Content-Type':'application/json'};
 
-  // ── DEPLOY article via Netlify API ──
+  // ── DEPLOY: commit article to GitHub ──
   if (action === 'deploy') {
-    const NETLIFY_TOKEN = process.env.NETLIFY_TOKEN;
-    const SITE_ID = '05bc81ec-adb1-422c-9c1e-8a22a41fa1f8';
-    if (!NETLIFY_TOKEN) return { statusCode: 500, headers: CORS, body: JSON.stringify({ error: 'NETLIFY_TOKEN 未設定' }) };
+    const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+    const OWNER = 'reneysung';
+    const REPO = 'journeylift';
+    if (!GITHUB_TOKEN) return { statusCode: 500, headers: CORS, body: JSON.stringify({ error: 'GITHUB_TOKEN 未設定' }) };
 
     try {
       const { filename, content } = JSON.parse(event.body);
+      const encodedContent = Buffer.from(content).toString('base64');
 
-      // Step 1: Get site info to find published deploy
-      const siteRes = await fetch(`https://api.netlify.com/api/v1/sites/${SITE_ID}`, {
-        headers: { 'Authorization': 'Bearer ' + NETLIFY_TOKEN }
+      // Check if file already exists (to get SHA for update)
+      let sha = null;
+      const checkRes = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${filename}`, {
+        headers: { 'Authorization': 'Bearer ' + GITHUB_TOKEN, 'Accept': 'application/vnd.github.v3+json' }
       });
-      const siteData = await siteRes.json();
-
-      if (!siteData.published_deploy) {
-        return { statusCode: 500, headers: CORS, body: JSON.stringify({ error: '找不到已發布的部署，site data: ' + JSON.stringify(siteData).slice(0,100) }) };
+      if (checkRes.ok) {
+        const checkData = await checkRes.json();
+        sha = checkData.sha;
       }
 
-      const deployId = siteData.published_deploy.id;
+      // Create or update file
+      const body = { message: `發布文章：${filename}`, content: encodedContent };
+      if (sha) body.sha = sha;
 
-      // Step 2: Upload file to deploy
-      const encoder = new TextEncoder();
-      const fileBytes = encoder.encode(content);
-
-      const uploadRes = await fetch(`https://api.netlify.com/api/v1/deploys/${deployId}/files/${filename}`, {
+      const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${filename}`, {
         method: 'PUT',
         headers: {
-          'Authorization': 'Bearer ' + NETLIFY_TOKEN,
-          'Content-Type': 'application/octet-stream'
+          'Authorization': 'Bearer ' + GITHUB_TOKEN,
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json'
         },
-        body: fileBytes
+        body: JSON.stringify(body)
       });
 
-      const uploadText = await uploadRes.text();
-      let uploadData;
-      try { uploadData = JSON.parse(uploadText); } catch(e) { uploadData = { raw: uploadText.slice(0,100) }; }
-
+      const data = await res.json();
       return {
-        statusCode: uploadRes.status,
+        statusCode: res.status,
         headers: CORS,
-        body: JSON.stringify({ ok: uploadRes.ok, status: uploadRes.status, deployId, data: uploadData })
+        body: JSON.stringify({ ok: res.ok, status: res.status, url: data.content?.html_url })
       };
     } catch (err) {
-      return { statusCode: 500, headers: CORS, body: JSON.stringify({ error: err.message, stack: err.stack?.slice(0,200) }) };
+      return { statusCode: 500, headers: CORS, body: JSON.stringify({ error: err.message }) };
     }
   }
 
