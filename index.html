@@ -5,156 +5,226 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>漫途 — 生活旅遊誌｜用文字記錄每一段旅程</title>
 <meta name="description" content="漫途旅遊誌，用文字記錄每一段值得被記住的旅程。">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Noto+Serif+TC:wght@300;400&family=Noto+Sans+TC:wght@300;400&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{
-  --bg:#faf8f5;--surface:#fff;--border:#e8e0d0;--border2:#d4c8b8;
-  --text:#2a2420;--text2:#6b5a4e;--text3:#a89880;
-  --accent:#c4956a;--accent2:#8b6a4f;
-  --font-serif:'Cormorant Garamond',serif;--font-sans:'Noto Sans TC',sans-serif;
+:root {
+  --ink:#12100e;--ink2:#1e1b18;--ink3:#2a2520;
+  --paper:#f5f0e8;--paper2:#ede8de;
+  --gold:#c8a96e;--gold2:#e8c98e;
+  --mist:#8a8278;--mist2:#b8b0a0;
+  --ff-d:'Cormorant Garamond',serif;
+  --ff-s:'Noto Serif TC',serif;
+  --ff-n:'Noto Sans TC',sans-serif;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:14px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--ink);color:var(--paper);font-family:var(--ff-n);font-size:14px;font-weight:300;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 
-/* HEADER */
-header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.logo{font-family:var(--font-serif);font-size:1.6rem;color:var(--accent2)}
-.logo em{font-style:italic;color:var(--accent)}
-nav{display:flex;gap:2rem;align-items:center}
-nav a{font-size:0.78rem;letter-spacing:0.1em;color:var(--text2);transition:color 0.2s}
-nav a:hover{color:var(--accent)}
-.nav-admin{font-size:0.72rem;color:var(--text3);border:1px solid var(--border2);padding:0.3rem 0.7rem}
-.nav-admin:hover{border-color:var(--accent);color:var(--accent)}
+/* grain */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.35}
 
-/* HERO */
-.hero{max-width:1100px;margin:0 auto;padding:5rem 2rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
-.hero-text h1{font-family:var(--font-serif);font-size:3.5rem;line-height:1.15;color:var(--text);margin-bottom:1.2rem}
-.hero-text h1 em{font-style:italic;color:var(--accent)}
-.hero-text p{font-size:0.9rem;color:var(--text2);line-height:1.9;margin-bottom:2rem}
-.hero-btns{display:flex;gap:1rem}
-.btn-main{background:var(--accent);color:#fff;padding:0.7rem 1.8rem;font-size:0.8rem;letter-spacing:0.1em;font-family:var(--font-sans);border:none;cursor:pointer}
-.btn-main:hover{background:var(--accent2)}
-.btn-ghost{background:none;color:var(--text2);padding:0.7rem 1.8rem;font-size:0.8rem;letter-spacing:0.1em;font-family:var(--font-sans);border:1px solid var(--border2);cursor:pointer}
-.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
-.hero-visual{display:flex;align-items:center;justify-content:center}
-.hero-emoji-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0.8rem}
-.hero-emoji-item{background:var(--surface);border:1px solid var(--border);padding:1rem;font-size:1.8rem;text-align:center;transition:transform 0.2s}
-.hero-emoji-item:hover{transform:translateY(-3px)}
+/* header */
+header{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 3rem;height:68px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(200,169,110,0.12);background:rgba(18,16,14,0.94);backdrop-filter:blur(16px)}
+.logo{font-family:var(--ff-d);font-size:1.5rem;font-weight:400;letter-spacing:0.08em;color:var(--paper)}
+.logo em{color:var(--gold);font-style:italic}
+.logo small{font-size:0.42em;letter-spacing:0.3em;color:var(--mist2);vertical-align:super;margin-left:0.6em;font-style:normal}
+.hnav{display:flex;align-items:center;gap:2.5rem}
+.hnav a{font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--mist2);transition:color 0.3s;position:relative}
+.hnav a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--gold);transition:width 0.3s}
+.hnav a:hover{color:var(--gold)}
+.hnav a:hover::after{width:100%}
 
-/* SECTION */
-.section{max-width:1100px;margin:0 auto;padding:3rem 2rem}
-.section-hd{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
-.section-title{font-family:var(--font-serif);font-size:2rem;color:var(--text)}
-.section-more{font-size:0.75rem;letter-spacing:0.1em;color:var(--accent);transition:opacity 0.2s}
-.section-more:hover{opacity:0.7}
+/* hero */
+.hero{min-height:100vh;display:grid;grid-template-columns:55fr 45fr;padding-top:68px}
+.hero-l{padding:8rem 5rem 6rem;display:flex;flex-direction:column;justify-content:center;position:relative}
+.hero-l::after{content:'';position:absolute;right:0;top:20%;bottom:20%;width:1px;background:linear-gradient(to bottom,transparent,rgba(200,169,110,0.25),transparent)}
+.kicker{font-size:0.62rem;letter-spacing:0.42em;text-transform:uppercase;color:var(--gold);margin-bottom:2rem;display:flex;align-items:center;gap:1rem;animation:up 0.9s 0.1s both}
+.kicker::before{content:'';display:inline-block;width:36px;height:1px;background:var(--gold)}
+.h1{font-family:var(--ff-d);font-size:clamp(4rem,7.5vw,7rem);font-weight:300;line-height:1;letter-spacing:-0.01em;color:var(--paper);margin-bottom:0.15em;animation:up 0.9s 0.2s both}
+.h1 em{font-style:italic;color:var(--gold)}
+.h2{font-family:var(--ff-d);font-size:clamp(1.1rem,2vw,1.6rem);font-weight:300;font-style:italic;color:var(--mist);margin-bottom:2.5rem;line-height:1.5;animation:up 0.9s 0.3s both}
+.desc{font-size:0.8rem;color:var(--mist2);line-height:2.1;max-width:360px;margin-bottom:3rem;border-left:1px solid rgba(200,169,110,0.25);padding-left:1.2rem;animation:up 0.9s 0.4s both}
+.cta{display:flex;gap:1rem;align-items:center;animation:up 0.9s 0.5s both}
+.btn-p{background:var(--gold);color:var(--ink);padding:0.8rem 2.2rem;font-size:0.7rem;letter-spacing:0.22em;text-transform:uppercase;font-family:var(--ff-n);transition:background 0.3s,transform 0.2s;display:inline-block}
+.btn-p:hover{background:var(--gold2);transform:translateY(-2px)}
+.btn-t{font-size:0.7rem;letter-spacing:0.15em;color:var(--mist2);display:flex;align-items:center;gap:0.5rem;transition:color 0.3s}
+.btn-t:hover{color:var(--paper)}
+.btn-t span{transition:transform 0.3s}
+.btn-t:hover span{transform:translateX(5px)}
 
-/* ARTICLES GRID */
-.arts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.art-card{background:var(--surface);border:1px solid var(--border);transition:transform 0.2s,box-shadow 0.2s;display:block}
-.art-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.08)}
-.art-emoji{font-size:2.5rem;padding:1.5rem 1.5rem 0.5rem}
-.art-body{padding:0 1.5rem 0.8rem}
-.art-meta{font-size:0.68rem;letter-spacing:0.1em;color:var(--text3);margin-bottom:0.4rem}
-.art-title{font-family:var(--font-serif);font-size:1.25rem;color:var(--text);margin-bottom:0.4rem;line-height:1.4}
-.art-excerpt{font-size:0.77rem;color:var(--text2);line-height:1.7;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.art-ft{padding:0.8rem 1.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
-.art-date{font-size:0.68rem;color:var(--text3)}
-.art-read{font-size:0.72rem;color:var(--accent)}
+.hero-r{background:var(--ink2);position:relative;overflow:hidden}
+.hero-r-inner{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:3.5rem}
+.big-num{position:absolute;top:2rem;right:2rem;font-family:var(--ff-d);font-size:14rem;font-weight:300;color:rgba(200,169,110,0.04);line-height:1;pointer-events:none;user-select:none}
+.feat-label{font-size:0.6rem;letter-spacing:0.38em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.feat-card{background:rgba(255,255,255,0.03);border:1px solid rgba(200,169,110,0.13);padding:2rem;transition:border-color 0.3s,background 0.3s;cursor:pointer}
+.feat-card:hover{border-color:rgba(200,169,110,0.35);background:rgba(255,255,255,0.05)}
+.feat-emoji{font-size:2.2rem;margin-bottom:0.8rem;display:block}
+.feat-meta{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--mist);margin-bottom:0.5rem}
+.feat-title{font-family:var(--ff-d);font-size:1.7rem;font-weight:300;line-height:1.3;color:var(--paper);margin-bottom:0.5rem}
+.feat-exc{font-size:0.75rem;color:var(--mist2);line-height:1.8;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
-/* FEATURED - first article bigger */
-.arts-grid-featured{display:grid;grid-template-columns:2fr 1fr;gap:1.5rem;margin-bottom:1.5rem}
-.art-card-featured .art-emoji{font-size:4rem;padding:2rem 2rem 1rem}
-.art-card-featured .art-title{font-size:1.8rem}
-.art-card-featured .art-excerpt{-webkit-line-clamp:3}
-.arts-grid-side{display:grid;grid-template-rows:1fr 1fr;gap:1.5rem}
+/* marquee */
+.mq{overflow:hidden;border-top:1px solid rgba(200,169,110,0.08);border-bottom:1px solid rgba(200,169,110,0.08);background:var(--ink2);padding:0.65rem 0}
+.mq-t{display:flex;gap:2.5rem;animation:mq 35s linear infinite;white-space:nowrap}
+.mq-i{font-size:0.62rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--mist);flex-shrink:0;display:flex;align-items:center;gap:1.2rem}
+.mq-i b{color:var(--gold);font-size:0.45rem;font-weight:400}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* EMPTY */
-.empty{text-align:center;padding:4rem;color:var(--text3)}
-.empty-icon{font-size:3rem;margin-bottom:1rem}
-.loading{text-align:center;padding:3rem;color:var(--text3);font-size:0.85rem}
+/* section */
+.sec{max-width:1320px;margin:0 auto;padding:6rem 3rem}
+.sec-hd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(200,169,110,0.12)}
+.sec-lbl{font-size:0.6rem;letter-spacing:0.42em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem}
+.sec-ttl{font-family:var(--ff-d);font-size:2.8rem;font-weight:300;color:var(--paper);line-height:1}
+.sec-all{font-size:0.66rem;letter-spacing:0.2em;color:var(--mist2);transition:color 0.3s;display:flex;align-items:center;gap:0.5rem;padding-bottom:0.2rem}
+.sec-all:hover{color:var(--gold)}
+.sec-all span{transition:transform 0.3s}
+.sec-all:hover span{transform:translateX(4px)}
 
-/* DIVIDER */
-.divider{border:none;border-top:1px solid var(--border);margin:0}
+/* article grid */
+.grid-main{display:grid;grid-template-columns:3fr 2fr;gap:1px;background:rgba(200,169,110,0.08)}
+.grid-small{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(200,169,110,0.08);margin-top:1px}
+.ac{background:var(--ink);display:block;padding:2.5rem;transition:background 0.3s;position:relative;overflow:hidden}
+.ac:hover{background:var(--ink2)}
+.ac-big{grid-row:1/3;padding:3.5rem}
+.ac::after{content:'';position:absolute;bottom:0;left:2.5rem;right:2.5rem;height:1px;background:linear-gradient(to right,transparent,rgba(200,169,110,0.25),transparent);transform:scaleX(0);transition:transform 0.4s}
+.ac:hover::after{transform:scaleX(1)}
+.ac-n{font-family:var(--ff-d);font-size:0.7rem;color:rgba(200,169,110,0.35);letter-spacing:0.2em;margin-bottom:1.2rem}
+.ac-emoji{font-size:1.8rem;margin-bottom:1rem;display:block}
+.ac-big .ac-emoji{font-size:3rem}
+.ac-meta{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem}
+.ac-ttl{font-family:var(--ff-d);font-size:1.35rem;font-weight:300;line-height:1.35;color:var(--paper);margin-bottom:0.7rem}
+.ac-big .ac-ttl{font-size:2.1rem;margin-bottom:1rem}
+.ac-exc{font-size:0.76rem;color:var(--mist2);line-height:1.85;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ac-big .ac-exc{-webkit-line-clamp:3}
+.ac-ft{display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.05)}
+.ac-dt{font-size:0.63rem;color:var(--mist);letter-spacing:0.08em}
+.ac-arr{font-size:0.68rem;color:var(--gold);opacity:0;transform:translateX(-8px);transition:opacity 0.3s,transform 0.3s}
+.ac:hover .ac-arr{opacity:1;transform:translateX(0)}
+.empty{text-align:center;padding:6rem 2rem;color:var(--mist)}
+.empty-num{font-family:var(--ff-d);font-size:5rem;font-weight:300;font-style:italic;color:rgba(200,169,110,0.12);display:block;margin-bottom:1rem}
+.loading{text-align:center;padding:6rem;font-size:0.72rem;letter-spacing:0.25em;color:var(--mist)}
 
-/* FOOTER */
-footer{background:var(--surface);border-top:1px solid var(--border);padding:3rem 2rem;margin-top:4rem}
-.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
-.footer-logo{font-family:var(--font-serif);font-size:1.3rem;color:var(--accent2)}
-.footer-logo em{font-style:italic}
-.footer-links{display:flex;gap:1.5rem}
-.footer-links a{font-size:0.75rem;color:var(--text3)}
-.footer-links a:hover{color:var(--accent)}
-.footer-copy{font-size:0.72rem;color:var(--text3);margin-top:1.5rem;text-align:center;padding-top:1.5rem;border-top:1px solid var(--border)}
+/* divider */
+.ornament{display:flex;align-items:center;justify-content:center;gap:1.5rem;padding:1.5rem 3rem;color:rgba(200,169,110,0.25);font-family:var(--ff-d);font-size:1.3rem}
+.ornament::before,.ornament::after{content:'';flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(200,169,110,0.15))}
+.ornament::after{background:linear-gradient(to left,transparent,rgba(200,169,110,0.15))}
 
-@media(max-width:768px){
-  .hero{grid-template-columns:1fr;gap:2rem;padding:3rem 1.5rem}
-  .hero-visual{display:none}
-  .arts-grid,.arts-grid-featured{grid-template-columns:1fr}
-  .arts-grid-side{grid-template-rows:auto}
-  .footer-inner{flex-direction:column;gap:1rem;text-align:center}
+/* footer */
+footer{border-top:1px solid rgba(200,169,110,0.08);padding:4rem 3rem;background:var(--ink2)}
+.ft-in{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:3rem}
+.ft-brand .logo{display:block;margin-bottom:1rem}
+.ft-brand p{font-size:0.75rem;color:var(--mist);line-height:1.85;max-width:260px}
+.ft-ttl{font-size:0.6rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem}
+.ft-links{display:flex;flex-direction:column;gap:0.6rem}
+.ft-links a{font-size:0.77rem;color:var(--mist2);transition:color 0.3s}
+.ft-links a:hover{color:var(--paper)}
+.ft-copy{grid-column:1/-1;border-top:1px solid rgba(200,169,110,0.08);padding-top:2rem;margin-top:1rem;font-size:0.62rem;letter-spacing:0.18em;color:var(--mist);text-align:center}
+
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:900px){
+  header{padding:0 1.5rem}
+  .hero{grid-template-columns:1fr}
+  .hero-l{padding:6rem 1.5rem 3rem}
+  .hero-l::after{display:none}
+  .hero-r{height:55vw}
+  .grid-main{grid-template-columns:1fr}
+  .ac-big{grid-row:auto}
+  .grid-small{grid-template-columns:1fr 1fr}
+  .sec{padding:4rem 1.5rem}
+  .ft-in{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
 <header>
-  <a href="/" class="logo"><em>漫</em>途旅遊誌</a>
-  <nav>
+  <a href="/" class="logo"><em>漫</em>途<small>旅遊誌</small></a>
+  <nav class="hnav">
     <a href="/">首頁</a>
-    <a href="/articles">所有文章</a>
-    <a href="/admin" class="nav-admin">後台</a>
+    <a href="/articles">文章</a>
+    <a href="/tools/unboxing.html">工具</a>
+    <a href="/admin">後台</a>
   </nav>
 </header>
 
-<!-- HERO -->
 <section class="hero">
-  <div class="hero-text">
-    <h1>用文字<br>記錄每一段<br><em>旅途</em></h1>
-    <p>漫途是一本關於旅行的誌，<br>記錄那些值得被記住的風景、滋味與感受。</p>
-    <div class="hero-btns">
-      <a href="/articles" class="btn-main">探索文章</a>
-      <a href="/tools/unboxing.html" class="btn-ghost">開箱文工具</a>
+  <div class="hero-l">
+    <div class="kicker">Travel · Life · Story</div>
+    <h1 class="h1">慢旅行<br><em>快記憶</em></h1>
+    <p class="h2">每一段旅程，都值得被文字留住</p>
+    <p class="desc">漫途是一本關於旅行的誌，記錄那些值得被記住的風景、滋味與感受。用緩慢的步伐，深刻的眼光，書寫每一段屬於自己的故事。</p>
+    <div class="cta">
+      <a href="/articles" class="btn-p">探索文章</a>
+      <a href="/tools/unboxing.html" class="btn-t">開箱文工具 <span>→</span></a>
     </div>
   </div>
-  <div class="hero-visual">
-    <div class="hero-emoji-grid">
-      <div class="hero-emoji-item">🌸</div>
-      <div class="hero-emoji-item">🏔️</div>
-      <div class="hero-emoji-item">🌅</div>
-      <div class="hero-emoji-item">⛩️</div>
-      <div class="hero-emoji-item">🍵</div>
-      <div class="hero-emoji-item">✈️</div>
-      <div class="hero-emoji-item">🌊</div>
-      <div class="hero-emoji-item">📸</div>
+  <div class="hero-r">
+    <div class="big-num">01</div>
+    <div class="hero-r-inner">
+      <div class="feat-label">最新刊登</div>
+      <div class="feat-card" id="hero-feat">
+        <span class="feat-emoji">✍️</span>
+        <div class="feat-meta">載入中...</div>
+        <div class="feat-title"> </div>
+      </div>
     </div>
   </div>
 </section>
 
-<hr class="divider">
+<div class="mq">
+  <div class="mq-t">
+    <div class="mq-i">旅行日記 <b>✦</b></div>
+    <div class="mq-i">咖啡廳探訪 <b>✦</b></div>
+    <div class="mq-i">城市漫遊 <b>✦</b></div>
+    <div class="mq-i">美食紀錄 <b>✦</b></div>
+    <div class="mq-i">日常旅途 <b>✦</b></div>
+    <div class="mq-i">文字風景 <b>✦</b></div>
+    <div class="mq-i">旅行日記 <b>✦</b></div>
+    <div class="mq-i">咖啡廳探訪 <b>✦</b></div>
+    <div class="mq-i">城市漫遊 <b>✦</b></div>
+    <div class="mq-i">美食紀錄 <b>✦</b></div>
+    <div class="mq-i">日常旅途 <b>✦</b></div>
+    <div class="mq-i">文字風景 <b>✦</b></div>
+  </div>
+</div>
 
-<!-- LATEST ARTICLES -->
-<section class="section">
-  <div class="section-hd">
-    <h2 class="section-title">最新文章</h2>
-    <a href="/articles" class="section-more">查看全部 →</a>
+<section class="sec">
+  <div class="sec-hd">
+    <div>
+      <div class="sec-lbl">Latest Stories</div>
+      <h2 class="sec-ttl">最新文章</h2>
+    </div>
+    <a href="/articles" class="sec-all">所有文章 <span>→</span></a>
   </div>
-  <div id="articles-container">
-    <div class="loading">載入中...</div>
-  </div>
+  <div id="ac-container"><div class="loading">Loading...</div></div>
 </section>
+
+<div class="ornament">❧</div>
 
 <footer>
-  <div class="footer-inner">
-    <div class="footer-logo"><em>漫</em>途旅遊誌</div>
-    <div class="footer-links">
-      <a href="/">首頁</a>
-      <a href="/articles">文章</a>
-      <a href="/tools/unboxing.html">開箱文工具</a>
+  <div class="ft-in">
+    <div class="ft-brand">
+      <a href="/" class="logo"><em>漫</em>途<small>旅遊誌</small></a>
+      <p>用文字記錄每一段值得被記住的旅程。慢旅行，深刻的眼光。</p>
     </div>
+    <div>
+      <div class="ft-ttl">導覽</div>
+      <div class="ft-links">
+        <a href="/">首頁</a>
+        <a href="/articles">所有文章</a>
+        <a href="/tools/unboxing.html">開箱文工具</a>
+      </div>
+    </div>
+    <div>
+      <div class="ft-ttl">管理</div>
+      <div class="ft-links">
+        <a href="/admin">後台管理</a>
+      </div>
+    </div>
+    <div class="ft-copy">© 2026 漫途旅遊誌 · 保留所有權利</div>
   </div>
-  <div class="footer-copy">© 2026 漫途旅遊誌 · 用文字記錄每一段旅程</div>
 </footer>
 
 <script>
@@ -165,62 +235,56 @@ const sb = supabase.createClient(
 
 async function load(){
   const {data} = await sb.from('articles')
-    .select('*')
-    .eq('status','published')
-    .order('published_at',{ascending:false})
-    .limit(6);
-
-  const container = document.getElementById('articles-container');
+    .select('*').eq('status','published')
+    .order('published_at',{ascending:false}).limit(7);
   const list = data||[];
 
+  if(list.length > 0){
+    const a = list[0];
+    const fc = document.getElementById('hero-feat');
+    fc.onclick = ()=>location.href=`/articles/${a.slug}`;
+    fc.querySelector('.feat-emoji').textContent = a.emoji||'✍️';
+    fc.querySelector('.feat-meta').textContent = [a.city,a.category].filter(Boolean).join(' · ')||'漫途';
+    fc.querySelector('.feat-title').textContent = a.title;
+    if(a.excerpt){
+      const el = document.createElement('div');
+      el.className='feat-exc'; el.textContent=a.excerpt;
+      fc.appendChild(el);
+    }
+  }
+
+  const c = document.getElementById('ac-container');
   if(!list.length){
-    container.innerHTML=`<div class="empty"><div class="empty-icon">✍️</div><p>文章即將登場，敬請期待</p></div>`;
+    c.innerHTML=`<div class="empty"><span class="empty-num">漫途</span>文章即將登場，敬請期待</div>`;
     return;
   }
 
-  if(list.length >= 3){
-    const [first, second, third, ...rest] = list;
-    container.innerHTML = `
-      <div class="arts-grid-featured">
-        ${artCardFeatured(first)}
-        <div class="arts-grid-side">
-          ${artCard(second)}
-          ${artCard(third)}
-        </div>
-      </div>
-      ${rest.length ? `<div class="arts-grid">${rest.map(artCard).join('')}</div>` : ''}
-    `;
-  } else {
-    container.innerHTML = `<div class="arts-grid">${list.map(artCard).join('')}</div>`;
-  }
+  const [first,...rest] = list;
+  const side = rest.slice(0,1);
+  const small = rest.slice(1);
+
+  c.innerHTML = `
+    <div class="grid-main">
+      ${card(first,1,true)}
+      ${side.map((a,i)=>card(a,i+2,false)).join('')}
+    </div>
+    ${small.length?`<div class="grid-small">${small.map((a,i)=>card(a,i+3,false)).join('')}</div>`:''}
+  `;
 }
 
-function artCard(a){
-  return `<a href="/articles/${a.slug}" class="art-card">
-    <div class="art-emoji">${a.emoji||'✍️'}</div>
-    <div class="art-body">
-      <div class="art-meta">${[a.city,a.category].filter(Boolean).join(' · ')}</div>
-      <div class="art-title">${a.title}</div>
-      <div class="art-excerpt">${a.excerpt||''}</div>
-    </div>
-    <div class="art-ft">
-      <span class="art-date">${a.published_at?new Date(a.published_at).toLocaleDateString('zh-TW'):''}</span>
-      <span class="art-read">閱讀 →</span>
-    </div>
-  </a>`;
-}
+function fmt(d){ return d?new Date(d).toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric'}):''; }
+function fmtS(d){ return d?new Date(d).toLocaleDateString('zh-TW'):''; }
 
-function artCardFeatured(a){
-  return `<a href="/articles/${a.slug}" class="art-card art-card-featured">
-    <div class="art-emoji">${a.emoji||'✍️'}</div>
-    <div class="art-body">
-      <div class="art-meta">${[a.city,a.category].filter(Boolean).join(' · ')}</div>
-      <div class="art-title">${a.title}</div>
-      <div class="art-excerpt">${a.excerpt||''}</div>
-    </div>
-    <div class="art-ft">
-      <span class="art-date">${a.published_at?new Date(a.published_at).toLocaleDateString('zh-TW'):''}</span>
-      <span class="art-read">閱讀全文 →</span>
+function card(a,n,big){
+  return `<a href="/articles/${a.slug}" class="ac${big?' ac-big':''}">
+    <div class="ac-n">No.${String(n).padStart(2,'0')}</div>
+    <span class="ac-emoji">${a.emoji||'✍️'}</span>
+    <div class="ac-meta">${[a.city,a.category].filter(Boolean).join(' · ')||'漫途'}</div>
+    <div class="ac-ttl">${a.title}</div>
+    <div class="ac-exc">${a.excerpt||''}</div>
+    <div class="ac-ft">
+      <span class="ac-dt">${big?fmt(a.published_at):fmtS(a.published_at)}</span>
+      <span class="ac-arr">${big?'閱讀全文 →':'→'}</span>
     </div>
   </a>`;
 }
