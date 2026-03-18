@@ -780,6 +780,105 @@ function saveSettings(){
   localStorage.setItem('mantu-cats',JSON.stringify(cats));
 }
 
+// ── AI UNBOXING ────────────────────────────────────────────────────────────
+let aiImgBase64=[], aiGenTitle='', aiGenSlug='';
+
+function handleAiImgs(e){
+  const files=Array.from(e.target.files||[]);
+  aiImgBase64=[];
+  const prev=document.getElementById('ai-img-previews');
+  prev.innerHTML='';
+  files.forEach(file=>{
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      aiImgBase64.push({data:ev.target.result.split(',')[1],type:file.type});
+      const img=document.createElement('img');
+      img.src=ev.target.result;
+      img.style.cssText='width:70px;height:70px;object-fit:cover;border:1px solid var(--border2)';
+      prev.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+  });
+  e.target.value='';
+}
+
+async function genAiArticle(){
+  const name=document.getElementById('ai-name').value.trim();
+  if(!name){toast('請填寫店家名稱','err');return;}
+  const apiKey=localStorage.getItem(KEY_SK);
+  if(!apiKey){document.getElementById('ai-key-warn').style.display='block';return;}
+  document.getElementById('ai-key-warn').style.display='none';
+  const btn=document.getElementById('ai-gen-btn');
+  const status=document.getElementById('ai-status');
+  btn.disabled=true;btn.textContent='生成中...';
+  status.textContent='AI 思考中...';status.style.color='var(--accent)';
+  const city=document.getElementById('ai-city').value.trim();
+  const type=document.getElementById('ai-type').value;
+  const feature=document.getElementById('ai-feature').value.trim();
+  const note=document.getElementById('ai-note').value.trim();
+  const rating=document.getElementById('ai-rating').value;
+  const price=document.getElementById('ai-price').value;
+  const prompt=`你是一位擅長寫旅遊開箱文的部落客，文風細膩有溫度。請根據以下資訊，寫一篇完整的繁體中文開箱文章。\n\n店家資料：\n- 名稱：${name}\n- 城市：${city||'未指定'}\n- 類型：${type}\n- 特色：${feature||'未提供'}\n- 評分：${rating}/5\n- 價位：${price}\n- 個人心得：${note||'未提供'}\n\n請依照以下格式回覆：\n\nTITLE: [吸引人的文章標題，有意境]\n\nBODY:\n[文章內容800-1200字，分段落，純文字段落用空行分隔]`;
+  try{
+    const userContent=[];
+    if(aiImgBase64.length>0){aiImgBase64.forEach(img=>{userContent.push({type:'image',source:{type:'base64',media_type:img.type,data:img.data}});});}
+    userContent.push({type:'text',text:prompt});
+    const res=await fetch('/.netlify/functions/claude-proxy',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'x-action':'generate'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2000,messages:[{role:'user',content:userContent}]})});
+    const data=await res.json();
+    const text=data.content?.[0]?.text||'';
+    const titleMatch=text.match(/TITLE:\s*(.+)/);
+    const bodyMatch=text.match(/BODY:\s*([\s\S]+)/);
+    aiGenTitle=titleMatch?titleMatch[1].trim():`${name}｜${city}${type}開箱`;
+    const body=bodyMatch?bodyMatch[1].trim():text;
+    aiGenSlug=aiGenTitle.replace(/[^\u4e00-\u9fff\w\s-]/g,'').trim().replace(/[\s_]+/g,'-').substring(0,60).toLowerCase()+'-'+Date.now();
+    document.getElementById('ai-title-preview').textContent=aiGenTitle;
+    document.getElementById('ai-body-preview').textContent=body;
+    status.textContent='✅ 生成完成！可直接編輯後發布';status.style.color='var(--green)';
+    document.getElementById('ai-publish-panel').style.display='block';
+    renderCitySelect2();renderCatSelect2();
+    if(city){const sel=document.getElementById('ai-pub-city');Array.from(sel.options).forEach(o=>{if(o.value===city)o.selected=true;});}
+    const catSel=document.getElementById('ai-pub-cat');Array.from(catSel.options).forEach(o=>{if(o.value===type)o.selected=true;});
+    document.getElementById('ai-pub-time').value=fmtDateLocal(new Date());
+  }catch(e){status.textContent='生成失敗：'+e.message.slice(0,50);status.style.color='var(--red)';}
+  btn.disabled=false;btn.textContent='✨ AI 生成開箱文';
+}
+
+function renderCitySelect2(){const sel=document.getElementById('ai-pub-city');sel.innerHTML='<option value="">— 選擇城市 —</option>'+cities.map(c=>`<option value="${c}">${c}</option>`).join('');}
+function renderCatSelect2(){const sel=document.getElementById('ai-pub-cat');sel.innerHTML='<option value="">— 選擇分類 —</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('');}
+
+async function publishAiArticle(){
+  const title=aiGenTitle;
+  const body=document.getElementById('ai-body-preview').textContent.trim();
+  if(!title||!body){toast('請先生成文章','err');return;}
+  const city=document.getElementById('ai-pub-city').value;
+  const cat=document.getElementById('ai-pub-cat').value;
+  const btn=document.getElementById('ai-pub-btn');
+  const msg=document.getElementById('ai-pub-msg');
+  btn.disabled=true;btn.textContent='發布中...';
+  let coverImage=null;
+  if(aiImgBase64.length>0){
+    try{
+      const img=aiImgBase64[0];const ext=img.type.split('/')[1]||'jpg';const fname=Date.now()+'.'+ext;
+      const blob=await fetch(`data:${img.type};base64,${img.data}`).then(r=>r.blob());
+      const{data:upData}=await sb.storage.from('article-images').upload(fname,blob,{contentType:img.type});
+      if(upData){const{data:{publicUrl}}=sb.storage.from('article-images').getPublicUrl(fname);coverImage=publicUrl;}
+    }catch(e){console.log('img err',e);}
+  }
+  const htmlContent=body.split('\n\n').map(p=>p.trim()?`<p>${p.replace(/\n/g,'<br>')}</p>`:'').join('\n');
+  const status=document.getElementById('ai-pub-status').value;
+  const pubAt=document.getElementById('ai-pub-time').value;
+  const name=document.getElementById('ai-name').value.trim();
+  const type=document.getElementById('ai-type').value;
+  const articleData={title,slug:aiGenSlug,city:city||document.getElementById('ai-city').value||null,category:cat||type||null,excerpt:document.getElementById('ai-pub-excerpt').value.trim()||body.slice(0,120)+'...',content:htmlContent,keywords:[name,type,city].filter(Boolean),emoji:{咖啡廳:'☕',餐廳:'🍽️',甜點:'🍰',景點:'🏔️',住宿:'🏠',酒吧:'🍸'}[type]||'✍️',cover_image:coverImage,status,published_at:pubAt?new Date(pubAt).toISOString():new Date().toISOString()};
+  const{error}=await sb.from('articles').insert(articleData);
+  btn.disabled=false;btn.textContent='🚀 發布到前台';
+  if(error){msg.style.color='var(--red)';msg.textContent='發布失敗：'+error.message;return;}
+  msg.style.color='var(--green)';
+  msg.innerHTML=status==='published'?`✅ 文章已發布！<a href="https://journeylift.com.tw/articles/${aiGenSlug}" target="_blank" style="color:var(--accent2);margin-left:0.5rem">查看文章 →</a>`:'📝 已存為草稿';
+  toast(status==='published'?'文章已發布 🎉':'已存為草稿');
+  await loadArticles();
+}
+
 // ── PAGES ──────────────────────────────────────────────────────────────────
 function showPage(name){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
