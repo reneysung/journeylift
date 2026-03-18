@@ -1,12 +1,17 @@
 [functions]
   directory = "netlify/functions"
 
+[[redirects]]
+  from = "/articles/:slug"
+  to = "/articles/article.html"
+  status = 200
+
 [[headers]]
   for = "/tools/*"
   [headers.values]
     Cache-Control = "no-cache, no-store, must-revalidate"
 
 [[headers]]
-  for = "/*"
+  for = "/admin*"
   [headers.values]
-    X-Frame-Options = "SAMEORIGIN"
+    Cache-Control = "no-cache, no-store, must-revalidate"
