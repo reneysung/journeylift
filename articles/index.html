@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>文章目錄 — 漫途旅遊誌</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  --bg:#faf8f5;--surface:#fff;--border:#e8e0d0;
+  --text:#2a2420;--text2:#6b5a4e;--text3:#a89880;
+  --accent:#c4956a;--accent2:#8b6a4f;
+  --font-serif:'Cormorant Garamond',serif;--font-sans:'Noto Sans TC',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:14px}
+a{color:inherit;text-decoration:none}
+
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 2rem;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-family:var(--font-serif);font-size:1.5rem;color:var(--accent2)}
+.logo span{font-style:italic}
+nav{display:flex;gap:2rem}
+nav a{font-size:0.78rem;letter-spacing:0.1em;color:var(--text2);transition:color 0.2s}
+nav a:hover{color:var(--accent)}
+
+.hero{padding:3rem 2rem 2rem;max-width:1100px;margin:0 auto;border-bottom:1px solid var(--border);margin-bottom:2rem}
+.hero h1{font-family:var(--font-serif);font-size:2.8rem;color:var(--text);margin-bottom:0.5rem}
+.hero p{font-size:0.85rem;color:var(--text2);line-height:1.8}
+
+.container{max-width:1100px;margin:0 auto;padding:0 2rem 4rem}
+
+.filters{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:2rem}
+.f-btn{background:none;border:1px solid var(--border);color:var(--text2);padding:0.4rem 1rem;font-size:0.75rem;letter-spacing:0.08em;cursor:pointer;font-family:var(--font-sans);transition:all 0.2s}
+.f-btn:hover,.f-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+.articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}
+.art-card{background:var(--surface);border:1px solid var(--border);transition:transform 0.2s,box-shadow 0.2s;cursor:pointer}
+.art-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.08)}
+.art-card-emoji{font-size:3rem;padding:1.5rem 1.5rem 0.5rem;line-height:1}
+.art-card-body{padding:0 1.5rem 1.5rem}
+.art-card-meta{font-size:0.68rem;letter-spacing:0.1em;color:var(--text3);margin-bottom:0.5rem}
+.art-card-title{font-family:var(--font-serif);font-size:1.3rem;color:var(--text);margin-bottom:0.5rem;line-height:1.4}
+.art-card-excerpt{font-size:0.78rem;color:var(--text2);line-height:1.7;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.art-card-ft{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.art-card-date{font-size:0.7rem;color:var(--text3)}
+.art-card-link{font-size:0.72rem;color:var(--accent);letter-spacing:0.05em}
+
+.loading{text-align:center;padding:4rem;color:var(--text3);font-size:0.85rem}
+.empty{text-align:center;padding:4rem;color:var(--text3)}
+.empty-icon{font-size:3rem;margin-bottom:1rem}
+
+footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem;text-align:center;font-size:0.75rem;color:var(--text3)}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="/" class="logo"><span>漫途</span>旅遊誌</a>
+  <nav>
+    <a href="/">首頁</a>
+    <a href="/articles" style="color:var(--accent)">文章</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <h1>旅途日記</h1>
+  <p>記錄每一段值得被記住的旅程</p>
+</div>
+
+<div class="container">
+  <div class="filters" id="filters">
+    <button class="f-btn active" onclick="setFilter('all',this)">全部</button>
+  </div>
+  <div id="articles-container">
+    <div class="loading">載入中...</div>
+  </div>
+</div>
+
+<footer>© 2026 漫途旅遊誌 · 用文字記錄每一段旅程</footer>
+
+<script>
+const sb = supabase.createClient(
+  'https://zsebcpfblecwumbaxeaz.supabase.co',
+  'sb_publishable_L2DOfeM0cAJqwlVCr1LwtA_jE9MBNDn'
+);
+
+let allArts = [], activeFilter = 'all';
+
+async function load(){
+  const {data} = await sb.from('articles')
+    .select('*')
+    .eq('status','published')
+    .order('published_at',{ascending:false});
+  allArts = data||[];
+  buildFilters();
+  render();
+}
+
+function buildFilters(){
+  const cities = [...new Set(allArts.map(a=>a.city).filter(Boolean))];
+  const cats = [...new Set(allArts.map(a=>a.category).filter(Boolean))];
+  const container = document.getElementById('filters');
+  container.innerHTML = `<button class="f-btn active" onclick="setFilter('all',this)">全部</button>`
+    + cities.map(c=>`<button class="f-btn" onclick="setFilter('city:${c}',this)">${c}</button>`).join('')
+    + cats.map(c=>`<button class="f-btn" onclick="setFilter('cat:${c}',this)">${c}</button>`).join('');
+}
+
+function setFilter(f,el){
+  activeFilter=f;
+  document.querySelectorAll('.f-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+function render(){
+  let list = allArts;
+  if(activeFilter.startsWith('city:')) list=allArts.filter(a=>a.city===activeFilter.slice(5));
+  else if(activeFilter.startsWith('cat:')) list=allArts.filter(a=>a.category===activeFilter.slice(4));
+
+  const container = document.getElementById('articles-container');
+  if(!list.length){
+    container.innerHTML=`<div class="empty"><div class="empty-icon">📭</div>尚無文章</div>`;
+    return;
+  }
+  container.innerHTML=`<div class="articles-grid">${list.map(a=>`
+    <a href="/articles/${a.slug}" class="art-card">
+      <div class="art-card-emoji">${a.emoji||'✍️'}</div>
+      <div class="art-card-body">
+        <div class="art-card-meta">${[a.city,a.category].filter(Boolean).join(' · ')}</div>
+        <div class="art-card-title">${a.title}</div>
+        <div class="art-card-excerpt">${a.excerpt||''}</div>
+      </div>
+      <div class="art-card-ft">
+        <span class="art-card-date">${a.published_at?new Date(a.published_at).toLocaleDateString('zh-TW'):''}</span>
+        <span class="art-card-link">閱讀全文 →</span>
+      </div>
+    </a>`).join('')}</div>`;
+}
+
+load();
+</script>
+</body>
+</html>
