@@ -253,7 +253,7 @@ async function load(){
   const KNOWN=new Set(['台北','台南','台中','高雄','花蓮','宜蘭','南投','嘉義','屏東','台東','澎湖','金門','基隆','新竹','苗栗','彰化','雲林','新北','桃園']);const cities=[...new Set(_all.map(a=>a.city).filter(c=>c&&KNOWN.has(c)))];
   const bar=document.getElementById('city-bar');
   if(cities.length>1){
-    bar.innerHTML='<button class="city-btn on" onclick="fc(\'\')">全部</button>'+cities.map(c=>`<button class="city-btn" onclick="fc('${c}')">${c}</button>`).join('');
+    bar.innerHTML='<a class="city-btn on" href="/articles">全部</a>'+cities.map(c=>`<a class="city-btn" href="/articles?city=${encodeURIComponent(c)}">${c}</a>`).join('');
   }
   rg(_all);
 }
@@ -263,6 +263,15 @@ function fc(city){
   document.querySelectorAll('.city-btn').forEach(b=>b.classList.toggle('on',b.textContent===city||(city===''&&b.textContent==='全部')));
   rg(city?_all.filter(a=>a.city===city):_all);
 }
+// city-btn <a> click: prevent navigation, do JS filter instead
+document.addEventListener('click',function(e){
+  const btn=e.target.closest('.city-btn');
+  if(!btn||!btn.href)return;
+  e.preventDefault();
+  const url=new URL(btn.href);
+  const city=decodeURIComponent(url.searchParams.get('city')||'');
+  fc(city);
+});
 
 function fmt(d){return d?new Date(d).toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric'}):''}
 function fmtS(d){return d?new Date(d).toLocaleDateString('zh-TW'):''}
