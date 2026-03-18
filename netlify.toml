@@ -1,5 +1,9 @@
 [functions]
   directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[functions."claude-proxy"]
+  timeout = 26
 
 [[headers]]
   for = "/tools/*"
