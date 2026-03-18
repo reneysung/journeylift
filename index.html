@@ -121,6 +121,14 @@ footer{border-top:1px solid rgba(200,169,110,0.08);padding:4rem 3rem;background:
 .ft-links a:hover{color:var(--paper)}
 .ft-copy{grid-column:1/-1;border-top:1px solid rgba(200,169,110,0.08);padding-top:2rem;margin-top:1rem;font-size:0.62rem;letter-spacing:0.18em;color:var(--mist);text-align:center}
 
+/* city filter */
+.city-bar{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:2.5rem}
+.city-btn{padding:0.3rem 0.85rem;border:1px solid rgba(200,169,110,0.18);background:none;color:var(--mist);cursor:pointer;font-family:var(--ff-n);font-size:0.65rem;letter-spacing:0.1em;transition:all 0.2s}
+.city-btn:hover,.city-btn.on{border-color:var(--gold);color:var(--gold)}
+/* cover image */
+.ac-cover{width:100%;aspect-ratio:3/2;object-fit:cover;display:block;margin-bottom:1.2rem}
+.ac-big .ac-cover{aspect-ratio:16/9;margin-bottom:1.5rem}
+@media(max-width:900px){.city-bar{gap:0.3rem}.city-btn{font-size:0.62rem}}
 @keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 
 @media(max-width:900px){
@@ -144,8 +152,6 @@ footer{border-top:1px solid rgba(200,169,110,0.08);padding:4rem 3rem;background:
   <nav class="hnav">
     <a href="/">首頁</a>
     <a href="/articles">文章</a>
-    <a href="/tools/unboxing.html">工具</a>
-    <a href="/admin">後台</a>
   </nav>
 </header>
 
@@ -157,7 +163,6 @@ footer{border-top:1px solid rgba(200,169,110,0.08);padding:4rem 3rem;background:
     <p class="desc">漫途是一本關於旅行的誌，記錄那些值得被記住的風景、滋味與感受。用緩慢的步伐，深刻的眼光，書寫每一段屬於自己的故事。</p>
     <div class="cta">
       <a href="/articles" class="btn-p">探索文章</a>
-      <a href="/tools/unboxing.html" class="btn-t">開箱文工具 <span>→</span></a>
     </div>
   </div>
   <div class="hero-r">
@@ -198,6 +203,7 @@ footer{border-top:1px solid rgba(200,169,110,0.08);padding:4rem 3rem;background:
     </div>
     <a href="/articles" class="sec-all">所有文章 <span>→</span></a>
   </div>
+  <div class="city-bar" id="city-bar"></div>
   <div id="ac-container"><div class="loading">Loading...</div></div>
 </section>
 
@@ -214,15 +220,7 @@ footer{border-top:1px solid rgba(200,169,110,0.08);padding:4rem 3rem;background:
       <div class="ft-links">
         <a href="/">首頁</a>
         <a href="/articles">所有文章</a>
-        <a href="/tools/unboxing.html">開箱文工具</a>
-      </div>
-    </div>
-    <div>
-      <div class="ft-ttl">管理</div>
-      <div class="ft-links">
-        <a href="/admin">後台管理</a>
-      </div>
-    </div>
+
     <div class="ft-copy">© 2026 漫途旅遊誌 · 保留所有權利</div>
   </div>
 </footer>
@@ -232,53 +230,50 @@ const sb = supabase.createClient(
   'https://zsebcpfblecwumbaxeaz.supabase.co',
   'sb_publishable_L2DOfeM0cAJqwlVCr1LwtA_jE9MBNDn'
 );
+let _all=[], _city='';
 
 async function load(){
-  const {data} = await sb.from('articles')
-    .select('*').eq('status','published')
-    .order('published_at',{ascending:false}).limit(7);
-  const list = data||[];
-
-  if(list.length > 0){
-    const a = list[0];
-    const fc = document.getElementById('hero-feat');
-    fc.onclick = ()=>location.href=`/articles/${a.slug}`;
-    fc.querySelector('.feat-emoji').textContent = a.emoji||'✍️';
-    fc.querySelector('.feat-meta').textContent = [a.city,a.category].filter(Boolean).join(' · ')||'漫途';
-    fc.querySelector('.feat-title').textContent = a.title;
-    if(a.excerpt){
-      const el = document.createElement('div');
-      el.className='feat-exc'; el.textContent=a.excerpt;
-      fc.appendChild(el);
+  const {data} = await sb.from('articles').select('*').eq('status','published').order('published_at',{ascending:false}).limit(20);
+  _all = data||[];
+  if(_all.length>0){
+    const a=_all[0];
+    const fc=document.getElementById('hero-feat');
+    fc.onclick=()=>location.href=`/articles/${a.slug}`;
+    fc.querySelector('.feat-emoji').textContent=a.emoji||'✍️';
+    fc.querySelector('.feat-meta').textContent=[a.city,a.category].filter(Boolean).join(' · ')||'漫途';
+    fc.querySelector('.feat-title').textContent=a.title;
+    if(a.cover_image){
+      const img=document.createElement('img');
+      img.src=a.cover_image;img.style.cssText='width:100%;aspect-ratio:16/9;object-fit:cover;margin-bottom:1rem';
+      fc.insertBefore(img,fc.querySelector('.feat-emoji'));
+      fc.querySelector('.feat-emoji').style.display='none';
     }
+    if(a.excerpt){const el=document.createElement('div');el.className='feat-exc';el.textContent=a.excerpt;fc.appendChild(el);}
   }
-
-  const c = document.getElementById('ac-container');
-  if(!list.length){
-    c.innerHTML=`<div class="empty"><span class="empty-num">漫途</span>文章即將登場，敬請期待</div>`;
-    return;
+  const cities=[...new Set(_all.map(a=>a.city).filter(Boolean))];
+  const bar=document.getElementById('city-bar');
+  if(cities.length>1){
+    bar.innerHTML='<button class="city-btn on" onclick="fc(\'\')">全部</button>'+cities.map(c=>`<button class="city-btn" onclick="fc('${c}')">${c}</button>`).join('');
   }
-
-  const [first,...rest] = list;
-  const side = rest.slice(0,1);
-  const small = rest.slice(1);
-
-  c.innerHTML = `
-    <div class="grid-main">
-      ${card(first,1,true)}
-      ${side.map((a,i)=>card(a,i+2,false)).join('')}
-    </div>
-    ${small.length?`<div class="grid-small">${small.map((a,i)=>card(a,i+3,false)).join('')}</div>`:''}
-  `;
+  rg(_all);
 }
 
-function fmt(d){ return d?new Date(d).toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric'}):''; }
-function fmtS(d){ return d?new Date(d).toLocaleDateString('zh-TW'):''; }
+function fc(city){
+  _city=city;
+  document.querySelectorAll('.city-btn').forEach(b=>b.classList.toggle('on',b.textContent===city||(city===''&&b.textContent==='全部')));
+  rg(city?_all.filter(a=>a.city===city):_all);
+}
+
+function fmt(d){return d?new Date(d).toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric'}):''}
+function fmtS(d){return d?new Date(d).toLocaleDateString('zh-TW'):''}
 
 function card(a,n,big){
+  const cover=a.cover_image
+    ?`<img class="ac-cover" src="${a.cover_image}" alt="${a.title}" loading="lazy">`
+    :`<span class="ac-emoji">${a.emoji||'✍️'}</span>`;
   return `<a href="/articles/${a.slug}" class="ac${big?' ac-big':''}">
     <div class="ac-n">No.${String(n).padStart(2,'0')}</div>
-    <span class="ac-emoji">${a.emoji||'✍️'}</span>
+    ${cover}
     <div class="ac-meta">${[a.city,a.category].filter(Boolean).join(' · ')||'漫途'}</div>
     <div class="ac-ttl">${a.title}</div>
     <div class="ac-exc">${a.excerpt||''}</div>
@@ -287,6 +282,14 @@ function card(a,n,big){
       <span class="ac-arr">${big?'閱讀全文 →':'→'}</span>
     </div>
   </a>`;
+}
+
+function rg(list){
+  const el=document.getElementById('ac-container');
+  if(!list.length){el.innerHTML='<div class="empty"><span class="empty-num">漫途</span>此地尚無文章</div>';return;}
+  const[first,...rest]=list;
+  const side=rest.slice(0,1),small=rest.slice(1,6);
+  el.innerHTML=`<div class="grid-main">${card(first,1,true)}${side.map((a,i)=>card(a,i+2,false)).join('')}</div>${small.length?`<div class="grid-small">${small.map((a,i)=>card(a,i+3,false)).join('')}</div>`:''}`;
 }
 
 load();
