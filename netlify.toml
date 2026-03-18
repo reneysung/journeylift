@@ -2,6 +2,12 @@
   directory = "netlify/functions"
 
 [[redirects]]
+  from = "/admin"
+  to = "/admin-v2.html"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/articles/:slug"
   to = "/articles/article.html"
   status = 200
@@ -12,18 +18,9 @@
   status = 200
 
 [[headers]]
-  for = "/admin"
+  for = "/admin-v2.html"
   [headers.values]
-    Cache-Control = "no-cache, no-store, must-revalidate, max-age=0"
-    Pragma = "no-cache"
-    Expires = "0"
-
-[[headers]]
-  for = "/admin.html"
-  [headers.values]
-    Cache-Control = "no-cache, no-store, must-revalidate, max-age=0"
-    Pragma = "no-cache"
-    Expires = "0"
+    Cache-Control = "no-cache, no-store, must-revalidate"
 
 [[headers]]
   for = "/tools/*"
