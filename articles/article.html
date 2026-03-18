@@ -155,7 +155,28 @@ async function load(){
 
   if(!data){ notFound(); return; }
 
-  // Update meta
+  
+  // Update OG meta for social sharing
+  const setMeta = (sel, val) => {
+    const el = document.querySelector(sel);
+    if(el && val) el.setAttribute(el.hasAttribute('content')?'content':'href', val);
+  };
+  const pageUrl = location.href;
+  const ogImg = data.cover_image || 'https://journeylift.com.tw/og-default.jpg';
+  document.title = data.title + ' — 漫途旅遊誌';
+  setMeta('meta[property="og:url"]', pageUrl);
+  setMeta('meta[property="og:title"]', data.title);
+  setMeta('meta[property="og:description"]', data.excerpt||data.title);
+  setMeta('meta[property="og:image"]', ogImg);
+  setMeta('meta[name="twitter:title"]', data.title);
+  setMeta('meta[name="twitter:description"]', data.excerpt||data.title);
+  setMeta('meta[name="twitter:image"]', ogImg);
+  setMeta('meta[name="description"]', data.excerpt||data.title);
+  // canonical link
+  let canonical = document.querySelector('link[rel="canonical"]');
+  if(!canonical){ canonical=document.createElement('link'); canonical.rel='canonical'; document.head.appendChild(canonical); }
+  canonical.href = pageUrl;
+// Update meta (legacy)
   document.title = `${data.title} — 漫途旅遊誌`;
   const desc = document.createElement('meta');
   desc.name='description'; desc.content=data.excerpt||'';
