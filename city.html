@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title id="page-title">地區文章 — 漫途生活旅遊誌</title>
+<meta id="meta-desc" name="description" content="">
+<link rel="canonical" id="canonical" href="">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+TC:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Serif TC',serif;background:#faf9f7;color:#2c2c2c;min-height:100vh}
+header{background:#fff;border-bottom:1px solid #e8e0d5;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+.logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#2c2c2c;text-decoration:none;letter-spacing:.05em}
+nav a{color:#666;text-decoration:none;font-size:13px;margin-left:20px}
+nav a:hover{color:#2c2c2c}
+.hero{background:linear-gradient(135deg,#f5f0e8 0%,#ede8df 100%);padding:48px 24px 40px;text-align:center;border-bottom:1px solid #e8e0d5}
+.hero-label{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#999;margin-bottom:12px}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,6vw,52px);font-weight:600;color:#1a1a1a;line-height:1.2;margin-bottom:12px}
+.hero-sub{font-size:14px;color:#777;line-height:1.7}
+.kw-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.kw-chip{background:#fff;border:1px solid #ddd;border-radius:20px;padding:6px 16px;font-size:12px;color:#555;text-decoration:none;transition:all .2s}
+.kw-chip:hover,.kw-chip.active{background:#2c2c2c;color:#fff;border-color:#2c2c2c}
+.container{max-width:960px;margin:0 auto;padding:40px 24px}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+.section-head h2{font-family:'Cormorant Garamond',serif;font-size:22px;color:#1a1a1a}
+.count{font-size:12px;color:#999}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}
+.card{background:#fff;border-radius:8px;overflow:hidden;border:1px solid #e8e0d5;transition:transform .2s,box-shadow .2s;text-decoration:none;color:inherit;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.card-img{width:100%;aspect-ratio:16/9;object-fit:cover;background:#f0ece4;display:flex;align-items:center;justify-content:center;font-size:36px}
+.card-body{padding:16px;flex:1;display:flex;flex-direction:column}
+.card-meta{font-size:11px;color:#aaa;letter-spacing:.05em;margin-bottom:8px;display:flex;gap:8px;align-items:center}
+.card-tag{background:#f5f0e8;color:#8b7355;border-radius:4px;padding:2px 7px;font-size:10px}
+.card-title{font-size:15px;font-weight:600;line-height:1.5;color:#1a1a1a;margin-bottom:8px;flex:1}
+.card-excerpt{font-size:12px;color:#888;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.empty{text-align:center;padding:80px 24px;color:#aaa}
+.empty-icon{font-size:48px;margin-bottom:16px}
+.loading{text-align:center;padding:80px;color:#aaa;font-size:14px}
+footer{background:#2c2c2c;color:#aaa;text-align:center;padding:32px 24px;font-size:12px;margin-top:80px}
+footer a{color:#ccc;text-decoration:none}
+@media(max-width:600px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/">漫途</a>
+  <nav>
+    <a href="/articles">所有文章</a>
+    <a href="/">首頁</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="hero-label">地區探索</div>
+  <h1 id="city-name">載入中...</h1>
+  <p class="hero-sub" id="city-sub">探索當地最值得一去的咖啡廳、美食與生活風格</p>
+  <div class="kw-chips" id="kw-chips"></div>
+</div>
+
+<div class="container">
+  <div class="section-head">
+    <h2 id="section-title">精選文章</h2>
+    <span class="count" id="art-count"></span>
+  </div>
+  <div id="grid" class="grid"><div class="loading">載入中...</div></div>
+</div>
+
+<footer>
+  <p>© 2025 <a href="/">漫途生活旅遊誌</a> · 用文字記錄每一段旅程</p>
+</footer>
+
+<script>
+const SUPA_URL = 'https://zsebcpfblecwumbaxeaz.supabase.co';
+const SUPA_KEY = 'sb_publishable_L2DOfeM0cAJqwlVCr1LwtA_jE9MBNDn';
+
+async function sbGet(path) {
+  const r = await fetch(SUPA_URL + '/rest/v1/' + path, {
+    headers: {'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY}
+  });
+  return r.json();
+}
+
+function fmtDate(s) {
+  if (!s) return '';
+  const d = new Date(s);
+  return d.getFullYear() + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + String(d.getDate()).padStart(2,'0');
+}
+
+function cardHtml(a) {
+  const img = a.cover_image
+    ? '<img class="card-img" src="' + a.cover_image + '" alt="' + a.title + '" loading="lazy">'
+    : '<div class="card-img">' + (a.emoji || '📝') + '</div>';
+  return '<a class="card" href="/articles/' + a.slug + '">' +
+    img +
+    '<div class="card-body">' +
+      '<div class="card-meta">' +
+        (a.category ? '<span class="card-tag">' + a.category + '</span>' : '') +
+        '<span>' + fmtDate(a.published_at) + '</span>' +
+      '</div>' +
+      '<div class="card-title">' + a.title + '</div>' +
+      '<div class="card-excerpt">' + (a.excerpt || '') + '</div>' +
+    '</div>' +
+  '</a>';
+}
+
+async function init() {
+  // Get city slug from URL path e.g. /tainan or /tainan/tainan-food
+  const parts = location.pathname.replace(/^\//, '').split('/');
+  const citySlug = parts[0];
+  const kwSlug = parts[1] || null;
+
+  // Load region info
+  const regions = await sbGet('regions?select=id,name,slug&slug=eq.' + citySlug);
+  const region = regions[0];
+  if (!region) {
+    document.getElementById('city-name').textContent = '找不到此地區';
+    document.getElementById('grid').innerHTML = '<div class="empty"><div class="empty-icon">🗺️</div><p>找不到此地區</p></div>';
+    return;
+  }
+
+  // Update page meta
+  const cityName = region.name;
+  document.title = cityName + '旅遊美食攻略 — 漫途生活旅遊誌';
+  document.getElementById('page-title').textContent = cityName + '旅遊美食攻略 — 漫途生活旅遊誌';
+  document.getElementById('meta-desc').content = '探索' + cityName + '最值得一訪的咖啡廳、美食餐廳與生活風格，精選在地推薦文章。';
+  document.getElementById('canonical').href = 'https://journeylift.com.tw/' + citySlug;
+  document.getElementById('city-name').textContent = cityName;
+
+  // Load keywords for this city
+  const keywords = await sbGet('keywords?select=id,name,slug&region_id=eq.' + region.id + '&order=sort_order');
+  window._regionId = region.id;
+  window._kwSlug = kwSlug;
+
+  // Render keyword chips
+  const chipsEl = document.getElementById('kw-chips');
+  let chipsHtml = '<a class="kw-chip' + (!kwSlug ? ' active' : '') + '" href="/' + citySlug + '">全部</a>';
+  keywords.forEach(k => {
+    const active = kwSlug === k.slug ? ' active' : '';
+    chipsHtml += '<a class="kw-chip' + active + '" href="/' + citySlug + '/' + k.slug + '">' + k.name + '</a>';
+  });
+  chipsEl.innerHTML = chipsHtml;
+
+  // Update hero subtitle if keyword selected
+  if (kwSlug) {
+    const kw = keywords.find(k => k.slug === kwSlug);
+    if (kw) {
+      document.getElementById('city-sub').textContent = cityName + ' ' + kw.name + '精選推薦';
+      document.getElementById('section-title').textContent = cityName + ' × ' + kw.name;
+      document.title = cityName + kw.name + '推薦 — 漫途生活旅遊誌';
+      document.getElementById('canonical').href = 'https://journeylift.com.tw/' + citySlug + '/' + kwSlug;
+      document.getElementById('meta-desc').content = '精選' + cityName + kw.name + '推薦，在地達人帶你找到最值得造訪的好店。';
+    }
+  } else {
+    document.getElementById('section-title').textContent = cityName + '精選文章';
+  }
+
+  // Load articles
+  let query = 'articles?select=id,title,slug,city,category,excerpt,cover_image,emoji,published_at,keyword_id&status=eq.published&city=eq.' + cityName + '&order=published_at.desc';
+  if (kwSlug && keywords.length) {
+    const kw = keywords.find(k => k.slug === kwSlug);
+    if (kw) query = 'articles?select=id,title,slug,city,category,excerpt,cover_image,emoji,published_at,keyword_id&status=eq.published&keyword_id=eq.' + kw.id + '&order=published_at.desc';
+  }
+
+  const articles = await sbGet(query);
+  const grid = document.getElementById('grid');
+  const countEl = document.getElementById('art-count');
+
+  if (!articles.length) {
+    grid.innerHTML = '<div class="empty"><div class="empty-icon">📭</div><p>此區暫無文章，敬請期待</p></div>';
+    countEl.textContent = '0 篇文章';
+    return;
+  }
+
+  countEl.textContent = articles.length + ' 篇文章';
+  grid.innerHTML = articles.map(cardHtml).join('');
+}
+
+init().catch(e => {
+  console.error(e);
+  document.getElementById('grid').innerHTML = '<div class="empty"><div class="empty-icon">⚠️</div><p>載入失敗，請重新整理</p></div>';
+});
+</script>
+</body>
+</html>
