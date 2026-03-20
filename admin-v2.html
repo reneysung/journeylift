@@ -355,30 +355,13 @@ tr:hover td{background:var(--surface2)}
 
       <!-- SETTINGS PAGE -->
       <div class="page" id="page-settings">
-        <div class="page-hd">
-          <div class="page-title">分類設定</div>
-        </div>
-        <div style="background:var(--surface);border:1px solid var(--border);padding:1.5rem;max-width:500px">
-          <div class="fg">
-            <label class="fl">城市列表</label>
-            <div id="cities-list" style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.5rem"></div>
-            <div style="display:flex;gap:0.5rem">
-              <input class="fi" id="new-city" placeholder="新增城市..." style="flex:1" onkeydown="if(event.key==='Enter')addCity()">
-              <button class="btn-primary" onclick="addCity()">新增</button>
-            </div>
-          </div>
-          <div class="fg" style="margin-top:1.5rem">
-            <label class="fl">分類列表</label>
-            <div id="cats-list" style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.5rem"></div>
-            <div style="display:flex;gap:0.5rem">
-              <input class="fi" id="new-cat" placeholder="新增分類..." style="flex:1" onkeydown="if(event.key==='Enter')addCat()">
-              <button class="btn-primary" onclick="addCat()">新增</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </main>
+  <div class="page-hd">
+    <div class="page-title">分類設定</div>
+    <button class="btn-primary" onclick="openAddCat()">＋ 新增分類</button>
+  </div>
+  <div id="cat-list" style="margin-top:1.5rem"></div>
+</div>
+</main>
   </div>
 </div>
 
@@ -1109,5 +1092,94 @@ window.addEventListener('load',()=>{
   </div>
 </div>
 
+
+<script>
+(function(){
+  var SB='https://zsebcpfblecwumbaxeaz.supabase.co';
+  var SK='sb_publishable_L2DOfeM0cAJqwlVCr1LwtA_jE9MBNDn';
+
+  function loadCats(){
+    fetch(SB+'/rest/v1/categories?select=*&order=sort_order',{
+      headers:{apikey:SK,Authorization:'Bearer '+SK}
+    }).then(function(r){return r.json();}).then(function(data){
+      window._catsCache=Array.isArray(data)?data:[];
+      renderCats(window._catsCache);
+    }).catch(function(e){console.error('loadCats',e);});
+  }
+  window.loadCats=loadCats;
+
+  function renderCats(cats){
+    var el=document.getElementById('cat-list');
+    if(!el)return;
+    if(!cats||!cats.length){el.innerHTML='<p style="color:var(--muted)">尚無分類，請新增</p>';return;}
+    var html='';
+    for(var i=0;i<cats.length;i++){
+      var cat=cats[i];
+      var preview=(cat.ai_prompt||'').slice(0,80)+(cat.ai_prompt&&cat.ai_prompt.length>80?'...':'');
+      html+='<div style="background:var(--surface2);border:1px solid var(--border);padding:1.2rem 1.5rem;border-radius:4px;margin-bottom:1rem">';
+      html+='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.6rem">';
+      html+='<span style="color:var(--paper);font-size:1rem;font-weight:500">'+cat.name+'</span>';
+      html+='<div>';
+      html+='<button onclick="editCat(''+cat.id+'')" style="background:none;border:1px solid var(--border);color:var(--accent);padding:0.25rem 0.8rem;font-size:0.72rem;cursor:pointer;margin-right:0.4rem;font-family:inherit">編輯</button>';
+      html+='<button onclick="deleteCat(''+cat.id+'',''+cat.name+'')" style="background:none;border:1px solid rgba(255,80,80,0.3);color:#f66;padding:0.25rem 0.8rem;font-size:0.72rem;cursor:pointer;font-family:inherit">刪除</button>';
+      html+='</div></div>';
+      html+='<div style="font-size:0.72rem;color:var(--muted);background:var(--surface);padding:0.6rem 1rem;border-radius:3px;line-height:1.6">'+(preview||'未設定 AI 指令')+'</div>';
+      html+='</div>';
+    }
+    el.innerHTML=html;
+  }
+  window.renderCats=renderCats;
+
+  window.openAddCat=function(){
+    var name=prompt('分類名稱：');
+    if(!name||!name.trim())return;
+    var ai=prompt('AI 寫作指引（請說明這類文章的寫作重點）：','')||'';
+    saveCat(null,name.trim(),ai);
+  };
+
+  window.editCat=function(id){
+    var cats=window._catsCache||[];
+    var cat=null;
+    for(var i=0;i<cats.length;i++){if(cats[i].id===id){cat=cats[i];break;}}
+    if(!cat)return;
+    var name=prompt('分類名稱：',cat.name);
+    if(!name||!name.trim())return;
+    var ai=prompt('AI 寫作指引：',cat.ai_prompt||'')||'';
+    saveCat(id,name.trim(),ai);
+  };
+
+  window.saveCat=function(id,name,ai_prompt){
+    var url=id?SB+'/rest/v1/categories?id=eq.'+id:SB+'/rest/v1/categories';
+    var method=id?'PATCH':'POST';
+    fetch(url,{method:method,headers:{apikey:SK,Authorization:'Bearer '+SK,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({name:name,ai_prompt:ai_prompt})})
+    .then(function(r){if(r.ok)loadCats();else alert('儲存失敗');})
+    .catch(function(){alert('儲存失敗');});
+  };
+
+  window.deleteCat=function(id,name){
+    if(!confirm('確定要刪除「'+name+'」分類？'))return;
+    fetch(SB+'/rest/v1/categories?id=eq.'+id,{method:'DELETE',headers:{apikey:SK,Authorization:'Bearer '+SK}})
+    .then(function(r){if(r.ok)loadCats();else alert('刪除失敗');});
+  };
+
+  // 攔截 showPage，當切換到 settings 時自動載入分類
+  var _origShowPage=null;
+  function patchShowPage(){
+    if(typeof window.showPage==='function'&&!window._catPatched){
+      _origShowPage=window.showPage;
+      window.showPage=function(name){
+        _origShowPage(name);
+        if(name==='settings')setTimeout(loadCats,100);
+      };
+      window._catPatched=true;
+    }
+  }
+  // 等 DOM 和原始 JS 都載入完
+  if(document.readyState==='complete'){patchShowPage();}
+  else{window.addEventListener('load',patchShowPage);}
+  // 備用：1秒後再試一次
+  setTimeout(patchShowPage,1000);
+})();
+</script>
 </body>
 </html>
