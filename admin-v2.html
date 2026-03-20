@@ -1,5 +1,5 @@
 aiGenSlug=aiGenTitle.replace(/[^\w\s-]/g,'').trim().replace(/[\s_]+/g,'-').substring(0,40).toLowerCase()+'-'+Math.random().toString(36).substring(2,6);
-    if(!aiGenSlug||aiGenSlug.length<4)aiGenSlug=name.replace(/[^\w\s-]/g,'').trim().replace(/[\s_]+/g,'-').substring(0,30).toLowerCase()+'-'+Math.random().toString(36).substring(2,6);漫途</title>
+    if(!aiGenSlug||aiGenSlug.length<4){const _citySlug=(window._regions||[]).find(r=>r.name===city)?.slug||city||'article';const _typeMap={'咖啡廳':'cafe','餐廳':'restaurant','小吃':'food','景點':'spot','住宿':'hotel','甜點':'dessert','酒吧':'bar','早午餐':'brunch'};const _typeSlug=_typeMap[document.getElementById('ai-type')?.value]||'place';aiGenSlug=_citySlug+'-'+_typeSlug+'-'+Math.random().toString(36).substring(2,6);}漫途</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
