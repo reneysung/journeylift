@@ -1,5 +1,6 @@
 [functions]
   directory = "netlify/functions"
+  node_bundler = "esbuild"
 
 [[redirects]]
   from = "/admin"
@@ -35,3 +36,6 @@
 [[edge_functions]]
   function = "og-meta"
   path = "/articles/:slug"
+
+[functions.claude-proxy]
+  timeout = 26
