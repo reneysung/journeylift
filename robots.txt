@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://journeylift.com.tw/sitemap.xml
+
+# Block admin
+Disallow: /admin
+Disallow: /admin-v2.html
+Disallow: /tools/
