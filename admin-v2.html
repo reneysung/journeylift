@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Ã¥Â¾ÂÃ¥ÂÂ°Ã§Â®Â¡Ã§ÂÂ Ã¢ÂÂ Ã¦Â¼Â«Ã©ÂÂ</title>
+<title>後台管理 — 漫途</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -154,7 +154,7 @@ tr:hover td{background:var(--surface2)}
 #toast.err{border-left:3px solid var(--red)}
 
 
-/* Ã¢ÂÂÃ¢ÂÂ MOBILE RESPONSIVE Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ */
+/* ── MOBILE RESPONSIVE ───────────────────────────────────────────────────── */
 .mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);z-index:200;padding:0.3rem 0 env(safe-area-inset-bottom,0.3rem)}
 .mobile-nav-inner{display:flex;justify-content:space-around;align-items:center}
 .mnav-btn{display:flex;flex-direction:column;align-items:center;gap:0.15rem;padding:0.35rem 0.8rem;background:none;border:none;color:var(--text3);cursor:pointer;font-family:var(--font-sans);font-size:0.56rem;letter-spacing:0.04em;transition:color 0.15s}
@@ -202,35 +202,35 @@ tr:hover td{background:var(--surface2)}
 <!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
-    <div class="login-logo">Ã¦Â¼Â«Ã©ÂÂ</div>
-    <div class="login-sub">Ã¥Â¾ÂÃ¥ÂÂ°Ã§Â®Â¡Ã§ÂÂÃ§Â³Â»Ã§ÂµÂ±</div>
+    <div class="login-logo">漫途</div>
+    <div class="login-sub">後台管理系統</div>
     <div class="login-err" id="login-err"></div>
-    <input type="password" id="pw-input" placeholder="Ã¨Â¼Â¸Ã¥ÂÂ¥Ã¥Â¯ÂÃ§Â¢Â¼" onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="login-btn" onclick="doLogin()">Ã©ÂÂ²Ã¥ÂÂ¥Ã¥Â¾ÂÃ¥ÂÂ°</button>
+    <input type="password" id="pw-input" placeholder="輸入密碼" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">進入後台</button>
   </div>
 </div>
 
 <!-- APP -->
 <div id="app">
   <header>
-    <div class="header-logo">Ã¦Â¼Â«Ã©ÂÂ ÃÂ· Ã¥Â¾ÂÃ¥ÂÂ°</div>
+    <div class="header-logo">漫途 · 後台</div>
     <div class="header-right">
       <span id="hd-stats" style="font-size:0.72rem;color:var(--text3)"></span>
-      <button onclick="openKeyModal()" style="background:none;border:1px solid var(--border2);color:var(--text2);padding:0.35rem 0.8rem;font-size:0.72rem;letter-spacing:0.08em;cursor:pointer;font-family:var(--ff-sans)" id="key-status-dot">Ã¢ÂÂ API Key</button>
-      <a href="https://journeylift.com.tw/articles" target="_blank" style="font-size:0.72rem;color:var(--text2);border:1px solid var(--border2);padding:0.35rem 0.8rem;letter-spacing:0.08em;text-decoration:none">Ã¦ÂÂ¥Ã§ÂÂÃ¥ÂÂÃ¥ÂÂ° Ã¢ÂÂ</a>
-      <button class="btn-logout" onclick="doLogout()">Ã§ÂÂ»Ã¥ÂÂº</button>
+      <button onclick="openKeyModal()" style="background:none;border:1px solid var(--border2);color:var(--text2);padding:0.35rem 0.8rem;font-size:0.72rem;letter-spacing:0.08em;cursor:pointer;font-family:var(--ff-sans)" id="key-status-dot">⚙ API Key</button>
+      <a href="https://journeylift.com.tw/articles" target="_blank" style="font-size:0.72rem;color:var(--text2);border:1px solid var(--border2);padding:0.35rem 0.8rem;letter-spacing:0.08em;text-decoration:none">查看前台 ↗</a>
+      <button class="btn-logout" onclick="doLogout()">登出</button>
     </div>
   </header>
   <div class="main-layout">
     <nav>
       <div class="nav-item active" onclick="showPage('articles')" id="nav-articles">
-        <span class="nav-icon">Ã°ÂÂÂ</span>Ã¦ÂÂÃ§Â«Â Ã§Â®Â¡Ã§ÂÂ
+        <span class="nav-icon">📝</span>文章管理
       </div>
       <div class="nav-item" onclick="showPage('ai')" id="nav-ai">
-        <span class="nav-icon">Ã¢ÂÂ¨</span>AI Ã©ÂÂÃ§Â®Â±Ã¦ÂÂ
+        <span class="nav-icon">✨</span>AI 開箱文
       </div>
       <div class="nav-item" onclick="showPage('settings')" id="nav-settings">
-        <span class="nav-icon">Ã¢ÂÂÃ¯Â¸Â</span>Ã¥ÂÂÃ©Â¡ÂÃ¨Â¨Â­Ã¥Â®Â
+        <span class="nav-icon">⚙️</span>分類設定
       </div>
     </nav>
     <main>
@@ -238,84 +238,84 @@ tr:hover td{background:var(--surface2)}
       <!-- ARTICLES PAGE -->
       <div class="page active" id="page-articles">
         <div class="page-hd">
-          <div class="page-title">Ã¦ÂÂÃ§Â«Â Ã§Â®Â¡Ã§ÂÂ</div>
-          <button class="btn-primary" onclick="openAddArt()">Ã¯Â¼Â Ã¦ÂÂ°Ã¥Â¢ÂÃ¦ÂÂÃ§Â«Â </button>
+          <div class="page-title">文章管理</div>
+          <button class="btn-primary" onclick="openAddArt()">＋ 新增文章</button>
         </div>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-lbl">Ã§Â¸Â½Ã¦ÂÂÃ§Â«Â Ã¦ÂÂ¸</div><div class="stat-val" id="st-total">0</div><div class="stat-sub">Ã§Â¯ÂÃ¦ÂÂÃ§Â«Â </div></div>
-          <div class="stat-card"><div class="stat-lbl">Ã¥Â·Â²Ã§ÂÂ¼Ã¥Â¸Â</div><div class="stat-val" id="st-pub">0</div><div class="stat-sub">Ã§Â¯ÂÃ¦ÂÂÃ§Â«Â </div></div>
-          <div class="stat-card"><div class="stat-lbl">Ã¨ÂÂÃ§Â¨Â¿</div><div class="stat-val" id="st-draft">0</div><div class="stat-sub">Ã§Â¯ÂÃ¦ÂÂÃ§Â«Â </div></div>
-          <div class="stat-card"><div class="stat-lbl">Ã¥ÂÂÃ¥Â¸ÂÃ¦ÂÂ¸</div><div class="stat-val" id="st-cities">0</div><div class="stat-sub">Ã¥ÂÂÃ¥ÂÂÃ¥Â¸Â</div></div>
+          <div class="stat-card"><div class="stat-lbl">總文章數</div><div class="stat-val" id="st-total">0</div><div class="stat-sub">篇文章</div></div>
+          <div class="stat-card"><div class="stat-lbl">已發布</div><div class="stat-val" id="st-pub">0</div><div class="stat-sub">篇文章</div></div>
+          <div class="stat-card"><div class="stat-lbl">草稿</div><div class="stat-val" id="st-draft">0</div><div class="stat-sub">篇文章</div></div>
+          <div class="stat-card"><div class="stat-lbl">城市數</div><div class="stat-val" id="st-cities">0</div><div class="stat-sub">個城市</div></div>
         </div>
         <div class="tbl-wrap">
           <div class="tbl-toolbar">
-            <input class="tbl-search" id="art-search" placeholder="Ã¦ÂÂÃ¥Â°ÂÃ¦ÂÂÃ§Â«Â ..." oninput="filterArts()">
-            <button class="filter-btn active" onclick="setFilter('all',this)">Ã¥ÂÂ¨Ã©ÂÂ¨</button>
-            <button class="filter-btn" onclick="setFilter('published',this)">Ã¥Â·Â²Ã§ÂÂ¼Ã¥Â¸Â</button>
-            <button class="filter-btn" onclick="setFilter('draft',this)">Ã¨ÂÂÃ§Â¨Â¿</button>
+            <input class="tbl-search" id="art-search" placeholder="搜尋文章..." oninput="filterArts()">
+            <button class="filter-btn active" onclick="setFilter('all',this)">全部</button>
+            <button class="filter-btn" onclick="setFilter('published',this)">已發布</button>
+            <button class="filter-btn" onclick="setFilter('draft',this)">草稿</button>
           </div>
           <table>
             <thead>
               <tr>
-                <th>Ã¥Â°ÂÃ©ÂÂ¢</th><th>Ã¦Â¨ÂÃ©Â¡Â</th><th>Ã¥ÂÂÃ¥Â¸Â</th><th>Ã¥ÂÂÃ©Â¡Â</th><th>Ã§ÂÂÃ¦ÂÂ</th><th>Ã§ÂÂ¼Ã¥Â¸ÂÃ¦ÂÂÃ©ÂÂ</th><th>Ã¦ÂÂÃ¤Â½Â</th>
+                <th>封面</th><th>標題</th><th>城市</th><th>分類</th><th>狀態</th><th>發布時間</th><th>操作</th>
               </tr>
             </thead>
             <tbody id="art-tbody"></tbody>
           </table>
-          <div class="empty-state" id="art-empty" style="display:none">Ã¥Â°ÂÃ§ÂÂ¡Ã¦ÂÂÃ§Â«Â Ã¯Â¼ÂÃ©Â»ÂÃ¦ÂÂÃ£ÂÂÃ¦ÂÂ°Ã¥Â¢ÂÃ¦ÂÂÃ§Â«Â Ã£ÂÂÃ©ÂÂÃ¥Â§ÂÃ¥ÂÂµÃ¤Â½Â</div>
+          <div class="empty-state" id="art-empty" style="display:none">尚無文章，點擊「新增文章」開始創作</div>
         </div>
       </div>
 
 
       <!-- AI PAGE -->
       <div class="page" id="page-ai">
-        <div class="page-hd"><div class="page-title">Ã¢ÂÂ¨ AI Ã©ÂÂÃ§Â®Â±Ã¦ÂÂ</div></div>
+        <div class="page-hd"><div class="page-title">✨ AI 開箱文</div></div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start">
           <div>
             <div style="background:var(--surface);border:1px solid var(--border);padding:1.5rem;margin-bottom:1rem">
-              <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem">Ã¥ÂºÂÃ¥Â®Â¶Ã¨Â³ÂÃ¦ÂÂ</div>
-              <div class="fg"><label class="fl">Ã¥ÂºÂÃ¥Â®Â¶Ã¥ÂÂÃ§Â¨Â± <span class="req">*</span></label><input class="fi" id="ai-name" placeholder="Ã¤Â¾ÂÃ¯Â¼ÂÃ§ÂÂÃ§ÂÂ²Ã¦ÂÂÃ¥ÂÂ"></div>
+              <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem">店家資料</div>
+              <div class="fg"><label class="fl">店家名稱 <span class="req">*</span></label><input class="fi" id="ai-name" placeholder="例：珈琲時光"></div>
               <div class="fg-row">
-                <div class="fg"><label class="fl">Ã¥ÂÂÃ¥Â¸Â</label><select class="fsel" id="ai-city" onchange="syncAiCity(this.value)"><option value="">Ã¢ÂÂ Ã©ÂÂ¸Ã¦ÂÂÃ¥ÂÂÃ¥Â¸Â Ã¢ÂÂ</option></select></div>
-                <div class="fg"><label class="fl">Ã©Â¡ÂÃ¥ÂÂ</label><select class="fsel" id="ai-type"><option value="Ã¥ÂÂÃ¥ÂÂ¡Ã¥Â»Â³">Ã¢ÂÂ Ã¥ÂÂÃ¥ÂÂ¡Ã¥Â»Â³</option><option value="Ã©Â¤ÂÃ¥Â»Â³">Ã°ÂÂÂ½Ã¯Â¸Â Ã©Â¤ÂÃ¥Â»Â³</option><option value="Ã§ÂÂÃ©Â»Â">Ã°ÂÂÂ° Ã§ÂÂÃ©Â»Â</option><option value="Ã¦ÂÂ¯Ã©Â»Â">Ã°ÂÂÂÃ¯Â¸Â Ã¦ÂÂ¯Ã©Â»Â</option><option value="Ã¤Â½ÂÃ¥Â®Â¿">Ã°ÂÂÂ  Ã¤Â½ÂÃ¥Â®Â¿</option><option value="Ã©ÂÂÃ¥ÂÂ§">Ã°ÂÂÂ¸ Ã©ÂÂÃ¥ÂÂ§</option></select></div>
+                <div class="fg"><label class="fl">城市</label><select class="fsel" id="ai-city" onchange="syncAiCity(this.value)"><option value="">— 選擇城市 —</option></select></div>
+                <div class="fg"><label class="fl">類型</label><select class="fsel" id="ai-type"><option value="咖啡廳">☕ 咖啡廳</option><option value="餐廳">🍽️ 餐廳</option><option value="甜點">🍰 甜點</option><option value="景點">🏔️ 景點</option><option value="住宿">🏠 住宿</option><option value="酒吧">🍸 酒吧</option></select></div>
               </div>
-              <div class="fg"><label class="fl">Ã¦ÂÂÃ§ÂÂÃ¥ÂÂÃ©Â Â / Ã§ÂÂ¹Ã¨ÂÂ²Ã¤ÂºÂ®Ã©Â»Â</label><input class="fi" id="ai-feature" placeholder="Ã¤Â¾ÂÃ¯Â¼ÂÃ¦ÂÂÃ¦Â²ÂÃ¥ÂÂÃ¥ÂÂ¡Ã£ÂÂÃ¨ÂÂÃ¥Â±ÂÃ¦ÂÂ¹Ã©ÂÂ "></div>
-              <div class="fg"><label class="fl">Ã¥ÂÂÃ¤ÂºÂºÃ©Â«ÂÃ©Â©ÂÃ¥Â¿ÂÃ¥Â¾Â</label><textarea class="fta" id="ai-note" placeholder="Ã¤Â½Â Ã§ÂÂÃ¦ÂÂÃ¥ÂÂ..." style="min-height:80px"></textarea></div>
+              <div class="fg"><label class="fl">招牌品項 / 特色亮點</label><input class="fi" id="ai-feature" placeholder="例：手沖咖啡、老屋改造"></div>
+              <div class="fg"><label class="fl">個人體驗心得</label><textarea class="fta" id="ai-note" placeholder="你的感受..." style="min-height:80px"></textarea></div>
               <div class="fg-row">
-                <div class="fg"><label class="fl">Ã¨Â©ÂÃ¥ÂÂ</label><select class="fsel" id="ai-rating"><option value="5">Ã¢Â­ÂÃ¢Â­ÂÃ¢Â­ÂÃ¢Â­ÂÃ¢Â­Â Ã¦Â¥ÂµÃ¥ÂÂÃ¦ÂÂ¨Ã¨ÂÂ¦</option><option value="4">Ã¢Â­ÂÃ¢Â­ÂÃ¢Â­ÂÃ¢Â­Â Ã¦ÂÂ¨Ã¨ÂÂ¦</option><option value="3">Ã¢Â­ÂÃ¢Â­ÂÃ¢Â­Â Ã©ÂÂÃ¤Â¸ÂÃ©ÂÂ¯</option></select></div>
-                <div class="fg"><label class="fl">Ã¥ÂÂ¹Ã¤Â½Â</label><select class="fsel" id="ai-price"><option value="$">$ Ã¥Â¹Â³Ã¥ÂÂ¹</option><option value="$">$ Ã¤Â¸Â­Ã¥ÂÂ¹</option><option value="$$">$$ Ã©Â«ÂÃ¥ÂÂ¹</option></select></div>
+                <div class="fg"><label class="fl">評分</label><select class="fsel" id="ai-rating"><option value="5">⭐⭐⭐⭐⭐ 極力推薦</option><option value="4">⭐⭐⭐⭐ 推薦</option><option value="3">⭐⭐⭐ 還不錯</option></select></div>
+                <div class="fg"><label class="fl">價位</label><select class="fsel" id="ai-price"><option value="$">$ 平價</option><option value="$">$ 中價</option><option value="$$">$$ 高價</option></select></div>
               </div>
               <div class="fg">
-                <label class="fl">Ã¤Â¸ÂÃ¥ÂÂ³Ã¥ÂÂÃ§ÂÂÃ¯Â¼ÂAI Ã¥ÂÂÃ¦ÂÂÃ§ÂÂ¨Ã¯Â¼Â</label>
+                <label class="fl">上傳圖片（AI 分析用）</label>
                 <div class="fg">
-                <label class="fl">Ã¥Â°ÂÃ©ÂÂ¢Ã¥ÂÂÃ¯Â¼ÂÃ¥ÂÂ®Ã¥Â¼ÂµÃ¯Â¼ÂÃ©Â¡Â¯Ã§Â¤ÂºÃ¦ÂÂ¼Ã¦ÂÂÃ§Â«Â Ã¥ÂÂÃ¨Â¡Â¨Ã¯Â¼Â</label>
+                <label class="fl">封面圖（單張，顯示於文章列表）</label>
                 <div id="ai-cover-area" style="border:2px dashed var(--border2);padding:0.8rem;text-align:center;cursor:pointer;background:var(--surface2);font-size:0.78rem;color:var(--text3)" onclick="document.getElementById('ai-cover-file').click()">
-                  Ã°ÂÂÂ¼Ã¯Â¸Â Ã©Â»ÂÃ¦ÂÂÃ¤Â¸ÂÃ¥ÂÂ³Ã¥Â°ÂÃ©ÂÂ¢Ã¥ÂÂ
+                  🖼️ 點擊上傳封面圖
                 </div>
                 <img id="ai-cover-preview" style="display:none;width:100%;max-height:120px;object-fit:cover;margin-top:0.5rem;border-radius:4px">
                 <input type="file" id="ai-cover-file" accept="image/*" style="display:none" onchange="handleAiCover(event)">
               </div>
-              <div id="ai-img-area" style="border:2px dashed var(--border2);padding:1rem;text-align:center;cursor:pointer;background:var(--surface2);font-size:0.78rem;color:var(--text3)" onclick="document.getElementById('ai-img-file').click()">Ã°ÂÂÂ· Ã©Â»ÂÃ¦ÂÂÃ¤Â¸ÂÃ¥ÂÂ³Ã¥ÂÂÃ§ÂÂÃ¯Â¼ÂÃ¥ÂÂ¯Ã¥Â¤ÂÃ¥Â¼ÂµÃ¯Â¼Â</div>
+              <div id="ai-img-area" style="border:2px dashed var(--border2);padding:1rem;text-align:center;cursor:pointer;background:var(--surface2);font-size:0.78rem;color:var(--text3)" onclick="document.getElementById('ai-img-file').click()">📷 點擊上傳圖片（可多張）</div>
                 <input type="file" id="ai-img-file" accept="image/*" multiple style="display:none" onchange="handleAiImgs(event)">
                 <div id="ai-img-previews" style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem"></div>
               </div>
               
               <div style="border-top:1px solid var(--border2);margin:1rem 0;padding-top:1rem">
-                <div style="font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:0.8rem">Ã¥ÂºÂÃ¥Â®Â¶Ã¨Â³ÂÃ¨Â¨ÂÃ¯Â¼ÂÃ©ÂÂ¸Ã¥Â¡Â«Ã¯Â¼ÂÃ§ÂÂ¼Ã¥Â¸ÂÃ¥Â¾ÂÃ©Â¡Â¯Ã§Â¤ÂºÃ¥ÂÂ¨Ã¦ÂÂÃ¦ÂÂ«Ã¯Â¼Â</div>
+                <div style="font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:0.8rem">店家資訊（選填，發布後顯示在文末）</div>
                 <div class="fg-row">
-                  <div class="fg"><label class="fl">Ã¥ÂÂ°Ã¥ÂÂ</label><input class="fi" id="ai-shop-address" placeholder="Ã¤Â¾ÂÃ¯Â¼ÂÃ¥ÂÂÃ¦ÂÂÃ§Â¸Â£Ã¤Â»ÂÃ¦ÂÂÃ©ÂÂ..."></div>
-                  <div class="fg"><label class="fl">Ã©ÂÂ»Ã¨Â©Â±</label><input class="fi" id="ai-shop-phone" placeholder="049-123456"></div>
+                  <div class="fg"><label class="fl">地址</label><input class="fi" id="ai-shop-address" placeholder="例：南投縣仁愛鄉..."></div>
+                  <div class="fg"><label class="fl">電話</label><input class="fi" id="ai-shop-phone" placeholder="049-123456"></div>
                 </div>
                 <div class="fg-row">
-                  <div class="fg"><label class="fl">Ã§ÂÂÃ¦Â¥Â­Ã¦ÂÂÃ©ÂÂ</label><input class="fi" id="ai-shop-hours" placeholder="Ã¤Â¾ÂÃ¯Â¼Â11:00-21:00Ã¯Â¼ÂÃ©ÂÂ±Ã¤ÂºÂÃ¥ÂÂ¬Ã¤Â¼ÂÃ¯Â¼Â"></div>
-                  <div class="fg"><label class="fl">Ã¦Â¶ÂÃ¨Â²Â»Ã¥ÂÂÃ¨Â¨Â»</label><input class="fi" id="ai-shop-price-note" placeholder="Ã¤Â¾ÂÃ¯Â¼ÂÃ¥Â¹Â³Ã¥ÂÂÃ¦Â¶ÂÃ¨Â²Â» $200-400"></div>
+                  <div class="fg"><label class="fl">營業時間</label><input class="fi" id="ai-shop-hours" placeholder="例：11:00-21:00（週二公休）"></div>
+                  <div class="fg"><label class="fl">消費備註</label><input class="fi" id="ai-shop-price-note" placeholder="例：平均消費 $200-400"></div>
                 </div>
                 <div class="fg-row">
-                  <div class="fg"><label class="fl">Ã¥ÂÂÃ¨Â»ÂÃ¨Â³ÂÃ¨Â¨Â</label><input class="fi" id="ai-shop-parking" placeholder="Ã¤Â¾ÂÃ¯Â¼ÂÃ©ÂÂÃ¥ÂÂ£Ã¦ÂÂÃ¥ÂÂÃ¨Â»ÂÃ¥Â Â´"></div>
-                  <div class="fg"><label class="fl">Ã¥Â®ÂÃ§Â¶Â²</label><input class="fi" id="ai-shop-website" placeholder="https://..."></div>
+                  <div class="fg"><label class="fl">停車資訊</label><input class="fi" id="ai-shop-parking" placeholder="例：門口有停車場"></div>
+                  <div class="fg"><label class="fl">官網</label><input class="fi" id="ai-shop-website" placeholder="https://..."></div>
                 </div>
                 <div class="fg-row">
-                  <div class="fg"><label class="fl">Google Maps Ã©ÂÂ£Ã§ÂµÂ</label><input class="fi" id="ai-shop-maps" placeholder="https://maps.google.com/..."></div>
+                  <div class="fg"><label class="fl">Google Maps 連結</label><input class="fi" id="ai-shop-maps" placeholder="https://maps.google.com/..."></div>
                   <div class="fg"><label class="fl">Facebook</label><input class="fi" id="ai-shop-fb" placeholder="https://fb.com/..."></div>
                 </div>
                 <div class="fg-row">
@@ -323,31 +323,31 @@ tr:hover td{background:var(--surface2)}
                   <div class="fg"><label class="fl">LINE</label><input class="fi" id="ai-shop-line" placeholder="https://line.me/..."></div>
                 </div>
               </div>
-<div id="ai-key-warn" style="display:none;font-size:0.72rem;color:var(--red);margin-bottom:0.8rem">Ã¢ÂÂ Ã¯Â¸Â Ã¨Â«ÂÃ¥ÂÂÃ¨Â¨Â­Ã¥Â®Â Anthropic API Key</div>
-              <button class="btn-primary" id="ai-gen-btn" onclick="genAiArticle()" style="width:100%">Ã¢ÂÂ¨ AI Ã§ÂÂÃ¦ÂÂÃ©ÂÂÃ§Â®Â±Ã¦ÂÂ</button>
+<div id="ai-key-warn" style="display:none;font-size:0.72rem;color:var(--red);margin-bottom:0.8rem">⚠️ 請先設定 Anthropic API Key</div>
+              <button class="btn-primary" id="ai-gen-btn" onclick="genAiArticle()" style="width:100%">✨ AI 生成開箱文</button>
             </div>
           </div>
           <div>
             <div style="background:var(--surface);border:1px solid var(--border);padding:1.5rem;margin-bottom:1rem">
               <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;justify-content:space-between">
-                <span>Ã§ÂÂÃ¦ÂÂÃ§ÂµÂÃ¦ÂÂ</span><span id="ai-status" style="color:var(--text3);font-size:0.68rem;letter-spacing:0">Ã§Â­ÂÃ¥Â¾ÂÃ§ÂÂÃ¦ÂÂ...</span>
+                <span>生成結果</span><span id="ai-status" style="color:var(--text3);font-size:0.68rem;letter-spacing:0">等待生成...</span>
               </div>
               <div id="ai-title-preview" style="font-family:var(--font-serif);font-size:1.2rem;color:var(--accent2);margin-bottom:0.8rem;min-height:1.5em"></div>
               <div id="ai-body-preview" contenteditable="true" style="min-height:200px;font-size:0.82rem;line-height:1.9;color:var(--text2);white-space:pre-wrap;outline:none;border:1px dashed var(--border2);padding:0.5rem"></div>
             </div>
             <div style="background:var(--surface);border:1px solid var(--border);padding:1.5rem" id="ai-publish-panel">
-              <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem">Ã§ÂÂ¼Ã¥Â¸ÂÃ¨Â¨Â­Ã¥Â®Â</div>
+              <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem">發布設定</div>
               <div class="fg-row">
-                <div class="fg"><label class="fl">Ã¥ÂÂÃ¥Â¸Â</label><select class="fsel" id="ai-pub-city"></select></div>
-                <div class="fg"><label class="fl">Ã¥ÂÂÃ©Â¡Â</label><select class="fsel" id="ai-pub-cat"></select>
-        <div class="form-row"><div class="fgroup"><label class="flbl">Ã¤Â¸Â»Ã¥ÂÂÃ©ÂÂÃ©ÂÂµÃ¥Â­Â</label><select class="fsel" id="ai-pub-kw"><option value="">Ã¤Â¸ÂÃ©ÂÂ¸Ã¦ÂÂ</option></select></div></div></div>
+                <div class="fg"><label class="fl">城市</label><select class="fsel" id="ai-pub-city"></select></div>
+                <div class="fg"><label class="fl">分類</label><select class="fsel" id="ai-pub-cat"></select>
+        <div class="form-row"><div class="fgroup"><label class="flbl">主力關鍵字</label><select class="fsel" id="ai-pub-kw"><option value="">不選擇</option></select></div></div></div>
               </div>
-              <div class="fg"><label class="fl">Ã¦ÂÂÃ¨Â¦Â</label><textarea class="fta" id="ai-pub-excerpt" style="min-height:56px" placeholder="Ã§Â°Â¡Ã§ÂÂ­Ã¦ÂÂÃ¨Â¿Â°..."></textarea></div>
+              <div class="fg"><label class="fl">摘要</label><textarea class="fta" id="ai-pub-excerpt" style="min-height:56px" placeholder="簡短描述..."></textarea></div>
               <div class="fg-row">
-                <div class="fg"><label class="fl">Ã§ÂÂÃ¦ÂÂ</label><select class="fsel" id="ai-pub-status"><option value="published">Ã¢ÂÂ Ã§Â«ÂÃ¥ÂÂ³Ã§ÂÂ¼Ã¥Â¸Â</option><option value="draft">Ã°ÂÂÂ Ã¥Â­ÂÃ§ÂÂºÃ¨ÂÂÃ§Â¨Â¿</option></select></div>
-                <div class="fg"><label class="fl">Ã§ÂÂ¼Ã¥Â¸ÂÃ¦ÂÂÃ©ÂÂ</label><input class="fi" type="datetime-local" id="ai-pub-time"></div>
+                <div class="fg"><label class="fl">狀態</label><select class="fsel" id="ai-pub-status"><option value="published">✅ 立即發布</option><option value="draft">📝 存為草稿</option></select></div>
+                <div class="fg"><label class="fl">發布時間</label><input class="fi" type="datetime-local" id="ai-pub-time"></div>
               </div>
-              <button class="btn-primary" id="ai-pub-btn" onclick="publishAiArticle()" style="width:100%;margin-top:0.5rem">Ã°ÂÂÂ Ã§ÂÂ¼Ã¥Â¸ÂÃ¥ÂÂ°Ã¥ÂÂÃ¥ÂÂ°</button>
+              <button class="btn-primary" id="ai-pub-btn" onclick="publishAiArticle()" style="width:100%;margin-top:0.5rem">🚀 發布到前台</button>
               <div id="ai-pub-msg" style="font-size:0.78rem;margin-top:0.8rem;min-height:1em"></div>
             </div>
           </div>
@@ -356,28 +356,28 @@ tr:hover td{background:var(--surface2)}
 
       <!-- SETTINGS PAGE -->
       <div class="page" id="page-settings">
-<div class="page-hd"><div class="page-title">Ã¥ÂÂÃ©Â¡ÂÃ¨Â¨Â­Ã¥Â®Â</div></div>
+<div class="page-hd"><div class="page-title">分類設定</div></div>
 <div id="sect-regions" style="margin-bottom:2rem">
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem">
-<h3 style="color:var(--accent);font-size:0.8rem;letter-spacing:0.1em">Ã¥ÂÂ°Ã¥ÂÂÃ§Â®Â¡Ã§ÂÂ</h3>
-<button id="btn-add-region" class="btn-primary" style="font-size:0.75rem;padding:0.35rem 0.9rem">Ã¯Â¼Â Ã¦ÂÂ°Ã¥Â¢ÂÃ¥ÂÂ°Ã¥ÂÂ</button>
+<h3 style="color:var(--accent);font-size:0.8rem;letter-spacing:0.1em">地區管理</h3>
+<button id="btn-add-region" class="btn-primary" style="font-size:0.75rem;padding:0.35rem 0.9rem">＋ 新增地區</button>
 </div>
 <div id="region-list" style="display:flex;flex-wrap:wrap;gap:0.5rem"></div>
 </div>
 <div id="sect-keywords" style="margin-bottom:2rem">
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem">
-<h3 style="color:var(--accent);font-size:0.8rem;letter-spacing:0.1em">Ã¤Â¸Â»Ã¥ÂÂÃ©ÂÂÃ©ÂÂµÃ¥Â­Â</h3>
-<button id="btn-add-kw" class="btn-primary" style="font-size:0.75rem;padding:0.35rem 0.9rem">Ã¯Â¼Â Ã¦ÂÂ°Ã¥Â¢ÂÃ©ÂÂÃ©ÂÂµÃ¥Â­Â</button>
+<h3 style="color:var(--accent);font-size:0.8rem;letter-spacing:0.1em">主力關鍵字</h3>
+<button id="btn-add-kw" class="btn-primary" style="font-size:0.75rem;padding:0.35rem 0.9rem">＋ 新增關鍵字</button>
 </div>
 <select id="kw-filter" style="background:var(--surface2);border:1px solid var(--border);color:var(--paper);padding:0.4rem 0.8rem;font-size:0.8rem;font-family:inherit;margin-bottom:0.8rem">
-<option value="">Ã¥ÂÂ¨Ã©ÂÂ¨Ã¥ÂÂ°Ã¥ÂÂ</option>
+<option value="">全部地區</option>
 </select>
 <div id="keyword-list"></div>
 </div>
 <div>
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem">
-<h3 style="color:var(--accent);font-size:0.8rem;letter-spacing:0.1em">Ã¦ÂÂÃ§Â«Â Ã¥ÂÂÃ©Â¡Â</h3>
-<button id="btn-add-cat" class="btn-primary" style="font-size:0.75rem;padding:0.35rem 0.9rem">Ã¯Â¼Â Ã¦ÂÂ°Ã¥Â¢ÂÃ¥ÂÂÃ©Â¡Â</button>
+<h3 style="color:var(--accent);font-size:0.8rem;letter-spacing:0.1em">文章分類</h3>
+<button id="btn-add-cat" class="btn-primary" style="font-size:0.75rem;padding:0.35rem 0.9rem">＋ 新增分類</button>
 </div>
 <div id="cat-list"></div>
 </div>
@@ -390,108 +390,108 @@ tr:hover td{background:var(--surface2)}
 <div class="modal-bg" id="art-modal">
   <div class="modal">
     <div class="modal-hd">
-      <div class="modal-title" id="art-modal-title">Ã¦ÂÂ°Ã¥Â¢ÂÃ¦ÂÂÃ§Â«Â </div>
-      <button class="modal-close" onclick="closeArtModal()">Ã¢ÂÂ</button>
+      <div class="modal-title" id="art-modal-title">新增文章</div>
+      <button class="modal-close" onclick="closeArtModal()">✕</button>
     </div>
     <div class="modal-body">
 
       <div class="fg">
-        <label class="fl">Ã¦ÂÂÃ§Â«Â Ã¦Â¨ÂÃ©Â¡Â <span class="req">*</span></label>
-        <input class="fi" id="f-title" placeholder="Ã¨Â¼Â¸Ã¥ÂÂ¥Ã¦ÂÂÃ§Â«Â Ã¦Â¨ÂÃ©Â¡Â...">
+        <label class="fl">文章標題 <span class="req">*</span></label>
+        <input class="fi" id="f-title" placeholder="輸入文章標題...">
       </div>
 
       <div class="fg-row">
         <div class="fg">
-          <label class="fl">Ã¥ÂÂÃ¥Â¸Â <span class="req">*</span></label>
+          <label class="fl">城市 <span class="req">*</span></label>
           <select class="fsel" id="f-city"></select>
         </div>
         <div class="fg">
-          <label class="fl">Ã¥ÂÂÃ©Â¡Â <span class="req">*</span></label>
+          <label class="fl">分類 <span class="req">*</span></label>
           <select class="fsel" id="f-cat"></select>
-        <div class="fgroup"><label class="flbl">Ã¤Â¸Â»Ã¥ÂÂÃ©ÂÂÃ©ÂÂµÃ¥Â­Â</label><select class="fsel" id="f-kw"><option value="">Ã¤Â¸ÂÃ©ÂÂ¸Ã¦ÂÂ</option></select></div>
+        <div class="fgroup"><label class="flbl">主力關鍵字</label><select class="fsel" id="f-kw"><option value="">不選擇</option></select></div>
         </div>
       </div>
 
       <div class="fg">
-        <label class="fl">Ã¦ÂÂÃ¨Â¦ÂÃ¯Â¼ÂSEO descriptionÃ¯Â¼Â</label>
-        <textarea class="fta" id="f-excerpt" placeholder="Ã§Â°Â¡Ã§ÂÂ­Ã¦ÂÂÃ¨Â¿Â°Ã©ÂÂÃ§Â¯ÂÃ¦ÂÂÃ§Â«Â ..." style="min-height:60px"></textarea>
+        <label class="fl">摘要（SEO description）</label>
+        <textarea class="fta" id="f-excerpt" placeholder="簡短描述這篇文章..." style="min-height:60px"></textarea>
       </div>
 
       <div class="fg">
-        <label class="fl">SEO Ã©ÂÂÃ©ÂÂµÃ¥Â­Â</label>
+        <label class="fl">SEO 關鍵字</label>
         <div class="kw-tags" id="art-kw-tags"></div>
-        <input class="fi" id="f-kw-input" placeholder="Ã¨Â¼Â¸Ã¥ÂÂ¥Ã©ÂÂÃ©ÂÂµÃ¥Â­ÂÃ¥Â¾ÂÃ¦ÂÂ Enter..." onkeydown="addArtKw(event)">
+        <input class="fi" id="f-kw-input" placeholder="輸入關鍵字後按 Enter..." onkeydown="addArtKw(event)">
       </div>
 
       <div class="fg">
-        <label class="fl">Ã¦ÂÂÃ§Â«Â Ã¥ÂÂ§Ã¥Â®Â¹</label>
+        <label class="fl">文章內容</label>
         <div class="editor-toolbar" id="editor-toolbar">
-          <button class="ed-btn" onclick="execCmd('bold')" title="Ã§Â²ÂÃ©Â«Â"><b>B</b></button>
-          <button class="ed-btn" onclick="execCmd('italic')" title="Ã¦ÂÂÃ©Â«Â"><i>I</i></button>
-          <button class="ed-btn" onclick="execCmd('underline')" title="Ã¥ÂºÂÃ§Â·Â"><u>U</u></button>
+          <button class="ed-btn" onclick="execCmd('bold')" title="粗體"><b>B</b></button>
+          <button class="ed-btn" onclick="execCmd('italic')" title="斜體"><i>I</i></button>
+          <button class="ed-btn" onclick="execCmd('underline')" title="底線"><u>U</u></button>
           <span style="color:var(--border2);padding:0 0.2rem">|</span>
           <button class="ed-btn" onclick="execFmt('h2')" title="H2">H2</button>
           <button class="ed-btn" onclick="execFmt('h3')" title="H3">H3</button>
-          <button class="ed-btn" onclick="execCmd('formatBlock','p')" title="Ã¦Â®ÂµÃ¨ÂÂ½">ÃÂ¶</button>
+          <button class="ed-btn" onclick="execCmd('formatBlock','p')" title="段落">¶</button>
           <span style="color:var(--border2);padding:0 0.2rem">|</span>
-          <button class="ed-btn" onclick="execCmd('insertUnorderedList')" title="Ã¦Â¸ÂÃ¥ÂÂ®">Ã¢ÂÂ¢ Ã¦Â¸ÂÃ¥ÂÂ®</button>
-          <button class="ed-btn" onclick="execCmd('insertOrderedList')" title="Ã§Â·Â¨Ã¨ÂÂ">1. Ã¦Â¸ÂÃ¥ÂÂ®</button>
-          <button class="ed-btn" onclick="execFmt('blockquote')" title="Ã¥Â¼ÂÃ§ÂÂ¨">Ã¢ÂÂ</button>
+          <button class="ed-btn" onclick="execCmd('insertUnorderedList')" title="清單">• 清單</button>
+          <button class="ed-btn" onclick="execCmd('insertOrderedList')" title="編號">1. 清單</button>
+          <button class="ed-btn" onclick="execFmt('blockquote')" title="引用">❝</button>
           <span style="color:var(--border2);padding:0 0.2rem">|</span>
-          <button class="ed-btn" onclick="insertLink()" title="Ã©ÂÂ£Ã§ÂµÂ">Ã°ÂÂÂ</button>
-          <button class="ed-btn" onclick="triggerImgInsert()" title="Ã¦ÂÂÃ¥ÂÂ¥Ã¥ÂÂÃ§ÂÂ">Ã°ÂÂÂ¼</button>
-                  <button class="ed-btn" onclick="toggleCodeView()" id="btn-code-view" title="Ã¦ÂªÂ¢Ã¨Â¦ÂÃ§Â¨ÂÃ¥Â¼ÂÃ§Â¢Â¼" style="margin-left:auto;color:var(--accent)">&lt;/&gt;</button>
+          <button class="ed-btn" onclick="insertLink()" title="連結">🔗</button>
+          <button class="ed-btn" onclick="triggerImgInsert()" title="插入圖片">🖼</button>
+                  <button class="ed-btn" onclick="toggleCodeView()" id="btn-code-view" title="檢視程式碼" style="margin-left:auto;color:var(--accent)">&lt;/&gt;</button>
         </div>
         <div id="f-content-editor" contenteditable="true" onpaste="handlePaste(event)"></div>
       </div>
 
       <div class="fg">
-        <label class="fl">Ã¥ÂÂÃ§ÂÂÃ¤Â¸ÂÃ¥ÂÂ³</label>
+        <label class="fl">圖片上傳</label>
         <div id="img-upload-area" onclick="document.getElementById('img-file-input').click()">
-          <div style="font-size:1.5rem">Ã°ÂÂÂ·</div>
-          <p>Ã©Â»ÂÃ¦ÂÂÃ¦ÂÂÃ¦ÂÂÃ¦ÂÂ³Ã¤Â¸ÂÃ¥ÂÂ³Ã¥ÂÂÃ§ÂÂÃ¯Â¼ÂÃ¥ÂÂ¯Ã¥Â¤ÂÃ¥Â¼ÂµÃ¯Â¼Â</p>
-          <p style="font-size:0.68rem;margin-top:0.2rem">Ã¤Â¸ÂÃ¥ÂÂ³Ã¥Â¾ÂÃ¥ÂÂ¯Ã¦ÂÂÃ¥ÂÂ¥Ã¦ÂÂÃ§Â«Â Ã¦ÂÂÃ¨Â¨Â­Ã§ÂÂºÃ¥Â°ÂÃ©ÂÂ¢</p>
+          <div style="font-size:1.5rem">📷</div>
+          <p>點擊或拖曳上傳圖片（可多張）</p>
+          <p style="font-size:0.68rem;margin-top:0.2rem">上傳後可插入文章或設為封面</p>
         </div>
         <input type="file" id="img-file-input" accept="image/*" multiple style="display:none" onchange="handleImgUpload(event)">
         <div class="img-preview-grid" id="img-preview-grid"></div>
       </div>
 
       <div class="fg">
-        <label class="fl">Ã¥ÂµÂÃ¥ÂÂ¥Ã¥Â½Â±Ã§ÂÂÃ¯Â¼ÂYouTube / Vimeo URLÃ¯Â¼Â</label>
+        <label class="fl">嵌入影片（YouTube / Vimeo URL）</label>
         <input class="fi" id="f-video" placeholder="https://www.youtube.com/watch?v=..." oninput="previewVideo(this.value)">
         <div id="video-preview-box" style="display:none" class="video-preview">
-          <div style="font-size:0.75rem;color:var(--text2);margin-bottom:0.4rem">Ã©Â ÂÃ¨Â¦Â½Ã¯Â¼Â</div>
+          <div style="font-size:0.75rem;color:var(--text2);margin-bottom:0.4rem">預覽：</div>
           <div class="video-embed-preview" id="video-embed-preview"></div>
         </div>
       </div>
 
       <div class="fg-row3">
         <div class="fg">
-          <label class="fl">Ã¥Â°ÂÃ©ÂÂ¢ Emoji</label>
+          <label class="fl">封面 Emoji</label>
           <div class="emoji-grid" id="emoji-grid"></div>
           <div class="emoji-preview">
-            <span id="emoji-sel-display">Ã¢ÂÂÃ¯Â¸Â</span>
-            <input id="f-emoji-custom" placeholder="Ã¨ÂÂªÃ¨Â¨Â emoji..." oninput="setEmoji(this.value)" maxlength="2">
+            <span id="emoji-sel-display">✍️</span>
+            <input id="f-emoji-custom" placeholder="自訂 emoji..." oninput="setEmoji(this.value)" maxlength="2">
           </div>
         </div>
         <div class="fg">
-          <label class="fl">Ã§ÂÂ¼Ã¥Â¸ÂÃ§ÂÂÃ¦ÂÂ</label>
+          <label class="fl">發布狀態</label>
           <select class="fsel" id="f-status">
-            <option value="draft">Ã°ÂÂÂ Ã¨ÂÂÃ§Â¨Â¿</option>
-            <option value="published">Ã¢ÂÂ Ã¥Â·Â²Ã§ÂÂ¼Ã¥Â¸Â</option>
+            <option value="draft">📝 草稿</option>
+            <option value="published">✅ 已發布</option>
           </select>
         </div>
         <div class="fg">
-          <label class="fl">Ã§ÂÂ¼Ã¥Â¸ÂÃ¦ÂÂÃ©ÂÂ</label>
+          <label class="fl">發布時間</label>
           <input class="fi" type="datetime-local" id="f-published-at">
-          <div style="font-size:0.68rem;color:var(--text3);margin-top:0.3rem">Ã¥ÂÂ¯Ã¨Â¨Â­Ã¥Â®ÂÃ©ÂÂÃ¥ÂÂ»Ã¦ÂÂÃ¦ÂÂªÃ¤Â¾ÂÃ§ÂÂÃ¦ÂÂÃ©ÂÂ</div>
+          <div style="font-size:0.68rem;color:var(--text3);margin-top:0.3rem">可設定過去或未來的時間</div>
         </div>
       </div>
 
     </div>
     <div class="modal-ft">
-      <button class="btn-secondary" onclick="closeArtModal()">Ã¥ÂÂÃ¦Â¶Â</button>
-      <button class="btn-primary" id="save-btn" onclick="saveArt()">Ã¥ÂÂ²Ã¥Â­ÂÃ¦ÂÂÃ§Â«Â </button>
+      <button class="btn-secondary" onclick="closeArtModal()">取消</button>
+      <button class="btn-primary" id="save-btn" onclick="saveArt()">儲存文章</button>
     </div>
   </div>
 </div>
@@ -499,24 +499,24 @@ tr:hover td{background:var(--surface2)}
 <div id="toast"></div>
 
 <script>
-// Ã¢ÂÂÃ¢ÂÂ SUPABASE Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── SUPABASE ───────────────────────────────────────────────────────────────
 const SUPA_URL = 'https://zsebcpfblecwumbaxeaz.supabase.co';
 const SUPA_KEY = 'sb_publishable_L2DOfeM0cAJqwlVCr1LwtA_jE9MBNDn';
 const sb = supabase.createClient(SUPA_URL, SUPA_KEY);
 
-// Ã¢ÂÂÃ¢ÂÂ CONFIG Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── CONFIG ─────────────────────────────────────────────────────────────────
 const ADMIN_PW = '@2Irirdlai';
-const EMOJIS = ['Ã¢ÂÂÃ¯Â¸Â','Ã°ÂÂÂ¸','Ã°ÂÂÂÃ¯Â¸Â','Ã°ÂÂÂ','Ã°ÂÂÂ®','Ã¢ÂÂ©Ã¯Â¸Â','Ã°ÂÂÂ¢','Ã°ÂÂÂ','Ã°ÂÂÂÃ¯Â¸Â','Ã°ÂÂÂ','Ã°ÂÂÂº','Ã°ÂÂÂ¼Ã¯Â¸Â','Ã¢ÂÂÃ¯Â¸Â','Ã°ÂÂÂ','Ã°ÂÂÂ','Ã°ÂÂÂ','Ã°ÂÂÂ','Ã°ÂÂÂ¸','Ã°ÂÂÂµ','Ã°ÂÂÂ','Ã°ÂÂÂ¯','Ã°ÂÂÂ­'];
+const EMOJIS = ['✍️','🌸','🏔️','🌅','🏮','⛩️','🚢','🌊','🏝️','🎋','🌺','🖼️','✈️','🚂','🌄','🎑','🌙','📸','🍵','🍜','🏯','🎭'];
 
 let allArts = [];
 let artKws = [];
 let artImages = [];
 let editingId = null;
-let selectedEmoji = 'Ã¢ÂÂÃ¯Â¸Â';
+let selectedEmoji = '✍️';
 let filterStatus = 'all';
 let cities = [], cats = [];
 
-// Ã¢ÂÂÃ¢ÂÂ AUTH Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── AUTH ───────────────────────────────────────────────────────────────────
 function doLogin(){
   const v = document.getElementById('pw-input').value;
   if(v === ADMIN_PW){
@@ -525,7 +525,7 @@ function doLogin(){
     document.getElementById('app').style.display='block';
     init();
   } else {
-    document.getElementById('login-err').textContent='Ã¥Â¯ÂÃ§Â¢Â¼Ã©ÂÂ¯Ã¨ÂªÂ¤Ã¯Â¼ÂÃ¨Â«ÂÃ¥ÂÂÃ¨Â©Â¦Ã¤Â¸ÂÃ¦Â¬Â¡';
+    document.getElementById('login-err').textContent='密碼錯誤，請再試一次';
     document.getElementById('pw-input').value='';
   }
 }
@@ -538,7 +538,7 @@ if(sessionStorage.getItem('mantu_auth')==='1'){
   document.getElementById('app').style.display='block';
 }
 
-// Ã¢ÂÂÃ¢ÂÂ INIT Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── INIT ───────────────────────────────────────────────────────────────────
 async function init(){
   loadSettings();
   renderEmojiGrid();
@@ -553,10 +553,10 @@ function loadSettings(){
   if(el&&k)el.value=k;
 }
 
-// Ã¢ÂÂÃ¢ÂÂ ARTICLES Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── ARTICLES ───────────────────────────────────────────────────────────────
 async function loadArticles(){
   const {data,error} = await sb.from('articles').select('*').order('created_at',{ascending:false});
-  if(error){ toast('Ã¨Â¼ÂÃ¥ÂÂ¥Ã¥Â¤Â±Ã¦ÂÂÃ¯Â¼Â'+error.message,'err'); return; }
+  if(error){ toast('載入失敗：'+error.message,'err'); return; }
   allArts = data||[];
   renderArts();
   updateStats();
@@ -570,7 +570,7 @@ function updateStats(){
   document.getElementById('st-pub').textContent = pub.length;
   document.getElementById('st-draft').textContent = draft.length;
   document.getElementById('st-cities').textContent = citySet.size;
-  document.getElementById('hd-stats').textContent = `${pub.length} Ã§Â¯ÂÃ¥Â·Â²Ã§ÂÂ¼Ã¥Â¸Â`;
+  document.getElementById('hd-stats').textContent = `${pub.length} 篇已發布`;
 }
 
 function renderArts(){
@@ -589,17 +589,17 @@ function renderArts(){
   document.getElementById('art-empty').style.display='none';
   tbody.innerHTML = list.map(a=>`
     <tr>
-      <td style="font-size:1.4rem;width:50px">${a.emoji||'Ã¢ÂÂÃ¯Â¸Â'}</td>
+      <td style="font-size:1.4rem;width:50px">${a.emoji||'✍️'}</td>
       <td><div style="font-weight:500;color:var(--text)">${a.title}</div><div style="font-size:0.7rem;color:var(--text3);margin-top:2px">${a.excerpt||''}</div></td>
-      <td>${a.city||'Ã¢ÂÂ'}</td>
-      <td>${a.category||'Ã¢ÂÂ'}</td>
-      <td><span class="badge ${a.status==='published'?'badge-pub':'badge-draft'}">${a.status==='published'?'Ã¥Â·Â²Ã§ÂÂ¼Ã¥Â¸Â':'Ã¨ÂÂÃ§Â¨Â¿'}</span></td>
-      <td style="font-size:0.75rem;color:var(--text3)">${a.published_at?new Date(a.published_at).toLocaleString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}):'Ã¢ÂÂ'}</td>
+      <td>${a.city||'—'}</td>
+      <td>${a.category||'—'}</td>
+      <td><span class="badge ${a.status==='published'?'badge-pub':'badge-draft'}">${a.status==='published'?'已發布':'草稿'}</span></td>
+      <td style="font-size:0.75rem;color:var(--text3)">${a.published_at?new Date(a.published_at).toLocaleString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}):'—'}</td>
       <td>
         <div class="tbl-actions">
-          <button class="act-btn" onclick="openEditArt(${a.id})" title="Ã§Â·Â¨Ã¨Â¼Â¯">Ã¢ÂÂÃ¯Â¸Â</button>
-          <button class="act-btn" onclick="togglePub(${a.id},'${a.status}')" title="${a.status==='published'?'Ã¤Â¸ÂÃ§Â·Â':'Ã§ÂÂ¼Ã¥Â¸Â'}">${a.status==='published'?'Ã¢Â¬ÂÃ¯Â¸Â':'Ã°ÂÂÂ'}</button>
-          <button class="act-btn del" onclick="delArt(${a.id})" title="Ã¥ÂÂªÃ©ÂÂ¤">Ã°ÂÂÂÃ¯Â¸Â</button>
+          <button class="act-btn" onclick="openEditArt(${a.id})" title="編輯">✏️</button>
+          <button class="act-btn" onclick="togglePub(${a.id},'${a.status}')" title="${a.status==='published'?'下線':'發布'}">${a.status==='published'?'⬇️':'🚀'}</button>
+          <button class="act-btn del" onclick="delArt(${a.id})" title="刪除">🗑️</button>
         </div>
       </td>
     </tr>`).join('');
@@ -620,23 +620,23 @@ async function togglePub(id,cur){
     upd.published_at = new Date().toISOString();
   }
   const {error} = await sb.from('articles').update(upd).eq('id',id);
-  if(error){ toast('Ã¦ÂÂ´Ã¦ÂÂ°Ã¥Â¤Â±Ã¦ÂÂ','err'); return; }
-  toast(newStatus==='published'?'Ã°ÂÂÂ Ã¦ÂÂÃ§Â«Â Ã¥Â·Â²Ã§ÂÂ¼Ã¥Â¸ÂÃ¯Â¼Â':'Ã¦ÂÂÃ§Â«Â Ã¥Â·Â²Ã¤Â¸ÂÃ§Â·Â');
+  if(error){ toast('更新失敗','err'); return; }
+  toast(newStatus==='published'?'🚀 文章已發布！':'文章已下線');
   await loadArticles();
 }
 
 async function delArt(id){
-  if(!confirm('Ã§Â¢ÂºÃ¥Â®ÂÃ¨Â¦ÂÃ¥ÂÂªÃ©ÂÂ¤Ã©ÂÂÃ§Â¯ÂÃ¦ÂÂÃ§Â«Â Ã¯Â¼Â')) return;
+  if(!confirm('確定要刪除這篇文章？')) return;
   const {error} = await sb.from('articles').delete().eq('id',id);
-  if(error){ toast('Ã¥ÂÂªÃ©ÂÂ¤Ã¥Â¤Â±Ã¦ÂÂ','err'); return; }
-  toast('Ã¦ÂÂÃ§Â«Â Ã¥Â·Â²Ã¥ÂÂªÃ©ÂÂ¤');
+  if(error){ toast('刪除失敗','err'); return; }
+  toast('文章已刪除');
   await loadArticles();
 }
 
-// Ã¢ÂÂÃ¢ÂÂ ARTICLE MODAL Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── ARTICLE MODAL ──────────────────────────────────────────────────────────
 function openAddArt(){
   editingId=null; artKws=[]; artImages=[];
-  document.getElementById('art-modal-title').textContent='Ã¦ÂÂ°Ã¥Â¢ÂÃ¦ÂÂÃ§Â«Â ';
+  document.getElementById('art-modal-title').textContent='新增文章';
   document.getElementById('f-title').value='';
   document.getElementById('f-excerpt').value='';
   document.getElementById('f-video').value='';
@@ -644,7 +644,7 @@ function openAddArt(){
   document.getElementById('f-status').value='draft';
   document.getElementById('f-kw').value='';
   document.getElementById('f-published-at').value=fmtDateLocal(new Date());
-  setEmoji('Ã¢ÂÂÃ¯Â¸Â');
+  setEmoji('✍️');
   setEditorContent('');
   renderArtKws();
   renderImgPreviews();
@@ -657,7 +657,7 @@ function openEditArt(id){
   editingId=id;
   artKws = Array.isArray(a.keywords) ? [...a.keywords] : (a.keywords||'').split(',').filter(Boolean);
   artImages=[];
-  document.getElementById('art-modal-title').textContent='Ã§Â·Â¨Ã¨Â¼Â¯Ã¦ÂÂÃ§Â«Â ';
+  document.getElementById('art-modal-title').textContent='編輯文章';
   document.getElementById('f-title').value=a.title||'';
   document.getElementById('f-excerpt').value=a.excerpt||'';
   document.getElementById('f-video').value=a.video_url||'';
@@ -666,7 +666,7 @@ function openEditArt(id){
   document.getElementById('f-published-at').value=a.published_at?fmtDateLocal(new Date(a.published_at)):fmtDateLocal(new Date());
   if(a.city) document.getElementById('f-city').value=a.city;
   if(a.category) document.getElementById('f-cat').value=a.category;
-  setEmoji(a.emoji||'Ã¢ÂÂÃ¯Â¸Â');
+  setEmoji(a.emoji||'✍️');
   setEditorContent(a.content||'');
   previewVideo(a.video_url||'');
   renderArtKws();
@@ -682,11 +682,11 @@ async function saveArt(){
   const title = document.getElementById('f-title').value.trim();
   const city = document.getElementById('f-city').value;
   const cat = document.getElementById('f-cat').value;
-  if(!title){ toast('Ã¨Â«ÂÃ¥Â¡Â«Ã¥Â¯Â«Ã¦ÂÂÃ§Â«Â Ã¦Â¨ÂÃ©Â¡Â','err'); return; }
-  if(!city){ toast('Ã¨Â«ÂÃ©ÂÂ¸Ã¦ÂÂÃ¥ÂÂÃ¥Â¸Â','err'); return; }
+  if(!title){ toast('請填寫文章標題','err'); return; }
+  if(!city){ toast('請選擇城市','err'); return; }
 
   const btn = document.getElementById('save-btn');
-  btn.disabled=true; btn.textContent='Ã¥ÂÂ²Ã¥Â­ÂÃ¤Â¸Â­...';
+  btn.disabled=true; btn.textContent='儲存中...';
 
   const slug = editingId
     ? allArts.find(a=>a.id===editingId)?.slug
@@ -715,15 +715,15 @@ async function saveArt(){
     ({error} = await sb.from('articles').insert(data));
   }
 
-  btn.disabled=false; btn.textContent='Ã¥ÂÂ²Ã¥Â­ÂÃ¦ÂÂÃ§Â«Â ';
-  if(error){ toast('Ã¥ÂÂ²Ã¥Â­ÂÃ¥Â¤Â±Ã¦ÂÂÃ¯Â¼Â'+error.message,'err'); return; }
-  toast(editingId?'Ã¦ÂÂÃ§Â«Â Ã¥Â·Â²Ã¦ÂÂ´Ã¦ÂÂ° Ã¢ÂÂ':'Ã¦ÂÂÃ§Â«Â Ã¥Â·Â²Ã¥Â»ÂºÃ§Â«Â Ã¢ÂÂ');
+  btn.disabled=false; btn.textContent='儲存文章';
+  if(error){ toast('儲存失敗：'+error.message,'err'); return; }
+  toast(editingId?'文章已更新 ✅':'文章已建立 ✅');
   closeArtModal();
   await loadArticles();
   updateSitemap();
 }
 
-// Ã¢ÂÂÃ¢ÂÂ EDITOR Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── EDITOR ─────────────────────────────────────────────────────────────────
 function execCmd(cmd,val=null){
   document.getElementById('f-content-editor').focus();
   document.execCommand(cmd,false,val);
@@ -733,7 +733,7 @@ function execFmt(tag){
   document.execCommand('formatBlock',false,tag);
 }
 function insertLink(){
-  const url = prompt('Ã¨Â¼Â¸Ã¥ÂÂ¥Ã©ÂÂ£Ã§ÂµÂÃ§Â¶Â²Ã¥ÂÂÃ¯Â¼Â');
+  const url = prompt('輸入連結網址：');
   if(url){ execCmd('createLink',url); }
 }
 function getEditorContent(){ return document.getElementById('f-content-editor').innerHTML; }
@@ -747,7 +747,7 @@ function triggerImgInsert(){
   document.getElementById('img-file-input').click();
 }
 
-// Ã¢ÂÂÃ¢ÂÂ IMAGE UPLOAD Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── IMAGE UPLOAD ───────────────────────────────────────────────────────────
 function setupDragDrop(){
   const area = document.getElementById('img-upload-area');
   area.addEventListener('dragover',e=>{e.preventDefault();area.style.borderColor='var(--accent)'});
@@ -762,17 +762,17 @@ function setupDragDrop(){
 async function handleImgUpload(e){
   const files = Array.from(e.target.files||[]);
   if(!files.length) return;
-  toast('Ã¤Â¸ÂÃ¥ÂÂ³Ã¤Â¸Â­...');
+  toast('上傳中...');
   for(const file of files){
     const ext = file.name.split('.').pop();
     const fname = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
     const {data,error} = await sb.storage.from('article-images').upload(fname,file,{contentType:file.type});
-    if(error){ toast('Ã¤Â¸ÂÃ¥ÂÂ³Ã¥Â¤Â±Ã¦ÂÂÃ¯Â¼Â'+error.message,'err'); continue; }
+    if(error){ toast('上傳失敗：'+error.message,'err'); continue; }
     const {data:{publicUrl}} = sb.storage.from('article-images').getPublicUrl(fname);
     artImages.push({url:publicUrl,name:fname});
   }
   renderImgPreviews();
-  toast('Ã¥ÂÂÃ§ÂÂÃ¤Â¸ÂÃ¥ÂÂ³Ã¥Â®ÂÃ¦ÂÂ Ã¢ÂÂ');
+  toast('圖片上傳完成 ✅');
   e.target.value='';
 }
 
@@ -781,8 +781,8 @@ function renderImgPreviews(){
   grid.innerHTML = artImages.map((img,i)=>`
     <div class="img-preview-item">
       <img src="${img.url}" alt="">
-      <button class="img-del" onclick="removeImg(${i})">Ã¢ÂÂ</button>
-      <button class="img-insert" onclick="insertImgToEditor('${img.url}')">Ã¦ÂÂÃ¥ÂÂ¥</button>
+      <button class="img-del" onclick="removeImg(${i})">✕</button>
+      <button class="img-insert" onclick="insertImgToEditor('${img.url}')">插入</button>
     </div>`).join('');
 }
 
@@ -790,10 +790,10 @@ function removeImg(i){ artImages.splice(i,1); renderImgPreviews(); }
 function insertImgToEditor(url){
   document.getElementById('f-content-editor').focus();
   document.execCommand('insertHTML',false,`<img src="${url}" style="max-width:100%;margin:0.5rem 0" alt="">`);
-  toast('Ã¥ÂÂÃ§ÂÂÃ¥Â·Â²Ã¦ÂÂÃ¥ÂÂ¥Ã¦ÂÂÃ§Â«Â ');
+  toast('圖片已插入文章');
 }
 
-// Ã¢ÂÂÃ¢ÂÂ KEYWORDS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── KEYWORDS ───────────────────────────────────────────────────────────────
 function addArtKw(e){
   if(e.key!=='Enter') return;
   e.preventDefault();
@@ -806,11 +806,11 @@ function addArtKw(e){
 function removeArtKw(k){ artKws=artKws.filter(x=>x!==k); renderArtKws(); }
 function renderArtKws(){
   document.getElementById('art-kw-tags').innerHTML=artKws.map(k=>
-    `<span class="kw-tag">${k}<button onclick="removeArtKw('${k}')">ÃÂ</button></span>`
+    `<span class="kw-tag">${k}<button onclick="removeArtKw('${k}')">×</button></span>`
   ).join('');
 }
 
-// Ã¢ÂÂÃ¢ÂÂ EMOJI Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── EMOJI ──────────────────────────────────────────────────────────────────
 function renderEmojiGrid(){
   document.getElementById('emoji-grid').innerHTML=EMOJIS.map(e=>
     `<button class="emoji-btn${e===selectedEmoji?' selected':''}" onclick="setEmoji('${e}')">${e}</button>`
@@ -826,7 +826,7 @@ function setEmoji(e){
   });
 }
 
-// Ã¢ÂÂÃ¢ÂÂ VIDEO Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── VIDEO ──────────────────────────────────────────────────────────────────
 function previewVideo(url){
   const box = document.getElementById('video-preview-box');
   const embed = document.getElementById('video-embed-preview');
@@ -845,22 +845,22 @@ function getEmbedUrl(url){
   return null;
 }
 
-// Ã¢ÂÂÃ¢ÂÂ SETTINGS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── SETTINGS ───────────────────────────────────────────────────────────────
 function renderCitySelect(){
   const sel=document.getElementById('f-city');
-  sel.innerHTML='<option value="">Ã¢ÂÂ Ã©ÂÂ¸Ã¦ÂÂÃ¥ÂÂÃ¥Â¸Â Ã¢ÂÂ</option>'+cities.map(c=>`<option value="${c}">${c}</option>`).join('');
+  sel.innerHTML='<option value="">— 選擇城市 —</option>'+cities.map(c=>`<option value="${c}">${c}</option>`).join('');
 }
 function renderCatSelect(){
   const sel=document.getElementById('f-cat');
-  sel.innerHTML='<option value="">Ã¢ÂÂ Ã©ÂÂ¸Ã¦ÂÂÃ¥ÂÂÃ©Â¡Â Ã¢ÂÂ</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('');
+  sel.innerHTML='<option value="">— 選擇分類 —</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('');
 }
 function renderCitiesList(){
   document.getElementById('cities-list').innerHTML=cities.map(c=>
-    `<span class="kw-tag">${c}<button onclick="removeCity('${c}')">ÃÂ</button></span>`).join('');
+    `<span class="kw-tag">${c}<button onclick="removeCity('${c}')">×</button></span>`).join('');
 }
 function renderCatsList(){
   document.getElementById('cats-list').innerHTML=cats.map(c=>
-    `<span class="kw-tag">${c}<button onclick="removeCat('${c}')">ÃÂ</button></span>`).join('');
+    `<span class="kw-tag">${c}<button onclick="removeCat('${c}')">×</button></span>`).join('');
 }
 function addCity(){
   const v=document.getElementById('new-city').value.trim();
@@ -882,7 +882,7 @@ function saveSettings(){
 }
 
 
-// Ã¢ÂÂÃ¢ÂÂ IMAGE COMPRESS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── IMAGE COMPRESS ──────────────────────────────────────────────────────────
 function compressImg(base64, mimeType, maxSize=800){
   return new Promise(resolve=>{
     const img=new Image();
@@ -909,14 +909,14 @@ function openKeyModal(){
 function closeKeyModal(){ document.getElementById('key-modal').classList.remove('open'); }
 function saveKeyModal(){
   const v = document.getElementById('key-modal-input').value.trim();
-  if(!v){ document.getElementById('key-modal-err').textContent='Ã¨Â«ÂÃ¨Â¼Â¸Ã¥ÂÂ¥ API Key'; return; }
+  if(!v){ document.getElementById('key-modal-err').textContent='請輸入 API Key'; return; }
   localStorage.setItem('mantu-api-key', v);
   closeKeyModal();
   document.getElementById('key-status-dot').style.color='var(--green)';
-  toast('API Key Ã¥Â·Â²Ã¦ÂÂ´Ã¦ÂÂ°Ã¯Â¼Â');
+  toast('API Key 已更新！');
 }
 
-// Ã¢ÂÂÃ¢ÂÂ AI UNBOXING Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── AI UNBOXING ────────────────────────────────────────────────────────────
 let aiCoverBase64=null;
 function handleAiCover(e){
   const file=e.target.files?.[0];if(!file)return;
@@ -925,7 +925,7 @@ function handleAiCover(e){
     aiCoverBase64={data:ev.target.result.split(',')[1],type:file.type};
     const prev=document.getElementById('ai-cover-preview');
     prev.src=ev.target.result;prev.style.display='block';
-    document.getElementById('ai-cover-area').innerHTML='Ã¢ÂÂ Ã¥Â°ÂÃ©ÂÂ¢Ã¥Â·Â²Ã©ÂÂ¸Ã¦ÂÂ';
+    document.getElementById('ai-cover-area').innerHTML='✅ 封面已選擇';
   };
   reader.readAsDataURL(file);e.target.value='';
 }
@@ -952,21 +952,21 @@ function handleAiImgs(e){
 
 async function genAiArticle(){
   const name=document.getElementById('ai-name').value.trim();
-  if(!name){toast('Ã¨Â«ÂÃ¥Â¡Â«Ã¥Â¯Â«Ã¥ÂºÂÃ¥Â®Â¶Ã¥ÂÂÃ§Â¨Â±','err');return;}
+  if(!name){toast('請填寫店家名稱','err');return;}
   const apiKey=localStorage.getItem('mantu-api-key');
   if(!apiKey){document.getElementById('ai-key-warn').style.display='block';return;}
   document.getElementById('ai-key-warn').style.display='none';
   const btn=document.getElementById('ai-gen-btn');
   const status=document.getElementById('ai-status');
-  btn.disabled=true;btn.textContent='Ã§ÂÂÃ¦ÂÂÃ¤Â¸Â­...';
-  status.textContent='AI Ã¦ÂÂÃ¨ÂÂÃ¤Â¸Â­...';status.style.color='var(--accent)';
+  btn.disabled=true;btn.textContent='生成中...';
+  status.textContent='AI 思考中...';status.style.color='var(--accent)';
   const city=document.getElementById('ai-city').value.trim();
   const type=document.getElementById('ai-type').value;
   const feature=document.getElementById('ai-feature').value.trim();
   const note=document.getElementById('ai-note').value.trim();
   const rating=document.getElementById('ai-rating').value;
   const price=document.getElementById('ai-price').value;
-  const prompt=`Ã¤Â½Â Ã¦ÂÂ¯Ã¤Â¸ÂÃ¤Â½ÂÃ¦ÂÂÃ©ÂÂ·Ã¥Â¯Â«Ã¦ÂÂÃ©ÂÂÃ©ÂÂÃ§Â®Â±Ã¦ÂÂÃ§ÂÂÃ©ÂÂ¨Ã¨ÂÂ½Ã¥Â®Â¢Ã¯Â¼ÂÃ¦ÂÂÃ©Â¢Â¨Ã§Â´Â°Ã¨ÂÂ©Ã¦ÂÂÃ¦ÂºÂ«Ã¥ÂºÂ¦Ã£ÂÂÃ¨Â«ÂÃ¦Â Â¹Ã¦ÂÂÃ¤Â»Â¥Ã¤Â¸ÂÃ¨Â³ÂÃ¨Â¨ÂÃ¯Â¼ÂÃ¥Â¯Â«Ã¤Â¸ÂÃ§Â¯ÂÃ¥Â®ÂÃ¦ÂÂ´Ã§ÂÂÃ§Â¹ÂÃ©Â«ÂÃ¤Â¸Â­Ã¦ÂÂÃ©ÂÂÃ§Â®Â±Ã¦ÂÂÃ§Â«Â Ã£ÂÂ\n\nÃ¥ÂºÂÃ¥Â®Â¶Ã¨Â³ÂÃ¦ÂÂÃ¯Â¼Â\n- Ã¥ÂÂÃ§Â¨Â±Ã¯Â¼Â${name}\n- Ã¥ÂÂÃ¥Â¸ÂÃ¯Â¼Â${city||'Ã¦ÂÂªÃ¦ÂÂÃ¥Â®Â'}\n- Ã©Â¡ÂÃ¥ÂÂÃ¯Â¼Â${type}\n- Ã§ÂÂ¹Ã¨ÂÂ²Ã¯Â¼Â${feature||'Ã¦ÂÂªÃ¦ÂÂÃ¤Â¾Â'}\n- Ã¨Â©ÂÃ¥ÂÂÃ¯Â¼Â${rating}/5\n- Ã¥ÂÂ¹Ã¤Â½ÂÃ¯Â¼Â${price}\n- Ã¥ÂÂÃ¤ÂºÂºÃ¥Â¿ÂÃ¥Â¾ÂÃ¯Â¼Â${note||'Ã¦ÂÂªÃ¦ÂÂÃ¤Â¾Â'}\n\nÃ¨Â«ÂÃ¤Â¾ÂÃ§ÂÂ§Ã¤Â»Â¥Ã¤Â¸ÂÃ¦Â Â¼Ã¥Â¼ÂÃ¥ÂÂÃ¨Â¦ÂÃ¯Â¼Â\n\nTITLE: [Ã¥ÂÂ¸Ã¥Â¼ÂÃ¤ÂºÂºÃ§ÂÂÃ¦ÂÂÃ§Â«Â Ã¦Â¨ÂÃ©Â¡ÂÃ¯Â¼ÂÃ¦ÂÂÃ¦ÂÂÃ¥Â¢Â]\n\nBODY:\n[Ã¦ÂÂÃ§Â«Â Ã¥ÂÂ§Ã¥Â®Â¹800-1200Ã¥Â­ÂÃ¯Â¼ÂÃ¥ÂÂÃ¦Â®ÂµÃ¨ÂÂ½Ã¯Â¼ÂÃ§Â´ÂÃ¦ÂÂÃ¥Â­ÂÃ¦Â®ÂµÃ¨ÂÂ½Ã§ÂÂ¨Ã§Â©ÂºÃ¨Â¡ÂÃ¥ÂÂÃ©ÂÂ]`;
+  const prompt=`你是一位擅長寫旅遊開箱文的部落客，文風細膩有溫度。請根據以下資訊，寫一篇完整的繁體中文開箱文章。\n\n店家資料：\n- 名稱：${name}\n- 城市：${city||'未指定'}\n- 類型：${type}\n- 特色：${feature||'未提供'}\n- 評分：${rating}/5\n- 價位：${price}\n- 個人心得：${note||'未提供'}\n\n請依照以下格式回覆：\n\nTITLE: [吸引人的文章標題，有意境]\n\nBODY:\n[文章內容800-1200字，分段落，純文字段落用空行分隔]`;
   try{
     const userContent=[];
     if(aiImgBase64.length>0){aiImgBase64.forEach(img=>{userContent.push({type:'image',source:{type:'base64',media_type:img.type,data:img.data}});});}
@@ -979,23 +979,23 @@ async function genAiArticle(){
     const text=data.content?.[0]?.text||'';
     const titleMatch=text.match(/TITLE:\s*(.+)/);
     const bodyMatch=text.match(/BODY:\s*([\s\S]+)/);
-    aiGenTitle=titleMatch?titleMatch[1].trim():`${name}Ã¯Â½Â${city}${type}Ã©ÂÂÃ§Â®Â±`;
+    aiGenTitle=titleMatch?titleMatch[1].trim():`${name}｜${city}${type}開箱`;
     const body=bodyMatch?bodyMatch[1].trim():text;
     aiGenSlug=aiGenTitle.replace(/[^\u4e00-\u9fff\w\s-]/g,'').trim().replace(/[\s_]+/g,'-').substring(0,60).toLowerCase()+'-'+Date.now();
     document.getElementById('ai-title-preview').textContent=aiGenTitle;
     document.getElementById('ai-body-preview').textContent=body;
-    status.textContent='Ã¢ÂÂ Ã§ÂÂÃ¦ÂÂÃ¥Â®ÂÃ¦ÂÂÃ¯Â¼ÂÃ¥ÂÂ¯Ã§ÂÂ´Ã¦ÂÂ¥Ã§Â·Â¨Ã¨Â¼Â¯Ã¥Â¾ÂÃ§ÂÂ¼Ã¥Â¸Â';status.style.color='var(--green)';
+    status.textContent='✅ 生成完成！可直接編輯後發布';status.style.color='var(--green)';
     document.getElementById('ai-publish-panel').style.display='block';
     renderCitySelect2();renderCatSelect2();
     if(city){const sel=document.getElementById('ai-pub-city');Array.from(sel.options).forEach(o=>{if(o.value===city)o.selected=true;});}
     const catSel=document.getElementById('ai-pub-cat');Array.from(catSel.options).forEach(o=>{if(o.value===type)o.selected=true;});
     document.getElementById('ai-pub-time').value=fmtDateLocal(new Date());
-  }catch(e){status.textContent='Ã§ÂÂÃ¦ÂÂÃ¥Â¤Â±Ã¦ÂÂÃ¯Â¼Â'+e.message.slice(0,50);status.style.color='var(--red)';}
-  btn.disabled=false;btn.textContent='Ã¢ÂÂ¨ AI Ã§ÂÂÃ¦ÂÂÃ©ÂÂÃ§Â®Â±Ã¦ÂÂ';
+  }catch(e){status.textContent='生成失敗：'+e.message.slice(0,50);status.style.color='var(--red)';}
+  btn.disabled=false;btn.textContent='✨ AI 生成開箱文';
 }
 
-function renderCitySelect2(){const sel=document.getElementById('ai-pub-city');sel.innerHTML='<option value="">Ã¢ÂÂ Ã©ÂÂ¸Ã¦ÂÂÃ¥ÂÂÃ¥Â¸Â Ã¢ÂÂ</option>'+cities.map(c=>`<option value="${c}">${c}</option>`).join('');}
-function renderCatSelect2(){const sel=document.getElementById('ai-pub-cat');sel.innerHTML='<option value="">Ã¢ÂÂ Ã©ÂÂ¸Ã¦ÂÂÃ¥ÂÂÃ©Â¡Â Ã¢ÂÂ</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('');}
+function renderCitySelect2(){const sel=document.getElementById('ai-pub-city');sel.innerHTML='<option value="">— 選擇城市 —</option>'+cities.map(c=>`<option value="${c}">${c}</option>`).join('');}
+function renderCatSelect2(){const sel=document.getElementById('ai-pub-cat');sel.innerHTML='<option value="">— 選擇分類 —</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('');}
 
 async 
 async function updateSitemap(){
@@ -1007,12 +1007,12 @@ async function updateSitemap(){
 function publishAiArticle(){
   const title=aiGenTitle;
   const body=document.getElementById('ai-body-preview').textContent.trim();
-  if(!title||!body){toast('Ã¨Â«ÂÃ¥ÂÂÃ§ÂÂÃ¦ÂÂÃ¦ÂÂÃ§Â«Â ','err');return;}
+  if(!title||!body){toast('請先生成文章','err');return;}
   const city=document.getElementById('ai-pub-city').value;
   const cat=document.getElementById('ai-pub-cat').value;
   const btn=document.getElementById('ai-pub-btn');
   const msg=document.getElementById('ai-pub-msg');
-  btn.disabled=true;btn.textContent='Ã§ÂÂ¼Ã¥Â¸ÂÃ¤Â¸Â­...';
+  btn.disabled=true;btn.textContent='發布中...';
   let coverImage=null;
   if(aiImgBase64.length>0){
     try{
@@ -1027,7 +1027,7 @@ function publishAiArticle(){
   const pubAt=document.getElementById('ai-pub-time').value;
   const name=document.getElementById('ai-name').value.trim();
   const type=document.getElementById('ai-type').value;
-  const articleData={title,slug:aiGenSlug,city:city||document.getElementById('ai-city').value||null,category:cat||type||null,excerpt:document.getElementById('ai-pub-excerpt').value.trim()||body.slice(0,120)+'...',content:htmlContent,keywords:[name,type,city].filter(Boolean),emoji:{Ã¥ÂÂÃ¥ÂÂ¡Ã¥Â»Â³:'Ã¢ÂÂ',Ã©Â¤ÂÃ¥Â»Â³:'Ã°ÂÂÂ½Ã¯Â¸Â',Ã§ÂÂÃ©Â»Â:'Ã°ÂÂÂ°',Ã¦ÂÂ¯Ã©Â»Â:'Ã°ÂÂÂÃ¯Â¸Â',Ã¤Â½ÂÃ¥Â®Â¿:'Ã°ÂÂÂ ',Ã©ÂÂÃ¥ÂÂ§:'Ã°ÂÂÂ¸'}[type]||'Ã¢ÂÂÃ¯Â¸Â',keyword_id:document.getElementById('ai-pub-kw').value||null,cover_image:window._coverImageUrl||coverImage,status,published_at:pubAt?new Date(pubAt).toISOString():new Date().toISOString(),
+  const articleData={title,slug:aiGenSlug,city:city||document.getElementById('ai-city').value||null,category:cat||type||null,excerpt:document.getElementById('ai-pub-excerpt').value.trim()||body.slice(0,120)+'...',content:htmlContent,keywords:[name,type,city].filter(Boolean),emoji:{咖啡廳:'☕',餐廳:'🍽️',甜點:'🍰',景點:'🏔️',住宿:'🏠',酒吧:'🍸'}[type]||'✍️',keyword_id:document.getElementById('ai-pub-kw').value||null,cover_image:window._coverImageUrl||coverImage,status,published_at:pubAt?new Date(pubAt).toISOString():new Date().toISOString(),
     shop_info:{
       name:document.getElementById('ai-name')?.value?.trim()||null,
       address:document.getElementById('ai-shop-address')?.value?.trim()||null,
@@ -1042,16 +1042,16 @@ function publishAiArticle(){
       line:document.getElementById('ai-shop-line')?.value?.trim()||null
     }};
   const{error}=await sb.from('articles').insert(articleData);
-  btn.disabled=false;btn.textContent='Ã°ÂÂÂ Ã§ÂÂ¼Ã¥Â¸ÂÃ¥ÂÂ°Ã¥ÂÂÃ¥ÂÂ°';
-  if(error){msg.style.color='var(--red)';msg.textContent='Ã§ÂÂ¼Ã¥Â¸ÂÃ¥Â¤Â±Ã¦ÂÂÃ¯Â¼Â'+error.message;return;}
+  btn.disabled=false;btn.textContent='🚀 發布到前台';
+  if(error){msg.style.color='var(--red)';msg.textContent='發布失敗：'+error.message;return;}
   msg.style.color='var(--green)';
-  msg.innerHTML=status==='published'?`Ã¢ÂÂ Ã¦ÂÂÃ§Â«Â Ã¥Â·Â²Ã§ÂÂ¼Ã¥Â¸ÂÃ¯Â¼Â<a href="https://journeylift.com.tw/articles/${aiGenSlug}" target="_blank" style="color:var(--accent2);margin-left:0.5rem">Ã¦ÂÂ¥Ã§ÂÂÃ¦ÂÂÃ§Â«Â  Ã¢ÂÂ</a>`:'Ã°ÂÂÂ Ã¥Â·Â²Ã¥Â­ÂÃ§ÂÂºÃ¨ÂÂÃ§Â¨Â¿';
-  toast(status==='published'?'Ã¦ÂÂÃ§Â«Â Ã¥Â·Â²Ã§ÂÂ¼Ã¥Â¸Â Ã°ÂÂÂ':'Ã¥Â·Â²Ã¥Â­ÂÃ§ÂÂºÃ¨ÂÂÃ§Â¨Â¿');
+  msg.innerHTML=status==='published'?`✅ 文章已發布！<a href="https://journeylift.com.tw/articles/${aiGenSlug}" target="_blank" style="color:var(--accent2);margin-left:0.5rem">查看文章 →</a>`:'📝 已存為草稿';
+  toast(status==='published'?'文章已發布 🎉':'已存為草稿');
   await loadArticles();
   if(status==='published') updateSitemap();
 }
 
-// Ã¢ÂÂÃ¢ÂÂ PAGES Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── PAGES ──────────────────────────────────────────────────────────────────
 function showPage(name){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
@@ -1062,7 +1062,7 @@ function showPage(name){
   if(mb)mb.classList.add('active');
 }
 
-// Ã¢ÂÂÃ¢ÂÂ HELPERS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── HELPERS ────────────────────────────────────────────────────────────────
 function fmtDateLocal(d){
   const pad=n=>String(n).padStart(2,'0');
   return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
@@ -1091,19 +1091,19 @@ window.addEventListener('load',()=>{
 <div class="mobile-nav" id="mobile-nav" style="display:none">
   <div class="mobile-nav-inner">
     <button class="mnav-btn active" id="mnav-articles" onclick="showPage('articles')">
-      <span class="mnav-icon">Ã°ÂÂÂ</span>Ã¦ÂÂÃ§Â«Â 
+      <span class="mnav-icon">📝</span>文章
     </button>
     <button class="mnav-btn" id="mnav-ai" onclick="showPage('ai')">
-      <span class="mnav-icon">Ã¢ÂÂ¨</span>AI
+      <span class="mnav-icon">✨</span>AI
     </button>
     <button class="mnav-btn" onclick="openAddArt()">
-      <span class="mnav-add">Ã¯Â¼Â</span>
+      <span class="mnav-add">＋</span>
     </button>
     <button class="mnav-btn" id="mnav-settings" onclick="showPage('settings')">
-      <span class="mnav-icon">Ã¢ÂÂÃ¯Â¸Â</span>Ã¨Â¨Â­Ã¥Â®Â
+      <span class="mnav-icon">⚙️</span>設定
     </button>
     <button class="mnav-btn" onclick="window.open('https://journeylift.com.tw','_blank')">
-      <span class="mnav-icon">Ã°ÂÂÂ</span>Ã¥ÂÂÃ¥ÂÂ°
+      <span class="mnav-icon">🌐</span>前台
     </button>
   </div>
 </div>
@@ -1112,20 +1112,20 @@ window.addEventListener('load',()=>{
 <div class="modal-bg" id="key-modal">
   <div class="modal" style="max-width:420px">
     <div class="modal-hd">
-      <div class="modal-title">Ã¢ÂÂ API Key Ã¨Â¨Â­Ã¥Â®Â</div>
-      <button class="modal-close" onclick="closeKeyModal()">Ã¢ÂÂ</button>
+      <div class="modal-title">⚙ API Key 設定</div>
+      <button class="modal-close" onclick="closeKeyModal()">✕</button>
     </div>
     <div class="modal-body">
       <div class="fg">
         <label class="fl">Anthropic API Key</label>
-        <div style="font-size:0.7rem;color:var(--text3);margin-bottom:0.5rem">Key Ã¥Â­ÂÃ¥ÂÂ¨Ã¦ÂÂ¬Ã¦Â©ÂÃ§ÂÂÃ¨Â¦Â½Ã¥ÂÂ¨Ã¯Â¼ÂÃ¤Â¸ÂÃ¦ÂÂÃ¤Â¸ÂÃ¥ÂÂ³Ã¥ÂÂ°Ã¤Â»Â»Ã¤Â½ÂÃ¤Â¼ÂºÃ¦ÂÂÃ¥ÂÂ¨Ã£ÂÂ</div>
+        <div style="font-size:0.7rem;color:var(--text3);margin-bottom:0.5rem">Key 存在本機瀏覽器，不會上傳到任何伺服器。</div>
         <input class="fi" type="password" id="key-modal-input" placeholder="sk-ant-api03-..." onkeydown="if(event.key==='Enter')saveKeyModal()">
       </div>
       <div id="key-modal-err" style="font-size:0.7rem;color:var(--red);min-height:1.2em"></div>
     </div>
     <div class="modal-ft">
-      <button class="btn-secondary" onclick="closeKeyModal()">Ã¥ÂÂÃ¦Â¶Â</button>
-      <button class="btn-primary" onclick="saveKeyModal()">Ã¥ÂÂ²Ã¥Â­Â</button>
+      <button class="btn-secondary" onclick="closeKeyModal()">取消</button>
+      <button class="btn-primary" onclick="saveKeyModal()">儲存</button>
     </div>
   </div>
 </div>
@@ -1165,7 +1165,7 @@ function renderCats(cats){
   if(!cats||!cats.length){
     var p=document.createElement("p");
     p.style.color="var(--muted)";
-    p.textContent="Ã¥Â°ÂÃ§ÂÂ¡Ã¥ÂÂÃ©Â¡ÂÃ¯Â¼ÂÃ¨Â«ÂÃ¦ÂÂ°Ã¥Â¢Â";
+    p.textContent="尚無分類，請新增";
     el.appendChild(p);return;
   }
   cats.forEach(function(cat){
@@ -1178,18 +1178,18 @@ function renderCats(cats){
     name.textContent=cat.name;
     var btns=document.createElement("div");
     var editBtn=document.createElement("button");
-    editBtn.textContent="Ã§Â·Â¨Ã¨Â¼Â¯";
+    editBtn.textContent="編輯";
     editBtn.style.cssText="background:none;border:1px solid var(--border);color:var(--accent);padding:0.25rem 0.8rem;font-size:0.72rem;cursor:pointer;margin-right:0.4rem;font-family:inherit";
     editBtn.onclick=(function(id){return function(){editCat(id);};})(cat.id);
     var delBtn=document.createElement("button");
-    delBtn.textContent="Ã¥ÂÂªÃ©ÂÂ¤";
+    delBtn.textContent="刪除";
     delBtn.style.cssText="background:none;border:1px solid rgba(255,80,80,0.3);color:#f66;padding:0.25rem 0.8rem;font-size:0.72rem;cursor:pointer;font-family:inherit";
     delBtn.onclick=(function(id,nm){return function(){deleteCat(id,nm);};})(cat.id,cat.name);
     btns.appendChild(editBtn);btns.appendChild(delBtn);
     top.appendChild(name);top.appendChild(btns);
     var preview=document.createElement("div");
     preview.style.cssText="font-size:0.72rem;color:var(--muted);background:var(--surface);padding:0.6rem 1rem;border-radius:3px;line-height:1.6";
-    preview.textContent=(cat.ai_prompt||"").slice(0,100)||"Ã¦ÂÂªÃ¨Â¨Â­Ã¥Â®Â AI Ã¦ÂÂÃ¤Â»Â¤";
+    preview.textContent=(cat.ai_prompt||"").slice(0,100)||"未設定 AI 指令";
     card.appendChild(top);card.appendChild(preview);
     el.appendChild(card);
   });
@@ -1197,30 +1197,30 @@ function renderCats(cats){
 window.renderCats=renderCats;
 
 window.openAddCat=function(){
-  var name=prompt("Ã¥ÂÂÃ©Â¡ÂÃ¥ÂÂÃ§Â¨Â±Ã¯Â¼Â");
+  var name=prompt("分類名稱：");
   if(!name||!name.trim())return;
-  var ai=prompt("AI Ã¥Â¯Â«Ã¤Â½ÂÃ¦ÂÂÃ¥Â¼ÂÃ¯Â¼Â","")||"";
+  var ai=prompt("AI 寫作指引：","")||"";
   saveCat(null,name.trim(),ai);
 };
 window.editCat=function(id){
   var cats=window._catsCache||[];
   var cat=null;for(var i=0;i<cats.length;i++)if(cats[i].id===id){cat=cats[i];break;}
   if(!cat)return;
-  var name=prompt("Ã¥ÂÂÃ©Â¡ÂÃ¥ÂÂÃ§Â¨Â±Ã¯Â¼Â",cat.name);
+  var name=prompt("分類名稱：",cat.name);
   if(!name||!name.trim())return;
-  var ai=prompt("AI Ã¥Â¯Â«Ã¤Â½ÂÃ¦ÂÂÃ¥Â¼ÂÃ¯Â¼Â",cat.ai_prompt||"")||"";
+  var ai=prompt("AI 寫作指引：",cat.ai_prompt||"")||"";
   saveCat(id,name.trim(),ai);
 };
 window.saveCat=function(id,name,ai_prompt){
   var url=id?SB+"/rest/v1/categories?id=eq."+id:SB+"/rest/v1/categories";
   var method=id?"PATCH":"POST";
   fetch(url,{method:method,headers:sbH(),body:JSON.stringify({name:name,ai_prompt:ai_prompt})})
-  .then(function(r){if(r.ok)loadCats();else alert("Ã¥ÂÂ²Ã¥Â­ÂÃ¥Â¤Â±Ã¦ÂÂ");});
+  .then(function(r){if(r.ok)loadCats();else alert("儲存失敗");});
 };
 window.deleteCat=function(id,name){
-  if(!confirm("Ã§Â¢ÂºÃ¥Â®ÂÃ¨Â¦ÂÃ¥ÂÂªÃ©ÂÂ¤Ã£ÂÂ"+name+"Ã£ÂÂÃ¯Â¼Â"))return;
+  if(!confirm("確定要刪除「"+name+"」？"))return;
   fetch(SB+"/rest/v1/categories?id=eq."+id,{method:"DELETE",headers:{apikey:SK,Authorization:"Bearer "+SK}})
-  .then(function(r){if(r.ok)loadCats();else alert("Ã¥ÂÂªÃ©ÂÂ¤Ã¥Â¤Â±Ã¦ÂÂ");});
+  .then(function(r){if(r.ok)loadCats();else alert("刪除失敗");});
 };
 
 // patch showPage after load
@@ -1243,7 +1243,7 @@ function toggleCodeView(){
   var btn=document.getElementById('btn-code-view');
   if(!editor)return;
   if(editor._codeMode){
-    // Ã¥Â¾ÂÃ§Â´ÂÃ¦ÂÂÃ¥Â­ÂÃ¯Â¼ÂHTMLÃ§Â¢Â¼Ã¯Â¼ÂÃ¨Â½ÂÃ¥ÂÂ contenteditable
+    // 從純文字（HTML碼）轉回 contenteditable
     editor.innerHTML=editor.value||editor.textContent;
     editor.contentEditable='true';
     editor.style.fontFamily='';
@@ -1252,7 +1252,7 @@ function toggleCodeView(){
     delete editor._codeMode;
     if(btn){btn.style.background='none';btn.style.color='var(--accent)';}
   } else {
-    // Ã¨Â½ÂÃ¦ÂÂÃ§Â´ÂÃ¦ÂÂÃ¥Â­ÂÃ©Â¡Â¯Ã§Â¤Âº HTML Ã¥ÂÂÃ¥Â§ÂÃ§Â¢Â¼
+    // 轉成純文字顯示 HTML 原始碼
     var html=editor.innerHTML;
     editor.contentEditable='false';
     editor.textContent=html;
@@ -1264,7 +1264,7 @@ function toggleCodeView(){
   }
 }
 
-// Ã©Â ÂÃ©ÂÂ¢Ã¨Â¼ÂÃ¥ÂÂ¥Ã¥Â¾ÂÃ¨ÂÂªÃ¥ÂÂÃ¥Â¾Â Supabase Ã¥ÂÂÃ¦Â­Â¥Ã¥ÂÂÃ©Â¡ÂÃ©ÂÂ¸Ã¥ÂÂ®
+// 頁面載入後自動從 Supabase 同步分類選單
 window.addEventListener('load',function(){
   setTimeout(function(){
     if(typeof loadCats==='function')loadCats();
@@ -1387,10 +1387,10 @@ window.deleteKeyword=function(id,nm){
   .then(function(r){if(r.ok)loadKeywords();});
 };
 
-// Ã¥ÂÂÃ¥Â§ÂÃ¥ÂÂ
+// 初始化
 window.addEventListener("load",function(){
   setTimeout(function(){
-    // Ã¦ÂÂÃ©ÂÂÃ¤ÂºÂÃ¤Â»Â¶
+    // 按鈕事件
     var r=document.getElementById("btn-add-region");
     if(r)r.addEventListener("click",window.openAddRegion);
     var k=document.getElementById("btn-add-kw");
