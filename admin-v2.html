@@ -690,7 +690,7 @@ async function saveArt(){
 
   const slug = editingId
     ? allArts.find(a=>a.id===editingId)?.slug
-    : title.toLowerCase().replace(/[^\w\s-]/g,'').trim().replace(/[\s_]+/g,'-').replace(/-+/g,'-').substring(0,60) + '-' + Date.now();
+    : title.toLowerCase().replace(/[^\w\s-]/g,'').trim().replace(/[\s_]+/g,'-').replace(/-+/g,'-').substring(0,40) + '-' + Math.random().toString(36).substring(2,6);
 
   const pubAt = document.getElementById('f-published-at').value;
   const data = {
@@ -981,7 +981,7 @@ async function genAiArticle(){
     const bodyMatch=text.match(/BODY:\s*([\s\S]+)/);
     aiGenTitle=titleMatch?titleMatch[1].trim():`${name}｜${city}${type}開箱`;
     const body=bodyMatch?bodyMatch[1].trim():text;
-    aiGenSlug=aiGenTitle.replace(/[^\u4e00-\u9fff\w\s-]/g,'').trim().replace(/[\s_]+/g,'-').substring(0,60).toLowerCase()+'-'+Date.now();
+    aiGenSlug=aiGenTitle.replace(/[^\u4e00-\u9fff\w\s-]/g,'').trim().replace(/[\s_]+/g,'-').substring(0,40).toLowerCase()+'-'+Math.random().toString(36).substring(2,6);
     document.getElementById('ai-title-preview').textContent=aiGenTitle;
     document.getElementById('ai-body-preview').textContent=body;
     status.textContent='✅ 生成完成！可直接編輯後發布';status.style.color='var(--green)';
@@ -1020,7 +1020,7 @@ async function publishAiArticle(){
   const pubAt=document.getElementById('ai-pub-time').value;
   const name=document.getElementById('ai-name').value.trim();
   const type=document.getElementById('ai-type').value;
-  const articleData={title,slug:aiGenSlug,city:city||document.getElementById('ai-city').value||null,category:cat||type||null,excerpt:document.getElementById('ai-pub-excerpt').value.trim()||body.slice(0,120)+'...',content:htmlContent,keywords:[name,type,city].filter(Boolean),emoji:{咖啡廳:'☕',餐廳:'🍽️',甜點:'🍰',景點:'🏔️',住宿:'🏠',酒吧:'🍸'}[type]||'✍️',keyword_id:document.getElementById('ai-pub-kw').value||null,cover_image:window._coverImageUrl||coverImage,status,published_at:pubAt?new Date(pubAt).toISOString():new Date().toISOString(),
+  const articleData={title,slug:aiGenSlug,city:city||document.getElementById('ai-city').value||null,category:cat||type||null,excerpt:document.getElementById('ai-pub-excerpt').value.trim()||body.slice(0,120)+'...',content:(()=>{const ps=htmlContent.split('</p>').filter(p=>p.trim());if(!images||!images.length)return htmlContent;const step=Math.max(1,Math.floor(ps.length/(images.length+1)));let out='';let ii=0;ps.forEach((p,i)=>{out+=p+'</p>';if((i+1)%step===0&&ii<images.length){out+='<figure style="margin:1.8rem 0;text-align:center"><img src="'+images[ii]+'" alt="" loading="lazy" style="max-width:100%;border-radius:8px;display:block;margin:0 auto"></figure>';ii++;}});while(ii<images.length){out+='<figure style="margin:1.8rem 0;text-align:center"><img src="'+images[ii]+'" alt="" loading="lazy" style="max-width:100%;border-radius:8px;display:block;margin:0 auto"></figure>';ii++;}return out;})(),keywords:[name,type,city].filter(Boolean),emoji:{咖啡廳:'☕',餐廳:'🍽️',甜點:'🍰',景點:'🏔️',住宿:'🏠',酒吧:'🍸'}[type]||'✍️',keyword_id:document.getElementById('ai-pub-kw').value||null,cover_image:window._coverImageUrl||coverImage,status,published_at:pubAt?new Date(pubAt).toISOString():new Date().toISOString(),
     shop_info:{
       name:document.getElementById('ai-name')?.value?.trim()||null,
       address:document.getElementById('ai-shop-address')?.value?.trim()||null,
