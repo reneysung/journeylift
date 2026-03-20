@@ -397,7 +397,7 @@ tr:hover td{background:var(--surface2)}
 
       <div class="fg">
         <label class="fl">文章內容</label>
-        <div class="editor-toolbar">
+        <div class="editor-toolbar" id="editor-toolbar">
           <button class="ed-btn" onclick="execCmd('bold')" title="粗體"><b>B</b></button>
           <button class="ed-btn" onclick="execCmd('italic')" title="斜體"><i>I</i></button>
           <button class="ed-btn" onclick="execCmd('underline')" title="底線"><u>U</u></button>
@@ -412,6 +412,7 @@ tr:hover td{background:var(--surface2)}
           <span style="color:var(--border2);padding:0 0.2rem">|</span>
           <button class="ed-btn" onclick="insertLink()" title="連結">🔗</button>
           <button class="ed-btn" onclick="triggerImgInsert()" title="插入圖片">🖼</button>
+                  <button class="ed-btn" onclick="toggleCodeView()" id="btn-code-view" title="檢視程式碼" style="margin-left:auto;color:var(--accent)">&lt;/&gt;</button>
         </div>
         <div id="f-content-editor" contenteditable="true" onpaste="handlePaste(event)"></div>
       </div>
@@ -1097,10 +1098,21 @@ function loadCats(){
   .then(function(r){return r.json();})
   .then(function(data){
     window._catsCache=Array.isArray(data)?data:[];
+    if(window._syncCats)window._syncCats(window._catsCache);
     renderCats(window._catsCache);
   }).catch(function(e){console.error("loadCats",e);});
 }
 window.loadCats=loadCats;
+window._syncCats=function(cats){
+  var ids=['ai-type','ai-pub-cat','f-cat','art-category'];
+  ids.forEach(function(id){
+    var sel=document.getElementById(id);
+    if(!sel)return;
+    var cur=sel.value;
+    sel.innerHTML=cats.map(function(x){return '<option value="'+x.name+'">'+x.name+'</option>';}).join('');
+    if(cur)sel.value=cur;
+  });
+};
 
 function renderCats(cats){
   var el=document.getElementById("cat-list");
@@ -1179,6 +1191,41 @@ window.addEventListener("load",function(){
   if(btn)btn.addEventListener("click",window.openAddCat);
 });
 })();
+</script>
+
+<script>
+function toggleCodeView(){
+  var editor=document.getElementById('art-content')||document.getElementById('editor');
+  var btn=document.getElementById('btn-code-view');
+  if(!editor)return;
+  if(editor._codeMode){
+    // 從純文字（HTML碼）轉回 contenteditable
+    editor.innerHTML=editor.value||editor.textContent;
+    editor.contentEditable='true';
+    editor.style.fontFamily='';
+    editor.style.fontSize='';
+    editor.style.color='';
+    delete editor._codeMode;
+    if(btn){btn.style.background='none';btn.style.color='var(--accent)';}
+  } else {
+    // 轉成純文字顯示 HTML 原始碼
+    var html=editor.innerHTML;
+    editor.contentEditable='false';
+    editor.textContent=html;
+    editor.style.fontFamily='monospace';
+    editor.style.fontSize='0.8rem';
+    editor.style.color='#7ec8a0';
+    editor._codeMode=true;
+    if(btn){btn.style.background='rgba(126,200,160,0.1)';btn.style.color='#7ec8a0';}
+  }
+}
+
+// 頁面載入後自動從 Supabase 同步分類選單
+window.addEventListener('load',function(){
+  setTimeout(function(){
+    if(typeof loadCats==='function')loadCats();
+  },800);
+});
 </script>
 </body>
 </html>
