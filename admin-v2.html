@@ -557,6 +557,12 @@ async function init(){
   renderEmojiGrid();
   setupDragDrop();
   await loadArticles();
+  // 自動同步分類和地區到所有選單
+  setTimeout(function(){
+    if(typeof loadRegions==='function')loadRegions();
+    if(typeof loadCats==='function')loadCats();
+    if(typeof loadKeywords==='function')loadKeywords();
+  },500);
 }
 
 function loadSettings(){
