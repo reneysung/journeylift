@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+  setTimeout(buildTOC, 50);
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
@@ -110,6 +111,16 @@ footer {
 }
 button.share-btn{border:none!important;background:none!important;}
 button.share-btn:hover{border:none!important;background:none!important;}
+
+/* 文章目錄 TOC */
+.toc-box{background:var(--bg2,#f8f4ef);border:1px solid var(--border,#e8e0d4);border-left:3px solid var(--accent,#c9a96e);border-radius:6px;padding:1.2rem 1.5rem;margin:1.5rem 0 2rem;max-width:100%}
+.toc-title{font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent,#c9a96e);margin-bottom:0.8rem;font-weight:600}
+.toc-list{list-style:none;padding:0;margin:0}
+.toc-list li{margin:0}
+.toc-list a{display:block;font-size:0.88rem;color:var(--text2,#6b6055);text-decoration:none;padding:0.25rem 0;border-bottom:none;transition:color 0.15s}
+.toc-list a:hover{color:var(--accent,#c9a96e)}
+.toc-h2{font-weight:500;color:var(--text,#2a2520)!important}
+.toc-h3{padding-left:1.2rem!important;font-size:0.83rem!important;opacity:0.85}
 </style>
 </head>
 <body>
@@ -279,6 +290,40 @@ function getEmbedUrl(url){
 }
 
 load();
+
+function buildTOC() {
+  const content = document.querySelector('.art-content');
+  if (!content) return;
+  const headings = content.querySelectorAll('h2, h3');
+  if (headings.length < 2) return; // 少於2個標題不顯示目錄
+
+  // Add IDs to headings
+  headings.forEach((h, i) => {
+    if (!h.id) h.id = 'toc-heading-' + i;
+  });
+
+  // Build TOC HTML
+  let items = '';
+  headings.forEach(h => {
+    const tag = h.tagName.toLowerCase();
+    const cls = tag === 'h2' ? 'toc-h2' : 'toc-h3';
+    const text = h.textContent.trim();
+    items += '<li><a href="#' + h.id + '" class="' + cls + '">' + text + '</a></li>';
+  });
+
+  const toc = document.createElement('nav');
+  toc.className = 'toc-box';
+  toc.setAttribute('aria-label', '文章目錄');
+  toc.innerHTML = '<div class="toc-title">文章目錄</div><ul class="toc-list">' + items + '</ul>';
+
+  // Insert TOC before first H2
+  const firstH2 = content.querySelector('h2');
+  if (firstH2) {
+    content.insertBefore(toc, firstH2);
+  } else {
+    content.insertBefore(toc, content.firstChild);
+  }
+}
 </script>
 </body>
 </html>
