@@ -340,15 +340,7 @@ tr:hover td{background:var(--surface2)}
               <div class="fg-row">
                 <div class="fg"><label class="fl">城市</label><select class="fsel" id="ai-pub-city"></select></div>
                 <div class="fg"><label class="fl">分類</label><select class="fsel" id="ai-pub-cat"></select>
-</div>
-        <div class="form-row">
-          <div class="fgroup">
-            <label class="flbl">主力關鍵字</label>
-            <select class="fsel" id="ai-pub-kw">
-              <option value="">不選擇</option>
-            </select>
-          </div>
-        </div></div>
+        <div class="form-row"><div class="fgroup"><label class="flbl">主力關鍵字</label><select class="fsel" id="ai-pub-kw"><option value="">不選擇</option></select></div></div></div>
               </div>
               <div class="fg"><label class="fl">摘要</label><textarea class="fta" id="ai-pub-excerpt" style="min-height:56px" placeholder="簡短描述..."></textarea></div>
               <div class="fg-row">
@@ -416,12 +408,7 @@ tr:hover td{background:var(--surface2)}
         <div class="fg">
           <label class="fl">分類 <span class="req">*</span></label>
           <select class="fsel" id="f-cat"></select>
-        <div class="fgroup">
-          <label class="flbl">主力關鍵字</label>
-          <select class="fsel" id="f-kw">
-            <option value="">不選擇</option>
-          </select>
-        </div>
+        <div class="fgroup"><label class="flbl">主力關鍵字</label><select class="fsel" id="f-kw"><option value="">不選擇</option></select></div>
         </div>
       </div>
 
@@ -557,18 +544,22 @@ async function init(){
   renderEmojiGrid();
   setupDragDrop();
   await loadArticles();
-  // 自動同步分類和地區到所有選單
-  setTimeout(function(){
-    if(typeof loadRegions==='function')loadRegions();
-    if(typeof loadCats==='function')loadCats();
-    if(typeof loadKeywords==='function')loadKeywords();
-  },500);
+  setTimeout(function(){if(typeof loadRegions==='function')loadRegions();if(typeof loadCats==='function')loadCats();if(typeof loadKeywords==='function')loadKeywords();},500);
 }
 
 function loadSettings(){
   var k=localStorage.getItem('mantu-api-key');
   var el=document.getElementById('api-key-input');
   if(el&&k)el.value=k;
+}
+
+// ── ARTICLES ───────────────────────────────────────────────────────────────
+async function loadArticles(){
+  const {data,error} = await sb.from('articles').select('*').order('created_at',{ascending:false});
+  if(error){ toast('載入失敗：'+error.message,'err'); return; }
+  allArts = data||[];
+  renderArts();
+  updateStats();
 }
 
 function updateStats(){
@@ -1135,30 +1126,13 @@ function loadCats(){
   .then(function(r){return r.json();})
   .then(function(data){
     window._catsCache=Array.isArray(data)?data:[];
-    // 直接同步所有分類選單
-    var _catOpts=(window._catsCache||[]).map(function(x){return '<option value="'+x.name+'">'+x.name+'</option>';}).join('');
-    ['ai-type','ai-pub-cat','f-cat'].forEach(function(id){
-      var sel=document.getElementById(id);
-      if(sel){var cur=sel.value;sel.innerHTML=_catOpts;sel.value=cur;}
-    });
-    // 同步主力關鍵字下拉（依城市篩選）
-    window._syncKwSelects=function(cityName){
-      var kws=window._keywords||[];
-      if(cityName){
-        var reg=(window._regions||[]).find(function(r){return r.name===cityName;});
-        if(reg)kws=kws.filter(function(k){return k.region_id===reg.id;});
-      }
-      var opts='<option value="">不選擇</option>'+kws.map(function(k){return '<option value="'+k.id+'">'+k.name+'</option>';}).join('');
-      ['ai-pub-kw','f-kw'].forEach(function(id){var s=document.getElementById(id);if(s)s.innerHTML=opts;});
-    };
-    window._syncKwSelects('');
+    
+    var _opts=(window._catsCache||[]).map(function(x){return '<option value="'+x.name+'">'+x.name+'</option>';}).join('');['ai-type','ai-pub-cat','f-cat'].forEach(function(id){var s=document.getElementById(id);if(s){var v=s.value;s.innerHTML=_opts;if(v)s.value=v;}});
     renderCats(window._catsCache);
   }).catch(function(e){console.error("loadCats",e);});
 }
 window.loadCats=loadCats;
 window._syncCats=function(cats){
-  // 同步所有分類下拉選單
-  var ids=['ai-type','ai-pub-cat','art-category','f-cat'];
   var ids=['ai-type','ai-pub-cat','f-cat','art-category'];
   ids.forEach(function(id){
     var sel=document.getElementById(id);
@@ -1299,9 +1273,7 @@ function loadRegions(){
   .then(function(r){return r.json();})
   .then(function(data){
     window._regions=Array.isArray(data)?data:[];
-    // 同步城市選單
-    var cityOpts='<option value="">— 選擇城市 —</option>'+window._regions.map(function(reg){return '<option value="'+reg.name+'">'+reg.name+'</option>';}).join('');
-    ['ai-city','ai-pub-city','f-city'].forEach(function(id){var sel=document.getElementById(id);if(sel){var cur=sel.value;sel.innerHTML=cityOpts;if(cur)sel.value=cur;}});
+    var _co='<option value="">\u2014 \u9078\u64c7\u57ce\u5e02 \u2014</option>'+(window._regions||[]).map(function(r){return '<option value="'+r.name+'">'+r.name+'</option>';}).join('');['ai-city','ai-pub-city','f-city'].forEach(function(id){var s=document.getElementById(id);if(s){var v=s.value;s.innerHTML=_co;if(v)s.value=v;}});
     renderRegions(window._regions);
     var sel=document.getElementById("kw-filter");
     if(!sel)return;
@@ -1314,21 +1286,7 @@ function loadRegions(){
   }).catch(function(e){console.error("loadRegions",e);});
 }
 window.loadRegions=loadRegions;
-window.syncAiCity=function(cityName){
-  // 自動同步到發布設定城市
-  var pubCity=document.getElementById('ai-pub-city');
-  if(pubCity)pubCity.value=cityName;
-  // 更新主力關鍵字選單（依城市篩選）
-  if(typeof window._syncKwSelects==='function')window._syncKwSelects(cityName);
-  else{
-    var kws=window._keywords||[];
-    var regs=window._regions||[];
-    var reg=regs.find(function(r){return r.name===cityName;});
-    if(reg)kws=kws.filter(function(k){return k.region_id===reg.id;});
-    var opts='<option value="">不選擇</option>'+kws.map(function(k){return '<option value="'+k.id+'">'+k.name+'</option>';}).join('');
-    ['ai-pub-kw','f-kw'].forEach(function(id){var s=document.getElementById(id);if(s)s.innerHTML=opts;});
-  }
-};
+window.syncAiCity=function(nm){var p=document.getElementById('ai-pub-city');if(p)p.value=nm;var kws=window._keywords||[];var reg=(window._regions||[]).find(function(r){return r.name===nm;});if(reg)kws=kws.filter(function(k){return k.region_id===reg.id;});var opts='<option value="">\u4e0d\u9078\u64c7</option>'+kws.map(function(k){return '<option value="'+k.id+'">'+k.name+'</option>';}).join('');['ai-pub-kw','f-kw'].forEach(function(id){var s=document.getElementById(id);if(s)s.innerHTML=opts;});};
 
 function renderRegions(regs){
   var el=document.getElementById("region-list");
@@ -1420,8 +1378,6 @@ window.addEventListener("load",function(){
     // 按鈕事件
     var r=document.getElementById("btn-add-region");
     if(r)r.addEventListener("click",window.openAddRegion);
-    // 登入後自動同步分類到所有選單
-    if(typeof loadCats==="function")loadCats();
     var k=document.getElementById("btn-add-kw");
     if(k)k.addEventListener("click",window.openAddKeyword);
     var f=document.getElementById("kw-filter");
