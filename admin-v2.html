@@ -981,7 +981,7 @@ async function genAiArticle(){
     const bodyMatch=text.match(/BODY:\s*([\s\S]+)/);
     aiGenTitle=titleMatch?titleMatch[1].trim():`${name}｜${city}${type}開箱`;
     const body=bodyMatch?bodyMatch[1].trim():text;
-    aiGenSlug=aiGenTitle.replace(/[^\w\s-]/g,'').trim().replace(/[\s_]+/g,'-').substring(0,40).toLowerCase()+'-'+Math.random().toString(36).substring(2,6);
+    aiGenSlug=aiGenTitle.replace(/[^\w\s-]/g,'').trim().replace(/[\s_]+/g,'-').substring(0,40).toLowerCase()+'-'+Math.random().toString(36).substring(2,6);if(!aiGenSlug||aiGenSlug.startsWith('-'))aiGenSlug=name.replace(/[^\w\s-]/g,'').trim().replace(/[\s_]+/g,'-').substring(0,30).toLowerCase()+'-'+Math.random().toString(36).substring(2,6);
     document.getElementById('ai-title-preview').textContent=aiGenTitle;
     document.getElementById('ai-body-preview').textContent=body;
     status.textContent='✅ 生成完成！可直接編輯後發布';status.style.color='var(--green)';
@@ -1007,12 +1007,7 @@ async function publishAiArticle(){
   const msg=document.getElementById('ai-pub-msg');
   btn.disabled=true;btn.textContent='發布中...';
   let coverImage=null;const images=[];
-  if(aiImgBase64.length>0){
-    try{
-      const img=aiImgBase64[0];const ext=img.type.split('/')[1]||'jpg';const fname=Date.now()+'.'+ext;
-      const blob=await fetch(`data:${img.type};base64,${img.data}`).then(r=>r.blob());
-      const{data:upData}=await sb.storage.from('article-images').upload(fname,blob,{contentType:img.type});
-      if(upData){const{data:{publicUrl}}=sb.storage.from('article-images').getPublicUrl(fname);coverImage=publicUrl;images.push(publicUrl);}
+  if(aiImgBase64.length>0){for(let _i=0;_i<aiImgBase64.length;_i++){try{const img=aiImgBase64[_i];const ext=img.type.split('/')[1]||'jpg';const fname=Date.now()+_i+'.'+ext;const blob=await fetch(`data:${img.type};base64,${img.data}`).then(r=>r.blob());const{data:upData}=await sb.storage.from('article-images').upload(fname,blob,{contentType:img.type});if(upData){const{data:{publicUrl}}=sb.storage.from('article-images').getPublicUrl(fname);if(_i===0)coverImage=publicUrl;images.push(publicUrl);}}catch(e){console.log('img err',e);}}}
     }catch(e){console.log('img err',e);}
   }
   const htmlContent=body.split('\n\n').map(p=>p.trim()?`<p>${p.replace(/\n/g,'<br>')}</p>`:'').join('\n');
