@@ -1,5 +1,9 @@
-aiGenSlug=aiGenTitle.replace(/[^\w\s-]/g,'').trim().replace(/[\s_]+/g,'-').substring(0,40).toLowerCase()+'-'+Math.random().toString(36).substring(2,6);
-    if(!aiGenSlug||aiGenSlug.length<4){const _citySlug=(window._regions||[]).find(r=>r.name===city)?.slug||city||'article';const _typeMap={'咖啡廳':'cafe','餐廳':'restaurant','小吃':'food','景點':'spot','住宿':'hotel','甜點':'dessert','酒吧':'bar','早午餐':'brunch'};const _typeSlug=_typeMap[document.getElementById('ai-type')?.value]||'place';aiGenSlug=_citySlug+'-'+_typeSlug+'-'+Math.random().toString(36).substring(2,6);}漫途</title>
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>後台管理 — 漫途</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -977,7 +981,8 @@ async function genAiArticle(){
     const bodyMatch=text.match(/BODY:\s*([\s\S]+)/);
     aiGenTitle=titleMatch?titleMatch[1].trim():`${name}｜${city}${type}開箱`;
     const body=bodyMatch?bodyMatch[1].trim():text;
-    aiGenSlug=aiGenTitle.replace(/[^\w\s-]/g,'').trim().replace(/[\s_]+/g,'-').substring(0,60).toLowerCase()+'-'+Date.now();
+    aiGenSlug=aiGenTitle.replace(/[^\w\s-]/g,'').trim().replace(/[\s_]+/g,'-').substring(0,40).toLowerCase()+'-'+Math.random().toString(36).substring(2,6);
+    if(!aiGenSlug||aiGenSlug.length<4){const _cs=(window._regions||[]).find(r=>r.name===city)?.slug||'article';const _tm={'咖啡廳':'cafe','餐廳':'restaurant','小吃':'food','景點':'spot','住宿':'hotel','甜點':'dessert','酒吧':'bar','早午餐':'brunch','裝潢':'interior','清潔':'cleaning'};const _ts=_tm[document.getElementById('ai-type')?.value]||'place';aiGenSlug=_cs+'-'+_ts+'-'+Math.random().toString(36).substring(2,6);}
     document.getElementById('ai-title-preview').textContent=aiGenTitle;
     document.getElementById('ai-body-preview').textContent=body;
     status.textContent='✅ 生成完成！可直接編輯後發布';status.style.color='var(--green)';
@@ -1011,7 +1016,6 @@ async function publishAiArticle(){
       if(upData){const{data:{publicUrl}}=sb.storage.from('article-images').getPublicUrl(fname);coverImage=publicUrl;_allImgUrls.push(publicUrl);}
     }catch(e){console.log('img err',e);}
   }
-  // Upload remaining images
   if(aiImgBase64.length>1){
     for(let _ii=1;_ii<aiImgBase64.length;_ii++){
       try{
@@ -1022,7 +1026,7 @@ async function publishAiArticle(){
         const _blob=await _resp.blob();
         const{data:_up}=await sb.storage.from('article-images').upload(_fname,_blob,{contentType:_img.type});
         if(_up){const{data:{publicUrl:_url}}=sb.storage.from('article-images').getPublicUrl(_fname);_allImgUrls.push(_url);}
-      }catch(_e){console.log('extra img err',_e);}
+      }catch(_e){console.log('img err',_e);}
     }
   }
     const htmlContent=body.split('\n\n').map(p=>p.trim()?`<p>${p.replace(/\n/g,'<br>')}</p>`:'').join('\n');
