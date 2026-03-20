@@ -77,7 +77,6 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem
 .share-bar{display:flex;align-items:center;gap:0.8rem;padding:1.5rem 0;border-top:1px solid var(--border,#2a2520);border-bottom:1px solid var(--border,#2a2520);margin:2rem 0}
 .share-label{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mist,#8a8278);flex-shrink:0}
 .share-btns{display:flex;gap:0.5rem;flex-wrap:wrap}
-.contact-line-btn{background:#06C755;color:#fff!important;border:none}
 .share-btn{.share-btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.4rem 1rem;border:1px solid var(--border2,rgba(200,169,110,0.2));background:none;font-size:0.72rem;color:var(--text2,#b8b0a0);cursor:pointer;font-family:inherit;letter-spacing:0.05em;transition:all 0.2s;text-decoration:none}
 .share-btn:hover{border-color:var(--accent,#c9a96e);color:var(--accent,#c9a96e)}
 .share-btn.copied{border-color:#4caf50;color:#4caf50}
@@ -215,10 +214,9 @@ ${(()=>{
     <div class="share-btns">
       <a class="share-btn" href="${fbUrl}" target="_blank" rel="noopener">📘 Facebook</a>
       <a class="share-btn" href="${lineUrl}" target="_blank" rel="noopener">💬 LINE</a>
-      <a class="share-btn contact-line-btn" href="https://lin.ee/ZBhZQL3" target="_blank" rel="noopener">💬 聯絡旅遊誌</a>
       <a class="share-btn" href="${twitterUrl}" target="_blank" rel="noopener">𝕏 Twitter</a>
       <button class="share-btn" onclick="copyLink(this)">🔗 複製連結</button>
-      <a class="share-btn" href="https://lin.ee/ZBhZQL3" target="_blank" rel="noopener" style="border-color:rgba(0,195,0,0.35);color:#06c755">💬 聯絡我們</a>
+      <a class="share-btn" href="https://lin.ee/ZBhZQL3" target="_blank" rel="noopener">💬 聯絡我們</a>
     </div>
   </div>`;
 })()}
