@@ -521,7 +521,7 @@ function loadSettings(){
   cities = JSON.parse(localStorage.getItem('mantu-cities')||'["台南","台北","高雄","台中","花蓮","宜蘭"]');
   cats = JSON.parse(localStorage.getItem('mantu-cats')||'["咖啡廳","餐廳","景點","住宿","小吃","伴手禮"]');
   renderCitySelect(); renderCatSelect();
-  /* renderCitiesList removed */ renderCatsList();
+  /* renderCitiesList removed */ /* renderCatsList removed */
 }
 
 // ── ARTICLES ───────────────────────────────────────────────────────────────
@@ -840,9 +840,9 @@ function addCat(){
   const v=document.getElementById('new-cat').value.trim();
   if(!v||cats.includes(v)) return;
   cats.push(v); document.getElementById('new-cat').value='';
-  saveSettings(); renderCatSelect(); renderCatsList();
+  saveSettings(); renderCatSelect(); /* renderCatsList removed */
 }
-function removeCat(c){ cats=cats.filter(x=>x!==c); saveSettings(); renderCatSelect(); renderCatsList(); }
+function removeCat(c){ cats=cats.filter(x=>x!==c); saveSettings(); renderCatSelect(); /* renderCatsList removed */ }
 function saveSettings(){
   localStorage.setItem('mantu-cities',JSON.stringify(cities));
   localStorage.setItem('mantu-cats',JSON.stringify(cats));
