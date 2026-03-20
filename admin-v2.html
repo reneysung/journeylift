@@ -997,14 +997,7 @@ async function genAiArticle(){
 function renderCitySelect2(){const sel=document.getElementById('ai-pub-city');sel.innerHTML='<option value="">— 選擇城市 —</option>'+cities.map(c=>`<option value="${c}">${c}</option>`).join('');}
 function renderCatSelect2(){const sel=document.getElementById('ai-pub-cat');sel.innerHTML='<option value="">— 選擇分類 —</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('');}
 
-async 
-async function updateSitemap(){
-  try{
-    await fetch('/.netlify/functions/update-sitemap',{method:'POST'});
-    console.log('sitemap update triggered');
-  }catch(e){console.warn('sitemap update failed',e);}
-}
-function publishAiArticle(){
+async function publishAiArticle(){
   const title=aiGenTitle;
   const body=document.getElementById('ai-body-preview').textContent.trim();
   if(!title||!body){toast('請先生成文章','err');return;}
@@ -1417,6 +1410,12 @@ window.addEventListener("load",function(){
   },1500);
 });
 })();
+
+async function updateSitemap(){
+  try{
+    await fetch('/.netlify/functions/update-sitemap',{method:'POST'});
+  }catch(e){console.warn('sitemap update failed',e);}
+}
 </script>
 </body>
 </html>
