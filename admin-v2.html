@@ -1130,6 +1130,8 @@ function loadCats(){
 }
 window.loadCats=loadCats;
 window._syncCats=function(cats){
+  // 同步所有分類下拉選單
+  var ids=['ai-type','ai-pub-cat','art-category','f-cat'];
   var ids=['ai-type','ai-pub-cat','f-cat','art-category'];
   ids.forEach(function(id){
     var sel=document.getElementById(id);
@@ -1373,6 +1375,8 @@ window.addEventListener("load",function(){
     // 按鈕事件
     var r=document.getElementById("btn-add-region");
     if(r)r.addEventListener("click",window.openAddRegion);
+    // 登入後自動同步分類到所有選單
+    if(typeof loadCats==="function")loadCats();
     var k=document.getElementById("btn-add-kw");
     if(k)k.addEventListener("click",window.openAddKeyword);
     var f=document.getElementById("kw-filter");
