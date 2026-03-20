@@ -3,7 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>文章 — 漫途旅遊誌</title>
+<title>æç«  â æ¼«éæéèª</title>
+<meta name="description" id="meta-desc" content="漫途旅遊誌 — 台灣慢旅行、咖啡廳、餐廳開箱文">
+<meta name="keywords" id="meta-keywords" content="漫途,旅遊,台灣,咖啡廳,開箱文">
+<meta name="robots" content="index, follow">
+<link rel="canonical" id="canonical-url" href="https://journeylift.com.tw">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="漫途 — 旅遊誌">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:title" id="og-title" content="漫途 — 旅遊誌">
+<meta property="og:description" id="og-desc" content="漫途旅遊誌 — 台灣慢旅行記錄">
+<meta property="og:url" id="og-url" content="https://journeylift.com.tw">
+<meta property="og:image" id="og-image" content="https://journeylift.com.tw/og-default.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" id="tw-title" content="漫途">
+<meta name="twitter:description" id="tw-desc" content="">
+<meta name="twitter:image" id="tw-image" content="https://journeylift.com.tw/og-default.jpg">
+<script type="application/ld+json" id="schema-jsonld">{}</script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -59,7 +75,7 @@ nav a:hover{color:var(--accent)}
 
 footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem;text-align:center;font-size:0.75rem;color:var(--text3)}
 
-/* ── SHOP INFO CARD ─────────────────────────────────────────────────────── */
+/* ââ SHOP INFO CARD âââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 .shop-card{background:var(--surface,#1a1714);border:1px solid var(--border,#2a2520);padding:1.8rem;margin:2.5rem 0;font-family:var(--font-sans,'Inter',sans-serif)}
 .shop-card-title{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent,#c9a96e);margin-bottom:1.2rem;display:flex;align-items:center;gap:0.5rem}
 .shop-card-title::after{content:'';flex:1;height:1px;background:var(--border,#2a2520)}
@@ -111,7 +127,7 @@ footer {
 button.share-btn{border:none!important;background:none!important;}
 button.share-btn:hover{border:none!important;background:none!important;}
 
-/* 文章目錄 TOC */
+/* æç« ç®é TOC */
 .toc-box{background:var(--bg2,#f8f4ef);border:1px solid var(--border,#e8e0d4);border-left:3px solid var(--accent,#c9a96e);border-radius:6px;padding:1.2rem 1.5rem;margin:1.5rem 0 2rem;max-width:100%}
 .toc-title{font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent,#c9a96e);margin-bottom:0.8rem;font-weight:600}
 .toc-list{list-style:none;padding:0;margin:0}
@@ -125,20 +141,20 @@ button.share-btn:hover{border:none!important;background:none!important;}
 <body>
 
 <header>
-  <a href="/" class="logo"><span>漫途</span>旅遊誌</a>
+  <a href="/" class="logo"><span>æ¼«é</span>æéèª</a>
   <nav>
-    <a href="/">首頁</a>
-    <a href="/articles">文章</a>
+    <a href="/">é¦é </a>
+    <a href="/articles">æç« </a>
   </nav>
 </header>
 
 <div class="article-wrap" id="article-wrap">
-  <div class="loading">載入中...</div>
+  <div class="loading">è¼å¥ä¸­...</div>
 </div>
 
 <footer>
-  <div class="footer-copyright">© 2026 漫途旅遊誌 · 用文字記錄每一段旅程</div>
-  <a class="footer-contact" href="https://lin.ee/ZBhZQL3" target="_blank" rel="noopener">💬 聯絡我們</a>
+  <div class="footer-copyright">Â© 2026 æ¼«éæéèª Â· ç¨æå­è¨éæ¯ä¸æ®µæç¨</div>
+  <a class="footer-contact" href="https://lin.ee/ZBhZQL3" target="_blank" rel="noopener">ð¬ è¯çµ¡æå</a>
 </footer>
 
 <script>
@@ -151,36 +167,36 @@ const sb = supabase.createClient(
   
 function copyLink(btn){
   navigator.clipboard.writeText(location.href).then(()=>{
-    btn.textContent='✅ 已複製！';
+    btn.textContent='â å·²è¤è£½ï¼';
     btn.classList.add('copied');
-    setTimeout(()=>{btn.textContent='🔗 複製連結';btn.classList.remove('copied');},2000);
+    setTimeout(()=>{btn.textContent='ð è¤è£½é£çµ';btn.classList.remove('copied');},2000);
   }).catch(()=>{
     // fallback
     const el=document.createElement('input');
     el.value=location.href;document.body.appendChild(el);
     el.select();document.execCommand('copy');document.body.removeChild(el);
-    btn.textContent='✅ 已複製！';btn.classList.add('copied');
-    setTimeout(()=>{btn.textContent='🔗 複製連結';btn.classList.remove('copied');},2000);
+    btn.textContent='â å·²è¤è£½ï¼';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='ð è¤è£½é£çµ';btn.classList.remove('copied');},2000);
   });
 }
 function renderShopCard(info){
     if(!info||!Object.keys(info).some(k=>info[k])) return '';
     const row=(icon,label,val,link)=>val?`<div class="shop-card-row"><span class="sci">${icon}</span><span>${link?`<a href="${link}" target="_blank">${val}</a>`:val}</span></div>`:'';
     const social=[];
-    if(info.fb) social.push(`<a href="${info.fb}" target="_blank">📘 Facebook</a>`);
-    if(info.ig) social.push(`<a href="${info.ig}" target="_blank">📷 Instagram</a>`);
-    if(info.line) social.push(`<a href="${info.line}" target="_blank">💬 LINE 分享</a>`);
-    if(info.maps) social.push(`<a href="${info.maps}" target="_blank">🗺️ Google Maps</a>`);
+    if(info.fb) social.push(`<a href="${info.fb}" target="_blank">ð Facebook</a>`);
+    if(info.ig) social.push(`<a href="${info.ig}" target="_blank">ð· Instagram</a>`);
+    if(info.line) social.push(`<a href="${info.line}" target="_blank">ð¬ LINE åäº«</a>`);
+    if(info.maps) social.push(`<a href="${info.maps}" target="_blank">ðºï¸ Google Maps</a>`);
     return `<div class="shop-card">
-      <div class="shop-card-title">店家資訊</div>
+      <div class="shop-card-title">åºå®¶è³è¨</div>
       ${info.name?'<div class="shop-card-name">'+info.name+'</div>':''}
       <div class="shop-card-grid">
-        ${row('📍','地址',info.address,info.maps)}
-        ${row('📞','電話',info.phone,info.phone?'tel:'+info.phone.replace(/[^+\d]/g,''):'')}
-        ${row('🕐','營業時間',info.hours)}
-        ${row('💰','消費',info.price_note)}
-        ${row('🅿️','停車',info.parking)}
-        ${row('🌐','官網',info.website,info.website)}
+        ${row('ð','å°å',info.address,info.maps)}
+        ${row('ð','é»è©±',info.phone,info.phone?'tel:'+info.phone.replace(/[^+\d]/g,''):'')}
+        ${row('ð','çæ¥­æé',info.hours)}
+        ${row('ð°','æ¶è²»',info.price_note)}
+        ${row('ð¿ï¸','åè»',info.parking)}
+        ${row('ð','å®ç¶²',info.website,info.website)}
       </div>
       ${social.length?'<div class="shop-social">'+social.join('')+'</div>':''}
     </div>`;
@@ -199,28 +215,65 @@ async function load(){
   if(!data){ notFound(); return; }
 
   
-  // Update OG meta for social sharing
+  // ===== Full SEO Setup =====
   const setMeta = (sel, val) => {
     const el = document.querySelector(sel);
     if(el && val) el.setAttribute(el.hasAttribute('content')?'content':'href', val);
   };
+  const setId = (id, attr, val) => {
+    const el = document.getElementById(id);
+    if(el && val) el.setAttribute(attr, val);
+  };
   const pageUrl = location.href;
   const ogImg = data.cover_image || 'https://journeylift.com.tw/og-default.jpg';
+  const pageUrl = 'https://journeylift.com.tw/articles/' + slug;
+  const seoDesc = (data.excerpt || data.title || '').substring(0, 160);
+  const rawKw = Array.isArray(data.keywords) ? data.keywords : (data.keywords ? data.keywords.split(',') : []);
+  const kwStr = [...new Set([...rawKw, data.city, data.category].filter(Boolean))].join(',');
+
+  // Title
   document.title = data.title + ' — 漫途旅遊誌';
-  setMeta('meta[property="og:url"]', pageUrl);
-  setMeta('meta[property="og:title"]', data.title);
-  setMeta('meta[property="og:description"]', data.excerpt||data.title);
-  setMeta('meta[property="og:image"]', ogImg);
-  setMeta('meta[name="twitter:title"]', data.title);
-  setMeta('meta[name="twitter:description"]', data.excerpt||data.title);
-  setMeta('meta[name="twitter:image"]', ogImg);
+
+  // Helper: set meta by id or selector
+  const sm = (sel, val) => { const el = document.querySelector(sel); if(el && val) el.setAttribute(el.hasAttribute('content')?'content':'href', val); };
+  const sid = (id, attr, val) => { const el = document.getElementById(id); if(el && val) el.setAttribute(attr, val); };
+
+  // Canonical
+  sid('canonical-url','href', pageUrl);
+  // Description
+  sid('meta-desc','content', seoDesc);
+  // Keywords
+  sid('meta-keywords','content', kwStr || '漫途,旅遊,台灣,開箱文');
+  // OG
+  sm('meta[property="og:url"]', pageUrl);
+  sm('meta[property="og:title"]', data.title + ' — 漫途旅遊誌');
+  sm('meta[property="og:description"]', seoDesc);
+  sm('meta[property="og:image"]', ogImg);
+  // Twitter
+  sm('meta[name="twitter:title"]', data.title);
+  sm('meta[name="twitter:description"]', seoDesc);
+  sm('meta[name="twitter:image"]', ogImg);
+  // Schema.org JSON-LD
+  const _schema = {
+    "@context":"https://schema.org","@type":"BlogPosting",
+    "headline":data.title,"description":seoDesc,"url":pageUrl,
+    "image":{"@type":"ImageObject","url":ogImg},
+    "datePublished":data.published_at||data.created_at,
+    "dateModified":data.updated_at||data.created_at,
+    "author":{"@type":"Organization","name":"漫途旅遊誌","url":"https://journeylift.com.tw"},
+    "publisher":{"@type":"Organization","name":"漫途旅遊誌","logo":{"@type":"ImageObject","url":"https://journeylift.com.tw/og-default.jpg"}},
+    "keywords":kwStr,"inLanguage":"zh-TW",
+    "mainEntityOfPage":{"@type":"WebPage","@id":pageUrl}
+  };
+  const _schEl = document.getElementById('schema-jsonld');
+  if(_schEl) _schEl.textContent = JSON.stringify(_schema);
   setMeta('meta[name="description"]', data.excerpt||data.title);
   // canonical link
   let canonical = document.querySelector('link[rel="canonical"]');
   if(!canonical){ canonical=document.createElement('link'); canonical.rel='canonical'; document.head.appendChild(canonical); }
   canonical.href = pageUrl;
 // Update meta (legacy)
-  document.title = `${data.title} — 漫途旅遊誌`;
+  document.title = `${data.title} â æ¼«éæéèª`;
   const desc = document.createElement('meta');
   desc.name='description'; desc.content=data.excerpt||'';
   document.head.appendChild(desc);
@@ -230,9 +283,9 @@ async function load(){
 
   document.getElementById('article-wrap').innerHTML = `
     <div class="art-header">
-      <div class="art-emoji">${data.emoji||'✍️'}</div>
+      <div class="art-emoji">${data.emoji||'âï¸'}</div>
       <div class="art-meta">
-        ${data.city?`<span>📍 ${data.city}</span>`:''}
+        ${data.city?`<span>ð ${data.city}</span>`:''}
         ${data.category?`<span>${data.category}</span>`:''}
         ${data.published_at?`<span>${new Date(data.published_at).toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric'})}</span>`:''}
       </div>
@@ -253,20 +306,20 @@ ${(()=>{
   const lineUrl = 'https://social-plugins.line.me/lineit/share?url='+url;
   const twitterUrl = 'https://twitter.com/intent/tweet?url='+url+'&text='+title;
   return `<div class="share-bar">
-    <span class="share-label">分享</span>
+    <span class="share-label">åäº«</span>
     <div class="share-btns">
-      <a class="share-btn" href="${fbUrl}" target="_blank" rel="noopener">📘 Facebook</a>
-      <a class="share-btn" href="${lineUrl}" target="_blank" rel="noopener">💬 LINE</a>
-      <a class="share-btn" href="${twitterUrl}" target="_blank" rel="noopener">𝕏 Twitter</a>
-      <button class="share-btn copy-link-btn" onclick="copyLink(this)">🔗 複製連結</button>
+      <a class="share-btn" href="${fbUrl}" target="_blank" rel="noopener">ð Facebook</a>
+      <a class="share-btn" href="${lineUrl}" target="_blank" rel="noopener">ð¬ LINE</a>
+      <a class="share-btn" href="${twitterUrl}" target="_blank" rel="noopener">ð Twitter</a>
+      <button class="share-btn copy-link-btn" onclick="copyLink(this)">ð è¤è£½é£çµ</button>
       
     </div>
   </div>`;
 })()}
 ${data.shop_info ? renderShopCard(data.shop_info) : ''}
       <div class="art-footer">
-      <a href="/articles" class="back-btn">← 返回文章列表</a>
-      <span class="art-date">${data.published_at?'發布於 '+new Date(data.published_at).toLocaleDateString('zh-TW'):''}</span>
+      <a href="/articles" class="back-btn">â è¿åæç« åè¡¨</a>
+      <span class="art-date">${data.published_at?'ç¼å¸æ¼ '+new Date(data.published_at).toLocaleDateString('zh-TW'):''}</span>
     </div>
   `;
 }
@@ -274,9 +327,9 @@ ${data.shop_info ? renderShopCard(data.shop_info) : ''}
 function notFound(){
   document.getElementById('article-wrap').innerHTML=`
     <div class="not-found">
-      <h2>找不到這篇文章</h2>
-      <p style="color:var(--text3);margin-bottom:2rem">文章可能已被移除或網址有誤</p>
-      <a href="/articles" style="color:var(--accent)">← 返回文章列表</a>
+      <h2>æ¾ä¸å°éç¯æç« </h2>
+      <p style="color:var(--text3);margin-bottom:2rem">æç« å¯è½å·²è¢«ç§»é¤æç¶²åæèª¤</p>
+      <a href="/articles" style="color:var(--accent)">â è¿åæç« åè¡¨</a>
     </div>`;
 }
 
@@ -294,7 +347,7 @@ function buildTOC() {
   const content = document.querySelector('.art-content');
   if (!content) return;
   const headings = content.querySelectorAll('h2, h3');
-  if (headings.length < 2) return; // 少於2個標題不顯示目錄
+  if (headings.length < 2) return; // å°æ¼2åæ¨é¡ä¸é¡¯ç¤ºç®é
 
   // Add IDs to headings
   headings.forEach((h, i) => {
@@ -312,8 +365,8 @@ function buildTOC() {
 
   const toc = document.createElement('nav');
   toc.className = 'toc-box';
-  toc.setAttribute('aria-label', '文章目錄');
-  toc.innerHTML = '<div class="toc-title">文章目錄</div><ul class="toc-list">' + items + '</ul>';
+  toc.setAttribute('aria-label', 'æç« ç®é');
+  toc.innerHTML = '<div class="toc-title">æç« ç®é</div><ul class="toc-list">' + items + '</ul>';
 
   // Insert TOC before first H2
   const firstH2 = content.querySelector('h2');
