@@ -1124,7 +1124,12 @@ function loadCats(){
   .then(function(r){return r.json();})
   .then(function(data){
     window._catsCache=Array.isArray(data)?data:[];
-    if(window._syncCats)window._syncCats(window._catsCache);
+    // 直接同步所有分類選單
+    var _catOpts=(window._catsCache||[]).map(function(x){return '<option value="'+x.name+'">'+x.name+'</option>';}).join('');
+    ['ai-type','ai-pub-cat','art-category','f-cat'].forEach(function(id){
+      var sel=document.getElementById(id);
+      if(sel){var cur=sel.value;sel.innerHTML=_catOpts;sel.value=cur;}
+    });
     renderCats(window._catsCache);
   }).catch(function(e){console.error("loadCats",e);});
 }
