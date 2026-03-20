@@ -148,6 +148,19 @@ footer{border-top:1px solid rgba(200,169,110,0.08);padding:4rem 3rem;background:
   .sec{padding:2.5rem 1.5rem}
   .ft-in{grid-template-columns:1fr}
 }
+
+/* region & keyword SEO section */
+.region-sec{padding:4rem 0 3rem;border-top:1px solid rgba(200,169,110,0.1)}
+.region-sec .sec-ttl{font-size:0.7rem;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:2rem;text-align:center}
+.region-grid{display:flex;flex-wrap:wrap;gap:0.8rem;justify-content:center;margin-bottom:3rem}
+.region-chip{display:inline-flex;flex-direction:column;align-items:center;border:1px solid rgba(200,169,110,0.2);padding:0.8rem 1.5rem;text-decoration:none;transition:all 0.2s;gap:0.2rem}
+.region-chip:hover{border-color:var(--gold);background:rgba(200,169,110,0.05)}
+.region-chip-name{font-size:0.9rem;color:var(--paper);font-family:var(--ff-s)}
+.region-chip-count{font-size:0.65rem;color:var(--mist);letter-spacing:0.05em}
+.kw-grid{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center}
+.kw-chip{padding:0.3rem 0.9rem;border:1px solid rgba(200,169,110,0.15);color:var(--mist);text-decoration:none;font-size:0.7rem;letter-spacing:0.08em;transition:all 0.2s}
+.kw-chip:hover{border-color:var(--gold);color:var(--gold)}
+@media(max-width:768px){.region-chip{padding:0.6rem 1rem}.region-chip-name{font-size:0.8rem}}
 </style>
 </head>
 <body>
@@ -214,6 +227,17 @@ footer{border-top:1px solid rgba(200,169,110,0.08);padding:4rem 3rem;background:
 
 <div class="ornament">❧</div>
 
+
+<section class="region-sec container">
+  <div class="sec-ttl">探索地區</div>
+  <div class="region-grid" id="hp-region-grid">
+    <div style="color:var(--mist);font-size:0.8rem">載入中...</div>
+  </div>
+  <div class="sec-ttl" style="margin-top:1rem">熱門關鍵字</div>
+  <div class="kw-grid" id="hp-kw-grid">
+    <div style="color:var(--mist);font-size:0.8rem">載入中...</div>
+  </div>
+</section>
 <footer>
   <div class="ft-in">
     <div class="ft-brand">
@@ -314,5 +338,51 @@ function rg(list){
 
 load();
 </script>
+
+<script>
+(function(){
+  var SB='https://zsebcpfblecwumbaxeaz.supabase.co';
+  var SK='sb_publishable_L2DOfeM0cAJqwlVCr1LwtA_jE9MBNDn';
+  function mk(tag,style,text){var el=document.createElement(tag);if(style)el.style.cssText=style;if(text!=null)el.textContent=text;return el;}
+
+  // 載入地區
+  fetch(SB+'/rest/v1/regions?select=*&order=sort_order',{headers:{apikey:SK,Authorization:'Bearer '+SK}})
+  .then(function(r){return r.json();})
+  .then(function(regs){
+    var el=document.getElementById('hp-region-grid');
+    if(!el||!regs||!regs.length)return;
+    while(el.firstChild)el.removeChild(el.firstChild);
+    regs.forEach(function(reg){
+      var a=document.createElement('a');
+      a.className='region-chip';
+      a.href='/articles?city='+encodeURIComponent(reg.name);
+      var name=mk('span','','');
+      name.className='region-chip-name';
+      name.textContent=reg.name;
+      a.appendChild(name);
+      el.appendChild(a);
+    });
+  }).catch(function(){});
+
+  // 載入關鍵字
+  fetch(SB+'/rest/v1/keywords?select=*,regions(name)&order=sort_order',{headers:{apikey:SK,Authorization:'Bearer '+SK}})
+  .then(function(r){return r.json();})
+  .then(function(kws){
+    var el=document.getElementById('hp-kw-grid');
+    if(!el||!kws||!kws.length)return;
+    while(el.firstChild)el.removeChild(el.firstChild);
+    kws.forEach(function(kw){
+      var a=document.createElement('a');
+      a.className='kw-chip';
+      var region=kw.regions?kw.regions.name:'';
+      // 連結到地區文章列表（之後有關鍵字頁面再換）
+      a.href='/articles?city='+encodeURIComponent(region)+'&kw='+encodeURIComponent(kw.slug);
+      a.textContent=kw.name;
+      el.appendChild(a);
+    });
+  }).catch(function(){});
+})();
+</script>
+
 </body>
 </html>
