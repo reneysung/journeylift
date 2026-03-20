@@ -552,7 +552,7 @@ if(sessionStorage.getItem('mantu_auth')==='1'){
 }
 
 // ── INIT ───────────────────────────────────────────────────────────────────
-async function init(){
+async async function init(){
   loadSettings();
   renderEmojiGrid();
   setupDragDrop();
@@ -566,19 +566,9 @@ async function init(){
 }
 
 function loadSettings(){
-  cities = JSON.parse(localStorage.getItem('mantu-cities')||'["台南","台北","高雄","台中","花蓮","宜蘭"]');
-  cats = JSON.parse(localStorage.getItem('mantu-cats')||'["咖啡廳","餐廳","景點","住宿","小吃","伴手禮"]');
-  renderCitySelect(); renderCatSelect();
-  /* renderCitiesList removed */ /* renderCatsList removed */
-}
-
-// ── ARTICLES ───────────────────────────────────────────────────────────────
-async function loadArticles(){
-  const {data,error} = await sb.from('articles').select('*').order('created_at',{ascending:false});
-  if(error){ toast('載入失敗：'+error.message,'err'); return; }
-  allArts = data||[];
-  renderArts();
-  updateStats();
+  var k=localStorage.getItem('mantu-api-key');
+  var el=document.getElementById('api-key-input');
+  if(el&&k)el.value=k;
 }
 
 function updateStats(){
