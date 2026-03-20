@@ -355,39 +355,31 @@ tr:hover td{background:var(--surface2)}
 
       <!-- SETTINGS PAGE -->
       <div class="page" id="page-settings">
-  <div class="page-hd"><div class="page-title">分類設定</div></div>
-
-  <!-- 區域管理 -->
-  <div style="margin-bottom:2.5rem">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
-      <h3 style="color:var(--accent);font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase">地區管理</h3>
-      <button class="btn-primary" onclick="openAddRegion()" style="font-size:0.75rem;padding:0.4rem 1rem">＋ 新增地區</button>
-    </div>
-    <div id="region-list" style="display:flex;flex-wrap:wrap;gap:0.5rem"></div>
-  </div>
-
-  <!-- 關鍵字管理 -->
-  <div style="margin-bottom:2.5rem">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
-      <h3 style="color:var(--accent);font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase">主力關鍵字</h3>
-      <button class="btn-primary" onclick="openAddKeyword()" style="font-size:0.75rem;padding:0.4rem 1rem">＋ 新增關鍵字</button>
-    </div>
-    <div style="margin-bottom:0.8rem">
-      <select id="kw-region-filter" onchange="renderKeywords()" style="background:var(--surface2);border:1px solid var(--border);color:var(--paper);padding:0.4rem 0.8rem;font-size:0.8rem;font-family:inherit">
-        <option value="">全部地區</option>
-      </select>
-    </div>
-    <div id="keyword-list" style="display:flex;flex-direction:column;gap:0.5rem"></div>
-  </div>
-
-  <!-- 文章分類 -->
-  <div>
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
-      <h3 style="color:var(--accent);font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase">文章分類</h3>
-      <button class="btn-primary" onclick="openAddCat()" style="font-size:0.75rem;padding:0.4rem 1rem">＋ 新增分類</button>
-    </div>
-    <div id="cat-list" style="display:flex;flex-direction:column;gap:0.8rem"></div>
-  </div>
+<div class="page-hd"><div class="page-title">分類設定</div></div>
+<div id="sect-regions" style="margin-bottom:2rem">
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem">
+<h3 style="color:var(--accent);font-size:0.8rem;letter-spacing:0.1em">地區管理</h3>
+<button id="btn-add-region" class="btn-primary" style="font-size:0.75rem;padding:0.35rem 0.9rem">＋ 新增地區</button>
+</div>
+<div id="region-list" style="display:flex;flex-wrap:wrap;gap:0.5rem"></div>
+</div>
+<div id="sect-keywords" style="margin-bottom:2rem">
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem">
+<h3 style="color:var(--accent);font-size:0.8rem;letter-spacing:0.1em">主力關鍵字</h3>
+<button id="btn-add-kw" class="btn-primary" style="font-size:0.75rem;padding:0.35rem 0.9rem">＋ 新增關鍵字</button>
+</div>
+<select id="kw-filter" style="background:var(--surface2);border:1px solid var(--border);color:var(--paper);padding:0.4rem 0.8rem;font-size:0.8rem;font-family:inherit;margin-bottom:0.8rem">
+<option value="">全部地區</option>
+</select>
+<div id="keyword-list"></div>
+</div>
+<div>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem">
+<h3 style="color:var(--accent);font-size:0.8rem;letter-spacing:0.1em">文章分類</h3>
+<button id="btn-add-cat" class="btn-primary" style="font-size:0.75rem;padding:0.35rem 0.9rem">＋ 新增分類</button>
+</div>
+<div id="cat-list"></div>
+</div>
 </div>
 </main>
   </div>
@@ -1262,133 +1254,147 @@ window.addEventListener('load',function(){
 });
 </script>
 
+
 <script>
 (function(){
-var SB='https://zsebcpfblecwumbaxeaz.supabase.co';
-var SK='sb_publishable_L2DOfeM0cAJqwlVCr1LwtA_jE9MBNDn';
-function sbh(){return {apikey:SK,Authorization:'Bearer '+SK,'Content-Type':'application/json',Prefer:'return=minimal'};}
+var SB="https://zsebcpfblecwumbaxeaz.supabase.co";
+var SK="sb_publishable_L2DOfeM0cAJqwlVCr1LwtA_jE9MBNDn";
+function gh(){return{apikey:SK,Authorization:"Bearer "+SK};}
+function ghj(){return{apikey:SK,Authorization:"Bearer "+SK,"Content-Type":"application/json",Prefer:"return=minimal"};}
+function mk(tag,style,text){var el=document.createElement(tag);if(style)el.style.cssText=style;if(text!=null)el.textContent=text;return el;}
 
-// ===== 地區 =====
+// REGIONS
 window._regions=[];
 function loadRegions(){
-  fetch(SB+'/rest/v1/regions?select=*&order=sort_order',{headers:{apikey:SK,Authorization:'Bearer '+SK}})
+  fetch(SB+"/rest/v1/regions?select=*&order=sort_order",{headers:gh()})
   .then(function(r){return r.json();})
   .then(function(data){
     window._regions=Array.isArray(data)?data:[];
     renderRegions(window._regions);
-    // 同步關鍵字篩選下拉
-    var sel=document.getElementById('kw-region-filter');
-    if(sel){
-      sel.innerHTML='<option value="">全部地區</option>'+
-        window._regions.map(function(r){return '<option value="'+r.id+'">'+r.name+'</option>';}).join('');
-    }
-  });
+    var sel=document.getElementById("kw-filter");
+    if(!sel)return;
+    sel.innerHTML="<option value=\"\">\u5168\u90e8\u5730\u5340</option>";
+    window._regions.forEach(function(reg){
+      var o=document.createElement("option");
+      o.value=reg.id;o.textContent=reg.name;
+      sel.appendChild(o);
+    });
+  }).catch(function(e){console.error("loadRegions",e);});
 }
 window.loadRegions=loadRegions;
 
-function renderRegions(regions){
-  var el=document.getElementById('region-list');
+function renderRegions(regs){
+  var el=document.getElementById("region-list");
   if(!el)return;
-  if(!regions||!regions.length){el.innerHTML='<p style="color:var(--muted)">尚無地區</p>';return;}
-  var html='';
-  regions.forEach(function(r){
-    html+='<div style="display:inline-flex;align-items:center;gap:0.4rem;background:var(--surface2);border:1px solid var(--border);padding:0.35rem 0.8rem;border-radius:3px">';
-    html+='<span style="color:var(--paper);font-size:0.85rem">'+r.name+'</span>';
-    html+='<span style="color:var(--muted);font-size:0.72rem">/'+r.slug+'</span>';
-    html+='<button onclick="deleteRegion(''+r.id+'',''+r.name+'')" style="background:none;border:none;color:#f66;cursor:pointer;font-size:0.75rem;padding:0 0.2rem">×</button>';
-    html+='</div>';
+  while(el.firstChild)el.removeChild(el.firstChild);
+  if(!regs||!regs.length){el.appendChild(mk("p","color:var(--muted)","\u5c1a\u7121\u5730\u5340"));return;}
+  regs.forEach(function(reg){
+    var card=mk("div","display:inline-flex;align-items:center;gap:0.4rem;background:var(--surface2);border:1px solid var(--border);padding:0.35rem 0.8rem;border-radius:3px");
+    card.appendChild(mk("span","color:var(--paper);font-size:0.85rem",reg.name));
+    card.appendChild(mk("span","color:var(--muted);font-size:0.72rem","/"+reg.slug));
+    var x=mk("button","background:none;border:none;color:#f66;cursor:pointer;font-size:0.85rem;padding:0 0.2rem","\u00d7");
+    (function(id,nm){x.addEventListener("click",function(){deleteRegion(id,nm);});})(reg.id,reg.name);
+    card.appendChild(x);
+    el.appendChild(card);
   });
-  el.innerHTML=html;
 }
 
 window.openAddRegion=function(){
-  var name=prompt('地區名稱（中文）：');
-  if(!name||!name.trim())return;
-  var slug=prompt('地區 slug（英文，用於網址）：',name.trim().toLowerCase().replace(/s+/g,'-'));
-  if(!slug||!slug.trim())return;
-  fetch(SB+'/rest/v1/regions',{method:'POST',headers:sbh(),body:JSON.stringify({name:name.trim(),slug:slug.trim()})})
-  .then(function(r){if(r.ok)loadRegions();else alert('儲存失敗');});
+  var nm=prompt("\u5730\u5340\u540d\u7a31\uff1a");
+  if(!nm||!nm.trim())return;
+  var sl=prompt("\u5730\u5340 slug\uff08\u82f1\u6587\uff09\uff1a",nm.trim().toLowerCase());
+  if(!sl||!sl.trim())return;
+  fetch(SB+"/rest/v1/regions",{method:"POST",headers:ghj(),body:JSON.stringify({name:nm.trim(),slug:sl.trim()})})
+  .then(function(r){if(r.ok)loadRegions();else alert("\u5132\u5b58\u5931\u6557");});
+};
+window.deleteRegion=function(id,nm){
+  if(!confirm("\u78ba\u5b9a\u522a\u9664\u300c"+nm+"\u300d\uff1f"))return;
+  fetch(SB+"/rest/v1/regions?id=eq."+id,{method:"DELETE",headers:gh()})
+  .then(function(r){if(r.ok){loadRegions();loadKeywords();}});
 };
 
-window.deleteRegion=function(id,name){
-  if(!confirm('確定要刪除「'+name+'」地區？（該地區的關鍵字也會一併刪除）'))return;
-  fetch(SB+'/rest/v1/regions?id=eq.'+id,{method:'DELETE',headers:{apikey:SK,Authorization:'Bearer '+SK}})
-  .then(function(r){if(r.ok){loadRegions();loadKeywords();}else alert('刪除失敗');});
-};
-
-// ===== 關鍵字 =====
+// KEYWORDS
 window._keywords=[];
 function loadKeywords(){
-  fetch(SB+'/rest/v1/keywords?select=*,regions(name)&order=sort_order',{headers:{apikey:SK,Authorization:'Bearer '+SK}})
+  fetch(SB+"/rest/v1/keywords?select=*,regions(name)&order=sort_order",{headers:gh()})
   .then(function(r){return r.json();})
   .then(function(data){
     window._keywords=Array.isArray(data)?data:[];
     renderKeywords();
-  });
+  }).catch(function(e){console.error("loadKeywords",e);});
 }
 window.loadKeywords=loadKeywords;
 
 window.renderKeywords=function(){
-  var el=document.getElementById('keyword-list');
+  var el=document.getElementById("keyword-list");
   if(!el)return;
-  var filter=document.getElementById('kw-region-filter');
-  var regionId=filter?filter.value:'';
+  while(el.firstChild)el.removeChild(el.firstChild);
+  var fv=(document.getElementById("kw-filter")||{}).value||"";
   var kws=window._keywords||[];
-  if(regionId)kws=kws.filter(function(k){return k.region_id===regionId;});
-  if(!kws.length){el.innerHTML='<p style="color:var(--muted)">尚無關鍵字</p>';return;}
-  var html='';
+  if(fv)kws=kws.filter(function(k){return k.region_id===fv;});
+  if(!kws.length){el.appendChild(mk("p","color:var(--muted)","\u5c1a\u7121\u95dc\u9375\u5b57"));return;}
   kws.forEach(function(kw){
-    var regionName=kw.regions?kw.regions.name:'';
-    html+='<div style="display:flex;align-items:center;justify-content:space-between;background:var(--surface2);border:1px solid var(--border);padding:0.6rem 1rem;border-radius:3px">';
-    html+='<div>';
-    html+='<span style="color:var(--paper);font-size:0.9rem">'+kw.name+'</span>';
-    if(regionName)html+=' <span style="color:var(--muted);font-size:0.72rem">(區域：'+regionName+')</span>';
-    html+='<span style="color:var(--muted);font-size:0.72rem;margin-left:0.5rem">/'+kw.slug+'</span>';
-    html+='</div>';
-    html+='<button onclick="deleteKeyword(''+kw.id+'',''+kw.name+'')" style="background:none;border:1px solid rgba(255,80,80,0.3);color:#f66;padding:0.2rem 0.6rem;font-size:0.72rem;cursor:pointer;font-family:inherit">刪除</button>';
-    html+='</div>';
+    var row=mk("div","display:flex;align-items:center;justify-content:space-between;background:var(--surface2);border:1px solid var(--border);padding:0.55rem 1rem;border-radius:3px;margin-bottom:0.4rem");
+    var info=mk("div","");
+    info.appendChild(mk("span","color:var(--paper);font-size:0.9rem",kw.name));
+    if(kw.regions&&kw.regions.name)info.appendChild(mk("span","color:var(--muted);font-size:0.72rem;margin-left:0.5rem","("+kw.regions.name+")"));
+    info.appendChild(mk("span","color:var(--muted);font-size:0.72rem;margin-left:0.5rem","/"+kw.slug));
+    var d=mk("button","background:none;border:1px solid rgba(255,80,80,0.3);color:#f66;padding:0.2rem 0.6rem;font-size:0.72rem;cursor:pointer;font-family:inherit","\u522a\u9664");
+    (function(id,nm){d.addEventListener("click",function(){deleteKeyword(id,nm);});})(kw.id,kw.name);
+    row.appendChild(info);row.appendChild(d);
+    el.appendChild(row);
   });
-  el.innerHTML=html;
 };
 
 window.openAddKeyword=function(){
-  var regions=window._regions||[];
-  if(!regions.length){alert('請先新增地區');return;}
-  var regionOpts=regions.map(function(r,i){return i+1+'. '+r.name;}).join('
-');
-  var regionIdx=prompt('選擇地區（輸入編號）：
-'+regionOpts);
-  if(!regionIdx)return;
-  var region=regions[parseInt(regionIdx)-1];
-  if(!region){alert('無效選擇');return;}
-  var name=prompt('關鍵字名稱（中文，如：'+region.name+'美食）：');
-  if(!name||!name.trim())return;
-  var slug=prompt('關鍵字 slug（英文，用於網址）：',region.slug+'-food');
-  if(!slug||!slug.trim())return;
-  fetch(SB+'/rest/v1/keywords',{method:'POST',headers:sbh(),body:JSON.stringify({name:name.trim(),slug:slug.trim(),region_id:region.id})})
-  .then(function(r){if(r.ok)loadKeywords();else alert('儲存失敗');});
+  var regs=window._regions||[];
+  if(!regs.length){alert("\u8acb\u5148\u65b0\u589e\u5730\u5340");return;}
+  var opts=regs.map(function(r,i){return (i+1)+". "+r.name;}).join("\n");
+  var idx=prompt("\u9078\u64c7\u5730\u5340\uff08\u8f38\u5165\u7de8\u865f\uff09\uff1a\n"+opts);
+  if(!idx)return;
+  var reg=regs[parseInt(idx)-1];
+  if(!reg){alert("\u7121\u6548\u9078\u64c7");return;}
+  var nm=prompt("\u95dc\u9375\u5b57\u540d\u7a31\uff08\u4e2d\u6587\uff09\uff1a");
+  if(!nm||!nm.trim())return;
+  var sl=prompt("\u95dc\u9375\u5b57 slug\uff08\u82f1\u6587\uff09\uff1a",reg.slug+"-food");
+  if(!sl||!sl.trim())return;
+  fetch(SB+"/rest/v1/keywords",{method:"POST",headers:ghj(),body:JSON.stringify({name:nm.trim(),slug:sl.trim(),region_id:reg.id})})
+  .then(function(r){if(r.ok)loadKeywords();else alert("\u5132\u5b58\u5931\u6557");});
+};
+window.deleteKeyword=function(id,nm){
+  if(!confirm("\u78ba\u5b9a\u522a\u9664\u300c"+nm+"\u300d\uff1f"))return;
+  fetch(SB+"/rest/v1/keywords?id=eq."+id,{method:"DELETE",headers:gh()})
+  .then(function(r){if(r.ok)loadKeywords();});
 };
 
-window.deleteKeyword=function(id,name){
-  if(!confirm('確定要刪除「'+name+'」？'))return;
-  fetch(SB+'/rest/v1/keywords?id=eq.'+id,{method:'DELETE',headers:{apikey:SK,Authorization:'Bearer '+SK}})
-  .then(function(r){if(r.ok)loadKeywords();else alert('刪除失敗');});
-};
-
-// 攔截 showPage 載入設定頁時同時載入地區和關鍵字
-window.addEventListener('load',function(){
+// 初始化
+window.addEventListener("load",function(){
   setTimeout(function(){
-    if(typeof window.showPage==='function'&&!window._settingsPatched){
+    // 按鈕事件
+    var r=document.getElementById("btn-add-region");
+    if(r)r.addEventListener("click",window.openAddRegion);
+    var k=document.getElementById("btn-add-kw");
+    if(k)k.addEventListener("click",window.openAddKeyword);
+    var f=document.getElementById("kw-filter");
+    if(f)f.addEventListener("change",window.renderKeywords);
+    var bc=document.getElementById("btn-add-cat");
+    if(bc)bc.addEventListener("click",window.openAddCat);
+    // patch showPage
+    if(typeof window.showPage==="function"&&!window._sp2){
       var orig=window.showPage;
-      window.showPage=function(name){
-        orig(name);
-        if(name==='settings'){
-          setTimeout(function(){loadRegions();loadKeywords();if(typeof loadCats==='function')loadCats();},100);
+      window.showPage=function(nm){
+        orig(nm);
+        if(nm==="settings"){
+          setTimeout(function(){
+            loadRegions();
+            loadKeywords();
+            if(typeof loadCats==="function")loadCats();
+          },150);
         }
       };
-      window._settingsPatched=true;
+      window._sp2=true;
     }
-  },1200);
+  },1500);
 });
 })();
 </script>
