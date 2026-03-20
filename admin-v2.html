@@ -720,6 +720,7 @@ async function saveArt(){
   toast(editingId?'Ã¦ÂÂÃ§Â«Â Ã¥Â·Â²Ã¦ÂÂ´Ã¦ÂÂ° Ã¢ÂÂ':'Ã¦ÂÂÃ§Â«Â Ã¥Â·Â²Ã¥Â»ÂºÃ§Â«Â Ã¢ÂÂ');
   closeArtModal();
   await loadArticles();
+  updateSitemap();
 }
 
 // Ã¢ÂÂÃ¢ÂÂ EDITOR Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
@@ -996,7 +997,14 @@ async function genAiArticle(){
 function renderCitySelect2(){const sel=document.getElementById('ai-pub-city');sel.innerHTML='<option value="">Ã¢ÂÂ Ã©ÂÂ¸Ã¦ÂÂÃ¥ÂÂÃ¥Â¸Â Ã¢ÂÂ</option>'+cities.map(c=>`<option value="${c}">${c}</option>`).join('');}
 function renderCatSelect2(){const sel=document.getElementById('ai-pub-cat');sel.innerHTML='<option value="">Ã¢ÂÂ Ã©ÂÂ¸Ã¦ÂÂÃ¥ÂÂÃ©Â¡Â Ã¢ÂÂ</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('');}
 
-async function publishAiArticle(){
+async 
+async function updateSitemap(){
+  try{
+    await fetch('/.netlify/functions/update-sitemap',{method:'POST'});
+    console.log('sitemap update triggered');
+  }catch(e){console.warn('sitemap update failed',e);}
+}
+function publishAiArticle(){
   const title=aiGenTitle;
   const body=document.getElementById('ai-body-preview').textContent.trim();
   if(!title||!body){toast('Ã¨Â«ÂÃ¥ÂÂÃ§ÂÂÃ¦ÂÂÃ¦ÂÂÃ§Â«Â ','err');return;}
@@ -1040,6 +1048,7 @@ async function publishAiArticle(){
   msg.innerHTML=status==='published'?`Ã¢ÂÂ Ã¦ÂÂÃ§Â«Â Ã¥Â·Â²Ã§ÂÂ¼Ã¥Â¸ÂÃ¯Â¼Â<a href="https://journeylift.com.tw/articles/${aiGenSlug}" target="_blank" style="color:var(--accent2);margin-left:0.5rem">Ã¦ÂÂ¥Ã§ÂÂÃ¦ÂÂÃ§Â«Â  Ã¢ÂÂ</a>`:'Ã°ÂÂÂ Ã¥Â·Â²Ã¥Â­ÂÃ§ÂÂºÃ¨ÂÂÃ§Â¨Â¿';
   toast(status==='published'?'Ã¦ÂÂÃ§Â«Â Ã¥Â·Â²Ã§ÂÂ¼Ã¥Â¸Â Ã°ÂÂÂ':'Ã¥Â·Â²Ã¥Â­ÂÃ§ÂÂºÃ¨ÂÂÃ§Â¨Â¿');
   await loadArticles();
+  if(status==='published') updateSitemap();
 }
 
 // Ã¢ÂÂÃ¢ÂÂ PAGES Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
