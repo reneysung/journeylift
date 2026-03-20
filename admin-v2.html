@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>å¾å°ç®¡ç â æ¼«é</title>
+<title>Ã¥Â¾ÂÃ¥ÂÂ°Ã§Â®Â¡Ã§ÂÂ Ã¢ÂÂ Ã¦Â¼Â«Ã©ÂÂ</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -154,7 +154,7 @@ tr:hover td{background:var(--surface2)}
 #toast.err{border-left:3px solid var(--red)}
 
 
-/* ââ MOBILE RESPONSIVE âââââââââââââââââââââââââââââââââââââââââââââââââââââ */
+/* Ã¢ÂÂÃ¢ÂÂ MOBILE RESPONSIVE Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ */
 .mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);z-index:200;padding:0.3rem 0 env(safe-area-inset-bottom,0.3rem)}
 .mobile-nav-inner{display:flex;justify-content:space-around;align-items:center}
 .mnav-btn{display:flex;flex-direction:column;align-items:center;gap:0.15rem;padding:0.35rem 0.8rem;background:none;border:none;color:var(--text3);cursor:pointer;font-family:var(--font-sans);font-size:0.56rem;letter-spacing:0.04em;transition:color 0.15s}
@@ -202,35 +202,35 @@ tr:hover td{background:var(--surface2)}
 <!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
-    <div class="login-logo">æ¼«é</div>
-    <div class="login-sub">å¾å°ç®¡çç³»çµ±</div>
+    <div class="login-logo">Ã¦Â¼Â«Ã©ÂÂ</div>
+    <div class="login-sub">Ã¥Â¾ÂÃ¥ÂÂ°Ã§Â®Â¡Ã§ÂÂÃ§Â³Â»Ã§ÂµÂ±</div>
     <div class="login-err" id="login-err"></div>
-    <input type="password" id="pw-input" placeholder="è¼¸å¥å¯ç¢¼" onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="login-btn" onclick="doLogin()">é²å¥å¾å°</button>
+    <input type="password" id="pw-input" placeholder="Ã¨Â¼Â¸Ã¥ÂÂ¥Ã¥Â¯ÂÃ§Â¢Â¼" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">Ã©ÂÂ²Ã¥ÂÂ¥Ã¥Â¾ÂÃ¥ÂÂ°</button>
   </div>
 </div>
 
 <!-- APP -->
 <div id="app">
   <header>
-    <div class="header-logo">æ¼«é Â· å¾å°</div>
+    <div class="header-logo">Ã¦Â¼Â«Ã©ÂÂ ÃÂ· Ã¥Â¾ÂÃ¥ÂÂ°</div>
     <div class="header-right">
       <span id="hd-stats" style="font-size:0.72rem;color:var(--text3)"></span>
-      <button onclick="openKeyModal()" style="background:none;border:1px solid var(--border2);color:var(--text2);padding:0.35rem 0.8rem;font-size:0.72rem;letter-spacing:0.08em;cursor:pointer;font-family:var(--ff-sans)" id="key-status-dot">â API Key</button>
-      <a href="https://journeylift.com.tw/articles" target="_blank" style="font-size:0.72rem;color:var(--text2);border:1px solid var(--border2);padding:0.35rem 0.8rem;letter-spacing:0.08em;text-decoration:none">æ¥çåå° â</a>
-      <button class="btn-logout" onclick="doLogout()">ç»åº</button>
+      <button onclick="openKeyModal()" style="background:none;border:1px solid var(--border2);color:var(--text2);padding:0.35rem 0.8rem;font-size:0.72rem;letter-spacing:0.08em;cursor:pointer;font-family:var(--ff-sans)" id="key-status-dot">Ã¢ÂÂ API Key</button>
+      <a href="https://journeylift.com.tw/articles" target="_blank" style="font-size:0.72rem;color:var(--text2);border:1px solid var(--border2);padding:0.35rem 0.8rem;letter-spacing:0.08em;text-decoration:none">Ã¦ÂÂ¥Ã§ÂÂÃ¥ÂÂÃ¥ÂÂ° Ã¢ÂÂ</a>
+      <button class="btn-logout" onclick="doLogout()">Ã§ÂÂ»Ã¥ÂÂº</button>
     </div>
   </header>
   <div class="main-layout">
     <nav>
       <div class="nav-item active" onclick="showPage('articles')" id="nav-articles">
-        <span class="nav-icon">ð</span>æç« ç®¡ç
+        <span class="nav-icon">Ã°ÂÂÂ</span>Ã¦ÂÂÃ§Â«Â Ã§Â®Â¡Ã§ÂÂ
       </div>
       <div class="nav-item" onclick="showPage('ai')" id="nav-ai">
-        <span class="nav-icon">â¨</span>AI éç®±æ
+        <span class="nav-icon">Ã¢ÂÂ¨</span>AI Ã©ÂÂÃ§Â®Â±Ã¦ÂÂ
       </div>
       <div class="nav-item" onclick="showPage('settings')" id="nav-settings">
-        <span class="nav-icon">âï¸</span>åé¡è¨­å®
+        <span class="nav-icon">Ã¢ÂÂÃ¯Â¸Â</span>Ã¥ÂÂÃ©Â¡ÂÃ¨Â¨Â­Ã¥Â®Â
       </div>
     </nav>
     <main>
@@ -238,84 +238,84 @@ tr:hover td{background:var(--surface2)}
       <!-- ARTICLES PAGE -->
       <div class="page active" id="page-articles">
         <div class="page-hd">
-          <div class="page-title">æç« ç®¡ç</div>
-          <button class="btn-primary" onclick="openAddArt()">ï¼ æ°å¢æç« </button>
+          <div class="page-title">Ã¦ÂÂÃ§Â«Â Ã§Â®Â¡Ã§ÂÂ</div>
+          <button class="btn-primary" onclick="openAddArt()">Ã¯Â¼Â Ã¦ÂÂ°Ã¥Â¢ÂÃ¦ÂÂÃ§Â«Â </button>
         </div>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-lbl">ç¸½æç« æ¸</div><div class="stat-val" id="st-total">0</div><div class="stat-sub">ç¯æç« </div></div>
-          <div class="stat-card"><div class="stat-lbl">å·²ç¼å¸</div><div class="stat-val" id="st-pub">0</div><div class="stat-sub">ç¯æç« </div></div>
-          <div class="stat-card"><div class="stat-lbl">èç¨¿</div><div class="stat-val" id="st-draft">0</div><div class="stat-sub">ç¯æç« </div></div>
-          <div class="stat-card"><div class="stat-lbl">åå¸æ¸</div><div class="stat-val" id="st-cities">0</div><div class="stat-sub">ååå¸</div></div>
+          <div class="stat-card"><div class="stat-lbl">Ã§Â¸Â½Ã¦ÂÂÃ§Â«Â Ã¦ÂÂ¸</div><div class="stat-val" id="st-total">0</div><div class="stat-sub">Ã§Â¯ÂÃ¦ÂÂÃ§Â«Â </div></div>
+          <div class="stat-card"><div class="stat-lbl">Ã¥Â·Â²Ã§ÂÂ¼Ã¥Â¸Â</div><div class="stat-val" id="st-pub">0</div><div class="stat-sub">Ã§Â¯ÂÃ¦ÂÂÃ§Â«Â </div></div>
+          <div class="stat-card"><div class="stat-lbl">Ã¨ÂÂÃ§Â¨Â¿</div><div class="stat-val" id="st-draft">0</div><div class="stat-sub">Ã§Â¯ÂÃ¦ÂÂÃ§Â«Â </div></div>
+          <div class="stat-card"><div class="stat-lbl">Ã¥ÂÂÃ¥Â¸ÂÃ¦ÂÂ¸</div><div class="stat-val" id="st-cities">0</div><div class="stat-sub">Ã¥ÂÂÃ¥ÂÂÃ¥Â¸Â</div></div>
         </div>
         <div class="tbl-wrap">
           <div class="tbl-toolbar">
-            <input class="tbl-search" id="art-search" placeholder="æå°æç« ..." oninput="filterArts()">
-            <button class="filter-btn active" onclick="setFilter('all',this)">å¨é¨</button>
-            <button class="filter-btn" onclick="setFilter('published',this)">å·²ç¼å¸</button>
-            <button class="filter-btn" onclick="setFilter('draft',this)">èç¨¿</button>
+            <input class="tbl-search" id="art-search" placeholder="Ã¦ÂÂÃ¥Â°ÂÃ¦ÂÂÃ§Â«Â ..." oninput="filterArts()">
+            <button class="filter-btn active" onclick="setFilter('all',this)">Ã¥ÂÂ¨Ã©ÂÂ¨</button>
+            <button class="filter-btn" onclick="setFilter('published',this)">Ã¥Â·Â²Ã§ÂÂ¼Ã¥Â¸Â</button>
+            <button class="filter-btn" onclick="setFilter('draft',this)">Ã¨ÂÂÃ§Â¨Â¿</button>
           </div>
           <table>
             <thead>
               <tr>
-                <th>å°é¢</th><th>æ¨é¡</th><th>åå¸</th><th>åé¡</th><th>çæ</th><th>ç¼å¸æé</th><th>æä½</th>
+                <th>Ã¥Â°ÂÃ©ÂÂ¢</th><th>Ã¦Â¨ÂÃ©Â¡Â</th><th>Ã¥ÂÂÃ¥Â¸Â</th><th>Ã¥ÂÂÃ©Â¡Â</th><th>Ã§ÂÂÃ¦ÂÂ</th><th>Ã§ÂÂ¼Ã¥Â¸ÂÃ¦ÂÂÃ©ÂÂ</th><th>Ã¦ÂÂÃ¤Â½Â</th>
               </tr>
             </thead>
             <tbody id="art-tbody"></tbody>
           </table>
-          <div class="empty-state" id="art-empty" style="display:none">å°ç¡æç« ï¼é»æãæ°å¢æç« ãéå§åµä½</div>
+          <div class="empty-state" id="art-empty" style="display:none">Ã¥Â°ÂÃ§ÂÂ¡Ã¦ÂÂÃ§Â«Â Ã¯Â¼ÂÃ©Â»ÂÃ¦ÂÂÃ£ÂÂÃ¦ÂÂ°Ã¥Â¢ÂÃ¦ÂÂÃ§Â«Â Ã£ÂÂÃ©ÂÂÃ¥Â§ÂÃ¥ÂÂµÃ¤Â½Â</div>
         </div>
       </div>
 
 
       <!-- AI PAGE -->
       <div class="page" id="page-ai">
-        <div class="page-hd"><div class="page-title">â¨ AI éç®±æ</div></div>
+        <div class="page-hd"><div class="page-title">Ã¢ÂÂ¨ AI Ã©ÂÂÃ§Â®Â±Ã¦ÂÂ</div></div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start">
           <div>
             <div style="background:var(--surface);border:1px solid var(--border);padding:1.5rem;margin-bottom:1rem">
-              <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem">åºå®¶è³æ</div>
-              <div class="fg"><label class="fl">åºå®¶åç¨± <span class="req">*</span></label><input class="fi" id="ai-name" placeholder="ä¾ï¼çç²æå"></div>
+              <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem">Ã¥ÂºÂÃ¥Â®Â¶Ã¨Â³ÂÃ¦ÂÂ</div>
+              <div class="fg"><label class="fl">Ã¥ÂºÂÃ¥Â®Â¶Ã¥ÂÂÃ§Â¨Â± <span class="req">*</span></label><input class="fi" id="ai-name" placeholder="Ã¤Â¾ÂÃ¯Â¼ÂÃ§ÂÂÃ§ÂÂ²Ã¦ÂÂÃ¥ÂÂ"></div>
               <div class="fg-row">
-                <div class="fg"><label class="fl">åå¸</label><select class="fsel" id="ai-city" onchange="syncAiCity(this.value)"><option value="">â é¸æåå¸ â</option></select></div>
-                <div class="fg"><label class="fl">é¡å</label><select class="fsel" id="ai-type"><option value="åå¡å»³">â åå¡å»³</option><option value="é¤å»³">ð½ï¸ é¤å»³</option><option value="çé»">ð° çé»</option><option value="æ¯é»">ðï¸ æ¯é»</option><option value="ä½å®¿">ð  ä½å®¿</option><option value="éå§">ð¸ éå§</option></select></div>
+                <div class="fg"><label class="fl">Ã¥ÂÂÃ¥Â¸Â</label><select class="fsel" id="ai-city" onchange="syncAiCity(this.value)"><option value="">Ã¢ÂÂ Ã©ÂÂ¸Ã¦ÂÂÃ¥ÂÂÃ¥Â¸Â Ã¢ÂÂ</option></select></div>
+                <div class="fg"><label class="fl">Ã©Â¡ÂÃ¥ÂÂ</label><select class="fsel" id="ai-type"><option value="Ã¥ÂÂÃ¥ÂÂ¡Ã¥Â»Â³">Ã¢ÂÂ Ã¥ÂÂÃ¥ÂÂ¡Ã¥Â»Â³</option><option value="Ã©Â¤ÂÃ¥Â»Â³">Ã°ÂÂÂ½Ã¯Â¸Â Ã©Â¤ÂÃ¥Â»Â³</option><option value="Ã§ÂÂÃ©Â»Â">Ã°ÂÂÂ° Ã§ÂÂÃ©Â»Â</option><option value="Ã¦ÂÂ¯Ã©Â»Â">Ã°ÂÂÂÃ¯Â¸Â Ã¦ÂÂ¯Ã©Â»Â</option><option value="Ã¤Â½ÂÃ¥Â®Â¿">Ã°ÂÂÂ  Ã¤Â½ÂÃ¥Â®Â¿</option><option value="Ã©ÂÂÃ¥ÂÂ§">Ã°ÂÂÂ¸ Ã©ÂÂÃ¥ÂÂ§</option></select></div>
               </div>
-              <div class="fg"><label class="fl">æçåé  / ç¹è²äº®é»</label><input class="fi" id="ai-feature" placeholder="ä¾ï¼ææ²åå¡ãèå±æ¹é "></div>
-              <div class="fg"><label class="fl">åäººé«é©å¿å¾</label><textarea class="fta" id="ai-note" placeholder="ä½ çæå..." style="min-height:80px"></textarea></div>
+              <div class="fg"><label class="fl">Ã¦ÂÂÃ§ÂÂÃ¥ÂÂÃ©Â Â / Ã§ÂÂ¹Ã¨ÂÂ²Ã¤ÂºÂ®Ã©Â»Â</label><input class="fi" id="ai-feature" placeholder="Ã¤Â¾ÂÃ¯Â¼ÂÃ¦ÂÂÃ¦Â²ÂÃ¥ÂÂÃ¥ÂÂ¡Ã£ÂÂÃ¨ÂÂÃ¥Â±ÂÃ¦ÂÂ¹Ã©ÂÂ "></div>
+              <div class="fg"><label class="fl">Ã¥ÂÂÃ¤ÂºÂºÃ©Â«ÂÃ©Â©ÂÃ¥Â¿ÂÃ¥Â¾Â</label><textarea class="fta" id="ai-note" placeholder="Ã¤Â½Â Ã§ÂÂÃ¦ÂÂÃ¥ÂÂ..." style="min-height:80px"></textarea></div>
               <div class="fg-row">
-                <div class="fg"><label class="fl">è©å</label><select class="fsel" id="ai-rating"><option value="5">â­â­â­â­â­ æ¥µåæ¨è¦</option><option value="4">â­â­â­â­ æ¨è¦</option><option value="3">â­â­â­ éä¸é¯</option></select></div>
-                <div class="fg"><label class="fl">å¹ä½</label><select class="fsel" id="ai-price"><option value="$">$ å¹³å¹</option><option value="$">$ ä¸­å¹</option><option value="$$">$$ é«å¹</option></select></div>
+                <div class="fg"><label class="fl">Ã¨Â©ÂÃ¥ÂÂ</label><select class="fsel" id="ai-rating"><option value="5">Ã¢Â­ÂÃ¢Â­ÂÃ¢Â­ÂÃ¢Â­ÂÃ¢Â­Â Ã¦Â¥ÂµÃ¥ÂÂÃ¦ÂÂ¨Ã¨ÂÂ¦</option><option value="4">Ã¢Â­ÂÃ¢Â­ÂÃ¢Â­ÂÃ¢Â­Â Ã¦ÂÂ¨Ã¨ÂÂ¦</option><option value="3">Ã¢Â­ÂÃ¢Â­ÂÃ¢Â­Â Ã©ÂÂÃ¤Â¸ÂÃ©ÂÂ¯</option></select></div>
+                <div class="fg"><label class="fl">Ã¥ÂÂ¹Ã¤Â½Â</label><select class="fsel" id="ai-price"><option value="$">$ Ã¥Â¹Â³Ã¥ÂÂ¹</option><option value="$">$ Ã¤Â¸Â­Ã¥ÂÂ¹</option><option value="$$">$$ Ã©Â«ÂÃ¥ÂÂ¹</option></select></div>
               </div>
               <div class="fg">
-                <label class="fl">ä¸å³åçï¼AI åæç¨ï¼</label>
+                <label class="fl">Ã¤Â¸ÂÃ¥ÂÂ³Ã¥ÂÂÃ§ÂÂÃ¯Â¼ÂAI Ã¥ÂÂÃ¦ÂÂÃ§ÂÂ¨Ã¯Â¼Â</label>
                 <div class="fg">
-                <label class="fl">å°é¢åï¼å®å¼µï¼é¡¯ç¤ºæ¼æç« åè¡¨ï¼</label>
+                <label class="fl">Ã¥Â°ÂÃ©ÂÂ¢Ã¥ÂÂÃ¯Â¼ÂÃ¥ÂÂ®Ã¥Â¼ÂµÃ¯Â¼ÂÃ©Â¡Â¯Ã§Â¤ÂºÃ¦ÂÂ¼Ã¦ÂÂÃ§Â«Â Ã¥ÂÂÃ¨Â¡Â¨Ã¯Â¼Â</label>
                 <div id="ai-cover-area" style="border:2px dashed var(--border2);padding:0.8rem;text-align:center;cursor:pointer;background:var(--surface2);font-size:0.78rem;color:var(--text3)" onclick="document.getElementById('ai-cover-file').click()">
-                  ð¼ï¸ é»æä¸å³å°é¢å
+                  Ã°ÂÂÂ¼Ã¯Â¸Â Ã©Â»ÂÃ¦ÂÂÃ¤Â¸ÂÃ¥ÂÂ³Ã¥Â°ÂÃ©ÂÂ¢Ã¥ÂÂ
                 </div>
                 <img id="ai-cover-preview" style="display:none;width:100%;max-height:120px;object-fit:cover;margin-top:0.5rem;border-radius:4px">
                 <input type="file" id="ai-cover-file" accept="image/*" style="display:none" onchange="handleAiCover(event)">
               </div>
-              <div id="ai-img-area" style="border:2px dashed var(--border2);padding:1rem;text-align:center;cursor:pointer;background:var(--surface2);font-size:0.78rem;color:var(--text3)" onclick="document.getElementById('ai-img-file').click()">ð· é»æä¸å³åçï¼å¯å¤å¼µï¼</div>
+              <div id="ai-img-area" style="border:2px dashed var(--border2);padding:1rem;text-align:center;cursor:pointer;background:var(--surface2);font-size:0.78rem;color:var(--text3)" onclick="document.getElementById('ai-img-file').click()">Ã°ÂÂÂ· Ã©Â»ÂÃ¦ÂÂÃ¤Â¸ÂÃ¥ÂÂ³Ã¥ÂÂÃ§ÂÂÃ¯Â¼ÂÃ¥ÂÂ¯Ã¥Â¤ÂÃ¥Â¼ÂµÃ¯Â¼Â</div>
                 <input type="file" id="ai-img-file" accept="image/*" multiple style="display:none" onchange="handleAiImgs(event)">
                 <div id="ai-img-previews" style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem"></div>
               </div>
               
               <div style="border-top:1px solid var(--border2);margin:1rem 0;padding-top:1rem">
-                <div style="font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:0.8rem">åºå®¶è³è¨ï¼é¸å¡«ï¼ç¼å¸å¾é¡¯ç¤ºå¨ææ«ï¼</div>
+                <div style="font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:0.8rem">Ã¥ÂºÂÃ¥Â®Â¶Ã¨Â³ÂÃ¨Â¨ÂÃ¯Â¼ÂÃ©ÂÂ¸Ã¥Â¡Â«Ã¯Â¼ÂÃ§ÂÂ¼Ã¥Â¸ÂÃ¥Â¾ÂÃ©Â¡Â¯Ã§Â¤ÂºÃ¥ÂÂ¨Ã¦ÂÂÃ¦ÂÂ«Ã¯Â¼Â</div>
                 <div class="fg-row">
-                  <div class="fg"><label class="fl">å°å</label><input class="fi" id="ai-shop-address" placeholder="ä¾ï¼åæç¸£ä»æé..."></div>
-                  <div class="fg"><label class="fl">é»è©±</label><input class="fi" id="ai-shop-phone" placeholder="049-123456"></div>
+                  <div class="fg"><label class="fl">Ã¥ÂÂ°Ã¥ÂÂ</label><input class="fi" id="ai-shop-address" placeholder="Ã¤Â¾ÂÃ¯Â¼ÂÃ¥ÂÂÃ¦ÂÂÃ§Â¸Â£Ã¤Â»ÂÃ¦ÂÂÃ©ÂÂ..."></div>
+                  <div class="fg"><label class="fl">Ã©ÂÂ»Ã¨Â©Â±</label><input class="fi" id="ai-shop-phone" placeholder="049-123456"></div>
                 </div>
                 <div class="fg-row">
-                  <div class="fg"><label class="fl">çæ¥­æé</label><input class="fi" id="ai-shop-hours" placeholder="ä¾ï¼11:00-21:00ï¼é±äºå¬ä¼ï¼"></div>
-                  <div class="fg"><label class="fl">æ¶è²»åè¨»</label><input class="fi" id="ai-shop-price-note" placeholder="ä¾ï¼å¹³åæ¶è²» $200-400"></div>
+                  <div class="fg"><label class="fl">Ã§ÂÂÃ¦Â¥Â­Ã¦ÂÂÃ©ÂÂ</label><input class="fi" id="ai-shop-hours" placeholder="Ã¤Â¾ÂÃ¯Â¼Â11:00-21:00Ã¯Â¼ÂÃ©ÂÂ±Ã¤ÂºÂÃ¥ÂÂ¬Ã¤Â¼ÂÃ¯Â¼Â"></div>
+                  <div class="fg"><label class="fl">Ã¦Â¶ÂÃ¨Â²Â»Ã¥ÂÂÃ¨Â¨Â»</label><input class="fi" id="ai-shop-price-note" placeholder="Ã¤Â¾ÂÃ¯Â¼ÂÃ¥Â¹Â³Ã¥ÂÂÃ¦Â¶ÂÃ¨Â²Â» $200-400"></div>
                 </div>
                 <div class="fg-row">
-                  <div class="fg"><label class="fl">åè»è³è¨</label><input class="fi" id="ai-shop-parking" placeholder="ä¾ï¼éå£æåè»å ´"></div>
-                  <div class="fg"><label class="fl">å®ç¶²</label><input class="fi" id="ai-shop-website" placeholder="https://..."></div>
+                  <div class="fg"><label class="fl">Ã¥ÂÂÃ¨Â»ÂÃ¨Â³ÂÃ¨Â¨Â</label><input class="fi" id="ai-shop-parking" placeholder="Ã¤Â¾ÂÃ¯Â¼ÂÃ©ÂÂÃ¥ÂÂ£Ã¦ÂÂÃ¥ÂÂÃ¨Â»ÂÃ¥Â Â´"></div>
+                  <div class="fg"><label class="fl">Ã¥Â®ÂÃ§Â¶Â²</label><input class="fi" id="ai-shop-website" placeholder="https://..."></div>
                 </div>
                 <div class="fg-row">
-                  <div class="fg"><label class="fl">Google Maps é£çµ</label><input class="fi" id="ai-shop-maps" placeholder="https://maps.google.com/..."></div>
+                  <div class="fg"><label class="fl">Google Maps Ã©ÂÂ£Ã§ÂµÂ</label><input class="fi" id="ai-shop-maps" placeholder="https://maps.google.com/..."></div>
                   <div class="fg"><label class="fl">Facebook</label><input class="fi" id="ai-shop-fb" placeholder="https://fb.com/..."></div>
                 </div>
                 <div class="fg-row">
@@ -323,31 +323,31 @@ tr:hover td{background:var(--surface2)}
                   <div class="fg"><label class="fl">LINE</label><input class="fi" id="ai-shop-line" placeholder="https://line.me/..."></div>
                 </div>
               </div>
-<div id="ai-key-warn" style="display:none;font-size:0.72rem;color:var(--red);margin-bottom:0.8rem">â ï¸ è«åè¨­å® Anthropic API Key</div>
-              <button class="btn-primary" id="ai-gen-btn" onclick="genAiArticle()" style="width:100%">â¨ AI çæéç®±æ</button>
+<div id="ai-key-warn" style="display:none;font-size:0.72rem;color:var(--red);margin-bottom:0.8rem">Ã¢ÂÂ Ã¯Â¸Â Ã¨Â«ÂÃ¥ÂÂÃ¨Â¨Â­Ã¥Â®Â Anthropic API Key</div>
+              <button class="btn-primary" id="ai-gen-btn" onclick="genAiArticle()" style="width:100%">Ã¢ÂÂ¨ AI Ã§ÂÂÃ¦ÂÂÃ©ÂÂÃ§Â®Â±Ã¦ÂÂ</button>
             </div>
           </div>
           <div>
             <div style="background:var(--surface);border:1px solid var(--border);padding:1.5rem;margin-bottom:1rem">
               <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;justify-content:space-between">
-                <span>çæçµæ</span><span id="ai-status" style="color:var(--text3);font-size:0.68rem;letter-spacing:0">ç­å¾çæ...</span>
+                <span>Ã§ÂÂÃ¦ÂÂÃ§ÂµÂÃ¦ÂÂ</span><span id="ai-status" style="color:var(--text3);font-size:0.68rem;letter-spacing:0">Ã§Â­ÂÃ¥Â¾ÂÃ§ÂÂÃ¦ÂÂ...</span>
               </div>
               <div id="ai-title-preview" style="font-family:var(--font-serif);font-size:1.2rem;color:var(--accent2);margin-bottom:0.8rem;min-height:1.5em"></div>
               <div id="ai-body-preview" contenteditable="true" style="min-height:200px;font-size:0.82rem;line-height:1.9;color:var(--text2);white-space:pre-wrap;outline:none;border:1px dashed var(--border2);padding:0.5rem"></div>
             </div>
             <div style="background:var(--surface);border:1px solid var(--border);padding:1.5rem" id="ai-publish-panel">
-              <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem">ç¼å¸è¨­å®</div>
+              <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem">Ã§ÂÂ¼Ã¥Â¸ÂÃ¨Â¨Â­Ã¥Â®Â</div>
               <div class="fg-row">
-                <div class="fg"><label class="fl">åå¸</label><select class="fsel" id="ai-pub-city"></select></div>
-                <div class="fg"><label class="fl">åé¡</label><select class="fsel" id="ai-pub-cat"></select>
-        <div class="form-row"><div class="fgroup"><label class="flbl">ä¸»åééµå­</label><select class="fsel" id="ai-pub-kw"><option value="">ä¸é¸æ</option></select></div></div></div>
+                <div class="fg"><label class="fl">Ã¥ÂÂÃ¥Â¸Â</label><select class="fsel" id="ai-pub-city"></select></div>
+                <div class="fg"><label class="fl">Ã¥ÂÂÃ©Â¡Â</label><select class="fsel" id="ai-pub-cat"></select>
+        <div class="form-row"><div class="fgroup"><label class="flbl">Ã¤Â¸Â»Ã¥ÂÂÃ©ÂÂÃ©ÂÂµÃ¥Â­Â</label><select class="fsel" id="ai-pub-kw"><option value="">Ã¤Â¸ÂÃ©ÂÂ¸Ã¦ÂÂ</option></select></div></div></div>
               </div>
-              <div class="fg"><label class="fl">æè¦</label><textarea class="fta" id="ai-pub-excerpt" style="min-height:56px" placeholder="ç°¡ç­æè¿°..."></textarea></div>
+              <div class="fg"><label class="fl">Ã¦ÂÂÃ¨Â¦Â</label><textarea class="fta" id="ai-pub-excerpt" style="min-height:56px" placeholder="Ã§Â°Â¡Ã§ÂÂ­Ã¦ÂÂÃ¨Â¿Â°..."></textarea></div>
               <div class="fg-row">
-                <div class="fg"><label class="fl">çæ</label><select class="fsel" id="ai-pub-status"><option value="published">â ç«å³ç¼å¸</option><option value="draft">ð å­çºèç¨¿</option></select></div>
-                <div class="fg"><label class="fl">ç¼å¸æé</label><input class="fi" type="datetime-local" id="ai-pub-time"></div>
+                <div class="fg"><label class="fl">Ã§ÂÂÃ¦ÂÂ</label><select class="fsel" id="ai-pub-status"><option value="published">Ã¢ÂÂ Ã§Â«ÂÃ¥ÂÂ³Ã§ÂÂ¼Ã¥Â¸Â</option><option value="draft">Ã°ÂÂÂ Ã¥Â­ÂÃ§ÂÂºÃ¨ÂÂÃ§Â¨Â¿</option></select></div>
+                <div class="fg"><label class="fl">Ã§ÂÂ¼Ã¥Â¸ÂÃ¦ÂÂÃ©ÂÂ</label><input class="fi" type="datetime-local" id="ai-pub-time"></div>
               </div>
-              <button class="btn-primary" id="ai-pub-btn" onclick="publishAiArticle()" style="width:100%;margin-top:0.5rem">ð ç¼å¸å°åå°</button>
+              <button class="btn-primary" id="ai-pub-btn" onclick="publishAiArticle()" style="width:100%;margin-top:0.5rem">Ã°ÂÂÂ Ã§ÂÂ¼Ã¥Â¸ÂÃ¥ÂÂ°Ã¥ÂÂÃ¥ÂÂ°</button>
               <div id="ai-pub-msg" style="font-size:0.78rem;margin-top:0.8rem;min-height:1em"></div>
             </div>
           </div>
@@ -356,28 +356,28 @@ tr:hover td{background:var(--surface2)}
 
       <!-- SETTINGS PAGE -->
       <div class="page" id="page-settings">
-<div class="page-hd"><div class="page-title">åé¡è¨­å®</div></div>
+<div class="page-hd"><div class="page-title">Ã¥ÂÂÃ©Â¡ÂÃ¨Â¨Â­Ã¥Â®Â</div></div>
 <div id="sect-regions" style="margin-bottom:2rem">
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem">
-<h3 style="color:var(--accent);font-size:0.8rem;letter-spacing:0.1em">å°åç®¡ç</h3>
-<button id="btn-add-region" class="btn-primary" style="font-size:0.75rem;padding:0.35rem 0.9rem">ï¼ æ°å¢å°å</button>
+<h3 style="color:var(--accent);font-size:0.8rem;letter-spacing:0.1em">Ã¥ÂÂ°Ã¥ÂÂÃ§Â®Â¡Ã§ÂÂ</h3>
+<button id="btn-add-region" class="btn-primary" style="font-size:0.75rem;padding:0.35rem 0.9rem">Ã¯Â¼Â Ã¦ÂÂ°Ã¥Â¢ÂÃ¥ÂÂ°Ã¥ÂÂ</button>
 </div>
 <div id="region-list" style="display:flex;flex-wrap:wrap;gap:0.5rem"></div>
 </div>
 <div id="sect-keywords" style="margin-bottom:2rem">
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem">
-<h3 style="color:var(--accent);font-size:0.8rem;letter-spacing:0.1em">ä¸»åééµå­</h3>
-<button id="btn-add-kw" class="btn-primary" style="font-size:0.75rem;padding:0.35rem 0.9rem">ï¼ æ°å¢ééµå­</button>
+<h3 style="color:var(--accent);font-size:0.8rem;letter-spacing:0.1em">Ã¤Â¸Â»Ã¥ÂÂÃ©ÂÂÃ©ÂÂµÃ¥Â­Â</h3>
+<button id="btn-add-kw" class="btn-primary" style="font-size:0.75rem;padding:0.35rem 0.9rem">Ã¯Â¼Â Ã¦ÂÂ°Ã¥Â¢ÂÃ©ÂÂÃ©ÂÂµÃ¥Â­Â</button>
 </div>
 <select id="kw-filter" style="background:var(--surface2);border:1px solid var(--border);color:var(--paper);padding:0.4rem 0.8rem;font-size:0.8rem;font-family:inherit;margin-bottom:0.8rem">
-<option value="">å¨é¨å°å</option>
+<option value="">Ã¥ÂÂ¨Ã©ÂÂ¨Ã¥ÂÂ°Ã¥ÂÂ</option>
 </select>
 <div id="keyword-list"></div>
 </div>
 <div>
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem">
-<h3 style="color:var(--accent);font-size:0.8rem;letter-spacing:0.1em">æç« åé¡</h3>
-<button id="btn-add-cat" class="btn-primary" style="font-size:0.75rem;padding:0.35rem 0.9rem">ï¼ æ°å¢åé¡</button>
+<h3 style="color:var(--accent);font-size:0.8rem;letter-spacing:0.1em">Ã¦ÂÂÃ§Â«Â Ã¥ÂÂÃ©Â¡Â</h3>
+<button id="btn-add-cat" class="btn-primary" style="font-size:0.75rem;padding:0.35rem 0.9rem">Ã¯Â¼Â Ã¦ÂÂ°Ã¥Â¢ÂÃ¥ÂÂÃ©Â¡Â</button>
 </div>
 <div id="cat-list"></div>
 </div>
@@ -390,108 +390,108 @@ tr:hover td{background:var(--surface2)}
 <div class="modal-bg" id="art-modal">
   <div class="modal">
     <div class="modal-hd">
-      <div class="modal-title" id="art-modal-title">æ°å¢æç« </div>
-      <button class="modal-close" onclick="closeArtModal()">â</button>
+      <div class="modal-title" id="art-modal-title">Ã¦ÂÂ°Ã¥Â¢ÂÃ¦ÂÂÃ§Â«Â </div>
+      <button class="modal-close" onclick="closeArtModal()">Ã¢ÂÂ</button>
     </div>
     <div class="modal-body">
 
       <div class="fg">
-        <label class="fl">æç« æ¨é¡ <span class="req">*</span></label>
-        <input class="fi" id="f-title" placeholder="è¼¸å¥æç« æ¨é¡...">
+        <label class="fl">Ã¦ÂÂÃ§Â«Â Ã¦Â¨ÂÃ©Â¡Â <span class="req">*</span></label>
+        <input class="fi" id="f-title" placeholder="Ã¨Â¼Â¸Ã¥ÂÂ¥Ã¦ÂÂÃ§Â«Â Ã¦Â¨ÂÃ©Â¡Â...">
       </div>
 
       <div class="fg-row">
         <div class="fg">
-          <label class="fl">åå¸ <span class="req">*</span></label>
+          <label class="fl">Ã¥ÂÂÃ¥Â¸Â <span class="req">*</span></label>
           <select class="fsel" id="f-city"></select>
         </div>
         <div class="fg">
-          <label class="fl">åé¡ <span class="req">*</span></label>
+          <label class="fl">Ã¥ÂÂÃ©Â¡Â <span class="req">*</span></label>
           <select class="fsel" id="f-cat"></select>
-        <div class="fgroup"><label class="flbl">ä¸»åééµå­</label><select class="fsel" id="f-kw"><option value="">ä¸é¸æ</option></select></div>
+        <div class="fgroup"><label class="flbl">Ã¤Â¸Â»Ã¥ÂÂÃ©ÂÂÃ©ÂÂµÃ¥Â­Â</label><select class="fsel" id="f-kw"><option value="">Ã¤Â¸ÂÃ©ÂÂ¸Ã¦ÂÂ</option></select></div>
         </div>
       </div>
 
       <div class="fg">
-        <label class="fl">æè¦ï¼SEO descriptionï¼</label>
-        <textarea class="fta" id="f-excerpt" placeholder="ç°¡ç­æè¿°éç¯æç« ..." style="min-height:60px"></textarea>
+        <label class="fl">Ã¦ÂÂÃ¨Â¦ÂÃ¯Â¼ÂSEO descriptionÃ¯Â¼Â</label>
+        <textarea class="fta" id="f-excerpt" placeholder="Ã§Â°Â¡Ã§ÂÂ­Ã¦ÂÂÃ¨Â¿Â°Ã©ÂÂÃ§Â¯ÂÃ¦ÂÂÃ§Â«Â ..." style="min-height:60px"></textarea>
       </div>
 
       <div class="fg">
-        <label class="fl">SEO ééµå­</label>
+        <label class="fl">SEO Ã©ÂÂÃ©ÂÂµÃ¥Â­Â</label>
         <div class="kw-tags" id="art-kw-tags"></div>
-        <input class="fi" id="f-kw-input" placeholder="è¼¸å¥ééµå­å¾æ Enter..." onkeydown="addArtKw(event)">
+        <input class="fi" id="f-kw-input" placeholder="Ã¨Â¼Â¸Ã¥ÂÂ¥Ã©ÂÂÃ©ÂÂµÃ¥Â­ÂÃ¥Â¾ÂÃ¦ÂÂ Enter..." onkeydown="addArtKw(event)">
       </div>
 
       <div class="fg">
-        <label class="fl">æç« å§å®¹</label>
+        <label class="fl">Ã¦ÂÂÃ§Â«Â Ã¥ÂÂ§Ã¥Â®Â¹</label>
         <div class="editor-toolbar" id="editor-toolbar">
-          <button class="ed-btn" onclick="execCmd('bold')" title="ç²é«"><b>B</b></button>
-          <button class="ed-btn" onclick="execCmd('italic')" title="æé«"><i>I</i></button>
-          <button class="ed-btn" onclick="execCmd('underline')" title="åºç·"><u>U</u></button>
+          <button class="ed-btn" onclick="execCmd('bold')" title="Ã§Â²ÂÃ©Â«Â"><b>B</b></button>
+          <button class="ed-btn" onclick="execCmd('italic')" title="Ã¦ÂÂÃ©Â«Â"><i>I</i></button>
+          <button class="ed-btn" onclick="execCmd('underline')" title="Ã¥ÂºÂÃ§Â·Â"><u>U</u></button>
           <span style="color:var(--border2);padding:0 0.2rem">|</span>
           <button class="ed-btn" onclick="execFmt('h2')" title="H2">H2</button>
           <button class="ed-btn" onclick="execFmt('h3')" title="H3">H3</button>
-          <button class="ed-btn" onclick="execCmd('formatBlock','p')" title="æ®µè½">Â¶</button>
+          <button class="ed-btn" onclick="execCmd('formatBlock','p')" title="Ã¦Â®ÂµÃ¨ÂÂ½">ÃÂ¶</button>
           <span style="color:var(--border2);padding:0 0.2rem">|</span>
-          <button class="ed-btn" onclick="execCmd('insertUnorderedList')" title="æ¸å®">â¢ æ¸å®</button>
-          <button class="ed-btn" onclick="execCmd('insertOrderedList')" title="ç·¨è">1. æ¸å®</button>
-          <button class="ed-btn" onclick="execFmt('blockquote')" title="å¼ç¨">â</button>
+          <button class="ed-btn" onclick="execCmd('insertUnorderedList')" title="Ã¦Â¸ÂÃ¥ÂÂ®">Ã¢ÂÂ¢ Ã¦Â¸ÂÃ¥ÂÂ®</button>
+          <button class="ed-btn" onclick="execCmd('insertOrderedList')" title="Ã§Â·Â¨Ã¨ÂÂ">1. Ã¦Â¸ÂÃ¥ÂÂ®</button>
+          <button class="ed-btn" onclick="execFmt('blockquote')" title="Ã¥Â¼ÂÃ§ÂÂ¨">Ã¢ÂÂ</button>
           <span style="color:var(--border2);padding:0 0.2rem">|</span>
-          <button class="ed-btn" onclick="insertLink()" title="é£çµ">ð</button>
-          <button class="ed-btn" onclick="triggerImgInsert()" title="æå¥åç">ð¼</button>
-                  <button class="ed-btn" onclick="toggleCodeView()" id="btn-code-view" title="æª¢è¦ç¨å¼ç¢¼" style="margin-left:auto;color:var(--accent)">&lt;/&gt;</button>
+          <button class="ed-btn" onclick="insertLink()" title="Ã©ÂÂ£Ã§ÂµÂ">Ã°ÂÂÂ</button>
+          <button class="ed-btn" onclick="triggerImgInsert()" title="Ã¦ÂÂÃ¥ÂÂ¥Ã¥ÂÂÃ§ÂÂ">Ã°ÂÂÂ¼</button>
+                  <button class="ed-btn" onclick="toggleCodeView()" id="btn-code-view" title="Ã¦ÂªÂ¢Ã¨Â¦ÂÃ§Â¨ÂÃ¥Â¼ÂÃ§Â¢Â¼" style="margin-left:auto;color:var(--accent)">&lt;/&gt;</button>
         </div>
         <div id="f-content-editor" contenteditable="true" onpaste="handlePaste(event)"></div>
       </div>
 
       <div class="fg">
-        <label class="fl">åçä¸å³</label>
+        <label class="fl">Ã¥ÂÂÃ§ÂÂÃ¤Â¸ÂÃ¥ÂÂ³</label>
         <div id="img-upload-area" onclick="document.getElementById('img-file-input').click()">
-          <div style="font-size:1.5rem">ð·</div>
-          <p>é»ææææ³ä¸å³åçï¼å¯å¤å¼µï¼</p>
-          <p style="font-size:0.68rem;margin-top:0.2rem">ä¸å³å¾å¯æå¥æç« æè¨­çºå°é¢</p>
+          <div style="font-size:1.5rem">Ã°ÂÂÂ·</div>
+          <p>Ã©Â»ÂÃ¦ÂÂÃ¦ÂÂÃ¦ÂÂÃ¦ÂÂ³Ã¤Â¸ÂÃ¥ÂÂ³Ã¥ÂÂÃ§ÂÂÃ¯Â¼ÂÃ¥ÂÂ¯Ã¥Â¤ÂÃ¥Â¼ÂµÃ¯Â¼Â</p>
+          <p style="font-size:0.68rem;margin-top:0.2rem">Ã¤Â¸ÂÃ¥ÂÂ³Ã¥Â¾ÂÃ¥ÂÂ¯Ã¦ÂÂÃ¥ÂÂ¥Ã¦ÂÂÃ§Â«Â Ã¦ÂÂÃ¨Â¨Â­Ã§ÂÂºÃ¥Â°ÂÃ©ÂÂ¢</p>
         </div>
         <input type="file" id="img-file-input" accept="image/*" multiple style="display:none" onchange="handleImgUpload(event)">
         <div class="img-preview-grid" id="img-preview-grid"></div>
       </div>
 
       <div class="fg">
-        <label class="fl">åµå¥å½±çï¼YouTube / Vimeo URLï¼</label>
+        <label class="fl">Ã¥ÂµÂÃ¥ÂÂ¥Ã¥Â½Â±Ã§ÂÂÃ¯Â¼ÂYouTube / Vimeo URLÃ¯Â¼Â</label>
         <input class="fi" id="f-video" placeholder="https://www.youtube.com/watch?v=..." oninput="previewVideo(this.value)">
         <div id="video-preview-box" style="display:none" class="video-preview">
-          <div style="font-size:0.75rem;color:var(--text2);margin-bottom:0.4rem">é è¦½ï¼</div>
+          <div style="font-size:0.75rem;color:var(--text2);margin-bottom:0.4rem">Ã©Â ÂÃ¨Â¦Â½Ã¯Â¼Â</div>
           <div class="video-embed-preview" id="video-embed-preview"></div>
         </div>
       </div>
 
       <div class="fg-row3">
         <div class="fg">
-          <label class="fl">å°é¢ Emoji</label>
+          <label class="fl">Ã¥Â°ÂÃ©ÂÂ¢ Emoji</label>
           <div class="emoji-grid" id="emoji-grid"></div>
           <div class="emoji-preview">
-            <span id="emoji-sel-display">âï¸</span>
-            <input id="f-emoji-custom" placeholder="èªè¨ emoji..." oninput="setEmoji(this.value)" maxlength="2">
+            <span id="emoji-sel-display">Ã¢ÂÂÃ¯Â¸Â</span>
+            <input id="f-emoji-custom" placeholder="Ã¨ÂÂªÃ¨Â¨Â emoji..." oninput="setEmoji(this.value)" maxlength="2">
           </div>
         </div>
         <div class="fg">
-          <label class="fl">ç¼å¸çæ</label>
+          <label class="fl">Ã§ÂÂ¼Ã¥Â¸ÂÃ§ÂÂÃ¦ÂÂ</label>
           <select class="fsel" id="f-status">
-            <option value="draft">ð èç¨¿</option>
-            <option value="published">â å·²ç¼å¸</option>
+            <option value="draft">Ã°ÂÂÂ Ã¨ÂÂÃ§Â¨Â¿</option>
+            <option value="published">Ã¢ÂÂ Ã¥Â·Â²Ã§ÂÂ¼Ã¥Â¸Â</option>
           </select>
         </div>
         <div class="fg">
-          <label class="fl">ç¼å¸æé</label>
+          <label class="fl">Ã§ÂÂ¼Ã¥Â¸ÂÃ¦ÂÂÃ©ÂÂ</label>
           <input class="fi" type="datetime-local" id="f-published-at">
-          <div style="font-size:0.68rem;color:var(--text3);margin-top:0.3rem">å¯è¨­å®éå»ææªä¾çæé</div>
+          <div style="font-size:0.68rem;color:var(--text3);margin-top:0.3rem">Ã¥ÂÂ¯Ã¨Â¨Â­Ã¥Â®ÂÃ©ÂÂÃ¥ÂÂ»Ã¦ÂÂÃ¦ÂÂªÃ¤Â¾ÂÃ§ÂÂÃ¦ÂÂÃ©ÂÂ</div>
         </div>
       </div>
 
     </div>
     <div class="modal-ft">
-      <button class="btn-secondary" onclick="closeArtModal()">åæ¶</button>
-      <button class="btn-primary" id="save-btn" onclick="saveArt()">å²å­æç« </button>
+      <button class="btn-secondary" onclick="closeArtModal()">Ã¥ÂÂÃ¦Â¶Â</button>
+      <button class="btn-primary" id="save-btn" onclick="saveArt()">Ã¥ÂÂ²Ã¥Â­ÂÃ¦ÂÂÃ§Â«Â </button>
     </div>
   </div>
 </div>
@@ -499,24 +499,24 @@ tr:hover td{background:var(--surface2)}
 <div id="toast"></div>
 
 <script>
-// ââ SUPABASE âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ SUPABASE Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 const SUPA_URL = 'https://zsebcpfblecwumbaxeaz.supabase.co';
 const SUPA_KEY = 'sb_publishable_L2DOfeM0cAJqwlVCr1LwtA_jE9MBNDn';
 const sb = supabase.createClient(SUPA_URL, SUPA_KEY);
 
-// ââ CONFIG âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ CONFIG Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 const ADMIN_PW = '@2Irirdlai';
-const EMOJIS = ['âï¸','ð¸','ðï¸','ð','ð®','â©ï¸','ð¢','ð','ðï¸','ð','ðº','ð¼ï¸','âï¸','ð','ð','ð','ð','ð¸','ðµ','ð','ð¯','ð­'];
+const EMOJIS = ['Ã¢ÂÂÃ¯Â¸Â','Ã°ÂÂÂ¸','Ã°ÂÂÂÃ¯Â¸Â','Ã°ÂÂÂ','Ã°ÂÂÂ®','Ã¢ÂÂ©Ã¯Â¸Â','Ã°ÂÂÂ¢','Ã°ÂÂÂ','Ã°ÂÂÂÃ¯Â¸Â','Ã°ÂÂÂ','Ã°ÂÂÂº','Ã°ÂÂÂ¼Ã¯Â¸Â','Ã¢ÂÂÃ¯Â¸Â','Ã°ÂÂÂ','Ã°ÂÂÂ','Ã°ÂÂÂ','Ã°ÂÂÂ','Ã°ÂÂÂ¸','Ã°ÂÂÂµ','Ã°ÂÂÂ','Ã°ÂÂÂ¯','Ã°ÂÂÂ­'];
 
 let allArts = [];
 let artKws = [];
 let artImages = [];
 let editingId = null;
-let selectedEmoji = 'âï¸';
+let selectedEmoji = 'Ã¢ÂÂÃ¯Â¸Â';
 let filterStatus = 'all';
 let cities = [], cats = [];
 
-// ââ AUTH âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ AUTH Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function doLogin(){
   const v = document.getElementById('pw-input').value;
   if(v === ADMIN_PW){
@@ -525,7 +525,7 @@ function doLogin(){
     document.getElementById('app').style.display='block';
     init();
   } else {
-    document.getElementById('login-err').textContent='å¯ç¢¼é¯èª¤ï¼è«åè©¦ä¸æ¬¡';
+    document.getElementById('login-err').textContent='Ã¥Â¯ÂÃ§Â¢Â¼Ã©ÂÂ¯Ã¨ÂªÂ¤Ã¯Â¼ÂÃ¨Â«ÂÃ¥ÂÂÃ¨Â©Â¦Ã¤Â¸ÂÃ¦Â¬Â¡';
     document.getElementById('pw-input').value='';
   }
 }
@@ -538,7 +538,7 @@ if(sessionStorage.getItem('mantu_auth')==='1'){
   document.getElementById('app').style.display='block';
 }
 
-// ââ INIT âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ INIT Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 async function init(){
   loadSettings();
   renderEmojiGrid();
@@ -553,10 +553,10 @@ function loadSettings(){
   if(el&&k)el.value=k;
 }
 
-// ââ ARTICLES âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ ARTICLES Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 async function loadArticles(){
   const {data,error} = await sb.from('articles').select('*').order('created_at',{ascending:false});
-  if(error){ toast('è¼å¥å¤±æï¼'+error.message,'err'); return; }
+  if(error){ toast('Ã¨Â¼ÂÃ¥ÂÂ¥Ã¥Â¤Â±Ã¦ÂÂÃ¯Â¼Â'+error.message,'err'); return; }
   allArts = data||[];
   renderArts();
   updateStats();
@@ -570,7 +570,7 @@ function updateStats(){
   document.getElementById('st-pub').textContent = pub.length;
   document.getElementById('st-draft').textContent = draft.length;
   document.getElementById('st-cities').textContent = citySet.size;
-  document.getElementById('hd-stats').textContent = `${pub.length} ç¯å·²ç¼å¸`;
+  document.getElementById('hd-stats').textContent = `${pub.length} Ã§Â¯ÂÃ¥Â·Â²Ã§ÂÂ¼Ã¥Â¸Â`;
 }
 
 function renderArts(){
@@ -589,17 +589,17 @@ function renderArts(){
   document.getElementById('art-empty').style.display='none';
   tbody.innerHTML = list.map(a=>`
     <tr>
-      <td style="font-size:1.4rem;width:50px">${a.emoji||'âï¸'}</td>
+      <td style="font-size:1.4rem;width:50px">${a.emoji||'Ã¢ÂÂÃ¯Â¸Â'}</td>
       <td><div style="font-weight:500;color:var(--text)">${a.title}</div><div style="font-size:0.7rem;color:var(--text3);margin-top:2px">${a.excerpt||''}</div></td>
-      <td>${a.city||'â'}</td>
-      <td>${a.category||'â'}</td>
-      <td><span class="badge ${a.status==='published'?'badge-pub':'badge-draft'}">${a.status==='published'?'å·²ç¼å¸':'èç¨¿'}</span></td>
-      <td style="font-size:0.75rem;color:var(--text3)">${a.published_at?new Date(a.published_at).toLocaleString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}):'â'}</td>
+      <td>${a.city||'Ã¢ÂÂ'}</td>
+      <td>${a.category||'Ã¢ÂÂ'}</td>
+      <td><span class="badge ${a.status==='published'?'badge-pub':'badge-draft'}">${a.status==='published'?'Ã¥Â·Â²Ã§ÂÂ¼Ã¥Â¸Â':'Ã¨ÂÂÃ§Â¨Â¿'}</span></td>
+      <td style="font-size:0.75rem;color:var(--text3)">${a.published_at?new Date(a.published_at).toLocaleString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}):'Ã¢ÂÂ'}</td>
       <td>
         <div class="tbl-actions">
-          <button class="act-btn" onclick="openEditArt(${a.id})" title="ç·¨è¼¯">âï¸</button>
-          <button class="act-btn" onclick="togglePub(${a.id},'${a.status}')" title="${a.status==='published'?'ä¸ç·':'ç¼å¸'}">${a.status==='published'?'â¬ï¸':'ð'}</button>
-          <button class="act-btn del" onclick="delArt(${a.id})" title="åªé¤">ðï¸</button>
+          <button class="act-btn" onclick="openEditArt(${a.id})" title="Ã§Â·Â¨Ã¨Â¼Â¯">Ã¢ÂÂÃ¯Â¸Â</button>
+          <button class="act-btn" onclick="togglePub(${a.id},'${a.status}')" title="${a.status==='published'?'Ã¤Â¸ÂÃ§Â·Â':'Ã§ÂÂ¼Ã¥Â¸Â'}">${a.status==='published'?'Ã¢Â¬ÂÃ¯Â¸Â':'Ã°ÂÂÂ'}</button>
+          <button class="act-btn del" onclick="delArt(${a.id})" title="Ã¥ÂÂªÃ©ÂÂ¤">Ã°ÂÂÂÃ¯Â¸Â</button>
         </div>
       </td>
     </tr>`).join('');
@@ -620,23 +620,23 @@ async function togglePub(id,cur){
     upd.published_at = new Date().toISOString();
   }
   const {error} = await sb.from('articles').update(upd).eq('id',id);
-  if(error){ toast('æ´æ°å¤±æ','err'); return; }
-  toast(newStatus==='published'?'ð æç« å·²ç¼å¸ï¼':'æç« å·²ä¸ç·');
+  if(error){ toast('Ã¦ÂÂ´Ã¦ÂÂ°Ã¥Â¤Â±Ã¦ÂÂ','err'); return; }
+  toast(newStatus==='published'?'Ã°ÂÂÂ Ã¦ÂÂÃ§Â«Â Ã¥Â·Â²Ã§ÂÂ¼Ã¥Â¸ÂÃ¯Â¼Â':'Ã¦ÂÂÃ§Â«Â Ã¥Â·Â²Ã¤Â¸ÂÃ§Â·Â');
   await loadArticles();
 }
 
 async function delArt(id){
-  if(!confirm('ç¢ºå®è¦åªé¤éç¯æç« ï¼')) return;
+  if(!confirm('Ã§Â¢ÂºÃ¥Â®ÂÃ¨Â¦ÂÃ¥ÂÂªÃ©ÂÂ¤Ã©ÂÂÃ§Â¯ÂÃ¦ÂÂÃ§Â«Â Ã¯Â¼Â')) return;
   const {error} = await sb.from('articles').delete().eq('id',id);
-  if(error){ toast('åªé¤å¤±æ','err'); return; }
-  toast('æç« å·²åªé¤');
+  if(error){ toast('Ã¥ÂÂªÃ©ÂÂ¤Ã¥Â¤Â±Ã¦ÂÂ','err'); return; }
+  toast('Ã¦ÂÂÃ§Â«Â Ã¥Â·Â²Ã¥ÂÂªÃ©ÂÂ¤');
   await loadArticles();
 }
 
-// ââ ARTICLE MODAL ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ ARTICLE MODAL Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function openAddArt(){
   editingId=null; artKws=[]; artImages=[];
-  document.getElementById('art-modal-title').textContent='æ°å¢æç« ';
+  document.getElementById('art-modal-title').textContent='Ã¦ÂÂ°Ã¥Â¢ÂÃ¦ÂÂÃ§Â«Â ';
   document.getElementById('f-title').value='';
   document.getElementById('f-excerpt').value='';
   document.getElementById('f-video').value='';
@@ -644,7 +644,7 @@ function openAddArt(){
   document.getElementById('f-status').value='draft';
   document.getElementById('f-kw').value='';
   document.getElementById('f-published-at').value=fmtDateLocal(new Date());
-  setEmoji('âï¸');
+  setEmoji('Ã¢ÂÂÃ¯Â¸Â');
   setEditorContent('');
   renderArtKws();
   renderImgPreviews();
@@ -657,7 +657,7 @@ function openEditArt(id){
   editingId=id;
   artKws = Array.isArray(a.keywords) ? [...a.keywords] : (a.keywords||'').split(',').filter(Boolean);
   artImages=[];
-  document.getElementById('art-modal-title').textContent='ç·¨è¼¯æç« ';
+  document.getElementById('art-modal-title').textContent='Ã§Â·Â¨Ã¨Â¼Â¯Ã¦ÂÂÃ§Â«Â ';
   document.getElementById('f-title').value=a.title||'';
   document.getElementById('f-excerpt').value=a.excerpt||'';
   document.getElementById('f-video').value=a.video_url||'';
@@ -666,7 +666,7 @@ function openEditArt(id){
   document.getElementById('f-published-at').value=a.published_at?fmtDateLocal(new Date(a.published_at)):fmtDateLocal(new Date());
   if(a.city) document.getElementById('f-city').value=a.city;
   if(a.category) document.getElementById('f-cat').value=a.category;
-  setEmoji(a.emoji||'âï¸');
+  setEmoji(a.emoji||'Ã¢ÂÂÃ¯Â¸Â');
   setEditorContent(a.content||'');
   previewVideo(a.video_url||'');
   renderArtKws();
@@ -682,11 +682,11 @@ async function saveArt(){
   const title = document.getElementById('f-title').value.trim();
   const city = document.getElementById('f-city').value;
   const cat = document.getElementById('f-cat').value;
-  if(!title){ toast('è«å¡«å¯«æç« æ¨é¡','err'); return; }
-  if(!city){ toast('è«é¸æåå¸','err'); return; }
+  if(!title){ toast('Ã¨Â«ÂÃ¥Â¡Â«Ã¥Â¯Â«Ã¦ÂÂÃ§Â«Â Ã¦Â¨ÂÃ©Â¡Â','err'); return; }
+  if(!city){ toast('Ã¨Â«ÂÃ©ÂÂ¸Ã¦ÂÂÃ¥ÂÂÃ¥Â¸Â','err'); return; }
 
   const btn = document.getElementById('save-btn');
-  btn.disabled=true; btn.textContent='å²å­ä¸­...';
+  btn.disabled=true; btn.textContent='Ã¥ÂÂ²Ã¥Â­ÂÃ¤Â¸Â­...';
 
   const slug = editingId
     ? allArts.find(a=>a.id===editingId)?.slug
@@ -715,14 +715,14 @@ async function saveArt(){
     ({error} = await sb.from('articles').insert(data));
   }
 
-  btn.disabled=false; btn.textContent='å²å­æç« ';
-  if(error){ toast('å²å­å¤±æï¼'+error.message,'err'); return; }
-  toast(editingId?'æç« å·²æ´æ° â':'æç« å·²å»ºç« â');
+  btn.disabled=false; btn.textContent='Ã¥ÂÂ²Ã¥Â­ÂÃ¦ÂÂÃ§Â«Â ';
+  if(error){ toast('Ã¥ÂÂ²Ã¥Â­ÂÃ¥Â¤Â±Ã¦ÂÂÃ¯Â¼Â'+error.message,'err'); return; }
+  toast(editingId?'Ã¦ÂÂÃ§Â«Â Ã¥Â·Â²Ã¦ÂÂ´Ã¦ÂÂ° Ã¢ÂÂ':'Ã¦ÂÂÃ§Â«Â Ã¥Â·Â²Ã¥Â»ÂºÃ§Â«Â Ã¢ÂÂ');
   closeArtModal();
   await loadArticles();
 }
 
-// ââ EDITOR âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ EDITOR Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function execCmd(cmd,val=null){
   document.getElementById('f-content-editor').focus();
   document.execCommand(cmd,false,val);
@@ -732,7 +732,7 @@ function execFmt(tag){
   document.execCommand('formatBlock',false,tag);
 }
 function insertLink(){
-  const url = prompt('è¼¸å¥é£çµç¶²åï¼');
+  const url = prompt('Ã¨Â¼Â¸Ã¥ÂÂ¥Ã©ÂÂ£Ã§ÂµÂÃ§Â¶Â²Ã¥ÂÂÃ¯Â¼Â');
   if(url){ execCmd('createLink',url); }
 }
 function getEditorContent(){ return document.getElementById('f-content-editor').innerHTML; }
@@ -746,7 +746,7 @@ function triggerImgInsert(){
   document.getElementById('img-file-input').click();
 }
 
-// ââ IMAGE UPLOAD âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ IMAGE UPLOAD Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function setupDragDrop(){
   const area = document.getElementById('img-upload-area');
   area.addEventListener('dragover',e=>{e.preventDefault();area.style.borderColor='var(--accent)'});
@@ -761,17 +761,17 @@ function setupDragDrop(){
 async function handleImgUpload(e){
   const files = Array.from(e.target.files||[]);
   if(!files.length) return;
-  toast('ä¸å³ä¸­...');
+  toast('Ã¤Â¸ÂÃ¥ÂÂ³Ã¤Â¸Â­...');
   for(const file of files){
     const ext = file.name.split('.').pop();
     const fname = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
     const {data,error} = await sb.storage.from('article-images').upload(fname,file,{contentType:file.type});
-    if(error){ toast('ä¸å³å¤±æï¼'+error.message,'err'); continue; }
+    if(error){ toast('Ã¤Â¸ÂÃ¥ÂÂ³Ã¥Â¤Â±Ã¦ÂÂÃ¯Â¼Â'+error.message,'err'); continue; }
     const {data:{publicUrl}} = sb.storage.from('article-images').getPublicUrl(fname);
     artImages.push({url:publicUrl,name:fname});
   }
   renderImgPreviews();
-  toast('åçä¸å³å®æ â');
+  toast('Ã¥ÂÂÃ§ÂÂÃ¤Â¸ÂÃ¥ÂÂ³Ã¥Â®ÂÃ¦ÂÂ Ã¢ÂÂ');
   e.target.value='';
 }
 
@@ -780,8 +780,8 @@ function renderImgPreviews(){
   grid.innerHTML = artImages.map((img,i)=>`
     <div class="img-preview-item">
       <img src="${img.url}" alt="">
-      <button class="img-del" onclick="removeImg(${i})">â</button>
-      <button class="img-insert" onclick="insertImgToEditor('${img.url}')">æå¥</button>
+      <button class="img-del" onclick="removeImg(${i})">Ã¢ÂÂ</button>
+      <button class="img-insert" onclick="insertImgToEditor('${img.url}')">Ã¦ÂÂÃ¥ÂÂ¥</button>
     </div>`).join('');
 }
 
@@ -789,10 +789,10 @@ function removeImg(i){ artImages.splice(i,1); renderImgPreviews(); }
 function insertImgToEditor(url){
   document.getElementById('f-content-editor').focus();
   document.execCommand('insertHTML',false,`<img src="${url}" style="max-width:100%;margin:0.5rem 0" alt="">`);
-  toast('åçå·²æå¥æç« ');
+  toast('Ã¥ÂÂÃ§ÂÂÃ¥Â·Â²Ã¦ÂÂÃ¥ÂÂ¥Ã¦ÂÂÃ§Â«Â ');
 }
 
-// ââ KEYWORDS âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ KEYWORDS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function addArtKw(e){
   if(e.key!=='Enter') return;
   e.preventDefault();
@@ -805,11 +805,11 @@ function addArtKw(e){
 function removeArtKw(k){ artKws=artKws.filter(x=>x!==k); renderArtKws(); }
 function renderArtKws(){
   document.getElementById('art-kw-tags').innerHTML=artKws.map(k=>
-    `<span class="kw-tag">${k}<button onclick="removeArtKw('${k}')">Ã</button></span>`
+    `<span class="kw-tag">${k}<button onclick="removeArtKw('${k}')">ÃÂ</button></span>`
   ).join('');
 }
 
-// ââ EMOJI ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ EMOJI Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function renderEmojiGrid(){
   document.getElementById('emoji-grid').innerHTML=EMOJIS.map(e=>
     `<button class="emoji-btn${e===selectedEmoji?' selected':''}" onclick="setEmoji('${e}')">${e}</button>`
@@ -825,7 +825,7 @@ function setEmoji(e){
   });
 }
 
-// ââ VIDEO ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ VIDEO Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function previewVideo(url){
   const box = document.getElementById('video-preview-box');
   const embed = document.getElementById('video-embed-preview');
@@ -844,22 +844,22 @@ function getEmbedUrl(url){
   return null;
 }
 
-// ââ SETTINGS âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ SETTINGS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function renderCitySelect(){
   const sel=document.getElementById('f-city');
-  sel.innerHTML='<option value="">â é¸æåå¸ â</option>'+cities.map(c=>`<option value="${c}">${c}</option>`).join('');
+  sel.innerHTML='<option value="">Ã¢ÂÂ Ã©ÂÂ¸Ã¦ÂÂÃ¥ÂÂÃ¥Â¸Â Ã¢ÂÂ</option>'+cities.map(c=>`<option value="${c}">${c}</option>`).join('');
 }
 function renderCatSelect(){
   const sel=document.getElementById('f-cat');
-  sel.innerHTML='<option value="">â é¸æåé¡ â</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('');
+  sel.innerHTML='<option value="">Ã¢ÂÂ Ã©ÂÂ¸Ã¦ÂÂÃ¥ÂÂÃ©Â¡Â Ã¢ÂÂ</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('');
 }
 function renderCitiesList(){
   document.getElementById('cities-list').innerHTML=cities.map(c=>
-    `<span class="kw-tag">${c}<button onclick="removeCity('${c}')">Ã</button></span>`).join('');
+    `<span class="kw-tag">${c}<button onclick="removeCity('${c}')">ÃÂ</button></span>`).join('');
 }
 function renderCatsList(){
   document.getElementById('cats-list').innerHTML=cats.map(c=>
-    `<span class="kw-tag">${c}<button onclick="removeCat('${c}')">Ã</button></span>`).join('');
+    `<span class="kw-tag">${c}<button onclick="removeCat('${c}')">ÃÂ</button></span>`).join('');
 }
 function addCity(){
   const v=document.getElementById('new-city').value.trim();
@@ -881,7 +881,7 @@ function saveSettings(){
 }
 
 
-// ââ IMAGE COMPRESS ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ IMAGE COMPRESS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function compressImg(base64, mimeType, maxSize=800){
   return new Promise(resolve=>{
     const img=new Image();
@@ -908,14 +908,14 @@ function openKeyModal(){
 function closeKeyModal(){ document.getElementById('key-modal').classList.remove('open'); }
 function saveKeyModal(){
   const v = document.getElementById('key-modal-input').value.trim();
-  if(!v){ document.getElementById('key-modal-err').textContent='è«è¼¸å¥ API Key'; return; }
+  if(!v){ document.getElementById('key-modal-err').textContent='Ã¨Â«ÂÃ¨Â¼Â¸Ã¥ÂÂ¥ API Key'; return; }
   localStorage.setItem('mantu-api-key', v);
   closeKeyModal();
   document.getElementById('key-status-dot').style.color='var(--green)';
-  toast('API Key å·²æ´æ°ï¼');
+  toast('API Key Ã¥Â·Â²Ã¦ÂÂ´Ã¦ÂÂ°Ã¯Â¼Â');
 }
 
-// ââ AI UNBOXING ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ AI UNBOXING Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 let aiCoverBase64=null;
 function handleAiCover(e){
   const file=e.target.files?.[0];if(!file)return;
@@ -924,7 +924,7 @@ function handleAiCover(e){
     aiCoverBase64={data:ev.target.result.split(',')[1],type:file.type};
     const prev=document.getElementById('ai-cover-preview');
     prev.src=ev.target.result;prev.style.display='block';
-    document.getElementById('ai-cover-area').innerHTML='â å°é¢å·²é¸æ';
+    document.getElementById('ai-cover-area').innerHTML='Ã¢ÂÂ Ã¥Â°ÂÃ©ÂÂ¢Ã¥Â·Â²Ã©ÂÂ¸Ã¦ÂÂ';
   };
   reader.readAsDataURL(file);e.target.value='';
 }
@@ -951,21 +951,21 @@ function handleAiImgs(e){
 
 async function genAiArticle(){
   const name=document.getElementById('ai-name').value.trim();
-  if(!name){toast('è«å¡«å¯«åºå®¶åç¨±','err');return;}
+  if(!name){toast('Ã¨Â«ÂÃ¥Â¡Â«Ã¥Â¯Â«Ã¥ÂºÂÃ¥Â®Â¶Ã¥ÂÂÃ§Â¨Â±','err');return;}
   const apiKey=localStorage.getItem('mantu-api-key');
   if(!apiKey){document.getElementById('ai-key-warn').style.display='block';return;}
   document.getElementById('ai-key-warn').style.display='none';
   const btn=document.getElementById('ai-gen-btn');
   const status=document.getElementById('ai-status');
-  btn.disabled=true;btn.textContent='çæä¸­...';
-  status.textContent='AI æèä¸­...';status.style.color='var(--accent)';
+  btn.disabled=true;btn.textContent='Ã§ÂÂÃ¦ÂÂÃ¤Â¸Â­...';
+  status.textContent='AI Ã¦ÂÂÃ¨ÂÂÃ¤Â¸Â­...';status.style.color='var(--accent)';
   const city=document.getElementById('ai-city').value.trim();
   const type=document.getElementById('ai-type').value;
   const feature=document.getElementById('ai-feature').value.trim();
   const note=document.getElementById('ai-note').value.trim();
   const rating=document.getElementById('ai-rating').value;
   const price=document.getElementById('ai-price').value;
-  const prompt=`ä½ æ¯ä¸ä½æé·å¯«æééç®±æçé¨è½å®¢ï¼æé¢¨ç´°è©ææº«åº¦ãè«æ ¹æä»¥ä¸è³è¨ï¼å¯«ä¸ç¯å®æ´çç¹é«ä¸­æéç®±æç« ã\n\nåºå®¶è³æï¼\n- åç¨±ï¼${name}\n- åå¸ï¼${city||'æªæå®'}\n- é¡åï¼${type}\n- ç¹è²ï¼${feature||'æªæä¾'}\n- è©åï¼${rating}/5\n- å¹ä½ï¼${price}\n- åäººå¿å¾ï¼${note||'æªæä¾'}\n\nè«ä¾ç§ä»¥ä¸æ ¼å¼åè¦ï¼\n\nTITLE: [å¸å¼äººçæç« æ¨é¡ï¼ææå¢]\n\nBODY:\n[æç« å§å®¹800-1200å­ï¼åæ®µè½ï¼ç´æå­æ®µè½ç¨ç©ºè¡åé]`;
+  const prompt=`Ã¤Â½Â Ã¦ÂÂ¯Ã¤Â¸ÂÃ¤Â½ÂÃ¦ÂÂÃ©ÂÂ·Ã¥Â¯Â«Ã¦ÂÂÃ©ÂÂÃ©ÂÂÃ§Â®Â±Ã¦ÂÂÃ§ÂÂÃ©ÂÂ¨Ã¨ÂÂ½Ã¥Â®Â¢Ã¯Â¼ÂÃ¦ÂÂÃ©Â¢Â¨Ã§Â´Â°Ã¨ÂÂ©Ã¦ÂÂÃ¦ÂºÂ«Ã¥ÂºÂ¦Ã£ÂÂÃ¨Â«ÂÃ¦Â Â¹Ã¦ÂÂÃ¤Â»Â¥Ã¤Â¸ÂÃ¨Â³ÂÃ¨Â¨ÂÃ¯Â¼ÂÃ¥Â¯Â«Ã¤Â¸ÂÃ§Â¯ÂÃ¥Â®ÂÃ¦ÂÂ´Ã§ÂÂÃ§Â¹ÂÃ©Â«ÂÃ¤Â¸Â­Ã¦ÂÂÃ©ÂÂÃ§Â®Â±Ã¦ÂÂÃ§Â«Â Ã£ÂÂ\n\nÃ¥ÂºÂÃ¥Â®Â¶Ã¨Â³ÂÃ¦ÂÂÃ¯Â¼Â\n- Ã¥ÂÂÃ§Â¨Â±Ã¯Â¼Â${name}\n- Ã¥ÂÂÃ¥Â¸ÂÃ¯Â¼Â${city||'Ã¦ÂÂªÃ¦ÂÂÃ¥Â®Â'}\n- Ã©Â¡ÂÃ¥ÂÂÃ¯Â¼Â${type}\n- Ã§ÂÂ¹Ã¨ÂÂ²Ã¯Â¼Â${feature||'Ã¦ÂÂªÃ¦ÂÂÃ¤Â¾Â'}\n- Ã¨Â©ÂÃ¥ÂÂÃ¯Â¼Â${rating}/5\n- Ã¥ÂÂ¹Ã¤Â½ÂÃ¯Â¼Â${price}\n- Ã¥ÂÂÃ¤ÂºÂºÃ¥Â¿ÂÃ¥Â¾ÂÃ¯Â¼Â${note||'Ã¦ÂÂªÃ¦ÂÂÃ¤Â¾Â'}\n\nÃ¨Â«ÂÃ¤Â¾ÂÃ§ÂÂ§Ã¤Â»Â¥Ã¤Â¸ÂÃ¦Â Â¼Ã¥Â¼ÂÃ¥ÂÂÃ¨Â¦ÂÃ¯Â¼Â\n\nTITLE: [Ã¥ÂÂ¸Ã¥Â¼ÂÃ¤ÂºÂºÃ§ÂÂÃ¦ÂÂÃ§Â«Â Ã¦Â¨ÂÃ©Â¡ÂÃ¯Â¼ÂÃ¦ÂÂÃ¦ÂÂÃ¥Â¢Â]\n\nBODY:\n[Ã¦ÂÂÃ§Â«Â Ã¥ÂÂ§Ã¥Â®Â¹800-1200Ã¥Â­ÂÃ¯Â¼ÂÃ¥ÂÂÃ¦Â®ÂµÃ¨ÂÂ½Ã¯Â¼ÂÃ§Â´ÂÃ¦ÂÂÃ¥Â­ÂÃ¦Â®ÂµÃ¨ÂÂ½Ã§ÂÂ¨Ã§Â©ÂºÃ¨Â¡ÂÃ¥ÂÂÃ©ÂÂ]`;
   try{
     const userContent=[];
     if(aiImgBase64.length>0){aiImgBase64.forEach(img=>{userContent.push({type:'image',source:{type:'base64',media_type:img.type,data:img.data}});});}
@@ -978,33 +978,33 @@ async function genAiArticle(){
     const text=data.content?.[0]?.text||'';
     const titleMatch=text.match(/TITLE:\s*(.+)/);
     const bodyMatch=text.match(/BODY:\s*([\s\S]+)/);
-    aiGenTitle=titleMatch?titleMatch[1].trim():`${name}ï½${city}${type}éç®±`;
+    aiGenTitle=titleMatch?titleMatch[1].trim():`${name}Ã¯Â½Â${city}${type}Ã©ÂÂÃ§Â®Â±`;
     const body=bodyMatch?bodyMatch[1].trim():text;
     aiGenSlug=aiGenTitle.replace(/[^\u4e00-\u9fff\w\s-]/g,'').trim().replace(/[\s_]+/g,'-').substring(0,60).toLowerCase()+'-'+Date.now();
     document.getElementById('ai-title-preview').textContent=aiGenTitle;
     document.getElementById('ai-body-preview').textContent=body;
-    status.textContent='â çæå®æï¼å¯ç´æ¥ç·¨è¼¯å¾ç¼å¸';status.style.color='var(--green)';
+    status.textContent='Ã¢ÂÂ Ã§ÂÂÃ¦ÂÂÃ¥Â®ÂÃ¦ÂÂÃ¯Â¼ÂÃ¥ÂÂ¯Ã§ÂÂ´Ã¦ÂÂ¥Ã§Â·Â¨Ã¨Â¼Â¯Ã¥Â¾ÂÃ§ÂÂ¼Ã¥Â¸Â';status.style.color='var(--green)';
     document.getElementById('ai-publish-panel').style.display='block';
     renderCitySelect2();renderCatSelect2();
     if(city){const sel=document.getElementById('ai-pub-city');Array.from(sel.options).forEach(o=>{if(o.value===city)o.selected=true;});}
     const catSel=document.getElementById('ai-pub-cat');Array.from(catSel.options).forEach(o=>{if(o.value===type)o.selected=true;});
     document.getElementById('ai-pub-time').value=fmtDateLocal(new Date());
-  }catch(e){status.textContent='çæå¤±æï¼'+e.message.slice(0,50);status.style.color='var(--red)';}
-  btn.disabled=false;btn.textContent='â¨ AI çæéç®±æ';
+  }catch(e){status.textContent='Ã§ÂÂÃ¦ÂÂÃ¥Â¤Â±Ã¦ÂÂÃ¯Â¼Â'+e.message.slice(0,50);status.style.color='var(--red)';}
+  btn.disabled=false;btn.textContent='Ã¢ÂÂ¨ AI Ã§ÂÂÃ¦ÂÂÃ©ÂÂÃ§Â®Â±Ã¦ÂÂ';
 }
 
-function renderCitySelect2(){const sel=document.getElementById('ai-pub-city');sel.innerHTML='<option value="">â é¸æåå¸ â</option>'+cities.map(c=>`<option value="${c}">${c}</option>`).join('');}
-function renderCatSelect2(){const sel=document.getElementById('ai-pub-cat');sel.innerHTML='<option value="">â é¸æåé¡ â</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('');}
+function renderCitySelect2(){const sel=document.getElementById('ai-pub-city');sel.innerHTML='<option value="">Ã¢ÂÂ Ã©ÂÂ¸Ã¦ÂÂÃ¥ÂÂÃ¥Â¸Â Ã¢ÂÂ</option>'+cities.map(c=>`<option value="${c}">${c}</option>`).join('');}
+function renderCatSelect2(){const sel=document.getElementById('ai-pub-cat');sel.innerHTML='<option value="">Ã¢ÂÂ Ã©ÂÂ¸Ã¦ÂÂÃ¥ÂÂÃ©Â¡Â Ã¢ÂÂ</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('');}
 
 async function publishAiArticle(){
   const title=aiGenTitle;
   const body=document.getElementById('ai-body-preview').textContent.trim();
-  if(!title||!body){toast('è«åçææç« ','err');return;}
+  if(!title||!body){toast('Ã¨Â«ÂÃ¥ÂÂÃ§ÂÂÃ¦ÂÂÃ¦ÂÂÃ§Â«Â ','err');return;}
   const city=document.getElementById('ai-pub-city').value;
   const cat=document.getElementById('ai-pub-cat').value;
   const btn=document.getElementById('ai-pub-btn');
   const msg=document.getElementById('ai-pub-msg');
-  btn.disabled=true;btn.textContent='ç¼å¸ä¸­...';
+  btn.disabled=true;btn.textContent='Ã§ÂÂ¼Ã¥Â¸ÂÃ¤Â¸Â­...';
   let coverImage=null;
   if(aiImgBase64.length>0){
     try{
@@ -1019,7 +1019,7 @@ async function publishAiArticle(){
   const pubAt=document.getElementById('ai-pub-time').value;
   const name=document.getElementById('ai-name').value.trim();
   const type=document.getElementById('ai-type').value;
-  const articleData={title,slug:aiGenSlug,city:city||document.getElementById('ai-city').value||null,category:cat||type||null,excerpt:document.getElementById('ai-pub-excerpt').value.trim()||body.slice(0,120)+'...',content:htmlContent,keywords:[name,type,city].filter(Boolean),emoji:{åå¡å»³:'â',é¤å»³:'ð½ï¸',çé»:'ð°',æ¯é»:'ðï¸',ä½å®¿:'ð ',éå§:'ð¸'}[type]||'âï¸',cover_image:window._coverImageUrl||coverImage,status,published_at:pubAt?new Date(pubAt).toISOString():new Date().toISOString(),
+  const articleData={title,slug:aiGenSlug,city:city||document.getElementById('ai-city').value||null,category:cat||type||null,excerpt:document.getElementById('ai-pub-excerpt').value.trim()||body.slice(0,120)+'...',content:htmlContent,keywords:[name,type,city].filter(Boolean),emoji:{Ã¥ÂÂÃ¥ÂÂ¡Ã¥Â»Â³:'Ã¢ÂÂ',Ã©Â¤ÂÃ¥Â»Â³:'Ã°ÂÂÂ½Ã¯Â¸Â',Ã§ÂÂÃ©Â»Â:'Ã°ÂÂÂ°',Ã¦ÂÂ¯Ã©Â»Â:'Ã°ÂÂÂÃ¯Â¸Â',Ã¤Â½ÂÃ¥Â®Â¿:'Ã°ÂÂÂ ',Ã©ÂÂÃ¥ÂÂ§:'Ã°ÂÂÂ¸'}[type]||'Ã¢ÂÂÃ¯Â¸Â',keyword_id:document.getElementById('ai-pub-kw').value||null,cover_image:window._coverImageUrl||coverImage,status,published_at:pubAt?new Date(pubAt).toISOString():new Date().toISOString(),
     shop_info:{
       name:document.getElementById('ai-name')?.value?.trim()||null,
       address:document.getElementById('ai-shop-address')?.value?.trim()||null,
@@ -1034,15 +1034,15 @@ async function publishAiArticle(){
       line:document.getElementById('ai-shop-line')?.value?.trim()||null
     }};
   const{error}=await sb.from('articles').insert(articleData);
-  btn.disabled=false;btn.textContent='ð ç¼å¸å°åå°';
-  if(error){msg.style.color='var(--red)';msg.textContent='ç¼å¸å¤±æï¼'+error.message;return;}
+  btn.disabled=false;btn.textContent='Ã°ÂÂÂ Ã§ÂÂ¼Ã¥Â¸ÂÃ¥ÂÂ°Ã¥ÂÂÃ¥ÂÂ°';
+  if(error){msg.style.color='var(--red)';msg.textContent='Ã§ÂÂ¼Ã¥Â¸ÂÃ¥Â¤Â±Ã¦ÂÂÃ¯Â¼Â'+error.message;return;}
   msg.style.color='var(--green)';
-  msg.innerHTML=status==='published'?`â æç« å·²ç¼å¸ï¼<a href="https://journeylift.com.tw/articles/${aiGenSlug}" target="_blank" style="color:var(--accent2);margin-left:0.5rem">æ¥çæç«  â</a>`:'ð å·²å­çºèç¨¿';
-  toast(status==='published'?'æç« å·²ç¼å¸ ð':'å·²å­çºèç¨¿');
+  msg.innerHTML=status==='published'?`Ã¢ÂÂ Ã¦ÂÂÃ§Â«Â Ã¥Â·Â²Ã§ÂÂ¼Ã¥Â¸ÂÃ¯Â¼Â<a href="https://journeylift.com.tw/articles/${aiGenSlug}" target="_blank" style="color:var(--accent2);margin-left:0.5rem">Ã¦ÂÂ¥Ã§ÂÂÃ¦ÂÂÃ§Â«Â  Ã¢ÂÂ</a>`:'Ã°ÂÂÂ Ã¥Â·Â²Ã¥Â­ÂÃ§ÂÂºÃ¨ÂÂÃ§Â¨Â¿';
+  toast(status==='published'?'Ã¦ÂÂÃ§Â«Â Ã¥Â·Â²Ã§ÂÂ¼Ã¥Â¸Â Ã°ÂÂÂ':'Ã¥Â·Â²Ã¥Â­ÂÃ§ÂÂºÃ¨ÂÂÃ§Â¨Â¿');
   await loadArticles();
 }
 
-// ââ PAGES ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ PAGES Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function showPage(name){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
@@ -1053,7 +1053,7 @@ function showPage(name){
   if(mb)mb.classList.add('active');
 }
 
-// ââ HELPERS ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ HELPERS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function fmtDateLocal(d){
   const pad=n=>String(n).padStart(2,'0');
   return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
@@ -1082,19 +1082,19 @@ window.addEventListener('load',()=>{
 <div class="mobile-nav" id="mobile-nav" style="display:none">
   <div class="mobile-nav-inner">
     <button class="mnav-btn active" id="mnav-articles" onclick="showPage('articles')">
-      <span class="mnav-icon">ð</span>æç« 
+      <span class="mnav-icon">Ã°ÂÂÂ</span>Ã¦ÂÂÃ§Â«Â 
     </button>
     <button class="mnav-btn" id="mnav-ai" onclick="showPage('ai')">
-      <span class="mnav-icon">â¨</span>AI
+      <span class="mnav-icon">Ã¢ÂÂ¨</span>AI
     </button>
     <button class="mnav-btn" onclick="openAddArt()">
-      <span class="mnav-add">ï¼</span>
+      <span class="mnav-add">Ã¯Â¼Â</span>
     </button>
     <button class="mnav-btn" id="mnav-settings" onclick="showPage('settings')">
-      <span class="mnav-icon">âï¸</span>è¨­å®
+      <span class="mnav-icon">Ã¢ÂÂÃ¯Â¸Â</span>Ã¨Â¨Â­Ã¥Â®Â
     </button>
     <button class="mnav-btn" onclick="window.open('https://journeylift.com.tw','_blank')">
-      <span class="mnav-icon">ð</span>åå°
+      <span class="mnav-icon">Ã°ÂÂÂ</span>Ã¥ÂÂÃ¥ÂÂ°
     </button>
   </div>
 </div>
@@ -1103,20 +1103,20 @@ window.addEventListener('load',()=>{
 <div class="modal-bg" id="key-modal">
   <div class="modal" style="max-width:420px">
     <div class="modal-hd">
-      <div class="modal-title">â API Key è¨­å®</div>
-      <button class="modal-close" onclick="closeKeyModal()">â</button>
+      <div class="modal-title">Ã¢ÂÂ API Key Ã¨Â¨Â­Ã¥Â®Â</div>
+      <button class="modal-close" onclick="closeKeyModal()">Ã¢ÂÂ</button>
     </div>
     <div class="modal-body">
       <div class="fg">
         <label class="fl">Anthropic API Key</label>
-        <div style="font-size:0.7rem;color:var(--text3);margin-bottom:0.5rem">Key å­å¨æ¬æ©çè¦½å¨ï¼ä¸æä¸å³å°ä»»ä½ä¼ºæå¨ã</div>
+        <div style="font-size:0.7rem;color:var(--text3);margin-bottom:0.5rem">Key Ã¥Â­ÂÃ¥ÂÂ¨Ã¦ÂÂ¬Ã¦Â©ÂÃ§ÂÂÃ¨Â¦Â½Ã¥ÂÂ¨Ã¯Â¼ÂÃ¤Â¸ÂÃ¦ÂÂÃ¤Â¸ÂÃ¥ÂÂ³Ã¥ÂÂ°Ã¤Â»Â»Ã¤Â½ÂÃ¤Â¼ÂºÃ¦ÂÂÃ¥ÂÂ¨Ã£ÂÂ</div>
         <input class="fi" type="password" id="key-modal-input" placeholder="sk-ant-api03-..." onkeydown="if(event.key==='Enter')saveKeyModal()">
       </div>
       <div id="key-modal-err" style="font-size:0.7rem;color:var(--red);min-height:1.2em"></div>
     </div>
     <div class="modal-ft">
-      <button class="btn-secondary" onclick="closeKeyModal()">åæ¶</button>
-      <button class="btn-primary" onclick="saveKeyModal()">å²å­</button>
+      <button class="btn-secondary" onclick="closeKeyModal()">Ã¥ÂÂÃ¦Â¶Â</button>
+      <button class="btn-primary" onclick="saveKeyModal()">Ã¥ÂÂ²Ã¥Â­Â</button>
     </div>
   </div>
 </div>
@@ -1156,7 +1156,7 @@ function renderCats(cats){
   if(!cats||!cats.length){
     var p=document.createElement("p");
     p.style.color="var(--muted)";
-    p.textContent="å°ç¡åé¡ï¼è«æ°å¢";
+    p.textContent="Ã¥Â°ÂÃ§ÂÂ¡Ã¥ÂÂÃ©Â¡ÂÃ¯Â¼ÂÃ¨Â«ÂÃ¦ÂÂ°Ã¥Â¢Â";
     el.appendChild(p);return;
   }
   cats.forEach(function(cat){
@@ -1169,18 +1169,18 @@ function renderCats(cats){
     name.textContent=cat.name;
     var btns=document.createElement("div");
     var editBtn=document.createElement("button");
-    editBtn.textContent="ç·¨è¼¯";
+    editBtn.textContent="Ã§Â·Â¨Ã¨Â¼Â¯";
     editBtn.style.cssText="background:none;border:1px solid var(--border);color:var(--accent);padding:0.25rem 0.8rem;font-size:0.72rem;cursor:pointer;margin-right:0.4rem;font-family:inherit";
     editBtn.onclick=(function(id){return function(){editCat(id);};})(cat.id);
     var delBtn=document.createElement("button");
-    delBtn.textContent="åªé¤";
+    delBtn.textContent="Ã¥ÂÂªÃ©ÂÂ¤";
     delBtn.style.cssText="background:none;border:1px solid rgba(255,80,80,0.3);color:#f66;padding:0.25rem 0.8rem;font-size:0.72rem;cursor:pointer;font-family:inherit";
     delBtn.onclick=(function(id,nm){return function(){deleteCat(id,nm);};})(cat.id,cat.name);
     btns.appendChild(editBtn);btns.appendChild(delBtn);
     top.appendChild(name);top.appendChild(btns);
     var preview=document.createElement("div");
     preview.style.cssText="font-size:0.72rem;color:var(--muted);background:var(--surface);padding:0.6rem 1rem;border-radius:3px;line-height:1.6";
-    preview.textContent=(cat.ai_prompt||"").slice(0,100)||"æªè¨­å® AI æä»¤";
+    preview.textContent=(cat.ai_prompt||"").slice(0,100)||"Ã¦ÂÂªÃ¨Â¨Â­Ã¥Â®Â AI Ã¦ÂÂÃ¤Â»Â¤";
     card.appendChild(top);card.appendChild(preview);
     el.appendChild(card);
   });
@@ -1188,30 +1188,30 @@ function renderCats(cats){
 window.renderCats=renderCats;
 
 window.openAddCat=function(){
-  var name=prompt("åé¡åç¨±ï¼");
+  var name=prompt("Ã¥ÂÂÃ©Â¡ÂÃ¥ÂÂÃ§Â¨Â±Ã¯Â¼Â");
   if(!name||!name.trim())return;
-  var ai=prompt("AI å¯«ä½æå¼ï¼","")||"";
+  var ai=prompt("AI Ã¥Â¯Â«Ã¤Â½ÂÃ¦ÂÂÃ¥Â¼ÂÃ¯Â¼Â","")||"";
   saveCat(null,name.trim(),ai);
 };
 window.editCat=function(id){
   var cats=window._catsCache||[];
   var cat=null;for(var i=0;i<cats.length;i++)if(cats[i].id===id){cat=cats[i];break;}
   if(!cat)return;
-  var name=prompt("åé¡åç¨±ï¼",cat.name);
+  var name=prompt("Ã¥ÂÂÃ©Â¡ÂÃ¥ÂÂÃ§Â¨Â±Ã¯Â¼Â",cat.name);
   if(!name||!name.trim())return;
-  var ai=prompt("AI å¯«ä½æå¼ï¼",cat.ai_prompt||"")||"";
+  var ai=prompt("AI Ã¥Â¯Â«Ã¤Â½ÂÃ¦ÂÂÃ¥Â¼ÂÃ¯Â¼Â",cat.ai_prompt||"")||"";
   saveCat(id,name.trim(),ai);
 };
 window.saveCat=function(id,name,ai_prompt){
   var url=id?SB+"/rest/v1/categories?id=eq."+id:SB+"/rest/v1/categories";
   var method=id?"PATCH":"POST";
   fetch(url,{method:method,headers:sbH(),body:JSON.stringify({name:name,ai_prompt:ai_prompt})})
-  .then(function(r){if(r.ok)loadCats();else alert("å²å­å¤±æ");});
+  .then(function(r){if(r.ok)loadCats();else alert("Ã¥ÂÂ²Ã¥Â­ÂÃ¥Â¤Â±Ã¦ÂÂ");});
 };
 window.deleteCat=function(id,name){
-  if(!confirm("ç¢ºå®è¦åªé¤ã"+name+"ãï¼"))return;
+  if(!confirm("Ã§Â¢ÂºÃ¥Â®ÂÃ¨Â¦ÂÃ¥ÂÂªÃ©ÂÂ¤Ã£ÂÂ"+name+"Ã£ÂÂÃ¯Â¼Â"))return;
   fetch(SB+"/rest/v1/categories?id=eq."+id,{method:"DELETE",headers:{apikey:SK,Authorization:"Bearer "+SK}})
-  .then(function(r){if(r.ok)loadCats();else alert("åªé¤å¤±æ");});
+  .then(function(r){if(r.ok)loadCats();else alert("Ã¥ÂÂªÃ©ÂÂ¤Ã¥Â¤Â±Ã¦ÂÂ");});
 };
 
 // patch showPage after load
@@ -1234,7 +1234,7 @@ function toggleCodeView(){
   var btn=document.getElementById('btn-code-view');
   if(!editor)return;
   if(editor._codeMode){
-    // å¾ç´æå­ï¼HTMLç¢¼ï¼è½å contenteditable
+    // Ã¥Â¾ÂÃ§Â´ÂÃ¦ÂÂÃ¥Â­ÂÃ¯Â¼ÂHTMLÃ§Â¢Â¼Ã¯Â¼ÂÃ¨Â½ÂÃ¥ÂÂ contenteditable
     editor.innerHTML=editor.value||editor.textContent;
     editor.contentEditable='true';
     editor.style.fontFamily='';
@@ -1243,7 +1243,7 @@ function toggleCodeView(){
     delete editor._codeMode;
     if(btn){btn.style.background='none';btn.style.color='var(--accent)';}
   } else {
-    // è½æç´æå­é¡¯ç¤º HTML åå§ç¢¼
+    // Ã¨Â½ÂÃ¦ÂÂÃ§Â´ÂÃ¦ÂÂÃ¥Â­ÂÃ©Â¡Â¯Ã§Â¤Âº HTML Ã¥ÂÂÃ¥Â§ÂÃ§Â¢Â¼
     var html=editor.innerHTML;
     editor.contentEditable='false';
     editor.textContent=html;
@@ -1255,7 +1255,7 @@ function toggleCodeView(){
   }
 }
 
-// é é¢è¼å¥å¾èªåå¾ Supabase åæ­¥åé¡é¸å®
+// Ã©Â ÂÃ©ÂÂ¢Ã¨Â¼ÂÃ¥ÂÂ¥Ã¥Â¾ÂÃ¨ÂÂªÃ¥ÂÂÃ¥Â¾Â Supabase Ã¥ÂÂÃ¦Â­Â¥Ã¥ÂÂÃ©Â¡ÂÃ©ÂÂ¸Ã¥ÂÂ®
 window.addEventListener('load',function(){
   setTimeout(function(){
     if(typeof loadCats==='function')loadCats();
@@ -1378,10 +1378,10 @@ window.deleteKeyword=function(id,nm){
   .then(function(r){if(r.ok)loadKeywords();});
 };
 
-// åå§å
+// Ã¥ÂÂÃ¥Â§ÂÃ¥ÂÂ
 window.addEventListener("load",function(){
   setTimeout(function(){
-    // æéäºä»¶
+    // Ã¦ÂÂÃ©ÂÂÃ¤ÂºÂÃ¤Â»Â¶
     var r=document.getElementById("btn-add-region");
     if(r)r.addEventListener("click",window.openAddRegion);
     var k=document.getElementById("btn-add-kw");
