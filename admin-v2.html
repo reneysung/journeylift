@@ -967,7 +967,7 @@ async function genAiArticle(){
     const userContent=[];
     if(aiImgBase64.length>0){aiImgBase64.forEach(img=>{userContent.push({type:'image',source:{type:'base64',media_type:img.type,data:img.data}});});}
     userContent.push({type:'text',text:prompt});
-    const res=await fetch('/.netlify/functions/claude-proxy',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:2000,messages:[{role:'user',content:userContent}]})});
+    const res=await fetch('/.netlify/functions/claude-proxy',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:4000,messages:[{role:'user',content:userContent}]})});
     if(!res.ok){const e=await res.text();throw new Error(e.slice(0,100));}const data=await res.json();
     const text=data.content?.[0]?.text||'';
     const titleMatch=text.match(/TITLE:\s*(.+)/);
