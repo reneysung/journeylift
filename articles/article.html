@@ -80,6 +80,34 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem
 .share-btn{.share-btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.4rem 1rem;border:1px solid var(--border2,rgba(200,169,110,0.2));background:none;font-size:0.72rem;color:var(--text2,#b8b0a0);cursor:pointer;font-family:inherit;letter-spacing:0.05em;transition:all 0.2s;text-decoration:none}
 .share-btn:hover{border-color:var(--accent,#c9a96e);color:var(--accent,#c9a96e)}
 .share-btn.copied{border-color:#4caf50;color:#4caf50}
+
+footer {
+  text-align: center;
+  padding: 1.5rem 1rem 1rem;
+  border-top: 1px solid var(--border, #e8e0d4);
+  margin-top: 2rem;
+}
+.footer-copyright {
+  font-size: 0.82rem;
+  color: var(--muted, #8a7f72);
+  margin-bottom: 0.6rem;
+}
+.footer-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  color: #06C755;
+  text-decoration: none;
+  border: 1.5px solid #06C755;
+  padding: 0.35rem 1rem;
+  border-radius: 20px;
+  transition: background 0.2s, color 0.2s;
+}
+.footer-contact:hover {
+  background: #06C755;
+  color: #fff;
+}
 </style>
 </head>
 <body>
@@ -96,7 +124,10 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem
   <div class="loading">載入中...</div>
 </div>
 
-<footer>© 2026 漫途旅遊誌 · 用文字記錄每一段旅程</footer>
+<footer>
+  <div class="footer-copyright">© 2026 漫途旅遊誌 · 用文字記錄每一段旅程</div>
+  <a class="footer-contact" href="https://lin.ee/ZBhZQL3" target="_blank" rel="noopener">💬 聯絡我們</a>
+</footer>
 
 <script>
 const sb = supabase.createClient(
@@ -126,7 +157,7 @@ function renderShopCard(info){
     const social=[];
     if(info.fb) social.push(`<a href="${info.fb}" target="_blank">📘 Facebook</a>`);
     if(info.ig) social.push(`<a href="${info.ig}" target="_blank">📷 Instagram</a>`);
-    if(info.line) social.push(`<a href="${info.line}" target="_blank">💬 LINE</a>`);
+    if(info.line) social.push(`<a href="${info.line}" target="_blank">💬 LINE 分享</a>`);
     if(info.maps) social.push(`<a href="${info.maps}" target="_blank">🗺️ Google Maps</a>`);
     return `<div class="shop-card">
       <div class="shop-card-title">店家資訊</div>
@@ -216,7 +247,7 @@ ${(()=>{
       <a class="share-btn" href="${lineUrl}" target="_blank" rel="noopener">💬 LINE</a>
       <a class="share-btn" href="${twitterUrl}" target="_blank" rel="noopener">𝕏 Twitter</a>
       <button class="share-btn" onclick="copyLink(this)">🔗 複製連結</button>
-      <a class="share-btn" href="https://lin.ee/ZBhZQL3" target="_blank" rel="noopener">💬 聯絡我們</a>
+      
     </div>
   </div>`;
 })()}
