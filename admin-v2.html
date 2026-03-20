@@ -276,7 +276,7 @@ tr:hover td{background:var(--surface2)}
               <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem">店家資料</div>
               <div class="fg"><label class="fl">店家名稱 <span class="req">*</span></label><input class="fi" id="ai-name" placeholder="例：珈琲時光"></div>
               <div class="fg-row">
-                <div class="fg"><label class="fl">城市</label><input class="fi" id="ai-city" placeholder="例：台南"></div>
+                <div class="fg"><label class="fl">城市</label><select class="fsel" id="ai-city" onchange="syncAiCity(this.value)"><option value="">— 選擇城市 —</option></select></div>
                 <div class="fg"><label class="fl">類型</label><select class="fsel" id="ai-type"><option value="咖啡廳">☕ 咖啡廳</option><option value="餐廳">🍽️ 餐廳</option><option value="甜點">🍰 甜點</option><option value="景點">🏔️ 景點</option><option value="住宿">🏠 住宿</option><option value="酒吧">🍸 酒吧</option></select></div>
               </div>
               <div class="fg"><label class="fl">招牌品項 / 特色亮點</label><input class="fi" id="ai-feature" placeholder="例：手沖咖啡、老屋改造"></div>
@@ -1303,6 +1303,9 @@ function loadRegions(){
   .then(function(r){return r.json();})
   .then(function(data){
     window._regions=Array.isArray(data)?data:[];
+    // 同步城市選單
+    var cityOpts='<option value="">— 選擇城市 —</option>'+window._regions.map(function(reg){return '<option value="'+reg.name+'">'+reg.name+'</option>';}).join('');
+    ['ai-city','ai-pub-city','f-city'].forEach(function(id){var sel=document.getElementById(id);if(sel){var cur=sel.value;sel.innerHTML=cityOpts;if(cur)sel.value=cur;}});
     renderRegions(window._regions);
     var sel=document.getElementById("kw-filter");
     if(!sel)return;
@@ -1315,6 +1318,21 @@ function loadRegions(){
   }).catch(function(e){console.error("loadRegions",e);});
 }
 window.loadRegions=loadRegions;
+window.syncAiCity=function(cityName){
+  // 自動同步到發布設定城市
+  var pubCity=document.getElementById('ai-pub-city');
+  if(pubCity)pubCity.value=cityName;
+  // 更新主力關鍵字選單（依城市篩選）
+  if(typeof window._syncKwSelects==='function')window._syncKwSelects(cityName);
+  else{
+    var kws=window._keywords||[];
+    var regs=window._regions||[];
+    var reg=regs.find(function(r){return r.name===cityName;});
+    if(reg)kws=kws.filter(function(k){return k.region_id===reg.id;});
+    var opts='<option value="">不選擇</option>'+kws.map(function(k){return '<option value="'+k.id+'">'+k.name+'</option>';}).join('');
+    ['ai-pub-kw','f-kw'].forEach(function(id){var s=document.getElementById(id);if(s)s.innerHTML=opts;});
+  }
+};
 
 function renderRegions(regs){
   var el=document.getElementById("region-list");
