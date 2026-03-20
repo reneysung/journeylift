@@ -339,7 +339,16 @@ tr:hover td{background:var(--surface2)}
               <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem">發布設定</div>
               <div class="fg-row">
                 <div class="fg"><label class="fl">城市</label><select class="fsel" id="ai-pub-city"></select></div>
-                <div class="fg"><label class="fl">分類</label><select class="fsel" id="ai-pub-cat"></select></div>
+                <div class="fg"><label class="fl">分類</label><select class="fsel" id="ai-pub-cat"></select>
+</div>
+        <div class="form-row">
+          <div class="fgroup">
+            <label class="flbl">主力關鍵字</label>
+            <select class="fsel" id="ai-pub-kw">
+              <option value="">不選擇</option>
+            </select>
+          </div>
+        </div></div>
               </div>
               <div class="fg"><label class="fl">摘要</label><textarea class="fta" id="ai-pub-excerpt" style="min-height:56px" placeholder="簡短描述..."></textarea></div>
               <div class="fg-row">
@@ -407,6 +416,12 @@ tr:hover td{background:var(--surface2)}
         <div class="fg">
           <label class="fl">分類 <span class="req">*</span></label>
           <select class="fsel" id="f-cat"></select>
+        <div class="fgroup">
+          <label class="flbl">主力關鍵字</label>
+          <select class="fsel" id="f-kw">
+            <option value="">不選擇</option>
+          </select>
+        </div>
         </div>
       </div>
 
@@ -1126,10 +1141,21 @@ function loadCats(){
     window._catsCache=Array.isArray(data)?data:[];
     // 直接同步所有分類選單
     var _catOpts=(window._catsCache||[]).map(function(x){return '<option value="'+x.name+'">'+x.name+'</option>';}).join('');
-    ['ai-type','ai-pub-cat','art-category','f-cat'].forEach(function(id){
+    ['ai-type','ai-pub-cat','f-cat'].forEach(function(id){
       var sel=document.getElementById(id);
       if(sel){var cur=sel.value;sel.innerHTML=_catOpts;sel.value=cur;}
     });
+    // 同步主力關鍵字下拉（依城市篩選）
+    window._syncKwSelects=function(cityName){
+      var kws=window._keywords||[];
+      if(cityName){
+        var reg=(window._regions||[]).find(function(r){return r.name===cityName;});
+        if(reg)kws=kws.filter(function(k){return k.region_id===reg.id;});
+      }
+      var opts='<option value="">不選擇</option>'+kws.map(function(k){return '<option value="'+k.id+'">'+k.name+'</option>';}).join('');
+      ['ai-pub-kw','f-kw'].forEach(function(id){var s=document.getElementById(id);if(s)s.innerHTML=opts;});
+    };
+    window._syncKwSelects('');
     renderCats(window._catsCache);
   }).catch(function(e){console.error("loadCats",e);});
 }
