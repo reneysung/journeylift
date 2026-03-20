@@ -39,3 +39,164 @@
 
 [functions.claude-proxy]
   timeout = 26
+
+# City & keyword pages
+[[redirects]]
+  from = "/nantou"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/nantou/*"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/taichung"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/taichung/*"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/taipei"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/taipei/*"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/tainan"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/tainan/*"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/taitung"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/taitung/*"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/chiayi"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/chiayi/*"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/keelung"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/keelung/*"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/yilan"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/yilan/*"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/pingtung"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/pingtung/*"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/newtaipei"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/newtaipei/*"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/hsinchu"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/hsinchu/*"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/taoyuan"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/taoyuan/*"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/penghu"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/penghu/*"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/hualien"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/hualien/*"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/kinmen"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/kinmen/*"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/kaohsiung"
+  to = "/city.html"
+  status = 200
+
+[[redirects]]
+  from = "/kaohsiung/*"
+  to = "/city.html"
+  status = 200
