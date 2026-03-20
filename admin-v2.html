@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>後台管理 — 漫途</title>
+<title>å¾å°ç®¡ç â æ¼«é</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -154,7 +154,7 @@ tr:hover td{background:var(--surface2)}
 #toast.err{border-left:3px solid var(--red)}
 
 
-/* ── MOBILE RESPONSIVE ───────────────────────────────────────────────────── */
+/* ââ MOBILE RESPONSIVE âââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 .mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);z-index:200;padding:0.3rem 0 env(safe-area-inset-bottom,0.3rem)}
 .mobile-nav-inner{display:flex;justify-content:space-around;align-items:center}
 .mnav-btn{display:flex;flex-direction:column;align-items:center;gap:0.15rem;padding:0.35rem 0.8rem;background:none;border:none;color:var(--text3);cursor:pointer;font-family:var(--font-sans);font-size:0.56rem;letter-spacing:0.04em;transition:color 0.15s}
@@ -202,35 +202,35 @@ tr:hover td{background:var(--surface2)}
 <!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
-    <div class="login-logo">漫途</div>
-    <div class="login-sub">後台管理系統</div>
+    <div class="login-logo">æ¼«é</div>
+    <div class="login-sub">å¾å°ç®¡çç³»çµ±</div>
     <div class="login-err" id="login-err"></div>
-    <input type="password" id="pw-input" placeholder="輸入密碼" onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="login-btn" onclick="doLogin()">進入後台</button>
+    <input type="password" id="pw-input" placeholder="è¼¸å¥å¯ç¢¼" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">é²å¥å¾å°</button>
   </div>
 </div>
 
 <!-- APP -->
 <div id="app">
   <header>
-    <div class="header-logo">漫途 · 後台</div>
+    <div class="header-logo">æ¼«é Â· å¾å°</div>
     <div class="header-right">
       <span id="hd-stats" style="font-size:0.72rem;color:var(--text3)"></span>
-      <button onclick="openKeyModal()" style="background:none;border:1px solid var(--border2);color:var(--text2);padding:0.35rem 0.8rem;font-size:0.72rem;letter-spacing:0.08em;cursor:pointer;font-family:var(--ff-sans)" id="key-status-dot">⚙ API Key</button>
-      <a href="https://journeylift.com.tw/articles" target="_blank" style="font-size:0.72rem;color:var(--text2);border:1px solid var(--border2);padding:0.35rem 0.8rem;letter-spacing:0.08em;text-decoration:none">查看前台 ↗</a>
-      <button class="btn-logout" onclick="doLogout()">登出</button>
+      <button onclick="openKeyModal()" style="background:none;border:1px solid var(--border2);color:var(--text2);padding:0.35rem 0.8rem;font-size:0.72rem;letter-spacing:0.08em;cursor:pointer;font-family:var(--ff-sans)" id="key-status-dot">â API Key</button>
+      <a href="https://journeylift.com.tw/articles" target="_blank" style="font-size:0.72rem;color:var(--text2);border:1px solid var(--border2);padding:0.35rem 0.8rem;letter-spacing:0.08em;text-decoration:none">æ¥çåå° â</a>
+      <button class="btn-logout" onclick="doLogout()">ç»åº</button>
     </div>
   </header>
   <div class="main-layout">
     <nav>
       <div class="nav-item active" onclick="showPage('articles')" id="nav-articles">
-        <span class="nav-icon">📝</span>文章管理
+        <span class="nav-icon">ð</span>æç« ç®¡ç
       </div>
       <div class="nav-item" onclick="showPage('ai')" id="nav-ai">
-        <span class="nav-icon">✨</span>AI 開箱文
+        <span class="nav-icon">â¨</span>AI éç®±æ
       </div>
       <div class="nav-item" onclick="showPage('settings')" id="nav-settings">
-        <span class="nav-icon">⚙️</span>分類設定
+        <span class="nav-icon">âï¸</span>åé¡è¨­å®
       </div>
     </nav>
     <main>
@@ -238,84 +238,84 @@ tr:hover td{background:var(--surface2)}
       <!-- ARTICLES PAGE -->
       <div class="page active" id="page-articles">
         <div class="page-hd">
-          <div class="page-title">文章管理</div>
-          <button class="btn-primary" onclick="openAddArt()">＋ 新增文章</button>
+          <div class="page-title">æç« ç®¡ç</div>
+          <button class="btn-primary" onclick="openAddArt()">ï¼ æ°å¢æç« </button>
         </div>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-lbl">總文章數</div><div class="stat-val" id="st-total">0</div><div class="stat-sub">篇文章</div></div>
-          <div class="stat-card"><div class="stat-lbl">已發布</div><div class="stat-val" id="st-pub">0</div><div class="stat-sub">篇文章</div></div>
-          <div class="stat-card"><div class="stat-lbl">草稿</div><div class="stat-val" id="st-draft">0</div><div class="stat-sub">篇文章</div></div>
-          <div class="stat-card"><div class="stat-lbl">城市數</div><div class="stat-val" id="st-cities">0</div><div class="stat-sub">個城市</div></div>
+          <div class="stat-card"><div class="stat-lbl">ç¸½æç« æ¸</div><div class="stat-val" id="st-total">0</div><div class="stat-sub">ç¯æç« </div></div>
+          <div class="stat-card"><div class="stat-lbl">å·²ç¼å¸</div><div class="stat-val" id="st-pub">0</div><div class="stat-sub">ç¯æç« </div></div>
+          <div class="stat-card"><div class="stat-lbl">èç¨¿</div><div class="stat-val" id="st-draft">0</div><div class="stat-sub">ç¯æç« </div></div>
+          <div class="stat-card"><div class="stat-lbl">åå¸æ¸</div><div class="stat-val" id="st-cities">0</div><div class="stat-sub">ååå¸</div></div>
         </div>
         <div class="tbl-wrap">
           <div class="tbl-toolbar">
-            <input class="tbl-search" id="art-search" placeholder="搜尋文章..." oninput="filterArts()">
-            <button class="filter-btn active" onclick="setFilter('all',this)">全部</button>
-            <button class="filter-btn" onclick="setFilter('published',this)">已發布</button>
-            <button class="filter-btn" onclick="setFilter('draft',this)">草稿</button>
+            <input class="tbl-search" id="art-search" placeholder="æå°æç« ..." oninput="filterArts()">
+            <button class="filter-btn active" onclick="setFilter('all',this)">å¨é¨</button>
+            <button class="filter-btn" onclick="setFilter('published',this)">å·²ç¼å¸</button>
+            <button class="filter-btn" onclick="setFilter('draft',this)">èç¨¿</button>
           </div>
           <table>
             <thead>
               <tr>
-                <th>封面</th><th>標題</th><th>城市</th><th>分類</th><th>狀態</th><th>發布時間</th><th>操作</th>
+                <th>å°é¢</th><th>æ¨é¡</th><th>åå¸</th><th>åé¡</th><th>çæ</th><th>ç¼å¸æé</th><th>æä½</th>
               </tr>
             </thead>
             <tbody id="art-tbody"></tbody>
           </table>
-          <div class="empty-state" id="art-empty" style="display:none">尚無文章，點擊「新增文章」開始創作</div>
+          <div class="empty-state" id="art-empty" style="display:none">å°ç¡æç« ï¼é»æãæ°å¢æç« ãéå§åµä½</div>
         </div>
       </div>
 
 
       <!-- AI PAGE -->
       <div class="page" id="page-ai">
-        <div class="page-hd"><div class="page-title">✨ AI 開箱文</div></div>
+        <div class="page-hd"><div class="page-title">â¨ AI éç®±æ</div></div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start">
           <div>
             <div style="background:var(--surface);border:1px solid var(--border);padding:1.5rem;margin-bottom:1rem">
-              <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem">店家資料</div>
-              <div class="fg"><label class="fl">店家名稱 <span class="req">*</span></label><input class="fi" id="ai-name" placeholder="例：珈琲時光"></div>
+              <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem">åºå®¶è³æ</div>
+              <div class="fg"><label class="fl">åºå®¶åç¨± <span class="req">*</span></label><input class="fi" id="ai-name" placeholder="ä¾ï¼çç²æå"></div>
               <div class="fg-row">
-                <div class="fg"><label class="fl">城市</label><select class="fsel" id="ai-city" onchange="syncAiCity(this.value)"><option value="">— 選擇城市 —</option></select></div>
-                <div class="fg"><label class="fl">類型</label><select class="fsel" id="ai-type"><option value="咖啡廳">☕ 咖啡廳</option><option value="餐廳">🍽️ 餐廳</option><option value="甜點">🍰 甜點</option><option value="景點">🏔️ 景點</option><option value="住宿">🏠 住宿</option><option value="酒吧">🍸 酒吧</option></select></div>
+                <div class="fg"><label class="fl">åå¸</label><select class="fsel" id="ai-city" onchange="syncAiCity(this.value)"><option value="">â é¸æåå¸ â</option></select></div>
+                <div class="fg"><label class="fl">é¡å</label><select class="fsel" id="ai-type"><option value="åå¡å»³">â åå¡å»³</option><option value="é¤å»³">ð½ï¸ é¤å»³</option><option value="çé»">ð° çé»</option><option value="æ¯é»">ðï¸ æ¯é»</option><option value="ä½å®¿">ð  ä½å®¿</option><option value="éå§">ð¸ éå§</option></select></div>
               </div>
-              <div class="fg"><label class="fl">招牌品項 / 特色亮點</label><input class="fi" id="ai-feature" placeholder="例：手沖咖啡、老屋改造"></div>
-              <div class="fg"><label class="fl">個人體驗心得</label><textarea class="fta" id="ai-note" placeholder="你的感受..." style="min-height:80px"></textarea></div>
+              <div class="fg"><label class="fl">æçåé  / ç¹è²äº®é»</label><input class="fi" id="ai-feature" placeholder="ä¾ï¼ææ²åå¡ãèå±æ¹é "></div>
+              <div class="fg"><label class="fl">åäººé«é©å¿å¾</label><textarea class="fta" id="ai-note" placeholder="ä½ çæå..." style="min-height:80px"></textarea></div>
               <div class="fg-row">
-                <div class="fg"><label class="fl">評分</label><select class="fsel" id="ai-rating"><option value="5">⭐⭐⭐⭐⭐ 極力推薦</option><option value="4">⭐⭐⭐⭐ 推薦</option><option value="3">⭐⭐⭐ 還不錯</option></select></div>
-                <div class="fg"><label class="fl">價位</label><select class="fsel" id="ai-price"><option value="$">$ 平價</option><option value="$">$ 中價</option><option value="$$">$$ 高價</option></select></div>
+                <div class="fg"><label class="fl">è©å</label><select class="fsel" id="ai-rating"><option value="5">â­â­â­â­â­ æ¥µåæ¨è¦</option><option value="4">â­â­â­â­ æ¨è¦</option><option value="3">â­â­â­ éä¸é¯</option></select></div>
+                <div class="fg"><label class="fl">å¹ä½</label><select class="fsel" id="ai-price"><option value="$">$ å¹³å¹</option><option value="$">$ ä¸­å¹</option><option value="$$">$$ é«å¹</option></select></div>
               </div>
               <div class="fg">
-                <label class="fl">上傳圖片（AI 分析用）</label>
+                <label class="fl">ä¸å³åçï¼AI åæç¨ï¼</label>
                 <div class="fg">
-                <label class="fl">封面圖（單張，顯示於文章列表）</label>
+                <label class="fl">å°é¢åï¼å®å¼µï¼é¡¯ç¤ºæ¼æç« åè¡¨ï¼</label>
                 <div id="ai-cover-area" style="border:2px dashed var(--border2);padding:0.8rem;text-align:center;cursor:pointer;background:var(--surface2);font-size:0.78rem;color:var(--text3)" onclick="document.getElementById('ai-cover-file').click()">
-                  🖼️ 點擊上傳封面圖
+                  ð¼ï¸ é»æä¸å³å°é¢å
                 </div>
                 <img id="ai-cover-preview" style="display:none;width:100%;max-height:120px;object-fit:cover;margin-top:0.5rem;border-radius:4px">
                 <input type="file" id="ai-cover-file" accept="image/*" style="display:none" onchange="handleAiCover(event)">
               </div>
-              <div id="ai-img-area" style="border:2px dashed var(--border2);padding:1rem;text-align:center;cursor:pointer;background:var(--surface2);font-size:0.78rem;color:var(--text3)" onclick="document.getElementById('ai-img-file').click()">📷 點擊上傳圖片（可多張）</div>
+              <div id="ai-img-area" style="border:2px dashed var(--border2);padding:1rem;text-align:center;cursor:pointer;background:var(--surface2);font-size:0.78rem;color:var(--text3)" onclick="document.getElementById('ai-img-file').click()">ð· é»æä¸å³åçï¼å¯å¤å¼µï¼</div>
                 <input type="file" id="ai-img-file" accept="image/*" multiple style="display:none" onchange="handleAiImgs(event)">
                 <div id="ai-img-previews" style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem"></div>
               </div>
               
               <div style="border-top:1px solid var(--border2);margin:1rem 0;padding-top:1rem">
-                <div style="font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:0.8rem">店家資訊（選填，發布後顯示在文末）</div>
+                <div style="font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:0.8rem">åºå®¶è³è¨ï¼é¸å¡«ï¼ç¼å¸å¾é¡¯ç¤ºå¨ææ«ï¼</div>
                 <div class="fg-row">
-                  <div class="fg"><label class="fl">地址</label><input class="fi" id="ai-shop-address" placeholder="例：南投縣仁愛鄉..."></div>
-                  <div class="fg"><label class="fl">電話</label><input class="fi" id="ai-shop-phone" placeholder="049-123456"></div>
+                  <div class="fg"><label class="fl">å°å</label><input class="fi" id="ai-shop-address" placeholder="ä¾ï¼åæç¸£ä»æé..."></div>
+                  <div class="fg"><label class="fl">é»è©±</label><input class="fi" id="ai-shop-phone" placeholder="049-123456"></div>
                 </div>
                 <div class="fg-row">
-                  <div class="fg"><label class="fl">營業時間</label><input class="fi" id="ai-shop-hours" placeholder="例：11:00-21:00（週二公休）"></div>
-                  <div class="fg"><label class="fl">消費備註</label><input class="fi" id="ai-shop-price-note" placeholder="例：平均消費 $200-400"></div>
+                  <div class="fg"><label class="fl">çæ¥­æé</label><input class="fi" id="ai-shop-hours" placeholder="ä¾ï¼11:00-21:00ï¼é±äºå¬ä¼ï¼"></div>
+                  <div class="fg"><label class="fl">æ¶è²»åè¨»</label><input class="fi" id="ai-shop-price-note" placeholder="ä¾ï¼å¹³åæ¶è²» $200-400"></div>
                 </div>
                 <div class="fg-row">
-                  <div class="fg"><label class="fl">停車資訊</label><input class="fi" id="ai-shop-parking" placeholder="例：門口有停車場"></div>
-                  <div class="fg"><label class="fl">官網</label><input class="fi" id="ai-shop-website" placeholder="https://..."></div>
+                  <div class="fg"><label class="fl">åè»è³è¨</label><input class="fi" id="ai-shop-parking" placeholder="ä¾ï¼éå£æåè»å ´"></div>
+                  <div class="fg"><label class="fl">å®ç¶²</label><input class="fi" id="ai-shop-website" placeholder="https://..."></div>
                 </div>
                 <div class="fg-row">
-                  <div class="fg"><label class="fl">Google Maps 連結</label><input class="fi" id="ai-shop-maps" placeholder="https://maps.google.com/..."></div>
+                  <div class="fg"><label class="fl">Google Maps é£çµ</label><input class="fi" id="ai-shop-maps" placeholder="https://maps.google.com/..."></div>
                   <div class="fg"><label class="fl">Facebook</label><input class="fi" id="ai-shop-fb" placeholder="https://fb.com/..."></div>
                 </div>
                 <div class="fg-row">
@@ -323,31 +323,31 @@ tr:hover td{background:var(--surface2)}
                   <div class="fg"><label class="fl">LINE</label><input class="fi" id="ai-shop-line" placeholder="https://line.me/..."></div>
                 </div>
               </div>
-<div id="ai-key-warn" style="display:none;font-size:0.72rem;color:var(--red);margin-bottom:0.8rem">⚠️ 請先設定 Anthropic API Key</div>
-              <button class="btn-primary" id="ai-gen-btn" onclick="genAiArticle()" style="width:100%">✨ AI 生成開箱文</button>
+<div id="ai-key-warn" style="display:none;font-size:0.72rem;color:var(--red);margin-bottom:0.8rem">â ï¸ è«åè¨­å® Anthropic API Key</div>
+              <button class="btn-primary" id="ai-gen-btn" onclick="genAiArticle()" style="width:100%">â¨ AI çæéç®±æ</button>
             </div>
           </div>
           <div>
             <div style="background:var(--surface);border:1px solid var(--border);padding:1.5rem;margin-bottom:1rem">
               <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;justify-content:space-between">
-                <span>生成結果</span><span id="ai-status" style="color:var(--text3);font-size:0.68rem;letter-spacing:0">等待生成...</span>
+                <span>çæçµæ</span><span id="ai-status" style="color:var(--text3);font-size:0.68rem;letter-spacing:0">ç­å¾çæ...</span>
               </div>
               <div id="ai-title-preview" style="font-family:var(--font-serif);font-size:1.2rem;color:var(--accent2);margin-bottom:0.8rem;min-height:1.5em"></div>
               <div id="ai-body-preview" contenteditable="true" style="min-height:200px;font-size:0.82rem;line-height:1.9;color:var(--text2);white-space:pre-wrap;outline:none;border:1px dashed var(--border2);padding:0.5rem"></div>
             </div>
             <div style="background:var(--surface);border:1px solid var(--border);padding:1.5rem" id="ai-publish-panel">
-              <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem">發布設定</div>
+              <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem">ç¼å¸è¨­å®</div>
               <div class="fg-row">
-                <div class="fg"><label class="fl">城市</label><select class="fsel" id="ai-pub-city"></select></div>
-                <div class="fg"><label class="fl">分類</label><select class="fsel" id="ai-pub-cat"></select>
-        <div class="form-row"><div class="fgroup"><label class="flbl">主力關鍵字</label><select class="fsel" id="ai-pub-kw"><option value="">不選擇</option></select></div></div></div>
+                <div class="fg"><label class="fl">åå¸</label><select class="fsel" id="ai-pub-city"></select></div>
+                <div class="fg"><label class="fl">åé¡</label><select class="fsel" id="ai-pub-cat"></select>
+        <div class="form-row"><div class="fgroup"><label class="flbl">ä¸»åééµå­</label><select class="fsel" id="ai-pub-kw"><option value="">ä¸é¸æ</option></select></div></div></div>
               </div>
-              <div class="fg"><label class="fl">摘要</label><textarea class="fta" id="ai-pub-excerpt" style="min-height:56px" placeholder="簡短描述..."></textarea></div>
+              <div class="fg"><label class="fl">æè¦</label><textarea class="fta" id="ai-pub-excerpt" style="min-height:56px" placeholder="ç°¡ç­æè¿°..."></textarea></div>
               <div class="fg-row">
-                <div class="fg"><label class="fl">狀態</label><select class="fsel" id="ai-pub-status"><option value="published">✅ 立即發布</option><option value="draft">📝 存為草稿</option></select></div>
-                <div class="fg"><label class="fl">發布時間</label><input class="fi" type="datetime-local" id="ai-pub-time"></div>
+                <div class="fg"><label class="fl">çæ</label><select class="fsel" id="ai-pub-status"><option value="published">â ç«å³ç¼å¸</option><option value="draft">ð å­çºèç¨¿</option></select></div>
+                <div class="fg"><label class="fl">ç¼å¸æé</label><input class="fi" type="datetime-local" id="ai-pub-time"></div>
               </div>
-              <button class="btn-primary" id="ai-pub-btn" onclick="publishAiArticle()" style="width:100%;margin-top:0.5rem">🚀 發布到前台</button>
+              <button class="btn-primary" id="ai-pub-btn" onclick="publishAiArticle()" style="width:100%;margin-top:0.5rem">ð ç¼å¸å°åå°</button>
               <div id="ai-pub-msg" style="font-size:0.78rem;margin-top:0.8rem;min-height:1em"></div>
             </div>
           </div>
@@ -356,28 +356,28 @@ tr:hover td{background:var(--surface2)}
 
       <!-- SETTINGS PAGE -->
       <div class="page" id="page-settings">
-<div class="page-hd"><div class="page-title">分類設定</div></div>
+<div class="page-hd"><div class="page-title">åé¡è¨­å®</div></div>
 <div id="sect-regions" style="margin-bottom:2rem">
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem">
-<h3 style="color:var(--accent);font-size:0.8rem;letter-spacing:0.1em">地區管理</h3>
-<button id="btn-add-region" class="btn-primary" style="font-size:0.75rem;padding:0.35rem 0.9rem">＋ 新增地區</button>
+<h3 style="color:var(--accent);font-size:0.8rem;letter-spacing:0.1em">å°åç®¡ç</h3>
+<button id="btn-add-region" class="btn-primary" style="font-size:0.75rem;padding:0.35rem 0.9rem">ï¼ æ°å¢å°å</button>
 </div>
 <div id="region-list" style="display:flex;flex-wrap:wrap;gap:0.5rem"></div>
 </div>
 <div id="sect-keywords" style="margin-bottom:2rem">
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem">
-<h3 style="color:var(--accent);font-size:0.8rem;letter-spacing:0.1em">主力關鍵字</h3>
-<button id="btn-add-kw" class="btn-primary" style="font-size:0.75rem;padding:0.35rem 0.9rem">＋ 新增關鍵字</button>
+<h3 style="color:var(--accent);font-size:0.8rem;letter-spacing:0.1em">ä¸»åééµå­</h3>
+<button id="btn-add-kw" class="btn-primary" style="font-size:0.75rem;padding:0.35rem 0.9rem">ï¼ æ°å¢ééµå­</button>
 </div>
 <select id="kw-filter" style="background:var(--surface2);border:1px solid var(--border);color:var(--paper);padding:0.4rem 0.8rem;font-size:0.8rem;font-family:inherit;margin-bottom:0.8rem">
-<option value="">全部地區</option>
+<option value="">å¨é¨å°å</option>
 </select>
 <div id="keyword-list"></div>
 </div>
 <div>
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem">
-<h3 style="color:var(--accent);font-size:0.8rem;letter-spacing:0.1em">文章分類</h3>
-<button id="btn-add-cat" class="btn-primary" style="font-size:0.75rem;padding:0.35rem 0.9rem">＋ 新增分類</button>
+<h3 style="color:var(--accent);font-size:0.8rem;letter-spacing:0.1em">æç« åé¡</h3>
+<button id="btn-add-cat" class="btn-primary" style="font-size:0.75rem;padding:0.35rem 0.9rem">ï¼ æ°å¢åé¡</button>
 </div>
 <div id="cat-list"></div>
 </div>
@@ -390,108 +390,108 @@ tr:hover td{background:var(--surface2)}
 <div class="modal-bg" id="art-modal">
   <div class="modal">
     <div class="modal-hd">
-      <div class="modal-title" id="art-modal-title">新增文章</div>
-      <button class="modal-close" onclick="closeArtModal()">✕</button>
+      <div class="modal-title" id="art-modal-title">æ°å¢æç« </div>
+      <button class="modal-close" onclick="closeArtModal()">â</button>
     </div>
     <div class="modal-body">
 
       <div class="fg">
-        <label class="fl">文章標題 <span class="req">*</span></label>
-        <input class="fi" id="f-title" placeholder="輸入文章標題...">
+        <label class="fl">æç« æ¨é¡ <span class="req">*</span></label>
+        <input class="fi" id="f-title" placeholder="è¼¸å¥æç« æ¨é¡...">
       </div>
 
       <div class="fg-row">
         <div class="fg">
-          <label class="fl">城市 <span class="req">*</span></label>
+          <label class="fl">åå¸ <span class="req">*</span></label>
           <select class="fsel" id="f-city"></select>
         </div>
         <div class="fg">
-          <label class="fl">分類 <span class="req">*</span></label>
+          <label class="fl">åé¡ <span class="req">*</span></label>
           <select class="fsel" id="f-cat"></select>
-        <div class="fgroup"><label class="flbl">主力關鍵字</label><select class="fsel" id="f-kw"><option value="">不選擇</option></select></div>
+        <div class="fgroup"><label class="flbl">ä¸»åééµå­</label><select class="fsel" id="f-kw"><option value="">ä¸é¸æ</option></select></div>
         </div>
       </div>
 
       <div class="fg">
-        <label class="fl">摘要（SEO description）</label>
-        <textarea class="fta" id="f-excerpt" placeholder="簡短描述這篇文章..." style="min-height:60px"></textarea>
+        <label class="fl">æè¦ï¼SEO descriptionï¼</label>
+        <textarea class="fta" id="f-excerpt" placeholder="ç°¡ç­æè¿°éç¯æç« ..." style="min-height:60px"></textarea>
       </div>
 
       <div class="fg">
-        <label class="fl">SEO 關鍵字</label>
+        <label class="fl">SEO ééµå­</label>
         <div class="kw-tags" id="art-kw-tags"></div>
-        <input class="fi" id="f-kw-input" placeholder="輸入關鍵字後按 Enter..." onkeydown="addArtKw(event)">
+        <input class="fi" id="f-kw-input" placeholder="è¼¸å¥ééµå­å¾æ Enter..." onkeydown="addArtKw(event)">
       </div>
 
       <div class="fg">
-        <label class="fl">文章內容</label>
+        <label class="fl">æç« å§å®¹</label>
         <div class="editor-toolbar" id="editor-toolbar">
-          <button class="ed-btn" onclick="execCmd('bold')" title="粗體"><b>B</b></button>
-          <button class="ed-btn" onclick="execCmd('italic')" title="斜體"><i>I</i></button>
-          <button class="ed-btn" onclick="execCmd('underline')" title="底線"><u>U</u></button>
+          <button class="ed-btn" onclick="execCmd('bold')" title="ç²é«"><b>B</b></button>
+          <button class="ed-btn" onclick="execCmd('italic')" title="æé«"><i>I</i></button>
+          <button class="ed-btn" onclick="execCmd('underline')" title="åºç·"><u>U</u></button>
           <span style="color:var(--border2);padding:0 0.2rem">|</span>
           <button class="ed-btn" onclick="execFmt('h2')" title="H2">H2</button>
           <button class="ed-btn" onclick="execFmt('h3')" title="H3">H3</button>
-          <button class="ed-btn" onclick="execCmd('formatBlock','p')" title="段落">¶</button>
+          <button class="ed-btn" onclick="execCmd('formatBlock','p')" title="æ®µè½">Â¶</button>
           <span style="color:var(--border2);padding:0 0.2rem">|</span>
-          <button class="ed-btn" onclick="execCmd('insertUnorderedList')" title="清單">• 清單</button>
-          <button class="ed-btn" onclick="execCmd('insertOrderedList')" title="編號">1. 清單</button>
-          <button class="ed-btn" onclick="execFmt('blockquote')" title="引用">❝</button>
+          <button class="ed-btn" onclick="execCmd('insertUnorderedList')" title="æ¸å®">â¢ æ¸å®</button>
+          <button class="ed-btn" onclick="execCmd('insertOrderedList')" title="ç·¨è">1. æ¸å®</button>
+          <button class="ed-btn" onclick="execFmt('blockquote')" title="å¼ç¨">â</button>
           <span style="color:var(--border2);padding:0 0.2rem">|</span>
-          <button class="ed-btn" onclick="insertLink()" title="連結">🔗</button>
-          <button class="ed-btn" onclick="triggerImgInsert()" title="插入圖片">🖼</button>
-                  <button class="ed-btn" onclick="toggleCodeView()" id="btn-code-view" title="檢視程式碼" style="margin-left:auto;color:var(--accent)">&lt;/&gt;</button>
+          <button class="ed-btn" onclick="insertLink()" title="é£çµ">ð</button>
+          <button class="ed-btn" onclick="triggerImgInsert()" title="æå¥åç">ð¼</button>
+                  <button class="ed-btn" onclick="toggleCodeView()" id="btn-code-view" title="æª¢è¦ç¨å¼ç¢¼" style="margin-left:auto;color:var(--accent)">&lt;/&gt;</button>
         </div>
         <div id="f-content-editor" contenteditable="true" onpaste="handlePaste(event)"></div>
       </div>
 
       <div class="fg">
-        <label class="fl">圖片上傳</label>
+        <label class="fl">åçä¸å³</label>
         <div id="img-upload-area" onclick="document.getElementById('img-file-input').click()">
-          <div style="font-size:1.5rem">📷</div>
-          <p>點擊或拖曳上傳圖片（可多張）</p>
-          <p style="font-size:0.68rem;margin-top:0.2rem">上傳後可插入文章或設為封面</p>
+          <div style="font-size:1.5rem">ð·</div>
+          <p>é»ææææ³ä¸å³åçï¼å¯å¤å¼µï¼</p>
+          <p style="font-size:0.68rem;margin-top:0.2rem">ä¸å³å¾å¯æå¥æç« æè¨­çºå°é¢</p>
         </div>
         <input type="file" id="img-file-input" accept="image/*" multiple style="display:none" onchange="handleImgUpload(event)">
         <div class="img-preview-grid" id="img-preview-grid"></div>
       </div>
 
       <div class="fg">
-        <label class="fl">嵌入影片（YouTube / Vimeo URL）</label>
+        <label class="fl">åµå¥å½±çï¼YouTube / Vimeo URLï¼</label>
         <input class="fi" id="f-video" placeholder="https://www.youtube.com/watch?v=..." oninput="previewVideo(this.value)">
         <div id="video-preview-box" style="display:none" class="video-preview">
-          <div style="font-size:0.75rem;color:var(--text2);margin-bottom:0.4rem">預覽：</div>
+          <div style="font-size:0.75rem;color:var(--text2);margin-bottom:0.4rem">é è¦½ï¼</div>
           <div class="video-embed-preview" id="video-embed-preview"></div>
         </div>
       </div>
 
       <div class="fg-row3">
         <div class="fg">
-          <label class="fl">封面 Emoji</label>
+          <label class="fl">å°é¢ Emoji</label>
           <div class="emoji-grid" id="emoji-grid"></div>
           <div class="emoji-preview">
-            <span id="emoji-sel-display">✍️</span>
-            <input id="f-emoji-custom" placeholder="自訂 emoji..." oninput="setEmoji(this.value)" maxlength="2">
+            <span id="emoji-sel-display">âï¸</span>
+            <input id="f-emoji-custom" placeholder="èªè¨ emoji..." oninput="setEmoji(this.value)" maxlength="2">
           </div>
         </div>
         <div class="fg">
-          <label class="fl">發布狀態</label>
+          <label class="fl">ç¼å¸çæ</label>
           <select class="fsel" id="f-status">
-            <option value="draft">📝 草稿</option>
-            <option value="published">✅ 已發布</option>
+            <option value="draft">ð èç¨¿</option>
+            <option value="published">â å·²ç¼å¸</option>
           </select>
         </div>
         <div class="fg">
-          <label class="fl">發布時間</label>
+          <label class="fl">ç¼å¸æé</label>
           <input class="fi" type="datetime-local" id="f-published-at">
-          <div style="font-size:0.68rem;color:var(--text3);margin-top:0.3rem">可設定過去或未來的時間</div>
+          <div style="font-size:0.68rem;color:var(--text3);margin-top:0.3rem">å¯è¨­å®éå»ææªä¾çæé</div>
         </div>
       </div>
 
     </div>
     <div class="modal-ft">
-      <button class="btn-secondary" onclick="closeArtModal()">取消</button>
-      <button class="btn-primary" id="save-btn" onclick="saveArt()">儲存文章</button>
+      <button class="btn-secondary" onclick="closeArtModal()">åæ¶</button>
+      <button class="btn-primary" id="save-btn" onclick="saveArt()">å²å­æç« </button>
     </div>
   </div>
 </div>
@@ -499,24 +499,24 @@ tr:hover td{background:var(--surface2)}
 <div id="toast"></div>
 
 <script>
-// ── SUPABASE ───────────────────────────────────────────────────────────────
+// ââ SUPABASE âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const SUPA_URL = 'https://zsebcpfblecwumbaxeaz.supabase.co';
 const SUPA_KEY = 'sb_publishable_L2DOfeM0cAJqwlVCr1LwtA_jE9MBNDn';
 const sb = supabase.createClient(SUPA_URL, SUPA_KEY);
 
-// ── CONFIG ─────────────────────────────────────────────────────────────────
+// ââ CONFIG âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 const ADMIN_PW = '@2Irirdlai';
-const EMOJIS = ['✍️','🌸','🏔️','🌅','🏮','⛩️','🚢','🌊','🏝️','🎋','🌺','🖼️','✈️','🚂','🌄','🎑','🌙','📸','🍵','🍜','🏯','🎭'];
+const EMOJIS = ['âï¸','ð¸','ðï¸','ð','ð®','â©ï¸','ð¢','ð','ðï¸','ð','ðº','ð¼ï¸','âï¸','ð','ð','ð','ð','ð¸','ðµ','ð','ð¯','ð­'];
 
 let allArts = [];
 let artKws = [];
 let artImages = [];
 let editingId = null;
-let selectedEmoji = '✍️';
+let selectedEmoji = 'âï¸';
 let filterStatus = 'all';
 let cities = [], cats = [];
 
-// ── AUTH ───────────────────────────────────────────────────────────────────
+// ââ AUTH âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function doLogin(){
   const v = document.getElementById('pw-input').value;
   if(v === ADMIN_PW){
@@ -525,7 +525,7 @@ function doLogin(){
     document.getElementById('app').style.display='block';
     init();
   } else {
-    document.getElementById('login-err').textContent='密碼錯誤，請再試一次';
+    document.getElementById('login-err').textContent='å¯ç¢¼é¯èª¤ï¼è«åè©¦ä¸æ¬¡';
     document.getElementById('pw-input').value='';
   }
 }
@@ -538,7 +538,7 @@ if(sessionStorage.getItem('mantu_auth')==='1'){
   document.getElementById('app').style.display='block';
 }
 
-// ── INIT ───────────────────────────────────────────────────────────────────
+// ââ INIT âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 async function init(){
   loadSettings();
   renderEmojiGrid();
@@ -553,10 +553,10 @@ function loadSettings(){
   if(el&&k)el.value=k;
 }
 
-// ── ARTICLES ───────────────────────────────────────────────────────────────
+// ââ ARTICLES âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 async function loadArticles(){
   const {data,error} = await sb.from('articles').select('*').order('created_at',{ascending:false});
-  if(error){ toast('載入失敗：'+error.message,'err'); return; }
+  if(error){ toast('è¼å¥å¤±æï¼'+error.message,'err'); return; }
   allArts = data||[];
   renderArts();
   updateStats();
@@ -570,7 +570,7 @@ function updateStats(){
   document.getElementById('st-pub').textContent = pub.length;
   document.getElementById('st-draft').textContent = draft.length;
   document.getElementById('st-cities').textContent = citySet.size;
-  document.getElementById('hd-stats').textContent = `${pub.length} 篇已發布`;
+  document.getElementById('hd-stats').textContent = `${pub.length} ç¯å·²ç¼å¸`;
 }
 
 function renderArts(){
@@ -589,17 +589,17 @@ function renderArts(){
   document.getElementById('art-empty').style.display='none';
   tbody.innerHTML = list.map(a=>`
     <tr>
-      <td style="font-size:1.4rem;width:50px">${a.emoji||'✍️'}</td>
+      <td style="font-size:1.4rem;width:50px">${a.emoji||'âï¸'}</td>
       <td><div style="font-weight:500;color:var(--text)">${a.title}</div><div style="font-size:0.7rem;color:var(--text3);margin-top:2px">${a.excerpt||''}</div></td>
-      <td>${a.city||'—'}</td>
-      <td>${a.category||'—'}</td>
-      <td><span class="badge ${a.status==='published'?'badge-pub':'badge-draft'}">${a.status==='published'?'已發布':'草稿'}</span></td>
-      <td style="font-size:0.75rem;color:var(--text3)">${a.published_at?new Date(a.published_at).toLocaleString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}):'—'}</td>
+      <td>${a.city||'â'}</td>
+      <td>${a.category||'â'}</td>
+      <td><span class="badge ${a.status==='published'?'badge-pub':'badge-draft'}">${a.status==='published'?'å·²ç¼å¸':'èç¨¿'}</span></td>
+      <td style="font-size:0.75rem;color:var(--text3)">${a.published_at?new Date(a.published_at).toLocaleString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}):'â'}</td>
       <td>
         <div class="tbl-actions">
-          <button class="act-btn" onclick="openEditArt(${a.id})" title="編輯">✏️</button>
-          <button class="act-btn" onclick="togglePub(${a.id},'${a.status}')" title="${a.status==='published'?'下線':'發布'}">${a.status==='published'?'⬇️':'🚀'}</button>
-          <button class="act-btn del" onclick="delArt(${a.id})" title="刪除">🗑️</button>
+          <button class="act-btn" onclick="openEditArt(${a.id})" title="ç·¨è¼¯">âï¸</button>
+          <button class="act-btn" onclick="togglePub(${a.id},'${a.status}')" title="${a.status==='published'?'ä¸ç·':'ç¼å¸'}">${a.status==='published'?'â¬ï¸':'ð'}</button>
+          <button class="act-btn del" onclick="delArt(${a.id})" title="åªé¤">ðï¸</button>
         </div>
       </td>
     </tr>`).join('');
@@ -620,30 +620,31 @@ async function togglePub(id,cur){
     upd.published_at = new Date().toISOString();
   }
   const {error} = await sb.from('articles').update(upd).eq('id',id);
-  if(error){ toast('更新失敗','err'); return; }
-  toast(newStatus==='published'?'🚀 文章已發布！':'文章已下線');
+  if(error){ toast('æ´æ°å¤±æ','err'); return; }
+  toast(newStatus==='published'?'ð æç« å·²ç¼å¸ï¼':'æç« å·²ä¸ç·');
   await loadArticles();
 }
 
 async function delArt(id){
-  if(!confirm('確定要刪除這篇文章？')) return;
+  if(!confirm('ç¢ºå®è¦åªé¤éç¯æç« ï¼')) return;
   const {error} = await sb.from('articles').delete().eq('id',id);
-  if(error){ toast('刪除失敗','err'); return; }
-  toast('文章已刪除');
+  if(error){ toast('åªé¤å¤±æ','err'); return; }
+  toast('æç« å·²åªé¤');
   await loadArticles();
 }
 
-// ── ARTICLE MODAL ──────────────────────────────────────────────────────────
+// ââ ARTICLE MODAL ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function openAddArt(){
   editingId=null; artKws=[]; artImages=[];
-  document.getElementById('art-modal-title').textContent='新增文章';
+  document.getElementById('art-modal-title').textContent='æ°å¢æç« ';
   document.getElementById('f-title').value='';
   document.getElementById('f-excerpt').value='';
   document.getElementById('f-video').value='';
   document.getElementById('video-preview-box').style.display='none';
   document.getElementById('f-status').value='draft';
+  document.getElementById('f-kw').value='';
   document.getElementById('f-published-at').value=fmtDateLocal(new Date());
-  setEmoji('✍️');
+  setEmoji('âï¸');
   setEditorContent('');
   renderArtKws();
   renderImgPreviews();
@@ -656,15 +657,16 @@ function openEditArt(id){
   editingId=id;
   artKws = Array.isArray(a.keywords) ? [...a.keywords] : (a.keywords||'').split(',').filter(Boolean);
   artImages=[];
-  document.getElementById('art-modal-title').textContent='編輯文章';
+  document.getElementById('art-modal-title').textContent='ç·¨è¼¯æç« ';
   document.getElementById('f-title').value=a.title||'';
   document.getElementById('f-excerpt').value=a.excerpt||'';
   document.getElementById('f-video').value=a.video_url||'';
+  document.getElementById('f-kw').value=a.keyword_id||'';
   document.getElementById('f-status').value=a.status||'draft';
   document.getElementById('f-published-at').value=a.published_at?fmtDateLocal(new Date(a.published_at)):fmtDateLocal(new Date());
   if(a.city) document.getElementById('f-city').value=a.city;
   if(a.category) document.getElementById('f-cat').value=a.category;
-  setEmoji(a.emoji||'✍️');
+  setEmoji(a.emoji||'âï¸');
   setEditorContent(a.content||'');
   previewVideo(a.video_url||'');
   renderArtKws();
@@ -680,11 +682,11 @@ async function saveArt(){
   const title = document.getElementById('f-title').value.trim();
   const city = document.getElementById('f-city').value;
   const cat = document.getElementById('f-cat').value;
-  if(!title){ toast('請填寫文章標題','err'); return; }
-  if(!city){ toast('請選擇城市','err'); return; }
+  if(!title){ toast('è«å¡«å¯«æç« æ¨é¡','err'); return; }
+  if(!city){ toast('è«é¸æåå¸','err'); return; }
 
   const btn = document.getElementById('save-btn');
-  btn.disabled=true; btn.textContent='儲存中...';
+  btn.disabled=true; btn.textContent='å²å­ä¸­...';
 
   const slug = editingId
     ? allArts.find(a=>a.id===editingId)?.slug
@@ -700,6 +702,7 @@ async function saveArt(){
     content: getEditorContent(),
     keywords: artKws,
     emoji: selectedEmoji,
+    keyword_id: document.getElementById('f-kw').value||null,
     video_url: document.getElementById('f-video').value.trim()||null,
     status: document.getElementById('f-status').value,
     published_at: pubAt ? new Date(pubAt).toISOString() : null
@@ -712,14 +715,14 @@ async function saveArt(){
     ({error} = await sb.from('articles').insert(data));
   }
 
-  btn.disabled=false; btn.textContent='儲存文章';
-  if(error){ toast('儲存失敗：'+error.message,'err'); return; }
-  toast(editingId?'文章已更新 ✅':'文章已建立 ✅');
+  btn.disabled=false; btn.textContent='å²å­æç« ';
+  if(error){ toast('å²å­å¤±æï¼'+error.message,'err'); return; }
+  toast(editingId?'æç« å·²æ´æ° â':'æç« å·²å»ºç« â');
   closeArtModal();
   await loadArticles();
 }
 
-// ── EDITOR ─────────────────────────────────────────────────────────────────
+// ââ EDITOR âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function execCmd(cmd,val=null){
   document.getElementById('f-content-editor').focus();
   document.execCommand(cmd,false,val);
@@ -729,7 +732,7 @@ function execFmt(tag){
   document.execCommand('formatBlock',false,tag);
 }
 function insertLink(){
-  const url = prompt('輸入連結網址：');
+  const url = prompt('è¼¸å¥é£çµç¶²åï¼');
   if(url){ execCmd('createLink',url); }
 }
 function getEditorContent(){ return document.getElementById('f-content-editor').innerHTML; }
@@ -743,7 +746,7 @@ function triggerImgInsert(){
   document.getElementById('img-file-input').click();
 }
 
-// ── IMAGE UPLOAD ───────────────────────────────────────────────────────────
+// ââ IMAGE UPLOAD âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function setupDragDrop(){
   const area = document.getElementById('img-upload-area');
   area.addEventListener('dragover',e=>{e.preventDefault();area.style.borderColor='var(--accent)'});
@@ -758,17 +761,17 @@ function setupDragDrop(){
 async function handleImgUpload(e){
   const files = Array.from(e.target.files||[]);
   if(!files.length) return;
-  toast('上傳中...');
+  toast('ä¸å³ä¸­...');
   for(const file of files){
     const ext = file.name.split('.').pop();
     const fname = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
     const {data,error} = await sb.storage.from('article-images').upload(fname,file,{contentType:file.type});
-    if(error){ toast('上傳失敗：'+error.message,'err'); continue; }
+    if(error){ toast('ä¸å³å¤±æï¼'+error.message,'err'); continue; }
     const {data:{publicUrl}} = sb.storage.from('article-images').getPublicUrl(fname);
     artImages.push({url:publicUrl,name:fname});
   }
   renderImgPreviews();
-  toast('圖片上傳完成 ✅');
+  toast('åçä¸å³å®æ â');
   e.target.value='';
 }
 
@@ -777,8 +780,8 @@ function renderImgPreviews(){
   grid.innerHTML = artImages.map((img,i)=>`
     <div class="img-preview-item">
       <img src="${img.url}" alt="">
-      <button class="img-del" onclick="removeImg(${i})">✕</button>
-      <button class="img-insert" onclick="insertImgToEditor('${img.url}')">插入</button>
+      <button class="img-del" onclick="removeImg(${i})">â</button>
+      <button class="img-insert" onclick="insertImgToEditor('${img.url}')">æå¥</button>
     </div>`).join('');
 }
 
@@ -786,10 +789,10 @@ function removeImg(i){ artImages.splice(i,1); renderImgPreviews(); }
 function insertImgToEditor(url){
   document.getElementById('f-content-editor').focus();
   document.execCommand('insertHTML',false,`<img src="${url}" style="max-width:100%;margin:0.5rem 0" alt="">`);
-  toast('圖片已插入文章');
+  toast('åçå·²æå¥æç« ');
 }
 
-// ── KEYWORDS ───────────────────────────────────────────────────────────────
+// ââ KEYWORDS âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function addArtKw(e){
   if(e.key!=='Enter') return;
   e.preventDefault();
@@ -802,11 +805,11 @@ function addArtKw(e){
 function removeArtKw(k){ artKws=artKws.filter(x=>x!==k); renderArtKws(); }
 function renderArtKws(){
   document.getElementById('art-kw-tags').innerHTML=artKws.map(k=>
-    `<span class="kw-tag">${k}<button onclick="removeArtKw('${k}')">×</button></span>`
+    `<span class="kw-tag">${k}<button onclick="removeArtKw('${k}')">Ã</button></span>`
   ).join('');
 }
 
-// ── EMOJI ──────────────────────────────────────────────────────────────────
+// ââ EMOJI ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function renderEmojiGrid(){
   document.getElementById('emoji-grid').innerHTML=EMOJIS.map(e=>
     `<button class="emoji-btn${e===selectedEmoji?' selected':''}" onclick="setEmoji('${e}')">${e}</button>`
@@ -822,7 +825,7 @@ function setEmoji(e){
   });
 }
 
-// ── VIDEO ──────────────────────────────────────────────────────────────────
+// ââ VIDEO ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function previewVideo(url){
   const box = document.getElementById('video-preview-box');
   const embed = document.getElementById('video-embed-preview');
@@ -841,22 +844,22 @@ function getEmbedUrl(url){
   return null;
 }
 
-// ── SETTINGS ───────────────────────────────────────────────────────────────
+// ââ SETTINGS âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function renderCitySelect(){
   const sel=document.getElementById('f-city');
-  sel.innerHTML='<option value="">— 選擇城市 —</option>'+cities.map(c=>`<option value="${c}">${c}</option>`).join('');
+  sel.innerHTML='<option value="">â é¸æåå¸ â</option>'+cities.map(c=>`<option value="${c}">${c}</option>`).join('');
 }
 function renderCatSelect(){
   const sel=document.getElementById('f-cat');
-  sel.innerHTML='<option value="">— 選擇分類 —</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('');
+  sel.innerHTML='<option value="">â é¸æåé¡ â</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('');
 }
 function renderCitiesList(){
   document.getElementById('cities-list').innerHTML=cities.map(c=>
-    `<span class="kw-tag">${c}<button onclick="removeCity('${c}')">×</button></span>`).join('');
+    `<span class="kw-tag">${c}<button onclick="removeCity('${c}')">Ã</button></span>`).join('');
 }
 function renderCatsList(){
   document.getElementById('cats-list').innerHTML=cats.map(c=>
-    `<span class="kw-tag">${c}<button onclick="removeCat('${c}')">×</button></span>`).join('');
+    `<span class="kw-tag">${c}<button onclick="removeCat('${c}')">Ã</button></span>`).join('');
 }
 function addCity(){
   const v=document.getElementById('new-city').value.trim();
@@ -878,7 +881,7 @@ function saveSettings(){
 }
 
 
-// ── IMAGE COMPRESS ──────────────────────────────────────────────────────────
+// ââ IMAGE COMPRESS ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function compressImg(base64, mimeType, maxSize=800){
   return new Promise(resolve=>{
     const img=new Image();
@@ -905,14 +908,14 @@ function openKeyModal(){
 function closeKeyModal(){ document.getElementById('key-modal').classList.remove('open'); }
 function saveKeyModal(){
   const v = document.getElementById('key-modal-input').value.trim();
-  if(!v){ document.getElementById('key-modal-err').textContent='請輸入 API Key'; return; }
+  if(!v){ document.getElementById('key-modal-err').textContent='è«è¼¸å¥ API Key'; return; }
   localStorage.setItem('mantu-api-key', v);
   closeKeyModal();
   document.getElementById('key-status-dot').style.color='var(--green)';
-  toast('API Key 已更新！');
+  toast('API Key å·²æ´æ°ï¼');
 }
 
-// ── AI UNBOXING ────────────────────────────────────────────────────────────
+// ââ AI UNBOXING ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 let aiCoverBase64=null;
 function handleAiCover(e){
   const file=e.target.files?.[0];if(!file)return;
@@ -921,7 +924,7 @@ function handleAiCover(e){
     aiCoverBase64={data:ev.target.result.split(',')[1],type:file.type};
     const prev=document.getElementById('ai-cover-preview');
     prev.src=ev.target.result;prev.style.display='block';
-    document.getElementById('ai-cover-area').innerHTML='✅ 封面已選擇';
+    document.getElementById('ai-cover-area').innerHTML='â å°é¢å·²é¸æ';
   };
   reader.readAsDataURL(file);e.target.value='';
 }
@@ -948,21 +951,21 @@ function handleAiImgs(e){
 
 async function genAiArticle(){
   const name=document.getElementById('ai-name').value.trim();
-  if(!name){toast('請填寫店家名稱','err');return;}
+  if(!name){toast('è«å¡«å¯«åºå®¶åç¨±','err');return;}
   const apiKey=localStorage.getItem('mantu-api-key');
   if(!apiKey){document.getElementById('ai-key-warn').style.display='block';return;}
   document.getElementById('ai-key-warn').style.display='none';
   const btn=document.getElementById('ai-gen-btn');
   const status=document.getElementById('ai-status');
-  btn.disabled=true;btn.textContent='生成中...';
-  status.textContent='AI 思考中...';status.style.color='var(--accent)';
+  btn.disabled=true;btn.textContent='çæä¸­...';
+  status.textContent='AI æèä¸­...';status.style.color='var(--accent)';
   const city=document.getElementById('ai-city').value.trim();
   const type=document.getElementById('ai-type').value;
   const feature=document.getElementById('ai-feature').value.trim();
   const note=document.getElementById('ai-note').value.trim();
   const rating=document.getElementById('ai-rating').value;
   const price=document.getElementById('ai-price').value;
-  const prompt=`你是一位擅長寫旅遊開箱文的部落客，文風細膩有溫度。請根據以下資訊，寫一篇完整的繁體中文開箱文章。\n\n店家資料：\n- 名稱：${name}\n- 城市：${city||'未指定'}\n- 類型：${type}\n- 特色：${feature||'未提供'}\n- 評分：${rating}/5\n- 價位：${price}\n- 個人心得：${note||'未提供'}\n\n請依照以下格式回覆：\n\nTITLE: [吸引人的文章標題，有意境]\n\nBODY:\n[文章內容800-1200字，分段落，純文字段落用空行分隔]`;
+  const prompt=`ä½ æ¯ä¸ä½æé·å¯«æééç®±æçé¨è½å®¢ï¼æé¢¨ç´°è©ææº«åº¦ãè«æ ¹æä»¥ä¸è³è¨ï¼å¯«ä¸ç¯å®æ´çç¹é«ä¸­æéç®±æç« ã\n\nåºå®¶è³æï¼\n- åç¨±ï¼${name}\n- åå¸ï¼${city||'æªæå®'}\n- é¡åï¼${type}\n- ç¹è²ï¼${feature||'æªæä¾'}\n- è©åï¼${rating}/5\n- å¹ä½ï¼${price}\n- åäººå¿å¾ï¼${note||'æªæä¾'}\n\nè«ä¾ç§ä»¥ä¸æ ¼å¼åè¦ï¼\n\nTITLE: [å¸å¼äººçæç« æ¨é¡ï¼ææå¢]\n\nBODY:\n[æç« å§å®¹800-1200å­ï¼åæ®µè½ï¼ç´æå­æ®µè½ç¨ç©ºè¡åé]`;
   try{
     const userContent=[];
     if(aiImgBase64.length>0){aiImgBase64.forEach(img=>{userContent.push({type:'image',source:{type:'base64',media_type:img.type,data:img.data}});});}
@@ -975,33 +978,33 @@ async function genAiArticle(){
     const text=data.content?.[0]?.text||'';
     const titleMatch=text.match(/TITLE:\s*(.+)/);
     const bodyMatch=text.match(/BODY:\s*([\s\S]+)/);
-    aiGenTitle=titleMatch?titleMatch[1].trim():`${name}｜${city}${type}開箱`;
+    aiGenTitle=titleMatch?titleMatch[1].trim():`${name}ï½${city}${type}éç®±`;
     const body=bodyMatch?bodyMatch[1].trim():text;
     aiGenSlug=aiGenTitle.replace(/[^\u4e00-\u9fff\w\s-]/g,'').trim().replace(/[\s_]+/g,'-').substring(0,60).toLowerCase()+'-'+Date.now();
     document.getElementById('ai-title-preview').textContent=aiGenTitle;
     document.getElementById('ai-body-preview').textContent=body;
-    status.textContent='✅ 生成完成！可直接編輯後發布';status.style.color='var(--green)';
+    status.textContent='â çæå®æï¼å¯ç´æ¥ç·¨è¼¯å¾ç¼å¸';status.style.color='var(--green)';
     document.getElementById('ai-publish-panel').style.display='block';
     renderCitySelect2();renderCatSelect2();
     if(city){const sel=document.getElementById('ai-pub-city');Array.from(sel.options).forEach(o=>{if(o.value===city)o.selected=true;});}
     const catSel=document.getElementById('ai-pub-cat');Array.from(catSel.options).forEach(o=>{if(o.value===type)o.selected=true;});
     document.getElementById('ai-pub-time').value=fmtDateLocal(new Date());
-  }catch(e){status.textContent='生成失敗：'+e.message.slice(0,50);status.style.color='var(--red)';}
-  btn.disabled=false;btn.textContent='✨ AI 生成開箱文';
+  }catch(e){status.textContent='çæå¤±æï¼'+e.message.slice(0,50);status.style.color='var(--red)';}
+  btn.disabled=false;btn.textContent='â¨ AI çæéç®±æ';
 }
 
-function renderCitySelect2(){const sel=document.getElementById('ai-pub-city');sel.innerHTML='<option value="">— 選擇城市 —</option>'+cities.map(c=>`<option value="${c}">${c}</option>`).join('');}
-function renderCatSelect2(){const sel=document.getElementById('ai-pub-cat');sel.innerHTML='<option value="">— 選擇分類 —</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('');}
+function renderCitySelect2(){const sel=document.getElementById('ai-pub-city');sel.innerHTML='<option value="">â é¸æåå¸ â</option>'+cities.map(c=>`<option value="${c}">${c}</option>`).join('');}
+function renderCatSelect2(){const sel=document.getElementById('ai-pub-cat');sel.innerHTML='<option value="">â é¸æåé¡ â</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('');}
 
 async function publishAiArticle(){
   const title=aiGenTitle;
   const body=document.getElementById('ai-body-preview').textContent.trim();
-  if(!title||!body){toast('請先生成文章','err');return;}
+  if(!title||!body){toast('è«åçææç« ','err');return;}
   const city=document.getElementById('ai-pub-city').value;
   const cat=document.getElementById('ai-pub-cat').value;
   const btn=document.getElementById('ai-pub-btn');
   const msg=document.getElementById('ai-pub-msg');
-  btn.disabled=true;btn.textContent='發布中...';
+  btn.disabled=true;btn.textContent='ç¼å¸ä¸­...';
   let coverImage=null;
   if(aiImgBase64.length>0){
     try{
@@ -1016,7 +1019,7 @@ async function publishAiArticle(){
   const pubAt=document.getElementById('ai-pub-time').value;
   const name=document.getElementById('ai-name').value.trim();
   const type=document.getElementById('ai-type').value;
-  const articleData={title,slug:aiGenSlug,city:city||document.getElementById('ai-city').value||null,category:cat||type||null,excerpt:document.getElementById('ai-pub-excerpt').value.trim()||body.slice(0,120)+'...',content:htmlContent,keywords:[name,type,city].filter(Boolean),emoji:{咖啡廳:'☕',餐廳:'🍽️',甜點:'🍰',景點:'🏔️',住宿:'🏠',酒吧:'🍸'}[type]||'✍️',cover_image:window._coverImageUrl||coverImage,status,published_at:pubAt?new Date(pubAt).toISOString():new Date().toISOString(),
+  const articleData={title,slug:aiGenSlug,city:city||document.getElementById('ai-city').value||null,category:cat||type||null,excerpt:document.getElementById('ai-pub-excerpt').value.trim()||body.slice(0,120)+'...',content:htmlContent,keywords:[name,type,city].filter(Boolean),emoji:{åå¡å»³:'â',é¤å»³:'ð½ï¸',çé»:'ð°',æ¯é»:'ðï¸',ä½å®¿:'ð ',éå§:'ð¸'}[type]||'âï¸',cover_image:window._coverImageUrl||coverImage,status,published_at:pubAt?new Date(pubAt).toISOString():new Date().toISOString(),
     shop_info:{
       name:document.getElementById('ai-name')?.value?.trim()||null,
       address:document.getElementById('ai-shop-address')?.value?.trim()||null,
@@ -1031,15 +1034,15 @@ async function publishAiArticle(){
       line:document.getElementById('ai-shop-line')?.value?.trim()||null
     }};
   const{error}=await sb.from('articles').insert(articleData);
-  btn.disabled=false;btn.textContent='🚀 發布到前台';
-  if(error){msg.style.color='var(--red)';msg.textContent='發布失敗：'+error.message;return;}
+  btn.disabled=false;btn.textContent='ð ç¼å¸å°åå°';
+  if(error){msg.style.color='var(--red)';msg.textContent='ç¼å¸å¤±æï¼'+error.message;return;}
   msg.style.color='var(--green)';
-  msg.innerHTML=status==='published'?`✅ 文章已發布！<a href="https://journeylift.com.tw/articles/${aiGenSlug}" target="_blank" style="color:var(--accent2);margin-left:0.5rem">查看文章 →</a>`:'📝 已存為草稿';
-  toast(status==='published'?'文章已發布 🎉':'已存為草稿');
+  msg.innerHTML=status==='published'?`â æç« å·²ç¼å¸ï¼<a href="https://journeylift.com.tw/articles/${aiGenSlug}" target="_blank" style="color:var(--accent2);margin-left:0.5rem">æ¥çæç«  â</a>`:'ð å·²å­çºèç¨¿';
+  toast(status==='published'?'æç« å·²ç¼å¸ ð':'å·²å­çºèç¨¿');
   await loadArticles();
 }
 
-// ── PAGES ──────────────────────────────────────────────────────────────────
+// ââ PAGES ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function showPage(name){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
@@ -1050,7 +1053,7 @@ function showPage(name){
   if(mb)mb.classList.add('active');
 }
 
-// ── HELPERS ────────────────────────────────────────────────────────────────
+// ââ HELPERS ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function fmtDateLocal(d){
   const pad=n=>String(n).padStart(2,'0');
   return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
@@ -1079,19 +1082,19 @@ window.addEventListener('load',()=>{
 <div class="mobile-nav" id="mobile-nav" style="display:none">
   <div class="mobile-nav-inner">
     <button class="mnav-btn active" id="mnav-articles" onclick="showPage('articles')">
-      <span class="mnav-icon">📝</span>文章
+      <span class="mnav-icon">ð</span>æç« 
     </button>
     <button class="mnav-btn" id="mnav-ai" onclick="showPage('ai')">
-      <span class="mnav-icon">✨</span>AI
+      <span class="mnav-icon">â¨</span>AI
     </button>
     <button class="mnav-btn" onclick="openAddArt()">
-      <span class="mnav-add">＋</span>
+      <span class="mnav-add">ï¼</span>
     </button>
     <button class="mnav-btn" id="mnav-settings" onclick="showPage('settings')">
-      <span class="mnav-icon">⚙️</span>設定
+      <span class="mnav-icon">âï¸</span>è¨­å®
     </button>
     <button class="mnav-btn" onclick="window.open('https://journeylift.com.tw','_blank')">
-      <span class="mnav-icon">🌐</span>前台
+      <span class="mnav-icon">ð</span>åå°
     </button>
   </div>
 </div>
@@ -1100,20 +1103,20 @@ window.addEventListener('load',()=>{
 <div class="modal-bg" id="key-modal">
   <div class="modal" style="max-width:420px">
     <div class="modal-hd">
-      <div class="modal-title">⚙ API Key 設定</div>
-      <button class="modal-close" onclick="closeKeyModal()">✕</button>
+      <div class="modal-title">â API Key è¨­å®</div>
+      <button class="modal-close" onclick="closeKeyModal()">â</button>
     </div>
     <div class="modal-body">
       <div class="fg">
         <label class="fl">Anthropic API Key</label>
-        <div style="font-size:0.7rem;color:var(--text3);margin-bottom:0.5rem">Key 存在本機瀏覽器，不會上傳到任何伺服器。</div>
+        <div style="font-size:0.7rem;color:var(--text3);margin-bottom:0.5rem">Key å­å¨æ¬æ©çè¦½å¨ï¼ä¸æä¸å³å°ä»»ä½ä¼ºæå¨ã</div>
         <input class="fi" type="password" id="key-modal-input" placeholder="sk-ant-api03-..." onkeydown="if(event.key==='Enter')saveKeyModal()">
       </div>
       <div id="key-modal-err" style="font-size:0.7rem;color:var(--red);min-height:1.2em"></div>
     </div>
     <div class="modal-ft">
-      <button class="btn-secondary" onclick="closeKeyModal()">取消</button>
-      <button class="btn-primary" onclick="saveKeyModal()">儲存</button>
+      <button class="btn-secondary" onclick="closeKeyModal()">åæ¶</button>
+      <button class="btn-primary" onclick="saveKeyModal()">å²å­</button>
     </div>
   </div>
 </div>
@@ -1153,7 +1156,7 @@ function renderCats(cats){
   if(!cats||!cats.length){
     var p=document.createElement("p");
     p.style.color="var(--muted)";
-    p.textContent="尚無分類，請新增";
+    p.textContent="å°ç¡åé¡ï¼è«æ°å¢";
     el.appendChild(p);return;
   }
   cats.forEach(function(cat){
@@ -1166,18 +1169,18 @@ function renderCats(cats){
     name.textContent=cat.name;
     var btns=document.createElement("div");
     var editBtn=document.createElement("button");
-    editBtn.textContent="編輯";
+    editBtn.textContent="ç·¨è¼¯";
     editBtn.style.cssText="background:none;border:1px solid var(--border);color:var(--accent);padding:0.25rem 0.8rem;font-size:0.72rem;cursor:pointer;margin-right:0.4rem;font-family:inherit";
     editBtn.onclick=(function(id){return function(){editCat(id);};})(cat.id);
     var delBtn=document.createElement("button");
-    delBtn.textContent="刪除";
+    delBtn.textContent="åªé¤";
     delBtn.style.cssText="background:none;border:1px solid rgba(255,80,80,0.3);color:#f66;padding:0.25rem 0.8rem;font-size:0.72rem;cursor:pointer;font-family:inherit";
     delBtn.onclick=(function(id,nm){return function(){deleteCat(id,nm);};})(cat.id,cat.name);
     btns.appendChild(editBtn);btns.appendChild(delBtn);
     top.appendChild(name);top.appendChild(btns);
     var preview=document.createElement("div");
     preview.style.cssText="font-size:0.72rem;color:var(--muted);background:var(--surface);padding:0.6rem 1rem;border-radius:3px;line-height:1.6";
-    preview.textContent=(cat.ai_prompt||"").slice(0,100)||"未設定 AI 指令";
+    preview.textContent=(cat.ai_prompt||"").slice(0,100)||"æªè¨­å® AI æä»¤";
     card.appendChild(top);card.appendChild(preview);
     el.appendChild(card);
   });
@@ -1185,30 +1188,30 @@ function renderCats(cats){
 window.renderCats=renderCats;
 
 window.openAddCat=function(){
-  var name=prompt("分類名稱：");
+  var name=prompt("åé¡åç¨±ï¼");
   if(!name||!name.trim())return;
-  var ai=prompt("AI 寫作指引：","")||"";
+  var ai=prompt("AI å¯«ä½æå¼ï¼","")||"";
   saveCat(null,name.trim(),ai);
 };
 window.editCat=function(id){
   var cats=window._catsCache||[];
   var cat=null;for(var i=0;i<cats.length;i++)if(cats[i].id===id){cat=cats[i];break;}
   if(!cat)return;
-  var name=prompt("分類名稱：",cat.name);
+  var name=prompt("åé¡åç¨±ï¼",cat.name);
   if(!name||!name.trim())return;
-  var ai=prompt("AI 寫作指引：",cat.ai_prompt||"")||"";
+  var ai=prompt("AI å¯«ä½æå¼ï¼",cat.ai_prompt||"")||"";
   saveCat(id,name.trim(),ai);
 };
 window.saveCat=function(id,name,ai_prompt){
   var url=id?SB+"/rest/v1/categories?id=eq."+id:SB+"/rest/v1/categories";
   var method=id?"PATCH":"POST";
   fetch(url,{method:method,headers:sbH(),body:JSON.stringify({name:name,ai_prompt:ai_prompt})})
-  .then(function(r){if(r.ok)loadCats();else alert("儲存失敗");});
+  .then(function(r){if(r.ok)loadCats();else alert("å²å­å¤±æ");});
 };
 window.deleteCat=function(id,name){
-  if(!confirm("確定要刪除「"+name+"」？"))return;
+  if(!confirm("ç¢ºå®è¦åªé¤ã"+name+"ãï¼"))return;
   fetch(SB+"/rest/v1/categories?id=eq."+id,{method:"DELETE",headers:{apikey:SK,Authorization:"Bearer "+SK}})
-  .then(function(r){if(r.ok)loadCats();else alert("刪除失敗");});
+  .then(function(r){if(r.ok)loadCats();else alert("åªé¤å¤±æ");});
 };
 
 // patch showPage after load
@@ -1231,7 +1234,7 @@ function toggleCodeView(){
   var btn=document.getElementById('btn-code-view');
   if(!editor)return;
   if(editor._codeMode){
-    // 從純文字（HTML碼）轉回 contenteditable
+    // å¾ç´æå­ï¼HTMLç¢¼ï¼è½å contenteditable
     editor.innerHTML=editor.value||editor.textContent;
     editor.contentEditable='true';
     editor.style.fontFamily='';
@@ -1240,7 +1243,7 @@ function toggleCodeView(){
     delete editor._codeMode;
     if(btn){btn.style.background='none';btn.style.color='var(--accent)';}
   } else {
-    // 轉成純文字顯示 HTML 原始碼
+    // è½æç´æå­é¡¯ç¤º HTML åå§ç¢¼
     var html=editor.innerHTML;
     editor.contentEditable='false';
     editor.textContent=html;
@@ -1252,7 +1255,7 @@ function toggleCodeView(){
   }
 }
 
-// 頁面載入後自動從 Supabase 同步分類選單
+// é é¢è¼å¥å¾èªåå¾ Supabase åæ­¥åé¡é¸å®
 window.addEventListener('load',function(){
   setTimeout(function(){
     if(typeof loadCats==='function')loadCats();
@@ -1375,10 +1378,10 @@ window.deleteKeyword=function(id,nm){
   .then(function(r){if(r.ok)loadKeywords();});
 };
 
-// 初始化
+// åå§å
 window.addEventListener("load",function(){
   setTimeout(function(){
-    // 按鈕事件
+    // æéäºä»¶
     var r=document.getElementById("btn-add-region");
     if(r)r.addEventListener("click",window.openAddRegion);
     var k=document.getElementById("btn-add-kw");
