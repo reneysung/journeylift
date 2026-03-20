@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-  setTimeout(buildTOC, 50);
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
@@ -324,6 +323,21 @@ function buildTOC() {
     content.insertBefore(toc, content.firstChild);
   }
 }
+
+// Auto-call buildTOC via MutationObserver after content loads
+(function() {
+  const obs = new MutationObserver(function(muts, o) {
+    const content = document.querySelector('.art-content');
+    if (content && content.querySelector('h2')) {
+      buildTOC();
+      o.disconnect();
+    }
+  });
+  obs.observe(document.body, {childList:true, subtree:true});
+  // Also try after short delay
+  setTimeout(function(){if(document.querySelector('.art-content h2') && !document.querySelector('.toc-box')){buildTOC();}}, 800);
+  setTimeout(function(){if(document.querySelector('.art-content h2') && !document.querySelector('.toc-box')){buildTOC();}}, 2000);
+})();
 </script>
 </body>
 </html>
