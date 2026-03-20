@@ -690,7 +690,7 @@ async function saveArt(){
 
   const slug = editingId
     ? allArts.find(a=>a.id===editingId)?.slug
-    : title.replace(/[^\u4e00-\u9fff\w\s-]/g,'').trim().replace(/[\s_]+/g,'-').substring(0,60).toLowerCase() + '-' + Date.now();
+    : title.toLowerCase().replace(/[^\w\s-]/g,'').trim().replace(/[\s_]+/g,'-').replace(/-+/g,'-').substring(0,60) + '-' + Date.now();
 
   const pubAt = document.getElementById('f-published-at').value;
   const data = {
