@@ -2,24 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://journeylift.com.tw</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
   <url><loc>https://journeylift.com.tw/articles</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://journeylift.com.tw/chiayi</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-20</lastmod></url>
-  <url><loc>https://journeylift.com.tw/hsinchu</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-20</lastmod></url>
-  <url><loc>https://journeylift.com.tw/hualien</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-20</lastmod></url>
-  <url><loc>https://journeylift.com.tw/kaohsiung</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-20</lastmod></url>
-  <url><loc>https://journeylift.com.tw/keelung</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-20</lastmod></url>
-  <url><loc>https://journeylift.com.tw/kinmen</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-20</lastmod></url>
-  <url><loc>https://journeylift.com.tw/nantou</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-20</lastmod></url>
-  <url><loc>https://journeylift.com.tw/newtaipei</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-20</lastmod></url>
-  <url><loc>https://journeylift.com.tw/penghu</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-20</lastmod></url>
-  <url><loc>https://journeylift.com.tw/pingtung</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-20</lastmod></url>
-  <url><loc>https://journeylift.com.tw/taichung</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-20</lastmod></url>
-  <url><loc>https://journeylift.com.tw/tainan</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-20</lastmod></url>
-  <url><loc>https://journeylift.com.tw/taipei</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-20</lastmod></url>
-  <url><loc>https://journeylift.com.tw/taitung</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-20</lastmod></url>
-  <url><loc>https://journeylift.com.tw/taoyuan</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-20</lastmod></url>
-  <url><loc>https://journeylift.com.tw/yilan</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-20</lastmod></url>
-  <url><loc>https://journeylift.com.tw/nantou/nantou-food</loc><changefreq>weekly</changefreq><priority>0.7</priority><lastmod>2026-03-20</lastmod></url>
-  <url><loc>https://journeylift.com.tw/tainan/tainan-food</loc><changefreq>weekly</changefreq><priority>0.7</priority><lastmod>2026-03-20</lastmod></url>
+  <url><loc>https://journeylift.com.tw/chiayi</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-21</lastmod></url>
+  <url><loc>https://journeylift.com.tw/hsinchu</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-21</lastmod></url>
+  <url><loc>https://journeylift.com.tw/hualien</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-21</lastmod></url>
+  <url><loc>https://journeylift.com.tw/kaohsiung</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-21</lastmod></url>
+  <url><loc>https://journeylift.com.tw/keelung</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-21</lastmod></url>
+  <url><loc>https://journeylift.com.tw/kinmen</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-21</lastmod></url>
+  <url><loc>https://journeylift.com.tw/nantou</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-21</lastmod></url>
+  <url><loc>https://journeylift.com.tw/newtaipei</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-21</lastmod></url>
+  <url><loc>https://journeylift.com.tw/penghu</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-21</lastmod></url>
+  <url><loc>https://journeylift.com.tw/pingtung</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-21</lastmod></url>
+  <url><loc>https://journeylift.com.tw/taichung</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-21</lastmod></url>
+  <url><loc>https://journeylift.com.tw/tainan</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-21</lastmod></url>
+  <url><loc>https://journeylift.com.tw/taipei</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-21</lastmod></url>
+  <url><loc>https://journeylift.com.tw/taitung</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-21</lastmod></url>
+  <url><loc>https://journeylift.com.tw/taoyuan</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-21</lastmod></url>
+  <url><loc>https://journeylift.com.tw/yilan</loc><changefreq>weekly</changefreq><priority>0.8</priority><lastmod>2026-03-21</lastmod></url>
+  <url><loc>https://journeylift.com.tw/nantou/nantou-food</loc><changefreq>weekly</changefreq><priority>0.7</priority><lastmod>2026-03-21</lastmod></url>
+  <url><loc>https://journeylift.com.tw/tainan/tainan-food</loc><changefreq>weekly</changefreq><priority>0.7</priority><lastmod>2026-03-21</lastmod></url>
+  <url><loc>https://journeylift.com.tw/articles/-1774060533033</loc><changefreq>monthly</changefreq><priority>0.6</priority><lastmod>2026-03-21</lastmod></url>
   <url><loc>https://journeylift.com.tw/articles/202610-1774019872644</loc><changefreq>monthly</changefreq><priority>0.6</priority><lastmod>2026-03-20</lastmod></url>
   <url><loc>https://journeylift.com.tw/articles/-1774017366618</loc><changefreq>monthly</changefreq><priority>0.6</priority><lastmod>2026-03-20</lastmod></url>
   <url><loc>https://journeylift.com.tw/articles/-sm0m</loc><changefreq>monthly</changefreq><priority>0.6</priority><lastmod>2026-03-20</lastmod></url>
