@@ -240,7 +240,13 @@ async function load(){
 
   document.getElementById('article-wrap').innerHTML = `
     <div class="art-header">
-      <div class="art-emoji">${data.emoji||'✍️'}</div>
+      ${data.cover_image
+  ? `<div class="art-cover"><img src="${data.cover_image}" alt="${data.title}" 
+      style="width:100%;max-height:420px;object-fit:cover;border-radius:8px;margin-bottom:1.5rem;display:block"
+      onerror="this.style.display='none';document.querySelector('.art-emoji-fallback').style.display='block'"></div>
+     <div class="art-emoji-fallback" style="display:none">${data.emoji||'✍️'}</div>`
+  : `<div class="art-emoji">${data.emoji||'✍️'}</div>`
+}
       <div class="art-meta">
         ${data.city?`<span>📍 ${data.city}</span>`:''}
         ${data.category?`<span>${data.category}</span>`:''}
