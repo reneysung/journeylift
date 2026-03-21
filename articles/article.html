@@ -224,7 +224,6 @@ async function load(){
     const el = document.getElementById(id);
     if(el && val) el.setAttribute(attr, val);
   };
-  const pageUrl = location.href;
   const ogImg = data.cover_image || 'https://journeylift.com.tw/og-default.jpg';
   const pageUrl = 'https://journeylift.com.tw/articles/' + slug;
   const seoDesc = (data.excerpt || data.title || '').substring(0, 160);
