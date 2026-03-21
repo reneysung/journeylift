@@ -571,6 +571,15 @@ function loadSettings(){
   var k=localStorage.getItem('mantu-api-key');
   var el=document.getElementById('api-key-input');
   if(el&&k)el.value=k;
+  // Update key status indicator
+  var dot=document.getElementById('key-status-dot');
+  if(dot){
+    if(k){dot.textContent='✓ API Key';dot.style.color='#4caf50';dot.style.borderColor='#4caf50';}
+    else{dot.textContent='⚙ API Key';dot.style.color='';dot.style.borderColor='';}
+  }
+  // Also pre-fill the key modal input for easy view
+  var mi=document.getElementById('key-modal-input');
+  if(mi&&k)mi.value=k;
 }
 
 // ── ARTICLES ───────────────────────────────────────────────────────────────
