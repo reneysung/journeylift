@@ -1092,7 +1092,14 @@ async function publishAiArticle(){
       }catch(_e){console.log('extra img err',_e);}
     }
   }
-    const htmlContent=body.split('\n\n').map(p=>p.trim()?`<p>${p.replace(/\n/g,'<br>')}</p>`:'').join('\n');
+    const htmlContent=body.split('\n\n').map(p=>{
+    p=p.trim();if(!p)return'';
+    if(/^####\s/.test(p))return'<h4>'+p.replace(/^####\s+/,'')+'</h4>';
+    if(/^###\s/.test(p))return'<h3>'+p.replace(/^###\s+/,'')+'</h3>';
+    if(/^##\s/.test(p))return'<h2>'+p.replace(/^##\s+/,'')+'</h2>';
+    if(/^#\s/.test(p))return'<h2>'+p.replace(/^#\s+/,'')+'</h2>';
+    return'<p>'+p.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>').replace(/\n/g,'<br>')+'</p>';
+  }).join('\n');
   const status=document.getElementById('ai-pub-status').value;
   const pubAt=document.getElementById('ai-pub-time').value;
   const name=document.getElementById('ai-name').value.trim();
