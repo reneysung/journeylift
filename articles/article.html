@@ -295,7 +295,7 @@ async function load(){
 
     ${embedUrl?`<div class="video-wrap"><iframe src="${embedUrl}" allowfullscreen></iframe></div>`:''}
 
-    <div class="art-content">${data.content||''}</div>
+    <div class="art-content">${renderMd(data.content)}</div>
 
     
 ${(()=>{
@@ -332,6 +332,19 @@ function notFound(){
     </div>`;
 }
 
+function renderMd(txt){
+  if(!txt) return '';
+  return txt
+    .replace(/^####\s+(.+)$/gm,'<h4>$1</h4>')
+    .replace(/^###\s+(.+)$/gm,'<h3>$1</h3>')
+    .replace(/^##\s+(.+)$/gm,'<h2>$1</h2>')
+    .replace(/^#\s+(.+)$/gm,'<h2>$1</h2>')
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g,'<em>$1</em>')
+    .replace(/\n\n+/g,'</p><p>')
+    .replace(/^(?!<[h|p|u|o|b|d|t])/,'<p>')
+    .replace(/(?<!>)$/,'</p>');
+}
 function getEmbedUrl(url){
   let m;
   if((m=url.match(/youtube\.com\/watch\?v=([^&]+)/))) return `https://www.youtube.com/embed/${m[1]}`;
