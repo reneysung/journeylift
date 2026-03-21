@@ -928,16 +928,31 @@ function saveKeyModal(){
 
 // ── AI UNBOXING ────────────────────────────────────────────────────────────
 let aiCoverBase64=null;
-function handleAiCover(e){
+async function handleAiCover(e){
   const file=e.target.files?.[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=ev=>{
-    aiCoverBase64={data:ev.target.result.split(',')[1],type:file.type};
-    const prev=document.getElementById('ai-cover-preview');
-    prev.src=ev.target.result;prev.style.display='block';
-    document.getElementById('ai-cover-area').innerHTML='✅ 封面已選擇';
-  };
-  reader.readAsDataURL(file);e.target.value='';
+  const area=document.getElementById('ai-cover-area');
+  const prev=document.getElementById('ai-cover-preview');
+  // Show local preview immediately
+  const localUrl=URL.createObjectURL(file);
+  prev.src=localUrl;prev.style.display='block';
+  area.innerHTML='⏫ 上傳中...';
+  window.aiCoverUrl=null;
+  try{
+    const ext=file.name.split('.').pop()||'jpg';
+    const fname='cover-'+Date.now()+'-'+Math.random().toString(36).slice(2)+'.'+ext;
+    const{data,error}=await sb.storage.from('article-images').upload(fname,file,{contentType:file.type,upsert:false});
+    if(error)throw error;
+    const{data:{publicUrl}}=sb.storage.from('article-images').getPublicUrl(fname);
+    window.aiCoverUrl=publicUrl;
+    area.innerHTML='✅ 封面已上傳';
+    area.style.color='#4caf50';
+    console.log('COVER_UPLOADED:',publicUrl);
+  }catch(err){
+    area.innerHTML='❌ 上傳失敗：'+err.message;
+    area.style.color='#f44336';
+    console.error('COVER_UPLOAD_ERR:',err);
+  }
+  e.target.value='';
 }
 let aiImgBase64=[], aiGenTitle='', aiGenSlug='';
 
@@ -1048,15 +1063,9 @@ async function publishAiArticle(){
   const btn=document.getElementById('ai-pub-btn');
   const msg=document.getElementById('ai-pub-msg');
   btn.disabled=true;btn.textContent='發布中...';
-  let coverImage=null;
-  if(aiImgBase64.length>0){
-    try{
-      const img=aiImgBase64[0];const ext=img.type.split('/')[1]||'jpg';const fname=Date.now()+'.'+ext;
-      const blob=await fetch(`data:${img.type};base64,${img.data}`).then(r=>r.blob());
-      const{data:upData}=await sb.storage.from('article-images').upload(fname,blob,{contentType:img.type});
-      if(upData){const{data:{publicUrl}}=sb.storage.from('article-images').getPublicUrl(fname);coverImage=publicUrl;}
-    }catch(e){console.log('img err',e);}
-  }
+  // Use pre-uploaded cover URL (uploaded immediately when user selected image)
+  const coverImage = window.aiCoverUrl || null;
+  console.log('PUBLISH_COVER_URL:', coverImage);
   const htmlContent=body.split('\n\n').map(p=>{p=p.trim();if(!p)return'';if(/^####\s/.test(p))return'<h4>'+p.replace(/^####\s+/,'')+'</h4>';if(/^###\s/.test(p))return'<h3>'+p.replace(/^###\s+/,'')+'</h3>';if(/^##\s/.test(p))return'<h2>'+p.replace(/^##\s+/,'')+'</h2>';if(/^#\s/.test(p))return'<h2>'+p.replace(/^#\s+/,'')+'</h2>';return'<p>'+p.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>').replace(/\n/g,'<br>')+'</p>';}).join('\n');
   const status=document.getElementById('ai-pub-status').value;
   const pubAt=document.getElementById('ai-pub-time').value;
