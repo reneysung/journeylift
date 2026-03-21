@@ -178,7 +178,6 @@ async function load(){
     const el = document.querySelector(sel);
     if(el && val) el.setAttribute(el.hasAttribute('content')?'content':'href', val);
   };
-  const pageUrl = location.href;
   const ogImg = data.cover_image || 'https://journeylift.com.tw/og-default.jpg';
   document.title = data.title + ' — 漫途旅遊誌';
   const pageUrl = 'https://journeylift.com.tw/articles/' + slug;
