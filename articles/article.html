@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>æç«  â æ¼«éæéèª</title>
+<title>文章 — 漫途旅遊誌</title>
 <meta name="description" id="meta-desc" content="漫途旅遊誌 — 台灣慢旅行、咖啡廳、餐廳開箱文">
-<meta name="keywords" id="meta-keywords" content="漫途,旅遊,台灣,咖啡廳,開箱文">
+<meta name="keywords" id="meta-keywords" content="漫途,旅遊,台灣">
 <meta name="robots" content="index, follow">
 <link rel="canonical" id="canonical-url" href="https://journeylift.com.tw">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="漫途 — 旅遊誌">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:title" id="og-title" content="漫途 — 旅遊誌">
-<meta property="og:description" id="og-desc" content="漫途旅遊誌 — 台灣慢旅行記錄">
-<meta property="og:url" id="og-url" content="https://journeylift.com.tw">
-<meta property="og:image" id="og-image" content="https://journeylift.com.tw/og-default.jpg">
+<meta property="og:title" content="漫途">
+<meta property="og:description" content="">
+<meta property="og:url" content="">
+<meta property="og:image" content="https://journeylift.com.tw/og-default.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" id="tw-title" content="漫途">
-<meta name="twitter:description" id="tw-desc" content="">
-<meta name="twitter:image" id="tw-image" content="https://journeylift.com.tw/og-default.jpg">
+<meta name="twitter:title" content="漫途">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://journeylift.com.tw/og-default.jpg">
 <script type="application/ld+json" id="schema-jsonld">{}</script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -75,7 +75,7 @@ nav a:hover{color:var(--accent)}
 
 footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem;text-align:center;font-size:0.75rem;color:var(--text3)}
 
-/* ââ SHOP INFO CARD âââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
+/* ── SHOP INFO CARD ─────────────────────────────────────────────────────── */
 .shop-card{background:var(--surface,#1a1714);border:1px solid var(--border,#2a2520);padding:1.8rem;margin:2.5rem 0;font-family:var(--font-sans,'Inter',sans-serif)}
 .shop-card-title{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent,#c9a96e);margin-bottom:1.2rem;display:flex;align-items:center;gap:0.5rem}
 .shop-card-title::after{content:'';flex:1;height:1px;background:var(--border,#2a2520)}
@@ -90,72 +90,30 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem
 .shop-social a{display:flex;align-items:center;gap:0.4rem;padding:0.4rem 0.9rem;border:1px solid var(--border,#2a2520);font-size:0.72rem;color:var(--text2,#a09080);text-decoration:none;letter-spacing:0.05em;transition:all 0.15s}
 .shop-social a:hover{border-color:var(--accent,#c9a96e);color:var(--accent,#c9a96e)}
 
-.share-bar{display:flex;align-items:center;gap:1.6rem;flex-wrap:wrap;padding:1.5rem 0;border-top:1px solid var(--border,#2a2520);border-bottom:1px solid var(--border,#2a2520);margin:2rem 0}
+.share-bar{display:flex;align-items:center;gap:0.8rem;padding:1.5rem 0;border-top:1px solid var(--border,#2a2520);border-bottom:1px solid var(--border,#2a2520);margin:2rem 0}
 .share-label{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mist,#8a8278);flex-shrink:0}
 .share-btns{display:flex;gap:0.5rem;flex-wrap:wrap}
-.share-btn{.share-btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 1.2rem;border:1px solid var(--border2,rgba(200,169,110,0.2));background:none;font-size:0.72rem;color:var(--text2,#b8b0a0);cursor:pointer;font-family:inherit;letter-spacing:0.05em;transition:all 0.2s;text-decoration:none}
+.contact-line-btn{background:#06C755;color:#fff!important;border:none}
+.share-btn{.share-btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.4rem 1rem;border:1px solid var(--border2,rgba(200,169,110,0.2));background:none;font-size:0.72rem;color:var(--text2,#b8b0a0);cursor:pointer;font-family:inherit;letter-spacing:0.05em;transition:all 0.2s;text-decoration:none}
 .share-btn:hover{border-color:var(--accent,#c9a96e);color:var(--accent,#c9a96e)}
 .share-btn.copied{border-color:#4caf50;color:#4caf50}
-
-footer {
-  text-align: center;
-  padding: 1.5rem 1rem 1rem;
-  border-top: 1px solid var(--border, #e8e0d4);
-  margin-top: 2rem;
-}
-.footer-copyright {
-  font-size: 0.82rem;
-  color: var(--muted, #8a7f72);
-  margin-bottom: 0.6rem;
-}
-.footer-contact {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  font-size: 0.85rem;
-  color: #06C755;
-  text-decoration: none;
-  border: 1.5px solid #06C755;
-  padding: 0.35rem 1rem;
-  border-radius: 20px;
-  transition: background 0.2s, color 0.2s;
-}
-.footer-contact:hover {
-  background: #06C755;
-  color: #fff;
-}
-button.share-btn{border:none!important;background:none!important;}
-button.share-btn:hover{border:none!important;background:none!important;}
-
-/* æç« ç®é TOC */
-.toc-box{background:var(--bg2,#f8f4ef);border:1px solid var(--border,#e8e0d4);border-left:3px solid var(--accent,#c9a96e);border-radius:6px;padding:1.2rem 1.5rem;margin:1.5rem 0 2rem;max-width:100%}
-.toc-title{font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent,#c9a96e);margin-bottom:0.8rem;font-weight:600}
-.toc-list{list-style:none;padding:0;margin:0}
-.toc-list li{margin:0}
-.toc-list a{display:block;font-size:0.88rem;color:var(--text2,#6b6055);text-decoration:none;padding:0.25rem 0;border-bottom:none;transition:color 0.15s}
-.toc-list a:hover{color:var(--accent,#c9a96e)}
-.toc-h2{font-weight:500;color:var(--text,#2a2520)!important}
-.toc-h3{padding-left:1.2rem!important;font-size:0.83rem!important;opacity:0.85}
 </style>
 </head>
 <body>
 
 <header>
-  <a href="/" class="logo"><span>æ¼«é</span>æéèª</a>
+  <a href="/" class="logo"><span>漫途</span>旅遊誌</a>
   <nav>
-    <a href="/">é¦é </a>
-    <a href="/articles">æç« </a>
+    <a href="/">首頁</a>
+    <a href="/articles">文章</a>
   </nav>
 </header>
 
 <div class="article-wrap" id="article-wrap">
-  <div class="loading">è¼å¥ä¸­...</div>
+  <div class="loading">載入中...</div>
 </div>
 
-<footer>
-  <div class="footer-copyright">Â© 2026 æ¼«éæéèª Â· ç¨æå­è¨éæ¯ä¸æ®µæç¨</div>
-  <a class="footer-contact" href="https://lin.ee/ZBhZQL3" target="_blank" rel="noopener">ð¬ è¯çµ¡æå</a>
-</footer>
+<footer>© 2026 漫途旅遊誌 · 用文字記錄每一段旅程</footer>
 
 <script>
 const sb = supabase.createClient(
@@ -167,36 +125,36 @@ const sb = supabase.createClient(
   
 function copyLink(btn){
   navigator.clipboard.writeText(location.href).then(()=>{
-    btn.textContent='â å·²è¤è£½ï¼';
+    btn.textContent='✅ 已複製！';
     btn.classList.add('copied');
-    setTimeout(()=>{btn.textContent='ð è¤è£½é£çµ';btn.classList.remove('copied');},2000);
+    setTimeout(()=>{btn.textContent='🔗 複製連結';btn.classList.remove('copied');},2000);
   }).catch(()=>{
     // fallback
     const el=document.createElement('input');
     el.value=location.href;document.body.appendChild(el);
     el.select();document.execCommand('copy');document.body.removeChild(el);
-    btn.textContent='â å·²è¤è£½ï¼';btn.classList.add('copied');
-    setTimeout(()=>{btn.textContent='ð è¤è£½é£çµ';btn.classList.remove('copied');},2000);
+    btn.textContent='✅ 已複製！';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='🔗 複製連結';btn.classList.remove('copied');},2000);
   });
 }
 function renderShopCard(info){
     if(!info||!Object.keys(info).some(k=>info[k])) return '';
     const row=(icon,label,val,link)=>val?`<div class="shop-card-row"><span class="sci">${icon}</span><span>${link?`<a href="${link}" target="_blank">${val}</a>`:val}</span></div>`:'';
     const social=[];
-    if(info.fb) social.push(`<a href="${info.fb}" target="_blank">ð Facebook</a>`);
-    if(info.ig) social.push(`<a href="${info.ig}" target="_blank">ð· Instagram</a>`);
-    if(info.line) social.push(`<a href="${info.line}" target="_blank">ð¬ LINE åäº«</a>`);
-    if(info.maps) social.push(`<a href="${info.maps}" target="_blank">ðºï¸ Google Maps</a>`);
+    if(info.fb) social.push(`<a href="${info.fb}" target="_blank">📘 Facebook</a>`);
+    if(info.ig) social.push(`<a href="${info.ig}" target="_blank">📷 Instagram</a>`);
+    if(info.line) social.push(`<a href="${info.line}" target="_blank">💬 LINE</a>`);
+    if(info.maps) social.push(`<a href="${info.maps}" target="_blank">🗺️ Google Maps</a>`);
     return `<div class="shop-card">
-      <div class="shop-card-title">åºå®¶è³è¨</div>
+      <div class="shop-card-title">店家資訊</div>
       ${info.name?'<div class="shop-card-name">'+info.name+'</div>':''}
       <div class="shop-card-grid">
-        ${row('ð','å°å',info.address,info.maps)}
-        ${row('ð','é»è©±',info.phone,info.phone?'tel:'+info.phone.replace(/[^+\d]/g,''):'')}
-        ${row('ð','çæ¥­æé',info.hours)}
-        ${row('ð°','æ¶è²»',info.price_note)}
-        ${row('ð¿ï¸','åè»',info.parking)}
-        ${row('ð','å®ç¶²',info.website,info.website)}
+        ${row('📍','地址',info.address,info.maps)}
+        ${row('📞','電話',info.phone,info.phone?'tel:'+info.phone.replace(/[^+\d]/g,''):'')}
+        ${row('🕐','營業時間',info.hours)}
+        ${row('💰','消費',info.price_note)}
+        ${row('🅿️','停車',info.parking)}
+        ${row('🌐','官網',info.website,info.website)}
       </div>
       ${social.length?'<div class="shop-social">'+social.join('')+'</div>':''}
     </div>`;
@@ -215,64 +173,40 @@ async function load(){
   if(!data){ notFound(); return; }
 
   
-  // ===== Full SEO Setup =====
+  // Update OG meta for social sharing
   const setMeta = (sel, val) => {
     const el = document.querySelector(sel);
     if(el && val) el.setAttribute(el.hasAttribute('content')?'content':'href', val);
   };
-  const setId = (id, attr, val) => {
-    const el = document.getElementById(id);
-    if(el && val) el.setAttribute(attr, val);
-  };
+  const pageUrl = location.href;
   const ogImg = data.cover_image || 'https://journeylift.com.tw/og-default.jpg';
+  document.title = data.title + ' — 漫途旅遊誌';
   const pageUrl = 'https://journeylift.com.tw/articles/' + slug;
   const seoDesc = (data.excerpt || data.title || '').substring(0, 160);
-  const rawKw = Array.isArray(data.keywords) ? data.keywords : (data.keywords ? data.keywords.split(',') : []);
+  const rawKw = Array.isArray(data.keywords) ? data.keywords : (data.keywords ? String(data.keywords).split(',') : []);
   const kwStr = [...new Set([...rawKw, data.city, data.category].filter(Boolean))].join(',');
-
-  // Title
-  document.title = data.title + ' — 漫途旅遊誌';
-
-  // Helper: set meta by id or selector
-  const sm = (sel, val) => { const el = document.querySelector(sel); if(el && val) el.setAttribute(el.hasAttribute('content')?'content':'href', val); };
-  const sid = (id, attr, val) => { const el = document.getElementById(id); if(el && val) el.setAttribute(attr, val); };
-
-  // Canonical
-  sid('canonical-url','href', pageUrl);
-  // Description
-  sid('meta-desc','content', seoDesc);
-  // Keywords
-  sid('meta-keywords','content', kwStr || '漫途,旅遊,台灣,開箱文');
-  // OG
-  sm('meta[property="og:url"]', pageUrl);
-  sm('meta[property="og:title"]', data.title + ' — 漫途旅遊誌');
-  sm('meta[property="og:description"]', seoDesc);
-  sm('meta[property="og:image"]', ogImg);
-  // Twitter
-  sm('meta[name="twitter:title"]', data.title);
-  sm('meta[name="twitter:description"]', seoDesc);
-  sm('meta[name="twitter:image"]', ogImg);
-  // Schema.org JSON-LD
-  const _schema = {
-    "@context":"https://schema.org","@type":"BlogPosting",
-    "headline":data.title,"description":seoDesc,"url":pageUrl,
-    "image":{"@type":"ImageObject","url":ogImg},
-    "datePublished":data.published_at||data.created_at,
-    "dateModified":data.updated_at||data.created_at,
-    "author":{"@type":"Organization","name":"漫途旅遊誌","url":"https://journeylift.com.tw"},
-    "publisher":{"@type":"Organization","name":"漫途旅遊誌","logo":{"@type":"ImageObject","url":"https://journeylift.com.tw/og-default.jpg"}},
-    "keywords":kwStr,"inLanguage":"zh-TW",
-    "mainEntityOfPage":{"@type":"WebPage","@id":pageUrl}
-  };
-  const _schEl = document.getElementById('schema-jsonld');
-  if(_schEl) _schEl.textContent = JSON.stringify(_schema);
+  // Canonical & meta
+  const setId = (id, attr, val) => { const el=document.getElementById(id); if(el&&val) el.setAttribute(attr,val); };
+  setId('canonical-url','href', pageUrl);
+  setId('meta-desc','content', seoDesc);
+  setId('meta-keywords','content', kwStr||'漫途,旅遊,台灣');
+  // Schema.org
+  const schEl = document.getElementById('schema-jsonld');
+  if(schEl) schEl.textContent = JSON.stringify({"@context":"https://schema.org","@type":"BlogPosting","headline":data.title,"description":seoDesc,"url":pageUrl,"datePublished":data.published_at||data.created_at,"author":{"@type":"Organization","name":"漫途旅遊誌"},"keywords":kwStr,"inLanguage":"zh-TW"});
+  setMeta('meta[property="og:url"]', pageUrl);
+  setMeta('meta[property="og:title"]', data.title);
+  setMeta('meta[property="og:description"]', data.excerpt||data.title);
+  setMeta('meta[property="og:image"]', ogImg);
+  setMeta('meta[name="twitter:title"]', data.title);
+  setMeta('meta[name="twitter:description"]', data.excerpt||data.title);
+  setMeta('meta[name="twitter:image"]', ogImg);
   setMeta('meta[name="description"]', data.excerpt||data.title);
   // canonical link
   let canonical = document.querySelector('link[rel="canonical"]');
   if(!canonical){ canonical=document.createElement('link'); canonical.rel='canonical'; document.head.appendChild(canonical); }
   canonical.href = pageUrl;
 // Update meta (legacy)
-  document.title = `${data.title} â æ¼«éæéèª`;
+  document.title = `${data.title} — 漫途旅遊誌`;
   const desc = document.createElement('meta');
   desc.name='description'; desc.content=data.excerpt||'';
   document.head.appendChild(desc);
@@ -282,9 +216,9 @@ async function load(){
 
   document.getElementById('article-wrap').innerHTML = `
     <div class="art-header">
-      <div class="art-emoji">${data.emoji||'âï¸'}</div>
+      <div class="art-emoji">${data.emoji||'✍️'}</div>
       <div class="art-meta">
-        ${data.city?`<span>ð ${data.city}</span>`:''}
+        ${data.city?`<span>📍 ${data.city}</span>`:''}
         ${data.category?`<span>${data.category}</span>`:''}
         ${data.published_at?`<span>${new Date(data.published_at).toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric'})}</span>`:''}
       </div>
@@ -305,20 +239,21 @@ ${(()=>{
   const lineUrl = 'https://social-plugins.line.me/lineit/share?url='+url;
   const twitterUrl = 'https://twitter.com/intent/tweet?url='+url+'&text='+title;
   return `<div class="share-bar">
-    <span class="share-label">åäº«</span>
+    <span class="share-label">分享</span>
     <div class="share-btns">
-      <a class="share-btn" href="${fbUrl}" target="_blank" rel="noopener">ð Facebook</a>
-      <a class="share-btn" href="${lineUrl}" target="_blank" rel="noopener">ð¬ LINE</a>
-      <a class="share-btn" href="${twitterUrl}" target="_blank" rel="noopener">ð Twitter</a>
-      <button class="share-btn copy-link-btn" onclick="copyLink(this)">ð è¤è£½é£çµ</button>
-      
+      <a class="share-btn" href="${fbUrl}" target="_blank" rel="noopener">📘 Facebook</a>
+      <a class="share-btn" href="${lineUrl}" target="_blank" rel="noopener">💬 LINE</a>
+      <a class="share-btn contact-line-btn" href="https://lin.ee/ZBhZQL3" target="_blank" rel="noopener">💬 聯絡旅遊誌</a>
+      <a class="share-btn" href="${twitterUrl}" target="_blank" rel="noopener">𝕏 Twitter</a>
+      <button class="share-btn" onclick="copyLink(this)">🔗 複製連結</button>
+      <a class="share-btn" href="https://lin.ee/ZBhZQL3" target="_blank" rel="noopener" style="border-color:rgba(0,195,0,0.35);color:#06c755">💬 聯絡我們</a>
     </div>
   </div>`;
 })()}
 ${data.shop_info ? renderShopCard(data.shop_info) : ''}
       <div class="art-footer">
-      <a href="/articles" class="back-btn">â è¿åæç« åè¡¨</a>
-      <span class="art-date">${data.published_at?'ç¼å¸æ¼ '+new Date(data.published_at).toLocaleDateString('zh-TW'):''}</span>
+      <a href="/articles" class="back-btn">← 返回文章列表</a>
+      <span class="art-date">${data.published_at?'發布於 '+new Date(data.published_at).toLocaleDateString('zh-TW'):''}</span>
     </div>
   `;
 }
@@ -326,24 +261,25 @@ ${data.shop_info ? renderShopCard(data.shop_info) : ''}
 function notFound(){
   document.getElementById('article-wrap').innerHTML=`
     <div class="not-found">
-      <h2>æ¾ä¸å°éç¯æç« </h2>
-      <p style="color:var(--text3);margin-bottom:2rem">æç« å¯è½å·²è¢«ç§»é¤æç¶²åæèª¤</p>
-      <a href="/articles" style="color:var(--accent)">â è¿åæç« åè¡¨</a>
+      <h2>找不到這篇文章</h2>
+      <p style="color:var(--text3);margin-bottom:2rem">文章可能已被移除或網址有誤</p>
+      <a href="/articles" style="color:var(--accent)">← 返回文章列表</a>
     </div>`;
 }
 
 function renderMd(txt){
   if(!txt) return '';
   return txt
+    .replace(/<p>####\s+(.+?)<\/p>/g,'<h4>$1</h4>')
+    .replace(/<p>###\s+(.+?)<\/p>/g,'<h3>$1</h3>')
+    .replace(/<p>##\s+(.+?)<\/p>/g,'<h2>$1</h2>')
+    .replace(/<p>#\s+(.+?)<\/p>/g,'<h2>$1</h2>')
     .replace(/^####\s+(.+)$/gm,'<h4>$1</h4>')
     .replace(/^###\s+(.+)$/gm,'<h3>$1</h3>')
     .replace(/^##\s+(.+)$/gm,'<h2>$1</h2>')
     .replace(/^#\s+(.+)$/gm,'<h2>$1</h2>')
     .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g,'<em>$1</em>')
-    .replace(/\n\n+/g,'</p><p>')
-    .replace(/^(?!<[h|p|u|o|b|d|t])/,'<p>')
-    .replace(/(?<!>)$/,'</p>');
+    .replace(/\*(.+?)\*/g,'<em>$1</em>');
 }
 function getEmbedUrl(url){
   let m;
@@ -354,55 +290,6 @@ function getEmbedUrl(url){
 }
 
 load();
-
-function buildTOC() {
-  const content = document.querySelector('.art-content');
-  if (!content) return;
-  const headings = content.querySelectorAll('h2, h3');
-  if (headings.length < 2) return; // å°æ¼2åæ¨é¡ä¸é¡¯ç¤ºç®é
-
-  // Add IDs to headings
-  headings.forEach((h, i) => {
-    if (!h.id) h.id = 'toc-heading-' + i;
-  });
-
-  // Build TOC HTML
-  let items = '';
-  headings.forEach(h => {
-    const tag = h.tagName.toLowerCase();
-    const cls = tag === 'h2' ? 'toc-h2' : 'toc-h3';
-    const text = h.textContent.trim();
-    items += '<li><a href="#' + h.id + '" class="' + cls + '">' + text + '</a></li>';
-  });
-
-  const toc = document.createElement('nav');
-  toc.className = 'toc-box';
-  toc.setAttribute('aria-label', 'æç« ç®é');
-  toc.innerHTML = '<div class="toc-title">æç« ç®é</div><ul class="toc-list">' + items + '</ul>';
-
-  // Insert TOC before first H2
-  const firstH2 = content.querySelector('h2');
-  if (firstH2) {
-    content.insertBefore(toc, firstH2);
-  } else {
-    content.insertBefore(toc, content.firstChild);
-  }
-}
-
-// Auto-call buildTOC via MutationObserver after content loads
-(function() {
-  const obs = new MutationObserver(function(muts, o) {
-    const content = document.querySelector('.art-content');
-    if (content && content.querySelector('h2')) {
-      buildTOC();
-      o.disconnect();
-    }
-  });
-  obs.observe(document.body, {childList:true, subtree:true});
-  // Also try after short delay
-  setTimeout(function(){if(document.querySelector('.art-content h2') && !document.querySelector('.toc-box')){buildTOC();}}, 800);
-  setTimeout(function(){if(document.querySelector('.art-content h2') && !document.querySelector('.toc-box')){buildTOC();}}, 2000);
-})();
 </script>
 </body>
 </html>
