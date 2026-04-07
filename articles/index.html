@@ -38,6 +38,7 @@ nav a:hover{color:var(--accent)}
 .art-card{background:var(--surface);border:1px solid var(--border);transition:transform 0.2s,box-shadow 0.2s;cursor:pointer}
 .art-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.08)}
 .art-card-emoji{font-size:3rem;padding:1.5rem 1.5rem 0.5rem;line-height:1}
+.art-card-cover{width:100%;height:180px;object-fit:cover;display:block}
 .art-card-body{padding:0 1.5rem 1.5rem}
 .art-card-meta{font-size:0.68rem;letter-spacing:0.1em;color:var(--text3);margin-bottom:0.5rem}
 .art-card-title{font-family:var(--font-serif);font-size:1.3rem;color:var(--text);margin-bottom:0.5rem;line-height:1.4}
@@ -123,9 +124,9 @@ function render(){
     container.innerHTML=`<div class="empty"><div class="empty-icon">📭</div>尚無文章</div>`;
     return;
   }
-  container.innerHTML=`<div class="articles-grid">${list.map(a=>`
+  container.innerHTML<`<div class="articles-grid">${list.map(a=>`
     <a href="/articles/${a.slug}" class="art-card">
-      <div class="art-card-emoji">${a.emoji||'✍️'}</div>
+      ${a.cover_image ? `<img src="${a.cover_image}" class="art-card-cover" alt="" loading="lazy">` : `<div class="art-card-emoji">${a.emoji||'✍️'}</div>`}
       <div class="art-card-body">
         <div class="art-card-meta">${[a.city,a.category].filter(Boolean).join(' · ')}</div>
         <div class="art-card-title">${a.title}</div>
@@ -138,15 +139,12 @@ function render(){
     </a>`).join('')}</div>`;
 }
 
-// Read ?city= param from URL and apply filter
 const _urlCity = decodeURIComponent(new URLSearchParams(location.search).get('city')||'');
 if(_urlCity){
-  // Update page title for SEO
   document.title = _urlCity + ' 旅遊文章 — 漫途旅遊誌';
   const metaDesc = document.querySelector('meta[name="description"]');
   if(metaDesc) metaDesc.content = '漫途旅遊誌 '+_urlCity+' 的旅遊開箱文章，記錄每一段旅程。';
 }
-// Also highlight active city button after load
 load(_urlCity);
 </script>
 </body>
