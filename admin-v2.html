@@ -427,6 +427,17 @@ tr:hover td{background:var(--surface2)}
       </div>
 
       <div class="fg">
+        <label class="fl">封面圖片 <span style="font-size:0.72rem;color:var(--text3)">（顯示於文章列表）</span></label>
+        <div id="cover-upload-area" onclick="document.getElementById('cover-file-input').click()" style="border:2px dashed var(--border2);padding:1rem;text-align:center;cursor:pointer;background:var(--surface2);border-radius:4px">
+          <div id="cover-preview-wrap">
+            <div style="font-size:1.5rem">🖼️</div>
+            <p style="font-size:0.78rem;color:var(--text3);margin-top:0.3rem">點擊上傳封面圖（建議 800x600 以上）</p>
+          </div>
+        </div>
+        <input type="file" id="cover-file-input" accept="image/*" style="display:none" onchange="handleCoverUpload(event)">
+      </div>
+
+      <div class="fg">
         <label class="fl">摘要（SEO description）</label>
         <textarea class="fta" id="f-excerpt" placeholder="簡短描述這篇文章..." style="min-height:60px"></textarea>
       </div>
@@ -525,6 +536,7 @@ const EMOJIS = ['✍️','🌸','🏔️','🌅','🏮','⛩️','🚢','🌊','
 let allArts = [];
 let artKws = [];
 let artImages = [];
+let artCoverUrl = null;
 let editingId = null;
 let selectedEmoji = '✍️';
 let filterStatus = 'all';
@@ -714,6 +726,7 @@ async function saveArt(){
     content: getEditorContent(),
     keywords: artKws,
     emoji: selectedEmoji,
+    cover_image: artCoverUrl || null,
     video_url: document.getElementById('f-video').value.trim()||null,
     status: document.getElementById('f-status').value,
     published_at: pubAt ? new Date(pubAt).toISOString() : null
