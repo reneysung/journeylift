@@ -8,7 +8,6 @@ const SITE = 'https://journeylift.com.tw';
 const DEFAULT_OG = `${SITE}/og-default.jpg`;
 const SITE_NAME = '漫途旅遊誌';
 
-// 城市與 sitemap 優先權
 const CITIES = [
   ['taipei', 1.0], ['newtaipei', 0.9], ['taoyuan', 0.8], ['hsinchu', 0.8],
   ['taichung', 0.9], ['nantou', 0.8], ['chiayi', 0.8], ['tainan', 0.9],
@@ -17,7 +16,6 @@ const CITIES = [
 ];
 const CITY_SET = new Set(CITIES.map((c) => c[0]));
 
-// 舊壞 slug → 新乾淨 slug（301）
 const SLUG_REDIRECTS = {
   '-1774017366618': 'kaohsiung-pier2-warehouse-cafe',
   '-sm0m': 'taipei-daan-green-light-cafe',
@@ -32,9 +30,13 @@ const SECURITY_HEADERS = {
 };
 
 function withSecurity(resp) {
-  const r = new Response(resp.body, resp);
-  for (const [k, v] of Object.entries(SECURITY_HEADERS)) r.headers.set(k, v);
-  return r;
+  const newHeaders = new Headers(resp.headers);
+  for (const [k, v] of Object.entries(SECURITY_HEADERS)) newHeaders.set(k, v);
+  return new Response(resp.body, {
+    status: resp.status,
+    statusText: resp.statusText,
+    headers: newHeaders,
+  });
 }
 
 function escapeXml(s) {
@@ -139,7 +141,6 @@ export default {
     const path = url.pathname;
 
     try {
-      // 1. 動態 sitemap.xml
       if (path === '/sitemap.xml') {
         const { xml, articleCount, totalEntries } = await buildSitemap();
         return withSecurity(new Response(xml, {
@@ -153,12 +154,10 @@ export default {
         }));
       }
 
-      // 2. /articles/[slug]
       const artMatch = path.match(/^\/articles\/(.+?)\/?$/);
       if (artMatch) {
         const slug = decodeURIComponent(artMatch[1]);
 
-        // 2a. 舊 slug 301
         if (SLUG_REDIRECTS[slug]) {
           return withSecurity(new Response(null, {
             status: 301,
@@ -169,7 +168,6 @@ export default {
           }));
         }
 
-        // 2b. 抓 article + SSR meta
         try {
           const articles = await sb(
             `articles?select=*&slug=eq.${encodeURIComponent(slug)}&status=eq.published&limit=1`
@@ -202,26 +200,21 @@ export default {
         }
       }
 
-      // 3. /articles 列表頁
       if (path === '/articles' || path === '/articles/') {
         return withSecurity(await fetchAsset(env, request, '/articles/index.html'));
       }
 
-      // 4. /[city] 或 /[city]/[keyword]
       const cityMatch = path.match(/^\/([^\/]+)(?:\/.+)?\/?$/);
       if (cityMatch && CITY_SET.has(cityMatch[1])) {
         return withSecurity(await fetchAsset(env, request, '/city.html'));
       }
 
-      // 5. /admin → /admin-v2.html
       if (path === '/admin' || path === '/admin/') {
         return withSecurity(await fetchAsset(env, request, '/admin-v2.html'));
       }
 
-      // 6. 其他全部 ASSETS
       return withSecurity(await env.ASSETS.fetch(request));
     } catch (e) {
-      // 最後一道 catch：避免 worker 整個炸
       return withSecurity(await env.ASSETS.fetch(request));
     }
   },
