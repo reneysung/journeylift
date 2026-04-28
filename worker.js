@@ -1,5 +1,5 @@
 // 漫途旅遊誌 — Cloudflare Worker
-// 提供：動態 sitemap.xml / 文章頁 SSR meta tags / 城市路由 / 舊 slug 301 / 安全 headers
+// 動態 sitemap.xml / 文章頁 SSR meta tags / 城市路由 / 舊 slug 301 / 安全 headers
 // 需要 ASSETS binding（wrangler.jsonc: assets.binding = "ASSETS"）
 
 const SB_URL = 'https://zsebcpfblecwumbaxeaz.supabase.co';
@@ -29,14 +29,23 @@ const SECURITY_HEADERS = {
   'Referrer-Policy': 'strict-origin-when-cross-origin',
 };
 
-function withSecurity(resp) {
-  const newHeaders = new Headers(resp.headers);
-  for (const [k, v] of Object.entries(SECURITY_HEADERS)) newHeaders.set(k, v);
-  return new Response(resp.body, {
-    status: resp.status,
-    statusText: resp.statusText,
-    headers: newHeaders,
-  });
+function applySecurity(headers) {
+  for (const [k, v] of Object.entries(SECURITY_HEADERS)) headers.set(k, v);
+  return headers;
+}
+
+async function passAsset(env, request) {
+  const r = await env.ASSETS.fetch(request);
+  const buf = await r.arrayBuffer();
+  const headers = applySecurity(new Headers(r.headers));
+  return new Response(buf, { status: r.status, statusText: r.statusText, headers });
+}
+
+async function fetchAssetBody(env, request, path) {
+  const origin = new URL(request.url).origin;
+  const u = new URL(path, origin);
+  const r = await env.ASSETS.fetch(new Request(u.toString(), request));
+  return r.text();
 }
 
 function escapeXml(s) {
@@ -64,9 +73,7 @@ async function buildSitemap() {
   entries.push(`<url><loc>${SITE}/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>`);
   entries.push(`<url><loc>${SITE}/articles</loc><changefreq>daily</changefreq><priority>0.9</priority></url>`);
   for (const [city, prio] of CITIES) {
-    entries.push(
-      `<url><loc>${SITE}/${city}</loc><changefreq>weekly</changefreq><priority>${prio}</priority></url>`
-    );
+    entries.push(`<url><loc>${SITE}/${city}</loc><changefreq>weekly</changefreq><priority>${prio}</priority></url>`);
   }
   let articleCount = 0;
   for (const a of articles) {
@@ -129,12 +136,6 @@ function injectArticleMeta(template, article) {
       `<script type="application/ld+json" id="schema-jsonld">${jsonLd}</script>`);
 }
 
-async function fetchAsset(env, request, path) {
-  const origin = new URL(request.url).origin;
-  const u = new URL(path, origin);
-  return env.ASSETS.fetch(new Request(u.toString(), request));
-}
-
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -143,15 +144,14 @@ export default {
     try {
       if (path === '/sitemap.xml') {
         const { xml, articleCount, totalEntries } = await buildSitemap();
-        return withSecurity(new Response(xml, {
-          headers: {
-            'Content-Type': 'application/xml; charset=utf-8',
-            'Cache-Control': 'public, max-age=3600, s-maxage=3600',
-            'X-Generated-By': 'worker',
-            'X-Article-Count': String(articleCount),
-            'X-Total-Entries': String(totalEntries),
-          },
+        const headers = applySecurity(new Headers({
+          'Content-Type': 'application/xml; charset=utf-8',
+          'Cache-Control': 'public, max-age=3600, s-maxage=3600',
+          'X-Generated-By': 'worker',
+          'X-Article-Count': String(articleCount),
+          'X-Total-Entries': String(totalEntries),
         }));
+        return new Response(xml, { status: 200, headers });
       }
 
       const artMatch = path.match(/^\/articles\/(.+?)\/?$/);
@@ -159,13 +159,11 @@ export default {
         const slug = decodeURIComponent(artMatch[1]);
 
         if (SLUG_REDIRECTS[slug]) {
-          return withSecurity(new Response(null, {
-            status: 301,
-            headers: {
-              Location: `${SITE}/articles/${SLUG_REDIRECTS[slug]}`,
-              'Cache-Control': 'public, max-age=86400',
-            },
+          const headers = applySecurity(new Headers({
+            Location: `${SITE}/articles/${SLUG_REDIRECTS[slug]}`,
+            'Cache-Control': 'public, max-age=86400',
           }));
+          return new Response(null, { status: 301, headers });
         }
 
         try {
@@ -173,49 +171,43 @@ export default {
             `articles?select=*&slug=eq.${encodeURIComponent(slug)}&status=eq.published&limit=1`
           );
           if (articles.length) {
-            const tmplResp = await fetchAsset(env, request, '/articles/article.html');
-            const tmpl = await tmplResp.text();
+            const tmpl = await fetchAssetBody(env, request, '/articles/article.html');
             const html = injectArticleMeta(tmpl, articles[0]);
-            return withSecurity(new Response(html, {
-              status: 200,
-              headers: {
-                'Content-Type': 'text/html; charset=utf-8',
-                'Cache-Control': 'public, max-age=300, s-maxage=600',
-                'X-Generated-By': 'worker-ssr',
-                'X-Article-Slug': slug,
-              },
-            }));
-          }
-          const tmplResp = await fetchAsset(env, request, '/articles/article.html');
-          const tmpl = await tmplResp.text();
-          return withSecurity(new Response(tmpl, {
-            status: 404,
-            headers: {
+            const headers = applySecurity(new Headers({
               'Content-Type': 'text/html; charset=utf-8',
-              'X-Generated-By': 'worker-404',
-            },
+              'Cache-Control': 'public, max-age=300, s-maxage=600',
+              'X-Generated-By': 'worker-ssr',
+              'X-Article-Slug': slug,
+            }));
+            return new Response(html, { status: 200, headers });
+          }
+          const tmpl = await fetchAssetBody(env, request, '/articles/article.html');
+          const headers = applySecurity(new Headers({
+            'Content-Type': 'text/html; charset=utf-8',
+            'X-Generated-By': 'worker-404',
           }));
+          return new Response(tmpl, { status: 404, headers });
         } catch (e) {
-          return withSecurity(await fetchAsset(env, request, '/articles/article.html'));
+          return passAsset(env, new Request(new URL('/articles/article.html', url.origin), request));
         }
       }
 
       if (path === '/articles' || path === '/articles/') {
-        return withSecurity(await fetchAsset(env, request, '/articles/index.html'));
+        return passAsset(env, new Request(new URL('/articles/index.html', url.origin), request));
       }
 
       const cityMatch = path.match(/^\/([^\/]+)(?:\/.+)?\/?$/);
       if (cityMatch && CITY_SET.has(cityMatch[1])) {
-        return withSecurity(await fetchAsset(env, request, '/city.html'));
+        return passAsset(env, new Request(new URL('/city.html', url.origin), request));
       }
 
       if (path === '/admin' || path === '/admin/') {
-        return withSecurity(await fetchAsset(env, request, '/admin-v2.html'));
+        return passAsset(env, new Request(new URL('/admin-v2.html', url.origin), request));
       }
 
-      return withSecurity(await env.ASSETS.fetch(request));
+      return passAsset(env, request);
     } catch (e) {
-      return withSecurity(await env.ASSETS.fetch(request));
+      return passAsset(env, request);
     }
   },
 };
