@@ -24,6 +24,7 @@ const SLUG_REDIRECTS = {
   '-1774017366618': 'kaohsiung-pier2-warehouse-cafe',
   '-sm0m': 'taipei-daan-green-light-cafe',
   '-1774011508378': 'tainan-chihkan-old-well-cafe',
+  '202610-1774019872644': 'tainan-renovation-cleaning-2026',
 };
 
 const SECURITY_HEADERS = {
