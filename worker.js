@@ -170,7 +170,7 @@ function injectHomeMeta(template, ogImage) {
   const desc = '漫途旅遊誌，用文字記錄每一段值得被記住的旅程。';
   const head = [
     `<link rel="canonical" href="${url}">`,
-    buildOgBlock({ title, desc, url, image: ogImage }),
+    buildOgBlock({ title, desc, url, image: ogImage || DEFAULT_OG }),
     ldScript([
       { '@context': 'https://schema.org', '@type': 'WebSite', name: SITE_NAME, url: SITE },
       { '@context': 'https://schema.org', '@type': 'Organization', name: SITE_NAME, url: SITE },
@@ -188,7 +188,7 @@ function injectCityMeta(template, cityName, citySlug, articles) {
     '@type': 'ListItem', position: i + 1, url: `${SITE}/articles/${a.slug}`, name: a.title,
   }));
   const head = [
-    buildOgBlock({ title, desc, url, image: ogImage }),
+    buildOgBlock({ title, desc, url, image: ogImage || DEFAULT_OG }),
     ldScript({
       '@context': 'https://schema.org', '@type': 'CollectionPage',
       name: title, description: desc, url,
@@ -201,6 +201,24 @@ function injectCityMeta(template, cityName, citySlug, articles) {
     .replace(/<meta id="meta-desc"[^>]*>/, `<meta id="meta-desc" name="description" content="${escapeHtml(desc)}">`)
     .replace(/<link rel="canonical" id="canonical"[^>]*>/, `<link rel="canonical" id="canonical" href="${url}">`)
     .replace('</head>', `${head}\n</head>`);
+}
+
+function injectListMeta(template) {
+  const url = `${SITE}/articles`;
+  const title = '文章目錄 — 漫途旅遊誌';
+  const desc = '漫途旅遊誌全部文章目錄：精選台灣各地咖啡廳、美食餐廳、旅遊景點與生活風格推薦文章。';
+  const head = [
+    `<link rel="canonical" href="${url}">`,
+    `<meta name="description" content="${escapeHtml(desc)}">`,
+    buildOgBlock({ title, desc, url, image: DEFAULT_OG }),
+    ldScript({
+      '@context': 'https://schema.org', '@type': 'CollectionPage',
+      name: title, description: desc, url,
+      isPartOf: { '@type': 'WebSite', name: SITE_NAME, url: SITE },
+    }),
+  ].join('\n');
+  // articles/index.html 只有 <title>，無 meta-desc/canonical 佔位 → 全部插入 </head> 前
+  return template.replace('</head>', `${head}\n</head>`);
 }
 
 export default {
@@ -240,6 +258,23 @@ export default {
               'Content-Type': 'text/html; charset=utf-8',
               'Cache-Control': 'public, max-age=300, s-maxage=600',
               'X-Generated-By': 'worker-ssr-home',
+            }),
+          });
+        } catch (e) {
+          return passAsset(env, request);
+        }
+      }
+
+      if (path === '/articles' || path === '/articles/') {
+        try {
+          const tmpl = await loadTemplate(env, url.origin, '/articles/');
+          const html = injectListMeta(tmpl);
+          return new Response(html, {
+            status: 200,
+            headers: withSec({
+              'Content-Type': 'text/html; charset=utf-8',
+              'Cache-Control': 'public, max-age=300, s-maxage=600',
+              'X-Generated-By': 'worker-ssr-list',
             }),
           });
         } catch (e) {
