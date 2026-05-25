@@ -142,6 +142,67 @@ function injectArticleMeta(template, article, slug) {
       `<script type="application/ld+json" id="schema-jsonld">${jsonLd}</script>`);
 }
 
+function buildOgBlock({ title, desc, url, image, type = 'website' }) {
+  return [
+    `<meta property="og:type" content="${type}">`,
+    `<meta property="og:site_name" content="${escapeHtml(SITE_NAME)}">`,
+    `<meta property="og:locale" content="zh_TW">`,
+    `<meta property="og:title" content="${escapeHtml(title)}">`,
+    `<meta property="og:description" content="${escapeHtml(desc)}">`,
+    `<meta property="og:url" content="${escapeHtml(url)}">`,
+    image ? `<meta property="og:image" content="${escapeHtml(image)}">` : '',
+    `<meta name="twitter:card" content="summary_large_image">`,
+    `<meta name="twitter:title" content="${escapeHtml(title)}">`,
+    `<meta name="twitter:description" content="${escapeHtml(desc)}">`,
+    image ? `<meta name="twitter:image" content="${escapeHtml(image)}">` : '',
+  ].filter(Boolean).join('\n');
+}
+
+function ldScript(obj) {
+  // escape `<` 避免內容含 </script> 破壞標籤
+  const json = JSON.stringify(obj).replace(/</g, '\\u003c');
+  return `<script type="application/ld+json" id="schema-jsonld-ssr">${json}</script>`;
+}
+
+function injectHomeMeta(template, ogImage) {
+  const url = `${SITE}/`;
+  const title = '漫途 — 生活旅遊誌｜用文字記錄每一段旅程';
+  const desc = '漫途旅遊誌，用文字記錄每一段值得被記住的旅程。';
+  const head = [
+    `<link rel="canonical" href="${url}">`,
+    buildOgBlock({ title, desc, url, image: ogImage }),
+    ldScript([
+      { '@context': 'https://schema.org', '@type': 'WebSite', name: SITE_NAME, url: SITE },
+      { '@context': 'https://schema.org', '@type': 'Organization', name: SITE_NAME, url: SITE },
+    ]),
+  ].join('\n');
+  return template.replace('</head>', `${head}\n</head>`);
+}
+
+function injectCityMeta(template, cityName, citySlug, articles) {
+  const url = `${SITE}/${citySlug}`;
+  const title = `${cityName}旅遊美食攻略 — 漫途生活旅遊誌`;
+  const desc = `探索${cityName}最值得一訪的咖啡廳、美食餐廳與生活風格，精選在地推薦文章。`;
+  const ogImage = (articles.find((a) => a.cover_image) || {}).cover_image || '';
+  const items = articles.slice(0, 20).map((a, i) => ({
+    '@type': 'ListItem', position: i + 1, url: `${SITE}/articles/${a.slug}`, name: a.title,
+  }));
+  const head = [
+    buildOgBlock({ title, desc, url, image: ogImage }),
+    ldScript({
+      '@context': 'https://schema.org', '@type': 'CollectionPage',
+      name: title, description: desc, url,
+      isPartOf: { '@type': 'WebSite', name: SITE_NAME, url: SITE },
+      mainEntity: { '@type': 'ItemList', numberOfItems: items.length, itemListElement: items },
+    }),
+  ].join('\n');
+  return template
+    .replace(/<title id="page-title">[^<]*<\/title>/, `<title id="page-title">${escapeHtml(title)}</title>`)
+    .replace(/<meta id="meta-desc"[^>]*>/, `<meta id="meta-desc" name="description" content="${escapeHtml(desc)}">`)
+    .replace(/<link rel="canonical" id="canonical"[^>]*>/, `<link rel="canonical" id="canonical" href="${url}">`)
+    .replace('</head>', `${head}\n</head>`);
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -160,6 +221,30 @@ export default {
             'X-Total-Entries': String(totalEntries),
           }),
         });
+      }
+
+      if (path === '/') {
+        try {
+          const tmpl = await loadTemplate(env, url.origin, '/');
+          let ogImage = '';
+          try {
+            const latest = await sb(
+              'articles?select=cover_image&status=eq.published&cover_image=not.is.null&order=published_at.desc&limit=1'
+            );
+            ogImage = latest[0]?.cover_image || '';
+          } catch (e) { /* og:image 省略即可 */ }
+          const html = injectHomeMeta(tmpl, ogImage);
+          return new Response(html, {
+            status: 200,
+            headers: withSec({
+              'Content-Type': 'text/html; charset=utf-8',
+              'Cache-Control': 'public, max-age=300, s-maxage=600',
+              'X-Generated-By': 'worker-ssr-home',
+            }),
+          });
+        } catch (e) {
+          return passAsset(env, request);
+        }
       }
 
       if (path.startsWith('/articles/') && path !== '/articles/' && !path.endsWith('.html') && !path.includes('/', 10)) {
@@ -200,6 +285,36 @@ export default {
 
       const cityMatch = path.match(/^\/([^\/]+)(?:\/.+)?\/?$/);
       if (cityMatch && CITY_SET.has(cityMatch[1])) {
+        const citySlug = cityMatch[1];
+        const segs = path.replace(/^\/+|\/+$/g, '').split('/');
+        if (segs.length === 1) {
+          // 純城市頁 → SSR meta（子頁 /{city}/{keyword} 維持 client-side，避免錯誤 canonical）
+          try {
+            const regions = await sb(
+              `regions?select=name,slug&slug=eq.${encodeURIComponent(citySlug)}&limit=1`
+            );
+            if (regions.length) {
+              const cityName = regions[0].name;
+              let articles = [];
+              try {
+                articles = await sb(
+                  `articles?select=title,slug,cover_image&status=eq.published&city=eq.${encodeURIComponent(cityName)}&order=published_at.desc&limit=20`
+                );
+              } catch (e) { /* 無文章也可，ItemList 空 */ }
+              const tmpl = await loadTemplate(env, url.origin, '/city');
+              const html = injectCityMeta(tmpl, cityName, citySlug, articles);
+              return new Response(html, {
+                status: 200,
+                headers: withSec({
+                  'Content-Type': 'text/html; charset=utf-8',
+                  'Cache-Control': 'public, max-age=300, s-maxage=600',
+                  'X-Generated-By': 'worker-ssr-city',
+                  'X-City-Slug': citySlug,
+                }),
+              });
+            }
+          } catch (e) { /* 失敗就 fallthrough 到 client-side shell */ }
+        }
         return passAsset(env, new Request(new URL('/city', url.origin).toString(), { method: 'GET' }));
       }
 
