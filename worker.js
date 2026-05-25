@@ -72,7 +72,7 @@ async function sb(path) {
 
 async function buildSitemap() {
   const articles = await sb(
-    'articles?select=slug,updated_at,published_at&status=eq.published&order=published_at.desc&limit=2000'
+    'articles?select=slug,updated_at,published_at,cover_image&status=eq.published&order=published_at.desc&limit=2000'
   );
   const today = new Date().toISOString().slice(0, 10);
   const entries = [];
@@ -85,13 +85,14 @@ async function buildSitemap() {
   for (const a of articles) {
     if (!a.slug || a.slug.startsWith('-')) continue;
     const lastmod = (a.updated_at || a.published_at || today).slice(0, 10);
+    const img = a.cover_image ? `<image:image><image:loc>${escapeXml(a.cover_image)}</image:loc></image:image>` : '';
     entries.push(
-      `<url><loc>${SITE}/articles/${escapeXml(a.slug)}</loc><lastmod>${lastmod}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>`
+      `<url><loc>${SITE}/articles/${escapeXml(a.slug)}</loc><lastmod>${lastmod}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority>${img}</url>`
     );
     articleCount++;
   }
   return {
-    xml: `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries.join('\n')}\n</urlset>\n`,
+    xml: `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${entries.join('\n')}\n</urlset>\n`,
     articleCount,
     totalEntries: entries.length,
   };

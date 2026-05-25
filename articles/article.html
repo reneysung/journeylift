@@ -216,7 +216,8 @@ async function load(){
   setId('meta-keywords','content', kwStr||'漫途,旅遊,台灣');
   // Schema.org
   const schEl = document.getElementById('schema-jsonld');
-  if(schEl) schEl.textContent = JSON.stringify({"@context":"https://schema.org","@type":"BlogPosting","headline":data.title,"description":seoDesc,"url":pageUrl,"datePublished":data.published_at||data.created_at,"author":{"@type":"Organization","name":"漫途旅遊誌"},"keywords":kwStr,"inLanguage":"zh-TW"});
+  // 只在 SSR 沒填（仍是空 {}）時才由 client 補，避免覆蓋 worker 注入較完整的 Article schema
+  if(schEl && schEl.textContent.trim()==='{}') schEl.textContent = JSON.stringify({"@context":"https://schema.org","@type":"BlogPosting","headline":data.title,"description":seoDesc,"url":pageUrl,"datePublished":data.published_at||data.created_at,"author":{"@type":"Organization","name":"漫途旅遊誌"},"keywords":kwStr,"inLanguage":"zh-TW"});
   setMeta('meta[property="og:url"]', pageUrl);
   setMeta('meta[property="og:title"]', data.title);
   setMeta('meta[property="og:description"]', data.excerpt||data.title);
