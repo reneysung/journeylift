@@ -1,0 +1,10 @@
+# 不要把這些當公開靜態資源上傳（資安 + 清潔）
+.git
+.wrangler
+*.map
+worker.js
+wrangler.jsonc
+.gitignore
+.assetsignore
+# 移除靜態 sitemap，改由 worker.js 動態產生 /sitemap.xml
+sitemap.xml
