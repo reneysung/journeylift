@@ -314,8 +314,16 @@ export default {
               }),
             });
           }
-          return passAsset(env, new Request(new URL('/articles/article', url.origin).toString(), { method: 'GET' }));
+          // 文章不存在 → 回 404（不是 200 SPA 殼），避免 Google 標成「轉址式 404 / soft 404」
+          const r = await env.ASSETS.fetch(new Request(new URL('/articles/article', url.origin).toString(), { method: 'GET' }));
+          const buf = await r.arrayBuffer();
+          return new Response(buf, {
+            status: 404,
+            statusText: 'Not Found',
+            headers: withSec({ 'Content-Type': 'text/html; charset=utf-8' }),
+          });
         } catch (e) {
+          // DB 出錯（暫時性）→ 維持 SPA fallback、不要 404
           return passAsset(env, new Request(new URL('/articles/article', url.origin).toString(), { method: 'GET' }));
         }
       }
