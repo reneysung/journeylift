@@ -229,6 +229,18 @@ export default {
     const path = url.pathname;
 
     try {
+      // 強制 https：避免 http:// 與 https:// 同時可達被 Google 視為重複網頁
+      if (url.protocol === 'http:') {
+        url.protocol = 'https:';
+        return new Response(null, {
+          status: 301,
+          headers: withSec({
+            Location: url.toString(),
+            'Cache-Control': 'public, max-age=86400',
+          }),
+        });
+      }
+
       // 統一 URL 形式：結尾 / 一律 301 到無斜線版（root / 除外），避免 /articles 與 /articles/、/tainan 與 /tainan/ 同時可達造成 canonical 重複
       if (path !== '/' && path.endsWith('/')) {
         const stripped = path.replace(/\/+$/, '');
