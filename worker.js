@@ -229,6 +229,18 @@ export default {
     const path = url.pathname;
 
     try {
+      // 統一 URL 形式：結尾 / 一律 301 到無斜線版（root / 除外），避免 /articles 與 /articles/、/tainan 與 /tainan/ 同時可達造成 canonical 重複
+      if (path !== '/' && path.endsWith('/')) {
+        const stripped = path.replace(/\/+$/, '');
+        return new Response(null, {
+          status: 301,
+          headers: withSec({
+            Location: `${SITE}${stripped}${url.search}`,
+            'Cache-Control': 'public, max-age=86400',
+          }),
+        });
+      }
+
       if (path === '/sitemap.xml') {
         const { xml, articleCount, totalEntries } = await buildSitemap();
         return new Response(xml, {
