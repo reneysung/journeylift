@@ -189,11 +189,18 @@ async function load(){
   const slug = decodeURIComponent(location.pathname.split('/').filter(Boolean).pop());
   if(!slug){ notFound(); return; }
 
-  const {data} = await sb.from('articles')
-    .select('*')
-    .eq('slug', slug)
-    .eq('status','published')
-    .single();
+  // 優先用 worker SSR inline 的資料，跳過 Supabase（避免冷啟動/逾時卡住內文渲染）
+  let data = null;
+  const ssrEl = document.getElementById('__ssr_article');
+  if (ssrEl) { try { data = JSON.parse(ssrEl.textContent); } catch(e){} }
+  if (!data) {
+    const r = await sb.from('articles')
+      .select('*')
+      .eq('slug', slug)
+      .eq('status','published')
+      .single();
+    data = r.data;
+  }
 
   if(!data){ notFound(); return; }
 

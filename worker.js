@@ -107,6 +107,10 @@ function injectArticleMeta(template, article, slug) {
   const published = article.published_at || article.created_at;
   const updated = article.updated_at || published;
 
+  // SSR：把整個 article inline 進 HTML，前端不必再打 Supabase
+  // （解決內文渲染要等 Supabase 冷啟動/逾時、整篇空白卡住的問題）
+  const ssrData = `<script id="__ssr_article" type="application/json">${JSON.stringify(article).replace(/</g, '\\u003c')}</script>`;
+
   const jsonLd = JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -141,7 +145,8 @@ function injectArticleMeta(template, article, slug) {
     .replace(/<meta name="twitter:image"[^>]*>/,
       `<meta name="twitter:image" content="${escapeHtml(image)}">`)
     .replace(/<script type="application\/ld\+json" id="schema-jsonld">[^<]*<\/script>/,
-      `<script type="application/ld+json" id="schema-jsonld">${jsonLd}</script>`);
+      `<script type="application/ld+json" id="schema-jsonld">${jsonLd}</script>`)
+    .replace('</head>', `${ssrData}\n</head>`);
 }
 
 function buildOgBlock({ title, desc, url, image, type = 'website' }) {
