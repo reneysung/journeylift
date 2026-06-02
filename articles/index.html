@@ -131,7 +131,7 @@ function render(){
     container.innerHTML=`<div class="empty"><div class="empty-icon">📭</div>尚無文章</div>`;
     return;
   }
-  container.innerHTML<`<div class="articles-grid">${list.map(a=>`
+  container.innerHTML=`<div class="articles-grid">${list.map(a=>`
     <a href="/articles/${a.slug}" class="art-card">
       ${a.cover_image ? `<img src="${a.cover_image}" class="art-card-cover" alt="" loading="lazy">` : `<div class="art-card-emoji">${a.emoji||'✍️'}</div>`}
       <div class="art-card-body">
