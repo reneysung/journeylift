@@ -210,7 +210,7 @@ function injectCityMeta(template, cityName, citySlug, articles) {
     .replace('</head>', `${head}\n</head>`);
 }
 
-function injectListMeta(template) {
+function injectListMeta(template, articles) {
   const url = `${SITE}/articles`;
   const title = '文章目錄 — 漫途旅遊誌';
   const desc = '漫途旅遊誌全部文章目錄：精選台灣各地咖啡廳、美食餐廳、旅遊景點與生活風格推薦文章。';
@@ -224,8 +224,12 @@ function injectListMeta(template) {
       isPartOf: { '@type': 'WebSite', name: SITE_NAME, url: SITE },
     }),
   ].join('\n');
+  // SSR：把列表資料 inline 進 HTML，前端不必再打 Supabase（解決列表頁等 Supabase 卡住）
+  const ssrList = articles
+    ? `<script id="__ssr_articles" type="application/json">${JSON.stringify(articles).replace(/</g, '\\u003c')}</script>`
+    : '';
   // articles/index.html 只有 <title>，無 meta-desc/canonical 佔位 → 全部插入 </head> 前
-  return template.replace('</head>', `${head}\n</head>`);
+  return template.replace('</head>', `${head}\n${ssrList}\n</head>`);
 }
 
 export default {
@@ -299,7 +303,12 @@ export default {
       if (path === '/articles' || path === '/articles/') {
         try {
           const tmpl = await loadTemplate(env, url.origin, '/articles/');
-          const html = injectListMeta(tmpl);
+          // 只撈列表需要的欄位（不抓 content），避免一次拉回所有文章內文
+          let listArticles = null;
+          try {
+            listArticles = await sb('articles?select=id,slug,title,excerpt,cover_image,city,category,emoji,published_at&status=eq.published&order=published_at.desc&limit=20');
+          } catch (e) { listArticles = null; }
+          const html = injectListMeta(tmpl, listArticles);
           return new Response(html, {
             status: 200,
             headers: withSec({
