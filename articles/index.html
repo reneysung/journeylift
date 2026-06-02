@@ -89,10 +89,17 @@ const sb = supabase.createClient(
 let allArts = [], activeFilter = 'all';
 
 async function load(initCity){
-  const {data} = await sb.from('articles')
-    .select('*')
-    .eq('status','published')
-    .order('published_at',{ascending:false});
+  // 優先用 worker SSR inline 的列表，跳過 Supabase（避免冷啟動/逾時卡住）；fallback 也只取列表欄位（不含 content）
+  let data = null;
+  const ssrEl = document.getElementById('__ssr_articles');
+  if (ssrEl) { try { data = JSON.parse(ssrEl.textContent); } catch(e){} }
+  if (!data) {
+    const r = await sb.from('articles')
+      .select('id,slug,title,excerpt,cover_image,city,category,emoji,published_at')
+      .eq('status','published')
+      .order('published_at',{ascending:false});
+    data = r.data;
+  }
   allArts = data||[];
   buildFilters();
   render();

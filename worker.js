@@ -306,7 +306,7 @@ export default {
           // 只撈列表需要的欄位（不抓 content），避免一次拉回所有文章內文
           let listArticles = null;
           try {
-            listArticles = await sb('articles?select=id,slug,title,excerpt,cover_image,city,category,emoji,published_at&status=eq.published&order=published_at.desc&limit=20');
+            listArticles = await sb('articles?select=id,slug,title,excerpt,cover_image,city,category,emoji,published_at&status=eq.published&order=published_at.desc&limit=100');
           } catch (e) { listArticles = null; }
           const html = injectListMeta(tmpl, listArticles);
           return new Response(html, {
