@@ -111,6 +111,34 @@ function injectArticleMeta(template, article, slug) {
   // （解決內文渲染要等 Supabase 冷啟動/逾時、整篇空白卡住的問題）
   const ssrData = `<script id="__ssr_article" type="application/json">${JSON.stringify(article).replace(/</g, '\\u003c')}</script>`;
 
+  // SSR 可見正文：H1 + 內文寫進 #article-wrap，讓不執行 JS 的爬蟲 / AI bot 也讀得到（AEO）。
+  // client JS 載入後以 __ssr_article 重新渲染（補 cover/分享/店家卡），整段覆蓋此內容，對真人無影響。
+  const mdLite = (txt) => !txt ? '' : String(txt)
+    .replace(/<script[\s\S]*?<\/script\s*>/gi, '')
+    .replace(/<p>####\s+(.+?)<\/p>/g, '<h4>$1</h4>')
+    .replace(/<p>###\s+(.+?)<\/p>/g, '<h3>$1</h3>')
+    .replace(/<p>##\s+(.+?)<\/p>/g, '<h2>$1</h2>')
+    .replace(/<p>#\s+(.+?)<\/p>/g, '<h2>$1</h2>')
+    .replace(/^####\s+(.+)$/gm, '<h4>$1</h4>')
+    .replace(/^###\s+(.+)$/gm, '<h3>$1</h3>')
+    .replace(/^##\s+(.+)$/gm, '<h2>$1</h2>')
+    .replace(/^#\s+(.+)$/gm, '<h2>$1</h2>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>');
+  const ssrDate = published ? String(published).slice(0, 10) : '';
+  const ssrBody = '<div class="art-header">'
+    + (article.cover_image ? `<div class="art-cover"><img src="${escapeHtml(article.cover_image)}" alt="${escapeHtml(article.title || '')}" style="width:100%;max-height:420px;object-fit:cover;border-radius:8px;margin-bottom:1.5rem;display:block"></div>` : '')
+    + '<div class="art-meta">'
+    + (article.city ? `<span>📍 ${escapeHtml(article.city)}</span>` : '')
+    + (article.category ? `<span>${escapeHtml(article.category)}</span>` : '')
+    + (ssrDate ? `<span>${escapeHtml(ssrDate)}</span>` : '')
+    + '</div>'
+    + `<h1 class="art-title">${escapeHtml(article.title || '')}</h1>`
+    + (article.excerpt ? `<p class="art-excerpt">${escapeHtml(article.excerpt)}</p>` : '')
+    + '</div>'
+    + `<div class="art-content">${mdLite(article.content)}</div>`
+    + '<div class="art-footer"><a href="/articles" class="back-btn">← 返回文章列表</a></div>';
+
   const jsonLd = JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -146,7 +174,8 @@ function injectArticleMeta(template, article, slug) {
       `<meta name="twitter:image" content="${escapeHtml(image)}">`)
     .replace(/<script type="application\/ld\+json" id="schema-jsonld">[^<]*<\/script>/,
       `<script type="application/ld+json" id="schema-jsonld">${jsonLd}</script>`)
-    .replace('</head>', `${ssrData}\n</head>`);
+    .replace('</head>', `${ssrData}\n</head>`)
+    .replace('<div class="loading">載入中...</div>', ssrBody);
 }
 
 function buildOgBlock({ title, desc, url, image, type = 'website' }) {
@@ -207,6 +236,8 @@ function injectCityMeta(template, cityName, citySlug, articles) {
     .replace(/<title id="page-title">[^<]*<\/title>/, `<title id="page-title">${escapeHtml(title)}</title>`)
     .replace(/<meta id="meta-desc"[^>]*>/, `<meta id="meta-desc" name="description" content="${escapeHtml(desc)}">`)
     .replace(/<link rel="canonical" id="canonical"[^>]*>/, `<link rel="canonical" id="canonical" href="${url}">`)
+    // SSR H1：把靜態「載入中...」換成城市名，讓不執行 JS 的爬蟲讀到正確主標題
+    .replace(/<h1 id="city-name">[^<]*<\/h1>/, `<h1 id="city-name">${escapeHtml(cityName)}</h1>`)
     .replace('</head>', `${head}\n</head>`);
 }
 
