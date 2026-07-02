@@ -281,6 +281,11 @@ export default {
         });
       }
 
+      // favicon.ico → 直接服務網站圖示 PNG（避免 404，讓 Google 搜尋結果能顯示小圖示）
+      if (path === '/favicon.ico') {
+        return env.ASSETS.fetch(new Request(new URL('/favicon-192.png', url.origin).toString(), { method: 'GET' }));
+      }
+
       // 統一 URL 形式：結尾 / 一律 301 到無斜線版（root / 除外），避免 /articles 與 /articles/、/tainan 與 /tainan/ 同時可達造成 canonical 重複
       if (path !== '/' && path.endsWith('/')) {
         const stripped = path.replace(/\/+$/, '');
