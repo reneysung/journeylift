@@ -130,8 +130,8 @@ footer{border-top:1px solid rgba(200,169,110,0.08);padding:4rem 3rem;background:
 .city-btn{padding:0.3rem 0.85rem;border:1px solid rgba(200,169,110,0.18);background:none;color:var(--mist);cursor:pointer;font-family:var(--ff-n);font-size:0.65rem;letter-spacing:0.1em;transition:all 0.2s}
 .city-btn:hover,.city-btn.on{border-color:var(--gold);color:var(--gold)}
 /* cover image */
-.ac-cover{width:100%;aspect-ratio:3/2;object-fit:cover;display:block;margin-bottom:1.2rem}
-.ac-big .ac-cover{aspect-ratio:16/9;margin-bottom:1.5rem}
+.ac-cover{width:100%;aspect-ratio:1200/630;object-fit:cover;display:block;margin-bottom:1.2rem}
+.ac-big .ac-cover{aspect-ratio:1200/630;margin-bottom:1.5rem}
 @media(max-width:900px){.city-bar{gap:0.3rem}.city-btn{font-size:0.62rem}}
 @keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 
@@ -290,7 +290,7 @@ async function load(){
     fc.querySelector('.feat-title').textContent=a.title;
     if(a.cover_image){
       const img=document.createElement('img');
-      img.src=a.cover_image;img.style.cssText='width:100%;aspect-ratio:16/9;object-fit:cover;margin-bottom:1rem';
+      img.src=a.cover_image;img.style.cssText='width:100%;aspect-ratio:1200/630;object-fit:cover;margin-bottom:1rem';
       fc.insertBefore(img,fc.querySelector('.feat-emoji'));
       fc.querySelector('.feat-emoji').style.display='none';
     }
