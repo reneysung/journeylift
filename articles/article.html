@@ -68,6 +68,15 @@ nav a:hover{color:var(--accent)}
 .video-wrap iframe{width:100%;height:100%;border:none}
 
 .art-footer{margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.related-wrap{margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.related-title{font-family:var(--font-serif);font-size:1.4rem;color:var(--accent2);margin-bottom:1.2rem}
+.related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
+.related-card{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:8px;overflow:hidden;text-decoration:none;color:inherit;transition:box-shadow .2s,transform .2s;background:var(--card,#fff)}
+.related-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.08);transform:translateY(-2px)}
+.related-thumb{aspect-ratio:1200/630;background-size:cover;background-position:center;background-color:var(--border)}
+.related-info{padding:.7rem .8rem}
+.related-meta{font-size:.75rem;color:var(--text2);margin-bottom:.3rem}
+.related-name{font-size:.95rem;line-height:1.45;color:var(--text)}
 .back-btn{font-size:0.78rem;color:var(--text2);letter-spacing:0.05em}
 .back-btn:hover{color:var(--accent)}
 .art-date{font-size:0.72rem;color:var(--text3)}
@@ -291,6 +300,18 @@ ${(()=>{
   </div>`;
 })()}
 ${data.shop_info ? renderShopCard(data.shop_info) : ''}
+    ${(()=>{
+      try{
+        const el=document.getElementById('__ssr_related');
+        const rel=el?JSON.parse(el.textContent):[];
+        if(!rel.length) return '';
+        const card=(r)=>{
+          const meta=[r.city?'📍'+r.city:'',r.category||''].filter(Boolean).join(' · ');
+          return `<a class="related-card" href="/articles/${r.slug}"><div class="related-thumb"${r.cover_image?` style="background-image:url('${r.cover_image}')"`:''}></div><div class="related-info"><div class="related-meta">${meta}</div><div class="related-name">${r.title||''}</div></div></a>`;
+        };
+        return `<div class="related-wrap"><h2 class="related-title">相關文章</h2><div class="related-grid">${rel.map(card).join('')}</div></div>`;
+      }catch(e){return '';}
+    })()}
       <div class="art-footer">
       <a href="/articles" class="back-btn">← 返回文章列表</a>
       <span class="art-date">${data.published_at?'發布於 '+new Date(data.published_at).toLocaleDateString('zh-TW'):''}</span>

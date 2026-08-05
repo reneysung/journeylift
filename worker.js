@@ -99,7 +99,7 @@ async function buildSitemap() {
   };
 }
 
-function injectArticleMeta(template, article, slug) {
+function injectArticleMeta(template, article, slug, related = []) {
   const url = `${SITE}/articles/${slug}`;
   const fullTitle = `${article.title} — ${SITE_NAME}`;
   const desc = (article.excerpt || article.title || '').slice(0, 160);
@@ -110,6 +110,19 @@ function injectArticleMeta(template, article, slug) {
   // SSR：把整個 article inline 進 HTML，前端不必再打 Supabase
   // （解決內文渲染要等 Supabase 冷啟動/逾時、整篇空白卡住的問題）
   const ssrData = `<script id="__ssr_article" type="application/json">${JSON.stringify(article).replace(/</g, '\\u003c')}</script>`;
+
+  // 相關文章（SSR 進 HTML，讓爬蟲/AI bot 讀得到內鏈；client 再以 __ssr_related 重繪）
+  const relItems = (related || []).slice(0, 6);
+  const relCard = (r) => {
+    const meta = [r.city ? '📍' + escapeHtml(r.city) : '', escapeHtml(r.category || '')].filter(Boolean).join(' · ');
+    return `<a class="related-card" href="/articles/${escapeHtml(r.slug)}">`
+      + `<div class="related-thumb"${r.cover_image ? ` style="background-image:url('${escapeHtml(r.cover_image)}')"` : ''}></div>`
+      + `<div class="related-info"><div class="related-meta">${meta}</div><div class="related-name">${escapeHtml(r.title || '')}</div></div></a>`;
+  };
+  const relatedBlock = relItems.length
+    ? `<div class="related-wrap"><h2 class="related-title">相關文章</h2><div class="related-grid">${relItems.map(relCard).join('')}</div></div>`
+    : '';
+  const ssrRelated = `<script id="__ssr_related" type="application/json">${JSON.stringify(relItems).replace(/</g, '\\u003c')}</script>`;
 
   // SSR 可見正文：H1 + 內文寫進 #article-wrap，讓不執行 JS 的爬蟲 / AI bot 也讀得到（AEO）。
   // client JS 載入後以 __ssr_article 重新渲染（補 cover/分享/店家卡），整段覆蓋此內容，對真人無影響。
@@ -137,6 +150,7 @@ function injectArticleMeta(template, article, slug) {
     + (article.excerpt ? `<p class="art-excerpt">${escapeHtml(article.excerpt)}</p>` : '')
     + '</div>'
     + `<div class="art-content">${mdLite(article.content)}</div>`
+    + relatedBlock
     + '<div class="art-footer"><a href="/articles" class="back-btn">← 返回文章列表</a></div>';
 
   const jsonLd = JSON.stringify({
@@ -174,7 +188,7 @@ function injectArticleMeta(template, article, slug) {
       `<meta name="twitter:image" content="${escapeHtml(image)}">`)
     .replace(/<script type="application\/ld\+json" id="schema-jsonld">[^<]*<\/script>/,
       `<script type="application/ld+json" id="schema-jsonld">${jsonLd}</script>`)
-    .replace('</head>', `${ssrData}\n</head>`)
+    .replace('</head>', `${ssrData}\n${ssrRelated}\n</head>`)
     .replace('<div class="loading">載入中...</div>', ssrBody);
 }
 
@@ -269,8 +283,8 @@ export default {
     const path = url.pathname;
 
     try {
-      // 強制 https：避免 http:// 與 https:// 同時可達被 Google 視為重複網頁
-      if (url.protocol === 'http:') {
+      // 強制 https：避免 http:// 與 https:// 同時可達被 Google 視為重複網頁（本機 dev 例外）
+      if (url.protocol === 'http:' && url.hostname !== 'localhost' && url.hostname !== '127.0.0.1') {
         url.protocol = 'https:';
         return new Response(null, {
           status: 301,
@@ -376,8 +390,28 @@ export default {
             `articles?select=*&slug=eq.${encodeURIComponent(slug)}&status=eq.published&limit=1`
           );
           if (articles.length) {
+            const art = articles[0];
+            // 相關文章：同城市 + 同分類，依相關度排序（同城 2 分 + 同類 1 分）取 6 篇
+            let related = [];
+            try {
+              const conds = [];
+              if (art.city) conds.push(`city.eq.${encodeURIComponent(art.city)}`);
+              if (art.category) conds.push(`category.eq.${encodeURIComponent(art.category)}`);
+              if (conds.length) {
+                const rel = await sb(
+                  `articles?select=slug,title,city,category,cover_image&status=eq.published`
+                  + `&or=(${conds.join(',')})&slug=neq.${encodeURIComponent(slug)}`
+                  + `&order=published_at.desc&limit=40`
+                );
+                related = rel
+                  .map((r) => ({ r, s: (r.city === art.city ? 2 : 0) + (r.category === art.category ? 1 : 0) }))
+                  .sort((a, b) => b.s - a.s)
+                  .slice(0, 6)
+                  .map((x) => x.r);
+              }
+            } catch (e) { related = []; }
             const tmpl = await loadTemplate(env, url.origin, '/articles/article');
-            const html = injectArticleMeta(tmpl, articles[0], slug);
+            const html = injectArticleMeta(tmpl, art, slug, related);
             return new Response(html, {
               status: 200,
               headers: withSec({
