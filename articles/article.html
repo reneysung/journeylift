@@ -142,6 +142,9 @@ nav a:hover{color:var(--accent)}
 .mantu-v2 .band{margin:3.5rem 0 0}
 .mantu-v2 .band-cap{font-size:11px;letter-spacing:.16em;color:var(--v2-t3);margin:0 0 12px}
 .mantu-v2 .band-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+/* 作品帶是節奏用的裝飾帶，統一裁成 3/2 讓整排齊高；
+   主圖組（.studio-gallery）仍絕不裁切。⚠️ 內建文字的圖（before/after）不要放進作品帶。 */
+.mantu-v2 .band .fig img{aspect-ratio:3/2;object-fit:cover;width:100%}
 /* 小標與內文 */
 .mantu-v2 .eyebrow{font-size:11px;letter-spacing:.2em;color:var(--v2-accent);font-weight:700;
   border-bottom:1px solid var(--v2-line);padding-bottom:7px;margin:1.6rem 0 .9rem}
