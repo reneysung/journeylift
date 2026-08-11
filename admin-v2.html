@@ -577,6 +577,12 @@ function loadSettings(){
   var k=localStorage.getItem('mantu-api-key');
   var el=document.getElementById('api-key-input');
   if(el&&k)el.value=k;
+  // saveSettings() 一直有寫入這兩個 key，但以前沒人讀 → cities/cats 永遠是空陣列、
+  // 城市與分類下拉整個沒選項，手動新增的重整就不見（2026-08-11 修）
+  try{
+    cities = JSON.parse(localStorage.getItem('mantu-cities')||'[]');
+    cats   = JSON.parse(localStorage.getItem('mantu-cats')||'[]');
+  }catch(e){ cities=[]; cats=[]; }
 }
 
 // ── ARTICLES ───────────────────────────────────────────────────────────────
@@ -584,8 +590,21 @@ async function loadArticles(){
   const {data,error} = await sb.from('articles').select('*').order('created_at',{ascending:false});
   if(error){ toast('載入失敗：'+error.message,'err'); return; }
   allArts = data||[];
+  syncListsFromArticles();
   renderArts();
   updateStats();
+}
+
+// 下拉選項以「文章實際用到的值」為準，再聯集手動加的，不寫死清單。
+// 之後新增分類（例如 2026-08 的「室內設計」）會自己出現，不用改程式。
+function syncListsFromArticles(){
+  const uniq = (arr,extra) => [...new Set([...arr.filter(Boolean),...extra])].sort((a,b)=>a.localeCompare(b,'zh-Hant'));
+  cities = uniq(allArts.map(a=>a.city),  cities);
+  cats   = uniq(allArts.map(a=>a.category), cats);
+  saveSettings();
+  if(document.getElementById('f-city'))    renderCitySelect();
+  if(document.getElementById('f-cat'))     renderCatSelect();
+  if(document.getElementById('ai-pub-cat'))renderCatSelect2();
 }
 
 function updateStats(){
