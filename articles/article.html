@@ -23,7 +23,7 @@
 <meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://journeylift.com.tw/og-default.jpg">
 <script type="application/ld+json" id="schema-jsonld">{}</script>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
@@ -73,12 +73,32 @@ nav a:hover{color:var(--accent)}
 .article-wrap:has(.mantu-v2) .art-title{font-size:2.9rem;max-width:16em}
 .article-wrap:has(.mantu-v2) .art-excerpt{max-width:38em;line-height:2}
 .article-wrap:has(.mantu-v2) .art-header{border-bottom:0;padding-bottom:0;margin-bottom:1.5rem}
-.mantu-v2{--v2-accent:var(--accent);--v2-soft:#f7eff3;--v2-line:var(--border);--v2-dash:#e6d2dc;
-  --v2-t2:var(--text2);--v2-t3:var(--text3);line-height:1.9}
+/* 中文襯線：站台 --font-serif 是 Cormorant（純拉丁），中文會掉到系統宋體（Win/Android 會壞或糊）。
+   v2 大量用襯線做店名與大標，所以在 v2 範圍內把 Noto Serif TC 接在後面，並關掉假粗體合成。
+   只作用於 v2，舊文章的字體外觀完全不變。 */
+.article-wrap:has(.mantu-v2){--font-serif:'Cormorant Garamond','Noto Serif TC',serif}
+.mantu-v2{font-synthesis:none}
+/* soft／dash 由 accent 推導，換配色只需改 --v2-accent 一個值（前一行為舊瀏覽器 fallback） */
+.mantu-v2{--v2-accent:var(--accent);--v2-line:var(--border);
+  --v2-t2:var(--text2);--v2-t3:var(--text3);line-height:1.9;
+  --v2-soft:var(--surface);--v2-dash:var(--border);
+  --v2-soft:color-mix(in srgb,var(--v2-accent) 7%,transparent);
+  --v2-dash:color-mix(in srgb,var(--v2-accent) 26%,transparent)}
 /* 區段標頭 */
 /* 站台導覽列用了裸 header{} 選擇器（第 39 行），內容區若出現 <header> 會被套用 → 這裡解除 */
 .mantu-v2 header{background:none;border:0;padding:0;height:auto;position:static;z-index:auto;
   display:block;justify-content:flex-start}
+/* 純文字段落（開場／知識段／FAQ／結語）維持易讀寬度，不跟著容器變 1080 */
+.mantu-v2 .col{max-width:660px}
+.mantu-v2 .col h2{font-family:var(--font-serif);font-size:1.6rem;color:var(--text);
+  margin:2.6rem 0 .9rem;padding-bottom:.4rem;border-bottom:1px solid var(--v2-line)}
+.mantu-v2 .col h3{font-family:var(--font-serif);font-size:1.1rem;color:var(--v2-t2);margin:1.6rem 0 .4rem}
+.mantu-v2 .col p{line-height:2.05}
+/* 目錄 */
+.mantu-v2 .toc{background:var(--v2-soft);padding:16px 20px;margin:1.8rem 0 0;max-width:660px}
+.mantu-v2 .toc strong{display:block;font-size:11px;letter-spacing:.2em;color:var(--v2-accent);margin-bottom:8px}
+.mantu-v2 .toc ol{margin:0;padding-left:1.3em;font-size:.9rem}
+.mantu-v2 .toc li{margin-bottom:.25rem}
 .mantu-v2 .sec-head{display:flex;align-items:baseline;gap:14px;margin:0 0 20px}
 .mantu-v2 .sec-head .eyebrow{font-size:11px;letter-spacing:.2em;color:var(--v2-accent);font-weight:700;
   margin:0;white-space:nowrap;border:0;padding:0}
@@ -109,7 +129,8 @@ nav a:hover{color:var(--accent)}
 .mantu-v2 .fig figcaption{font-size:.72rem;color:var(--v2-t3);line-height:1.65;margin-top:7px}
 .mantu-v2 .fig--lead{margin-bottom:14px}
 .mantu-v2 .fig--lead img{max-height:560px;width:auto}
-.mantu-v2 .fig-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:start}
+/* auto-fit：只有 2 張時會填滿整列，不會縮成 1/3 留空 */
+.mantu-v2 .fig-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;align-items:start}
 .mantu-v2 .fig-row .fig img{width:100%}
 /* 待補圖框（版型階段用，正式上線前應換成真圖或移除） */
 .mantu-v2 .ph .ph-box{aspect-ratio:var(--r,4/3);border:1.5px dashed var(--v2-dash);background:var(--v2-soft);
