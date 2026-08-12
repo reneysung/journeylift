@@ -430,7 +430,7 @@ ${data.shop_info ? renderShopCard(data.shop_info) : ''}
         if(!rel.length) return '';
         const card=(r)=>{
           const meta=[r.city?'📍'+r.city:'',r.category||''].filter(Boolean).join(' · ');
-          return `<a class="related-card" href="/articles/${r.slug}"><div class="related-thumb"${r.cover_image?` style="background-image:url('${r.cover_image}')"`:''}></div><div class="related-info"><div class="related-meta">${meta}</div><div class="related-name">${r.title||''}</div></div></a>`;
+          return `<a class="related-card" href="${'/articles/'+r.slug}"><div class="related-thumb"${r.cover_image?` style="background-image:url('${r.cover_image}')"`:''}></div><div class="related-info"><div class="related-meta">${meta}</div><div class="related-name">${r.title||''}</div></div></a>`;
         };
         return `<div class="related-wrap"><h2 class="related-title">相關文章</h2><div class="related-grid">${rel.map(card).join('')}</div></div>`;
       }catch(e){return '';}

@@ -136,7 +136,7 @@ function render(){
     return;
   }
   container.innerHTML=`<div class="articles-grid">${list.map(a=>`
-    <a href="/articles/${a.slug}" class="art-card">
+    <a href="${'/articles/'+a.slug}" class="art-card">
       ${a.cover_image ? `<img src="${a.cover_image}" class="art-card-cover" alt="" loading="lazy">` : `<div class="art-card-emoji">${a.emoji||'✍️'}</div>`}
       <div class="art-card-body">
         <div class="art-card-meta">${[a.city,a.category].filter(Boolean).join(' · ')}</div>
