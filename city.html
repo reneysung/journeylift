@@ -166,7 +166,14 @@ async function init() {
     if (kw) query = 'articles?select=id,title,slug,city,category,excerpt,cover_image,emoji,published_at,keyword_id&status=eq.published&keyword_id=eq.' + kw.id + '&order=published_at.desc';
   }
 
-  const articles = await sbGet(query);
+  // SSR 資料優先：純城市頁若 worker 已注入 __ssr_articles，直接用、不重打 Supabase
+  // （避免 Supabase 冷啟動時 client 重撈失敗，把已 SSR 好的卡片洗成錯誤訊息）
+  let articles;
+  const _ssrEl = document.getElementById('__ssr_articles');
+  if (_ssrEl && !kwSlug) {
+    try { articles = JSON.parse(_ssrEl.textContent); } catch (e) { articles = null; }
+  }
+  if (!articles) articles = await sbGet(query);
   const grid = document.getElementById('grid');
   const countEl = document.getElementById('art-count');
 

@@ -25,6 +25,7 @@ const SLUG_REDIRECTS = {
   '-sm0m': 'taipei-daan-green-light-cafe',
   '-1774011508378': 'tainan-chihkan-old-well-cafe',
   '202610-1774019872644': 'tainan-renovation-cleaning-2026',
+  'taipei-renovation-cleaning-2026': 'taipei-renovation-cleaning', // 舊 slug 改名 → 301 保住權重
 };
 
 const SECURITY_HEADERS = {
@@ -246,13 +247,42 @@ function injectCityMeta(template, cityName, citySlug, articles) {
       mainEntity: { '@type': 'ItemList', numberOfItems: items.length, itemListElement: items },
     }),
   ].join('\n');
+
+  // SSR 文章卡片：把「載入中」grid 換成真的 <a href> 卡片，讓爬蟲讀到內鏈與內容
+  // （治「城市總頁可見內容薄、內鏈弱 → 文章拿不到內鏈權重、Google 不收」的根因）
+  const fmtDate = (s) => {
+    if (!s) return '';
+    const d = new Date(s);
+    return `${d.getUTCFullYear()}/${String(d.getUTCMonth() + 1).padStart(2, '0')}/${String(d.getUTCDate()).padStart(2, '0')}`;
+  };
+  const cityCard = (a) => {
+    const img = a.cover_image
+      ? `<img class="card-img" src="${escapeHtml(a.cover_image)}" alt="${escapeHtml(a.title || '')}" loading="lazy">`
+      : `<div class="card-img">${escapeHtml(a.emoji || '📝')}</div>`;
+    return `<a class="card" href="/articles/${escapeHtml(a.slug)}">${img}`
+      + `<div class="card-body"><div class="card-meta">`
+      + (a.category ? `<span class="card-tag">${escapeHtml(a.category)}</span>` : '')
+      + `<span>${escapeHtml(fmtDate(a.published_at))}</span></div>`
+      + `<div class="card-title">${escapeHtml(a.title || '')}</div>`
+      + `<div class="card-excerpt">${escapeHtml(a.excerpt || '')}</div></div></a>`;
+  };
+  const cards = articles.length
+    ? articles.slice(0, 30).map(cityCard).join('')
+    : '<div class="empty"><div class="empty-icon">📭</div><p>此區暫無文章，敬請期待</p></div>';
+  const ssrArticles = `<script id="__ssr_articles" type="application/json">${JSON.stringify(articles).replace(/</g, '\\u003c')}</script>`;
+
   return template
     .replace(/<title id="page-title">[^<]*<\/title>/, `<title id="page-title">${escapeHtml(title)}</title>`)
     .replace(/<meta id="meta-desc"[^>]*>/, `<meta id="meta-desc" name="description" content="${escapeHtml(desc)}">`)
     .replace(/<link rel="canonical" id="canonical"[^>]*>/, `<link rel="canonical" id="canonical" href="${url}">`)
     // SSR H1：把靜態「載入中...」換成城市名，讓不執行 JS 的爬蟲讀到正確主標題
     .replace(/<h1 id="city-name">[^<]*<\/h1>/, `<h1 id="city-name">${escapeHtml(cityName)}</h1>`)
-    .replace('</head>', `${head}\n</head>`);
+    // SSR 區塊標題 + 篇數
+    .replace(/<h2 id="section-title">[^<]*<\/h2>/, `<h2 id="section-title">${escapeHtml(cityName)}精選文章</h2>`)
+    .replace(/<span class="count" id="art-count">[^<]*<\/span>/, `<span class="count" id="art-count">${articles.length} 篇文章</span>`)
+    // SSR grid：真卡片取代「載入中」占位（爬蟲讀得到、Supabase 掛了使用者也看得到內容）
+    .replace('<div id="grid" class="grid"><div class="loading">載入中...</div></div>', `<div id="grid" class="grid">${cards}</div>`)
+    .replace('</head>', `${head}\n${ssrArticles}\n</head>`);
 }
 
 function injectListMeta(template, articles) {
@@ -451,7 +481,7 @@ export default {
               let articles = [];
               try {
                 articles = await sb(
-                  `articles?select=title,slug,cover_image&status=eq.published&city=eq.${encodeURIComponent(cityName)}&order=published_at.desc&limit=20`
+                  `articles?select=title,slug,city,category,excerpt,cover_image,emoji,published_at&status=eq.published&city=eq.${encodeURIComponent(cityName)}&order=published_at.desc&limit=30`
                 );
               } catch (e) { /* 無文章也可，ItemList 空 */ }
               const tmpl = await loadTemplate(env, url.origin, '/city');
