@@ -230,10 +230,21 @@ function injectHomeMeta(template, ogImage) {
   return template.replace('</head>', `${head}\n</head>`);
 }
 
-function injectCityMeta(template, cityName, citySlug, articles) {
-  const url = `${SITE}/${citySlug}`;
-  const title = `${cityName}旅遊美食攻略 — 漫途生活旅遊誌`;
-  const desc = `探索${cityName}最值得一訪的咖啡廳、美食餐廳與生活風格，精選在地推薦文章。`;
+function injectCityMeta(template, cityName, citySlug, articles, keywords, activeKw) {
+  const isKw = !!activeKw;
+  const url = isKw ? `${SITE}/${citySlug}/${activeKw.slug}` : `${SITE}/${citySlug}`;
+  const title = isKw
+    ? `${cityName}${activeKw.name}推薦 — 漫途生活旅遊誌`
+    : `${cityName}旅遊美食攻略 — 漫途生活旅遊誌`;
+  const desc = isKw
+    ? `精選${cityName}${activeKw.name}推薦，在地達人帶你找到最值得造訪的好店與服務。`
+    : `探索${cityName}最值得一訪的咖啡廳、美食餐廳與生活風格，精選在地推薦文章。`;
+  const sectionTitle = isKw ? `${cityName} × ${activeKw.name}` : `${cityName}精選文章`;
+  // SSR 分類 chips（讓爬蟲讀到 城市→分類 的內鏈，分類子頁也拿得到權重）
+  const chip = (name, href, active) =>
+    `<a class="kw-chip${active ? ' active' : ''}" href="${href}">${escapeHtml(name)}</a>`;
+  const chipsHtml = chip('全部', `/${citySlug}`, !isKw)
+    + (keywords || []).map((k) => chip(k.name, `/${citySlug}/${k.slug}`, isKw && activeKw.slug === k.slug)).join('');
   const ogImage = (articles.find((a) => a.cover_image) || {}).cover_image || '';
   const items = articles.slice(0, 20).map((a, i) => ({
     '@type': 'ListItem', position: i + 1, url: `${SITE}/articles/${a.slug}`, name: a.title,
@@ -278,8 +289,14 @@ function injectCityMeta(template, cityName, citySlug, articles) {
     // SSR H1：把靜態「載入中...」換成城市名，讓不執行 JS 的爬蟲讀到正確主標題
     .replace(/<h1 id="city-name">[^<]*<\/h1>/, `<h1 id="city-name">${escapeHtml(cityName)}</h1>`)
     // SSR 區塊標題 + 篇數
-    .replace(/<h2 id="section-title">[^<]*<\/h2>/, `<h2 id="section-title">${escapeHtml(cityName)}精選文章</h2>`)
+    .replace(/<h2 id="section-title">[^<]*<\/h2>/, `<h2 id="section-title">${escapeHtml(sectionTitle)}</h2>`)
     .replace(/<span class="count" id="art-count">[^<]*<\/span>/, `<span class="count" id="art-count">${articles.length} 篇文章</span>`)
+    // SSR 分類副標（分類頁才換）
+    .replace(/<p class="hero-sub" id="city-sub">[^<]*<\/p>/, isKw
+      ? `<p class="hero-sub" id="city-sub">${escapeHtml(cityName)} ${escapeHtml(activeKw.name)}精選推薦</p>`
+      : '$&')
+    // SSR 分類 chips（城市→分類 內鏈，讓爬蟲讀到）
+    .replace('<div class="kw-chips" id="kw-chips"></div>', `<div class="kw-chips" id="kw-chips">${chipsHtml}</div>`)
     // SSR grid：真卡片取代「載入中」占位（爬蟲讀得到、Supabase 掛了使用者也看得到內容）
     .replace('<div id="grid" class="grid"><div class="loading">載入中...</div></div>', `<div id="grid" class="grid">${cards}</div>`)
     .replace('</head>', `${head}\n${ssrArticles}\n</head>`);
@@ -470,28 +487,41 @@ export default {
       if (cityMatch && CITY_SET.has(cityMatch[1])) {
         const citySlug = cityMatch[1];
         const segs = path.replace(/^\/+|\/+$/g, '').split('/');
-        if (segs.length === 1) {
-          // 純城市頁 → SSR meta（子頁 /{city}/{keyword} 維持 client-side，避免錯誤 canonical）
+        // 純城市頁 (/{city}) 與分類子頁 (/{city}/{keyword}) 都 SSR
+        if (segs.length === 1 || segs.length === 2) {
           try {
             const regions = await sb(
-              `regions?select=name,slug&slug=eq.${encodeURIComponent(citySlug)}&limit=1`
+              `regions?select=id,name,slug&slug=eq.${encodeURIComponent(citySlug)}&limit=1`
             );
             if (regions.length) {
-              const cityName = regions[0].name;
+              const region = regions[0];
+              const cityName = region.name;
+              const keywords = await sb(
+                `keywords?select=id,name,slug&region_id=eq.${region.id}&order=sort_order`
+              ).catch(() => []);
+              let activeKw = null;
+              if (segs.length === 2) {
+                activeKw = keywords.find((k) => k.slug === segs[1]) || null;
+                // 未知分類 slug → 交給 client shell（不 SSR 錯誤 canonical）
+                if (!activeKw) {
+                  return passAsset(env, new Request(new URL('/city', url.origin).toString(), { method: 'GET' }));
+                }
+              }
               let articles = [];
               try {
-                articles = await sb(
-                  `articles?select=title,slug,city,category,excerpt,cover_image,emoji,published_at&status=eq.published&city=eq.${encodeURIComponent(cityName)}&order=published_at.desc&limit=30`
-                );
+                const q = activeKw
+                  ? `articles?select=title,slug,city,category,excerpt,cover_image,emoji,published_at&status=eq.published&keyword_id=eq.${activeKw.id}&order=published_at.desc&limit=30`
+                  : `articles?select=title,slug,city,category,excerpt,cover_image,emoji,published_at&status=eq.published&city=eq.${encodeURIComponent(cityName)}&order=published_at.desc&limit=30`;
+                articles = await sb(q);
               } catch (e) { /* 無文章也可，ItemList 空 */ }
               const tmpl = await loadTemplate(env, url.origin, '/city');
-              const html = injectCityMeta(tmpl, cityName, citySlug, articles);
+              const html = injectCityMeta(tmpl, cityName, citySlug, articles, keywords, activeKw);
               return new Response(html, {
                 status: 200,
                 headers: withSec({
                   'Content-Type': 'text/html; charset=utf-8',
                   'Cache-Control': 'public, max-age=300, s-maxage=600',
-                  'X-Generated-By': 'worker-ssr-city',
+                  'X-Generated-By': activeKw ? 'worker-ssr-city-kw' : 'worker-ssr-city',
                   'X-City-Slug': citySlug,
                 }),
               });
