@@ -14,9 +14,10 @@ const SITE_NAME = '漫途旅遊誌';
 
 const CITIES = [
   ['taipei', 1.0], ['newtaipei', 0.9], ['taoyuan', 0.8], ['hsinchu', 0.8],
-  ['taichung', 0.9], ['nantou', 0.8], ['chiayi', 0.8], ['tainan', 0.9],
-  ['kaohsiung', 0.9], ['pingtung', 0.8], ['yilan', 0.8], ['hualien', 0.8],
-  ['taitung', 0.8], ['keelung', 0.8], ['kinmen', 0.8], ['penghu', 0.8],
+  ['taichung', 0.9], ['changhua', 0.8], ['nantou', 0.8], ['miaoli', 0.8],
+  ['chiayi', 0.8], ['tainan', 0.9], ['kaohsiung', 0.9], ['pingtung', 0.8],
+  ['yilan', 0.8], ['hualien', 0.8], ['taitung', 0.8], ['keelung', 0.8],
+  ['kinmen', 0.8], ['penghu', 0.8],
 ];
 const CITY_SET = new Set(CITIES.map((c) => c[0]));
 
