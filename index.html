@@ -7,8 +7,8 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="icon" href="/favicon.png">
 <link rel="apple-touch-icon" href="/favicon.png">
-<title>漫途 — 生活旅遊誌｜用文字記錄每一段旅程</title>
-<meta name="description" content="漫途旅遊誌，用文字記錄每一段值得被記住的旅程。">
+<title>漫途生活旅遊誌｜全台各縣市在地美食、裝潢、生活服務推薦</title>
+<meta name="description" content="漫途生活旅遊誌，精選全台各縣市在地美食、餐廳、裝潢清潔與生活服務推薦，在地達人帶你找到每個城市最值得的好店與好去處。">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Noto+Serif+TC:wght@300;400&family=Noto+Sans+TC:wght@300;400&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -181,8 +181,8 @@ footer{border-top:1px solid rgba(200,169,110,0.08);padding:4rem 3rem;background:
   <div class="hero-l">
     <div class="kicker">Travel · Life · Story</div>
     <h1 class="h1">慢旅行<br><span style="font-style:italic;color:var(--gold)">快記憶</span></h1>
-    <p class="h2">每一段旅程，都值得被文字留住</p>
-    <p class="desc">漫途是一本關於旅行的誌，記錄那些值得被記住的風景、滋味與感受。用緩慢的步伐，深刻的眼光，書寫每一段屬於自己的故事。</p>
+    <p class="h2">在地美食、裝潢、生活服務，一次為你選好</p>
+    <p class="desc">漫途生活旅遊誌，精選全台各縣市值得一訪的在地美食、餐廳，以及裝潢、清潔、生活服務的推薦——用在地的眼光，把每個城市最值得的好店與好去處，一篇篇為你整理好。</p>
     <div class="cta">
       <a href="/articles" class="btn-p">探索文章</a>
     </div>
@@ -354,44 +354,40 @@ load();
 (function(){
   var SB='https://zsebcpfblecwumbaxeaz.supabase.co';
   var SK='sb_publishable_L2DOfeM0cAJqwlVCr1LwtA_jE9MBNDn';
-  function mk(tag,style,text){var el=document.createElement(tag);if(style)el.style.cssText=style;if(text!=null)el.textContent=text;return el;}
 
-  // 載入地區
-  fetch(SB+'/rest/v1/regions?select=*&order=sort_order',{headers:{apikey:SK,Authorization:'Bearer '+SK}})
-  .then(function(r){return r.json();})
-  .then(function(regs){
-    var el=document.getElementById('hp-region-grid');
-    if(!el||!regs||!regs.length)return;
-    while(el.firstChild)el.removeChild(el.firstChild);
-    regs.forEach(function(reg){
-      var a=document.createElement('a');
-      a.className='region-chip';
-      a.href='/'+reg.slug;
-      var name=mk('span','','');
-      name.className='region-chip-name';
-      name.textContent=reg.name;
-      a.appendChild(name);
-      el.appendChild(a);
-    });
-  }).catch(function(){});
+  // 載入地區（worker 已 SSR 有 <a> 就跳過，不重打 Supabase、不覆蓋）
+  var rgEl=document.getElementById('hp-region-grid');
+  if(rgEl && !rgEl.querySelector('a')){
+    fetch(SB+'/rest/v1/regions?select=name,slug&order=sort_order',{headers:{apikey:SK,Authorization:'Bearer '+SK}})
+    .then(function(r){return r.json();})
+    .then(function(regs){
+      if(!regs||!regs.length)return;
+      while(rgEl.firstChild)rgEl.removeChild(rgEl.firstChild);
+      regs.forEach(function(reg){
+        var a=document.createElement('a');a.className='region-chip';a.href='/'+reg.slug;
+        var name=document.createElement('span');name.className='region-chip-name';name.textContent=reg.name;
+        a.appendChild(name);rgEl.appendChild(a);
+      });
+    }).catch(function(){});
+  }
 
-  // 載入關鍵字
-  fetch(SB+'/rest/v1/keywords?select=*,regions(name)&order=sort_order',{headers:{apikey:SK,Authorization:'Bearer '+SK}})
-  .then(function(r){return r.json();})
-  .then(function(kws){
-    var el=document.getElementById('hp-kw-grid');
-    if(!el||!kws||!kws.length)return;
-    while(el.firstChild)el.removeChild(el.firstChild);
-    kws.forEach(function(kw){
-      var a=document.createElement('a');
-      a.className='kw-chip';
-      var region=kw.regions?kw.regions.name:'';
-      // 連結到地區文章列表（之後有關鍵字頁面再換）
-      a.href='/articles?city='+encodeURIComponent(region)+'&kw='+encodeURIComponent(kw.slug);
-      a.textContent=kw.name;
-      el.appendChild(a);
-    });
-  }).catch(function(){});
+  // 載入關鍵字（連到真正的 /{city}/{keyword} landing、錨文字帶城市；SSR 已在就跳過）
+  var kwEl=document.getElementById('hp-kw-grid');
+  if(kwEl && !kwEl.querySelector('a')){
+    fetch(SB+'/rest/v1/keywords?select=name,slug,regions(name,slug)&order=sort_order',{headers:{apikey:SK,Authorization:'Bearer '+SK}})
+    .then(function(r){return r.json();})
+    .then(function(kws){
+      if(!kws||!kws.length)return;
+      while(kwEl.firstChild)kwEl.removeChild(kwEl.firstChild);
+      kws.forEach(function(kw){
+        if(!kw.regions||!kw.regions.slug)return;
+        var a=document.createElement('a');a.className='kw-chip';
+        a.href='/'+kw.regions.slug+'/'+kw.slug;
+        a.textContent=(kw.regions.name||'')+kw.name;
+        kwEl.appendChild(a);
+      });
+    }).catch(function(){});
+  }
 })();
 </script>
 

@@ -25,6 +25,8 @@ nav a:hover{color:#2c2c2c}
 .kw-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
 .kw-chip{background:#fff;border:1px solid #ddd;border-radius:20px;padding:6px 16px;font-size:12px;color:#555;text-decoration:none;transition:all .2s}
 .kw-chip:hover,.kw-chip.active{background:#2c2c2c;color:#fff;border-color:#2c2c2c}
+.area-link{display:inline-block;margin-top:18px;font-size:13px;color:#8b6a4f;text-decoration:none;border-bottom:1px solid #d8c8b2;padding-bottom:2px}
+.area-link:hover{color:#5e4733;border-color:#8b6a4f}
 .container{max-width:960px;margin:0 auto;padding:40px 24px}
 .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
 .section-head h2{font-family:'Cormorant Garamond',serif;font-size:22px;color:#1a1a1a}
@@ -125,9 +127,9 @@ async function init() {
 
   // Update page meta
   const cityName = region.name;
-  document.title = cityName + '旅遊美食攻略 — 漫途生活旅遊誌';
-  document.getElementById('page-title').textContent = cityName + '旅遊美食攻略 — 漫途生活旅遊誌';
-  document.getElementById('meta-desc').content = '探索' + cityName + '最值得一訪的咖啡廳、美食餐廳與生活風格，精選在地推薦文章。';
+  document.title = cityName + '在地美食、裝潢、生活服務推薦 — 漫途生活旅遊誌';
+  document.getElementById('page-title').textContent = cityName + '在地美食、裝潢、生活服務推薦 — 漫途生活旅遊誌';
+  document.getElementById('meta-desc').content = '精選' + cityName + '在地美食、餐廳、裝潢清潔與生活服務推薦，帶你找到' + cityName + '最值得的好店與好去處。';
   document.getElementById('canonical').href = 'https://journeylift.com.tw/' + citySlug;
   document.getElementById('city-name').textContent = cityName;
 
@@ -153,7 +155,7 @@ async function init() {
       document.getElementById('section-title').textContent = cityName + ' × ' + kw.name;
       document.title = cityName + kw.name + '推薦 — 漫途生活旅遊誌';
       document.getElementById('canonical').href = 'https://journeylift.com.tw/' + citySlug + '/' + kwSlug;
-      document.getElementById('meta-desc').content = '精選' + cityName + kw.name + '推薦，在地達人帶你找到最值得造訪的好店。';
+      document.getElementById('meta-desc').content = '精選' + cityName + kw.name + '推薦，在地達人帶你找到最值得造訪的好店與服務。';
     }
   } else {
     document.getElementById('section-title').textContent = cityName + '精選文章';

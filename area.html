@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="robots" content="noindex" id="tmpl-noindex">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<title id="page-title">地區專區 — 漫途生活旅遊誌</title>
+<meta id="meta-desc" name="description" content="">
+<link rel="canonical" id="canonical" href="">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+TC:wght@400;600&display=swap" rel="stylesheet">
+<!-- 地區專區（如 /kenting）模板：內容全由 worker.js SSR 填入，無 client JS。直接開 /area 只是空殼（noindex）。 -->
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Serif TC',serif;background:#faf9f7;color:#2c2c2c;min-height:100vh}
+header{background:#fff;border-bottom:1px solid #e8e0d5;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+.logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#2c2c2c;text-decoration:none;letter-spacing:.05em}
+nav a{color:#666;text-decoration:none;font-size:13px;margin-left:20px}
+nav a:hover{color:#2c2c2c}
+.hero{background:linear-gradient(135deg,#f5f0e8 0%,#ede8df 100%);padding:40px 24px 40px;text-align:center;border-bottom:1px solid #e8e0d5}
+.crumb{font-size:12px;color:#999;margin-bottom:18px}
+.crumb a{color:#8b7355;text-decoration:none}
+.crumb a:hover{text-decoration:underline}
+.crumb span{margin:0 6px}
+.hero-label{font-size:11px;letter-spacing:.15em;color:#999;margin-bottom:12px}
+.hero h1{font-family:'Noto Serif TC',serif;font-size:clamp(30px,6vw,46px);font-weight:600;color:#1a1a1a;line-height:1.3;margin-bottom:12px}
+.hero-sub{font-size:14px;color:#777;line-height:1.7}
+.container{max-width:960px;margin:0 auto;padding:40px 24px}
+.intro{max-width:680px;margin:0 auto 8px;font-size:15px;line-height:1.95;color:#3a3a3a}
+.intro p+p{margin-top:12px}
+.sec{margin-top:48px}
+.sec h2{font-family:'Noto Serif TC',serif;font-size:21px;font-weight:600;color:#1a1a1a;margin-bottom:10px}
+.sec-note{font-size:14px;color:#666;line-height:1.8;margin-bottom:22px;max-width:720px}
+.zones{border-top:1px solid #e8e0d5}
+.zone{display:grid;grid-template-columns:150px 1fr;gap:6px 20px;padding:16px 4px;border-bottom:1px solid #e8e0d5}
+.zone-name{font-weight:600;color:#1a1a1a;font-size:15px}
+.zone-desc{font-size:14px;line-height:1.8;color:#444}
+.zone-links{grid-column:2;font-size:13px}
+.zone-links a{color:#8b6a4f;text-decoration:none;margin-right:14px;white-space:nowrap}
+.zone-links a:hover{text-decoration:underline}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}
+.card{background:#fff;border-radius:8px;overflow:hidden;border:1px solid #e8e0d5;transition:transform .2s,box-shadow .2s;text-decoration:none;color:inherit;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.card-img{width:100%;aspect-ratio:1200/630;object-fit:cover;background:#f0ece4;display:flex;align-items:center;justify-content:center;font-size:36px}
+.card-body{padding:16px;flex:1;display:flex;flex-direction:column}
+.card-meta{font-size:11px;color:#aaa;letter-spacing:.05em;margin-bottom:8px;display:flex;gap:8px;align-items:center}
+.card-tag{background:#f5f0e8;color:#8b7355;border-radius:4px;padding:2px 7px;font-size:10px}
+.card-title{font-size:15px;font-weight:600;line-height:1.5;color:#1a1a1a;margin-bottom:8px;flex:1}
+.card-excerpt{font-size:12px;color:#888;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tips{list-style:none;border:1px solid #e8e0d5;border-radius:8px;background:#fff;padding:6px 20px}
+.tips li{padding:12px 0;font-size:14px;line-height:1.8;color:#444;border-bottom:1px dashed #e8e0d5}
+.tips li:last-child{border-bottom:0}
+.tips b{color:#1a1a1a}
+.tips a{color:#8b6a4f}
+.empty{text-align:center;padding:40px 24px;color:#aaa;font-size:14px}
+footer{background:#2c2c2c;color:#aaa;text-align:center;padding:32px 24px;font-size:12px;margin-top:80px}
+footer a{color:#ccc;text-decoration:none}
+@media(max-width:600px){
+  .container{padding:28px 16px}
+  .hero{padding:28px 16px 32px}
+  .grid{grid-template-columns:1fr}
+  .zone{grid-template-columns:1fr;gap:4px}
+  .zone-links{grid-column:1}
+}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/">漫途</a>
+  <nav>
+    <a href="/articles">所有文章</a>
+    <a href="/">首頁</a>
+  </nav>
+</header>
+
+<div class="hero"><!--AREA_HERO--></div>
+
+<div class="container"><!--AREA_BODY--></div>
+
+<footer>
+  <p>© 2025 <a href="/">漫途生活旅遊誌</a> · 用文字記錄每一段旅程</p>
+</footer>
+</body>
+</html>

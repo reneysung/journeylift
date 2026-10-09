@@ -21,12 +21,68 @@ const CITIES = [
 ];
 const CITY_SET = new Set(CITIES.map((c) => c[0]));
 
+// 城市中文名 → slug（麵包屑 BreadcrumbList 用；對不到就退回「文章」層）
+const CITY_NAME_SLUG = {
+  '台北': 'taipei', '新北': 'newtaipei', '桃園': 'taoyuan', '台中': 'taichung',
+  '台南': 'tainan', '高雄': 'kaohsiung', '基隆': 'keelung', '新竹': 'hsinchu',
+  '苗栗': 'miaoli', '彰化': 'changhua', '南投': 'nantou', '嘉義': 'chiayi',
+  '屏東': 'pingtung', '宜蘭': 'yilan', '花蓮': 'hualien', '台東': 'taitung',
+  '澎湖': 'penghu', '金門': 'kinmen',
+};
+
 const SLUG_REDIRECTS = {
   '-1774017366618': 'kaohsiung-pier2-warehouse-cafe',
   '-sm0m': 'taipei-daan-green-light-cafe',
   '-1774011508378': 'tainan-chihkan-old-well-cafe',
   '202610-1774019872644': 'tainan-renovation-cleaning-2026',
   'taipei-renovation-cleaning-2026': 'taipei-renovation-cleaning', // 舊 slug 改名 → 301 保住權重
+};
+
+// ── 地區專區（/{key}）：城市底下的旅遊熱區，集中同區文章＋分區導覽 ──
+// 文章依 slug 前綴自動收進來（新發 kenting-* 會自動出現在「更多」組）；groups 決定分組與順序。
+// 導覽文字只寫各篇文章裡已查證過的事實，改內容時同步對照文章。
+const AREAS = {
+  kenting: {
+    name: '墾丁',
+    city: '屏東',
+    citySlug: 'pingtung',
+    slugPrefix: 'kenting-',
+    title: (n) => `墾丁旅遊攻略｜吃住玩分區整理與兩天一夜行程，${n} 篇一次看 — 漫途生活旅遊誌`,
+    desc: '墾丁怎麼玩？漫途把墾丁的兩天一夜行程、海產、美食、飲料、民宿、飯店、露營、浮潛、卡丁車和按摩整理在同一頁，並依恆春古城、墾丁大街、南灣、後壁湖等區域分好，出發前先看這頁。',
+    h1: '墾丁旅遊攻略',
+    sub: (n) => `恆春半島的吃、住、玩與兩天一夜行程，漫途 ${n} 篇整理在這一頁`,
+    intro: [
+      '墾丁在恆春半島最南端，範圍大半在墾丁國家公園內，景點、餐廳和住宿散在半島一圈。從恆春市區開到後壁湖約 15 分鐘、到墾丁大街約 10 到 15 分鐘，住哪、在哪吃，會直接影響一天能玩幾個點。',
+      '這頁把漫途寫過的墾丁文章收在一起。第一次去，先看兩天一夜行程把動線排好；行程定了，再依要吃什麼、住哪裡、玩什麼點進各篇，每篇都附比較表和 Google 評分。',
+    ],
+    zones: [
+      ['恆春古城（市區）', '在地小吃最集中，綠豆蒜、鴨肉冬粉、餃子都在這一帶，古早味手搖和老屋咖啡也多在市區；精油芳療工作室多在恆春。住宿房價相對親民、好停車。',
+        [['kenting-food', '墾丁美食'], ['kenting-drinks', '墾丁飲料店'], ['kenting-massage', '墾丁按摩']]],
+      ['墾丁大街（小灣一帶）', '晚上最熱鬧的夜市街，晚餐、逛街、腳底按摩走路就到，凱撒、夏都、福華幾間飯店都在附近。旺季比較吵，停車最難找。',
+        [['kenting-hotel', '墾丁飯店'], ['kenting-massage', '墾丁按摩']]],
+      ['南灣', '沙灘與水上活動集中，比大街安靜。海景民宿、南灣渡假飯店都在這一帶，卡丁車場多在恆春往墾丁、南灣的路上。',
+        [['kenting-bnb', '墾丁民宿'], ['kenting-gocar', '墾丁卡丁車']]],
+      ['船帆石', '台 26 線海邊的珊瑚礁岩地標，往鵝鑾鼻、東海岸最順路，附近有海景民宿和福容。',
+        [['kenting-bnb', '墾丁民宿'], ['kenting-hotel', '墾丁飯店']]],
+      ['後壁湖', '墾丁國家公園內最大的漁港，生魚片、海產店最集中；內灣水淺浪小，是新手浮潛的首選。',
+        [['kenting-seafood', '墾丁海產'], ['kenting-snorkeling', '墾丁浮潛']]],
+      ['西海岸（萬里桐、紅柴、關山）', '萬里桐浮潛人比較少，有一對一帶的店；海景咖啡多在這一側，傍晚可以順看關山夕陽。',
+        [['kenting-snorkeling', '墾丁浮潛'], ['kenting-drinks', '墾丁飲料店'], ['kenting-itinerary', '兩天一夜行程']]],
+      ['東海岸（龍磐、風吹砂、佳樂水）', '看地景的路線，沿路店家少、草原段沒有遮蔽，水和防曬要帶夠；落山風季風很大。',
+        [['kenting-itinerary', '兩天一夜行程']]],
+    ],
+    groups: [
+      { title: '行程：第一次去先看這篇', note: '西岸、南岬、東海岸怎麼排才不繞路，含住宿分區、交通停車和季節提醒。', slugs: ['kenting-itinerary'] },
+      { title: '吃：海產、美食、飲料', note: '海產集中在後壁湖，在地小吃和古早味飲料在恆春市區，墾丁大街適合晚上逛。', slugs: ['kenting-seafood', 'kenting-food', 'kenting-drinks'] },
+      { title: '住：民宿、飯店、露營', note: '想走路到大街住小灣一帶，要安靜或海景看南灣、船帆石、埔頂；國家公園內限制露營，營地只有少數幾處。', slugs: ['kenting-bnb', 'kenting-hotel', 'kenting-camping'] },
+      { title: '玩：浮潛、卡丁車、按摩', note: '浮潛新手去後壁湖、想避開人潮去萬里桐；卡丁車場多在恆春往墾丁、南灣的路上；玩到晚上，大街也有開到很晚的按摩店。', slugs: ['kenting-snorkeling', 'kenting-gocar', 'kenting-massage'] },
+    ],
+    tips: [
+      ['季節', '10 月到隔年 3 月落山風強，東海岸偏冷；7 到 10 月是颱風季，海邊景點和水上活動遇大浪會關閉。'],
+      ['交通', '景點分散，自駕最方便；不開車可搭高鐵到左營轉墾丁快線或台灣好行，再租機車。'],
+      ['預約', '精油芳療、包棟民宿和熱門海產店，旺季都建議提早訂。'],
+    ],
+  },
 };
 
 const SECURITY_HEADERS = {
@@ -83,6 +139,9 @@ async function buildSitemap() {
   entries.push(`<url><loc>${SITE}/articles</loc><changefreq>daily</changefreq><priority>0.9</priority></url>`);
   for (const [city, prio] of CITIES) {
     entries.push(`<url><loc>${SITE}/${city}</loc><changefreq>weekly</changefreq><priority>${prio}</priority></url>`);
+  }
+  for (const key of Object.keys(AREAS)) {
+    entries.push(`<url><loc>${SITE}/${key}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>`);
   }
   let articleCount = 0;
   for (const a of articles) {
@@ -155,18 +214,39 @@ function injectArticleMeta(template, article, slug, related = []) {
     + relatedBlock
     + '<div class="art-footer"><a href="/articles" class="back-btn">← 返回文章列表</a></div>';
 
-  const jsonLd = JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: article.title,
-    description: desc,
-    image: [image],
-    datePublished: published,
-    dateModified: updated,
-    author: { '@type': 'Organization', name: SITE_NAME },
-    publisher: { '@type': 'Organization', name: SITE_NAME, url: SITE },
-    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
-  });
+  // 麵包屑：首頁 › 城市（對不到則「文章」）› 本篇
+  const citySlug = CITY_NAME_SLUG[article.city];
+  const crumbs = [{ name: '首頁', item: `${SITE}/` }];
+  crumbs.push(citySlug
+    ? { name: article.city, item: `${SITE}/${citySlug}` }
+    : { name: '文章', item: `${SITE}/articles` });
+  for (const [key, ar] of Object.entries(AREAS)) {
+    if (article.city === ar.city && String(slug).startsWith(ar.slugPrefix)) {
+      crumbs.push({ name: ar.name, item: `${SITE}/${key}` });
+      break;
+    }
+  }
+  crumbs.push({ name: article.title, item: url });
+
+  const jsonLd = JSON.stringify([
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: article.title,
+      description: desc,
+      image: [image],
+      datePublished: published,
+      dateModified: updated,
+      author: { '@type': 'Organization', name: SITE_NAME },
+      publisher: { '@type': 'Organization', name: SITE_NAME, url: SITE },
+      mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: c.item })),
+    },
+  ]);
 
   return template
     .replace(/<title>[^<]*<\/title>/, `<title>${escapeHtml(fullTitle)}</title>`)
@@ -218,8 +298,8 @@ function ldScript(obj) {
 
 function injectHomeMeta(template, ogImage) {
   const url = `${SITE}/`;
-  const title = '漫途 — 生活旅遊誌｜用文字記錄每一段旅程';
-  const desc = '漫途旅遊誌，用文字記錄每一段值得被記住的旅程。';
+  const title = '漫途生活旅遊誌｜全台各縣市在地美食、裝潢、生活服務推薦';
+  const desc = '漫途生活旅遊誌，精選全台各縣市在地美食、餐廳、裝潢清潔與生活服務推薦，在地達人帶你找到每個城市最值得的好店與好去處。';
   const head = [
     `<link rel="canonical" href="${url}">`,
     buildOgBlock({ title, desc, url, image: ogImage || DEFAULT_OG }),
@@ -236,16 +316,20 @@ function injectCityMeta(template, cityName, citySlug, articles, keywords, active
   const url = isKw ? `${SITE}/${citySlug}/${activeKw.slug}` : `${SITE}/${citySlug}`;
   const title = isKw
     ? `${cityName}${activeKw.name}推薦 — 漫途生活旅遊誌`
-    : `${cityName}旅遊美食攻略 — 漫途生活旅遊誌`;
+    : `${cityName}在地美食、裝潢、生活服務推薦 — 漫途生活旅遊誌`;
   const desc = isKw
     ? `精選${cityName}${activeKw.name}推薦，在地達人帶你找到最值得造訪的好店與服務。`
-    : `探索${cityName}最值得一訪的咖啡廳、美食餐廳與生活風格，精選在地推薦文章。`;
+    : `精選${cityName}在地美食、餐廳、裝潢清潔與生活服務推薦，帶你找到${cityName}最值得的好店與好去處。`;
   const sectionTitle = isKw ? `${cityName} × ${activeKw.name}` : `${cityName}精選文章`;
   // SSR 分類 chips（讓爬蟲讀到 城市→分類 的內鏈，分類子頁也拿得到權重）
   const chip = (name, href, active) =>
     `<a class="kw-chip${active ? ' active' : ''}" href="${href}">${escapeHtml(name)}</a>`;
   const chipsHtml = chip('全部', `/${citySlug}`, !isKw)
     + (keywords || []).map((k) => chip(k.name, `/${citySlug}/${k.slug}`, isKw && activeKw.slug === k.slug)).join('');
+  const areaLinks = Object.entries(AREAS)
+    .filter(([, ar]) => ar.citySlug === citySlug)
+    .map(([key, ar]) => `<a class="area-link" href="/${key}">📍 ${escapeHtml(ar.name)}專區：吃、住、玩與行程一次看 →</a>`)
+    .join('');
   const ogImage = (articles.find((a) => a.cover_image) || {}).cover_image || '';
   const items = articles.slice(0, 20).map((a, i) => ({
     '@type': 'ListItem', position: i + 1, url: `${SITE}/articles/${a.slug}`, name: a.title,
@@ -297,7 +381,7 @@ function injectCityMeta(template, cityName, citySlug, articles, keywords, active
       ? `<p class="hero-sub" id="city-sub">${escapeHtml(cityName)} ${escapeHtml(activeKw.name)}精選推薦</p>`
       : '$&')
     // SSR 分類 chips（城市→分類 內鏈，讓爬蟲讀到）
-    .replace('<div class="kw-chips" id="kw-chips"></div>', `<div class="kw-chips" id="kw-chips">${chipsHtml}</div>`)
+    .replace('<div class="kw-chips" id="kw-chips"></div>', () => `<div class="kw-chips" id="kw-chips">${chipsHtml}</div>${areaLinks}`)
     // SSR grid：真卡片取代「載入中」占位（爬蟲讀得到、Supabase 掛了使用者也看得到內容）
     .replace('<div id="grid" class="grid"><div class="loading">載入中...</div></div>', `<div id="grid" class="grid">${cards}</div>`)
     .replace('</head>', `${head}\n${ssrArticles}\n</head>`);
@@ -323,6 +407,155 @@ function injectListMeta(template, articles) {
     : '';
   // articles/index.html 只有 <title>，無 meta-desc/canonical 佔位 → 全部插入 </head> 前
   return template.replace('</head>', `${head}\n${ssrList}\n</head>`);
+}
+
+// ── 地區專區 SSR（/kenting 等）：整頁 server 產出，模板 area.html 無 client JS ──
+function injectArea(template, key, area, articles) {
+  const url = `${SITE}/${key}`;
+  const bySlug = new Map(articles.map((a) => [a.slug, a]));
+  const used = new Set();
+  const groups = area.groups.map((g) => {
+    const list = g.slugs.map((s) => bySlug.get(s)).filter(Boolean);
+    list.forEach((a) => used.add(a.slug));
+    return { ...g, list };
+  });
+  // 前綴相符但還沒排進分組的新文章 → 自動收進「更多」組，不會漏
+  const rest = articles.filter((a) => !used.has(a.slug));
+  if (rest.length) groups.push({ title: `更多${area.name}文章`, note: '', list: rest });
+  const ordered = groups.flatMap((g) => g.list);
+  const n = ordered.length;
+  const title = area.title(n);
+  const ogImage = (ordered.find((a) => a.cover_image) || {}).cover_image || DEFAULT_OG;
+
+  const fmtDate = (s) => {
+    if (!s) return '';
+    const d = new Date(s);
+    return `${d.getUTCFullYear()}/${String(d.getUTCMonth() + 1).padStart(2, '0')}/${String(d.getUTCDate()).padStart(2, '0')}`;
+  };
+  const card = (a) => {
+    const img = a.cover_image
+      ? `<img class="card-img" src="${escapeHtml(a.cover_image)}" alt="${escapeHtml(a.title || '')}" loading="lazy">`
+      : `<div class="card-img">${escapeHtml(a.emoji || '📝')}</div>`;
+    return `<a class="card" href="/articles/${escapeHtml(a.slug)}">${img}`
+      + `<div class="card-body"><div class="card-meta">`
+      + (a.category ? `<span class="card-tag">${escapeHtml(a.category)}</span>` : '')
+      + `<span>${escapeHtml(fmtDate(a.published_at))}</span></div>`
+      + `<div class="card-title">${escapeHtml(a.title || '')}</div>`
+      + `<div class="card-excerpt">${escapeHtml(a.excerpt || '')}</div></div></a>`;
+  };
+
+  const crumbs = [
+    { name: '首頁', item: `${SITE}/` },
+    { name: area.city, item: `${SITE}/${area.citySlug}` },
+    { name: area.name, item: url },
+  ];
+  const hero = `<nav class="crumb" aria-label="麵包屑"><a href="/">首頁</a><span>›</span>`
+    + `<a href="/${area.citySlug}">${escapeHtml(area.city)}</a><span>›</span>${escapeHtml(area.name)}</nav>`
+    + `<div class="hero-label">地區專區 · ${escapeHtml(area.city)}</div>`
+    + `<h1>${escapeHtml(area.h1)}</h1>`
+    + `<p class="hero-sub">${escapeHtml(area.sub(n))}</p>`;
+
+  // 分區速查：只連到有上線的文章
+  const zoneHtml = area.zones.map(([name, desc, links]) => {
+    const ls = links.filter(([s]) => bySlug.has(s))
+      .map(([s, label]) => `<a href="/articles/${escapeHtml(s)}">${escapeHtml(label)} →</a>`).join('');
+    return `<div class="zone"><div class="zone-name">${escapeHtml(name)}</div>`
+      + `<div class="zone-desc">${escapeHtml(desc)}</div>`
+      + (ls ? `<div class="zone-links">${ls}</div>` : '') + '</div>';
+  }).join('');
+
+  const groupHtml = groups.filter((g) => g.list.length).map((g) => `<section class="sec">`
+    + `<h2>${escapeHtml(g.title)}</h2>`
+    + (g.note ? `<p class="sec-note">${escapeHtml(g.note)}</p>` : '')
+    + `<div class="grid">${g.list.map(card).join('')}</div></section>`).join('');
+
+  const tipsHtml = area.tips.map(([k, v]) => `<li><b>${escapeHtml(k)}｜</b>${escapeHtml(v)}</li>`).join('');
+
+  const body = `<div class="intro">${area.intro.map((p) => `<p>${escapeHtml(p)}</p>`).join('')}</div>`
+    + `<section class="sec"><h2>${escapeHtml(area.name)}分區速查：每一區適合做什麼</h2><div class="zones">${zoneHtml}</div></section>`
+    + (groupHtml || '<div class="empty">文章載入失敗，請稍後重新整理</div>')
+    + `<section class="sec"><h2>出發前先知道</h2><ul class="tips">${tipsHtml}</ul></section>`;
+
+  const head = [
+    buildOgBlock({ title, desc: area.desc, url, image: ogImage }),
+    ldScript([
+      {
+        '@context': 'https://schema.org', '@type': 'CollectionPage',
+        name: title, description: area.desc, url,
+        isPartOf: { '@type': 'WebSite', name: SITE_NAME, url: SITE },
+        mainEntity: {
+          '@type': 'ItemList', numberOfItems: n,
+          itemListElement: ordered.map((a, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/articles/${a.slug}`, name: a.title })),
+        },
+      },
+      {
+        '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+        itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: c.item })),
+      },
+    ]),
+  ].join('\n');
+
+  return template
+    .replace(/<meta name="robots" content="noindex" id="tmpl-noindex">\n?/, '')
+    .replace(/<title id="page-title">[^<]*<\/title>/, () => `<title id="page-title">${escapeHtml(title)}</title>`)
+    .replace(/<meta id="meta-desc"[^>]*>/, () => `<meta id="meta-desc" name="description" content="${escapeHtml(area.desc)}">`)
+    .replace(/<link rel="canonical" id="canonical"[^>]*>/, () => `<link rel="canonical" id="canonical" href="${url}">`)
+    .replace('<!--AREA_HERO-->', () => hero)
+    .replace('<!--AREA_BODY-->', () => body)
+    .replace('</head>', () => `${head}\n</head>`);
+}
+
+// ── 首頁 SSR：把文章卡／城市／主題連結產成真實 <a href> 注入 raw HTML（給 Google 爬） ──
+function fmtHomeDate(d, big) {
+  if (!d) return '';
+  const t = new Date(d), y = t.getFullYear(), m = t.getMonth() + 1, day = t.getDate();
+  return big ? `${y}年${m}月${day}日` : `${y}/${m}/${day}`;
+}
+function homeCard(a, n, big) {
+  const cover = a.cover_image
+    ? `<img class="ac-cover" src="${escapeHtml(a.cover_image)}" alt="${escapeHtml(a.title || '')}" loading="lazy">`
+    : `<span class="ac-emoji">${escapeHtml(a.emoji || '✍️')}</span>`;
+  const meta = [a.city, a.category].filter(Boolean).join(' · ') || '漫途';
+  return `<a href="/articles/${escapeHtml(a.slug)}" class="ac${big ? ' ac-big' : ''}">`
+    + `<div class="ac-n">No.${String(n).padStart(2, '0')}</div>${cover}`
+    + `<div class="ac-meta">${escapeHtml(meta)}</div>`
+    + `<div class="ac-ttl">${escapeHtml(a.title || '')}</div>`
+    + `<div class="ac-exc">${escapeHtml(a.excerpt || '')}</div>`
+    + `<div class="ac-ft"><span class="ac-dt">${fmtHomeDate(a.published_at, big)}</span>`
+    + `<span class="ac-arr">${big ? '閱讀全文 →' : '→'}</span></div></a>`;
+}
+function homeAc(list) {
+  if (!list.length) return '<div class="empty"><span class="empty-num">漫途</span>此地尚無文章</div>';
+  const first = list[0], rest = list.slice(1), side = rest.slice(0, 1), small = rest.slice(1, 6);
+  return `<div class="grid-main">${homeCard(first, 1, true)}${side.map((a, i) => homeCard(a, i + 2, false)).join('')}</div>`
+    + (small.length ? `<div class="grid-small">${small.map((a, i) => homeCard(a, i + 3, false)).join('')}</div>` : '');
+}
+// 用字串定位填入容器內容（每個容器恰有 1 個佔位 div → 取第 2 個 </div> 為容器結尾）
+function fillContainer(html, id, inner) {
+  const marker = `id="${id}">`;
+  const start = html.indexOf(marker);
+  if (start < 0) return html;
+  const openEnd = start + marker.length;
+  const firstClose = html.indexOf('</div>', openEnd);
+  if (firstClose < 0) return html;
+  const secondClose = html.indexOf('</div>', firstClose + 6);
+  if (secondClose < 0) return html;
+  return html.slice(0, openEnd) + inner + html.slice(secondClose);
+}
+function injectHome(template, articles, regions, keywords) {
+  const regionHtml = (regions || [])
+    .map((r) => `<a class="region-chip" href="/${escapeHtml(r.slug)}"><span class="region-chip-name">${escapeHtml(r.name)}</span></a>`)
+    .join('');
+  const kwHtml = (keywords || [])
+    .filter((k) => k.regions && k.regions.slug)
+    .map((k) => `<a class="kw-chip" href="/${escapeHtml(k.regions.slug)}/${escapeHtml(k.slug)}">${escapeHtml((k.regions.name || '') + k.name)}</a>`)
+    .join('');
+  const ssr = `<script id="__ssr_articles" type="application/json">${JSON.stringify(articles || []).replace(/</g, '\\u003c')}</script>`;
+  let html = template.replace('</head>', `${ssr}\n</head>`);
+  html = fillContainer(html, 'ac-container', homeAc(articles || []));
+  html = fillContainer(html, 'hp-region-grid', regionHtml);
+  html = fillContainer(html, 'hp-kw-grid', kwHtml);
+  return html;
 }
 
 export default {
@@ -377,14 +610,17 @@ export default {
       if (path === '/') {
         try {
           const tmpl = await loadTemplate(env, url.origin, '/');
-          let ogImage = '';
+          let articles = [], regions = [], keywords = [];
           try {
-            const latest = await sb(
-              'articles?select=cover_image&status=eq.published&cover_image=not.is.null&order=published_at.desc&limit=1'
-            );
-            ogImage = latest[0]?.cover_image || '';
-          } catch (e) { /* og:image 省略即可 */ }
-          const html = injectHomeMeta(tmpl, ogImage);
+            [articles, regions, keywords] = await Promise.all([
+              sb('articles?select=title,slug,city,category,excerpt,cover_image,emoji,published_at&status=eq.published&order=published_at.desc&limit=18'),
+              sb('regions?select=name,slug&order=sort_order'),
+              sb('keywords?select=name,slug,regions(name,slug)&order=sort_order'),
+            ]);
+          } catch (e) { /* 資料失敗 → 只注入 meta、內容由前端渲染 */ }
+          const ogImage = (articles.find((a) => a.cover_image) || {}).cover_image || '';
+          let html = injectHomeMeta(tmpl, ogImage);
+          html = injectHome(html, articles, regions, keywords);
           return new Response(html, {
             status: 200,
             headers: withSec({
@@ -482,6 +718,30 @@ export default {
           // DB 出錯（暫時性）→ 維持 SPA fallback、不要 404
           return passAsset(env, new Request(new URL('/articles/article', url.origin).toString(), { method: 'GET' }));
         }
+      }
+
+      // 地區專區（/kenting 等）：只撈前綴相符的文章，整頁 SSR
+      const areaKey = path.slice(1);
+      if (Object.prototype.hasOwnProperty.call(AREAS, areaKey)) {
+        const area = AREAS[areaKey];
+        let articles = [];
+        try {
+          articles = await sb(
+            `articles?select=title,slug,city,category,excerpt,cover_image,emoji,published_at&status=eq.published`
+            + `&slug=like.${encodeURIComponent(area.slugPrefix)}*&order=published_at.desc&limit=60`
+          );
+        } catch (e) { articles = []; }
+        const tmpl = await loadTemplate(env, url.origin, '/area');
+        const html = injectArea(tmpl, areaKey, area, articles);
+        return new Response(html, {
+          status: 200,
+          headers: withSec({
+            'Content-Type': 'text/html; charset=utf-8',
+            // 文章撈失敗時別讓邊緣快取把空頁留 10 分鐘
+            'Cache-Control': articles.length ? 'public, max-age=300, s-maxage=600' : 'no-store',
+            'X-Generated-By': 'worker-ssr-area',
+          }),
+        });
       }
 
       const cityMatch = path.match(/^\/([^\/]+)(?:\/.+)?\/?$/);

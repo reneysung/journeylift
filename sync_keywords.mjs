@@ -13,6 +13,7 @@ const DRY = process.argv.includes('--dry');
 // 精準主題：依序比對 slug 尾綴（去城市前綴後） → [regex, 顯示名, slug 尾]
 const RULES = [
   [/roof-waterproofing|waterproofing/, '防水抓漏', 'waterproofing'],
+  [/self-build/, '自地自建', 'self-build'],
   [/enamel-kitchen|kitchen/, '廚具', 'kitchen'],
   [/contractor/, '裝潢統包', 'contractor'],
   [/painting/, '油漆', 'painting'],

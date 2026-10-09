@@ -8,3 +8,5 @@ wrangler.jsonc
 .assetsignore
 # 移除靜態 sitemap，改由 worker.js 動態產生 /sitemap.xml
 sitemap.xml
+# 內部維運腳本，不公開
+sync_keywords.mjs
