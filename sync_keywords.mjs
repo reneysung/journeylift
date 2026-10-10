@@ -9,6 +9,9 @@ const KEY = 'sb_publishable_L2DOfeM0cAJqwlVCr1LwtA_jE9MBNDn';
 const TP = 2;   // 精準主題門檻（該城 ≥2 篇）
 const TC = 3;   // 粗分類後備門檻（該城 ≥3 篇）
 const DRY = process.argv.includes('--dry');
+// --only=宜蘭,屏東：只處理指定城市（不動其他城市的分類，避免誤刪手動掛的知識文分類）
+const ONLY = ((process.argv.find((a) => a.startsWith('--only=')) || '').slice(7)).split(',').filter(Boolean);
+const inScope = (region) => !ONLY.length || ONLY.includes(region.name);
 
 // 精準主題：依序比對 slug 尾綴（去城市前綴後） → [regex, 顯示名, slug 尾]
 const RULES = [
@@ -66,6 +69,7 @@ const exMap = new Map(existing.map((k) => [`${k.region_id}|${k.slug}`, k.id]));
 const target = new Map();
 const affectedRegions = new Set();
 for (const region of regions) {
+  if (!inScope(region)) continue;
   const ca = arts.filter((a) => a.city === region.name);
   if (!ca.length) continue;
   const groups = new Map(); // slug → {name, ids}
@@ -112,17 +116,24 @@ for (const region of regions) {
     console.log(`  ${region.name} × ${g.name} (${g.ids.length}) → ${slug}`);
   }
 }
-if (!DRY) {
-  // NULL 掉不再符合的 keyword_id
-  const hadKw = req('GET', 'articles?status=eq.published&keyword_id=not.is.null&select=id').map((a) => a.id);
+{
+  // NULL 掉不再符合的 keyword_id（只限範圍內城市的文章）
+  const scopeCities = new Set(regions.filter(inScope).map((r) => r.name));
+  const hadKw = req('GET', 'articles?status=eq.published&keyword_id=not.is.null&select=id,city')
+    .filter((a) => scopeCities.has(a.city)).map((a) => a.id);
   const toNull = hadKw.filter((id) => !linkedIds.has(id));
-  if (toNull.length) req('PATCH', `articles?id=in.(${toNull.join(',')})`, { keyword_id: null });
-  // 刪掉受影響 region 裡、不在目標集合的舊 keyword（變空的分類）
+  if (toNull.length && !DRY) req('PATCH', `articles?id=in.(${toNull.join(',')})`, { keyword_id: null });
+  // 刪掉範圍內 region 裡、不在目標集合的舊 keyword（變空的分類）；DRY 時只列出不刪
   for (const region of regions) {
+    if (!inScope(region)) continue;
     const groups = target.get(region.id) || new Map();
     const cur = req('GET', `keywords?region_id=eq.${region.id}&select=id,slug`);
-    for (const k of cur) if (!groups.has(k.slug)) { req('DELETE', `keywords?id=eq.${k.id}`); deleted++; }
+    for (const k of cur) if (!groups.has(k.slug)) {
+      console.log(`  ${DRY ? '將刪除' : '刪除'} ${region.name} 分類 ${k.slug}`);
+      if (!DRY) req('DELETE', `keywords?id=eq.${k.id}`);
+      deleted++;
+    }
   }
-  if (toNull.length) console.log(`  NULL ${toNull.length} 篇不再符合的 keyword_id`);
+  if (toNull.length) console.log(`  ${DRY ? '將 NULL' : 'NULL'} ${toNull.length} 篇不再符合的 keyword_id`);
 }
 console.log(`\nkeywords: 新建 ${created}、沿用 ${reused}、刪除 ${deleted}；掛 ${linked} 篇${DRY ? '（DRY）' : ''}`);
