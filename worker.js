@@ -186,6 +186,14 @@ async function buildSitemap() {
   for (const key of Object.keys(AREAS)) {
     entries.push(`<url><loc>${SITE}/${key}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>`);
   }
+  // 城市分類頁 /{city}/{kw}（只收有綁城市的分類）
+  const cityKws = await sb('keywords?select=slug,regions(slug)&region_id=not.is.null').catch(() => []);
+  const citySet = new Set(CITIES.map(([c]) => c));
+  for (const k of cityKws) {
+    const c = k.regions && k.regions.slug;
+    if (!c || !citySet.has(c) || !k.slug) continue;
+    entries.push(`<url><loc>${SITE}/${c}/${escapeXml(k.slug)}</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>`);
+  }
   let articleCount = 0;
   for (const a of articles) {
     if (!a.slug || a.slug.startsWith('-')) continue;
