@@ -65,12 +65,23 @@ const arts = req('GET', 'articles?status=eq.published&select=id,city,slug,catego
 const existing = req('GET', 'keywords?select=id,slug,region_id');
 const exMap = new Map(existing.map((k) => [`${k.region_id}|${k.slug}`, k.id]));
 
+// 手動分類保護：分類裡掛了別城/全國文章（例：高雄系統櫃掛全國系統櫃知識文）＝人工整理過的，
+// 不刪、不改掛它底下的文章（文章不參與下面的自動分組）
+const regById = Object.fromEntries(regions.map((r) => [r.id, r]));
+const kwArts = req('GET', 'articles?status=eq.published&keyword_id=not.is.null&select=id,city,keyword_id');
+const manualKw = new Set();
+for (const a of kwArts) {
+  const k = existing.find((x) => x.id === a.keyword_id);
+  if (k && regById[k.region_id] && a.city !== regById[k.region_id].name) manualKw.add(k.id);
+}
+const manualArt = new Set(kwArts.filter((a) => manualKw.has(a.keyword_id)).map((a) => a.id));
+
 // 目標：region → Map(slug → {name, ids})
 const target = new Map();
 const affectedRegions = new Set();
 for (const region of regions) {
   if (!inScope(region)) continue;
-  const ca = arts.filter((a) => a.city === region.name);
+  const ca = arts.filter((a) => a.city === region.name && !manualArt.has(a.id));
   if (!ca.length) continue;
   const groups = new Map(); // slug → {name, ids}
   const used = new Set();
@@ -120,7 +131,7 @@ for (const region of regions) {
   // NULL 掉不再符合的 keyword_id（只限範圍內城市的文章）
   const scopeCities = new Set(regions.filter(inScope).map((r) => r.name));
   const hadKw = req('GET', 'articles?status=eq.published&keyword_id=not.is.null&select=id,city')
-    .filter((a) => scopeCities.has(a.city)).map((a) => a.id);
+    .filter((a) => scopeCities.has(a.city) && !manualArt.has(a.id)).map((a) => a.id);
   const toNull = hadKw.filter((id) => !linkedIds.has(id));
   if (toNull.length && !DRY) req('PATCH', `articles?id=in.(${toNull.join(',')})`, { keyword_id: null });
   // 刪掉範圍內 region 裡、不在目標集合的舊 keyword（變空的分類）；DRY 時只列出不刪
@@ -129,6 +140,7 @@ for (const region of regions) {
     const groups = target.get(region.id) || new Map();
     const cur = req('GET', `keywords?region_id=eq.${region.id}&select=id,slug`);
     for (const k of cur) if (!groups.has(k.slug)) {
+      if (manualKw.has(k.id)) { console.log(`  保留手動分類 ${region.name} ${k.slug}`); continue; }
       console.log(`  ${DRY ? '將刪除' : '刪除'} ${region.name} 分類 ${k.slug}`);
       if (!DRY) req('DELETE', `keywords?id=eq.${k.id}`);
       deleted++;
