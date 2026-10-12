@@ -617,7 +617,7 @@ function homeCard(a, n, big) {
 }
 function homeAc(list) {
   if (!list.length) return '<div class="empty"><span class="empty-num">漫途</span>此地尚無文章</div>';
-  const first = list[0], rest = list.slice(1), side = rest.slice(0, 1), small = rest.slice(1, 6);
+  const first = list[0], rest = list.slice(1), side = rest.slice(0, 1), small = rest.slice(1, 7);
   return `<div class="grid-main">${homeCard(first, 1, true)}${side.map((a, i) => homeCard(a, i + 2, false)).join('')}</div>`
     + (small.length ? `<div class="grid-small">${small.map((a, i) => homeCard(a, i + 3, false)).join('')}</div>` : '');
 }

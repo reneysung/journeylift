@@ -343,7 +343,7 @@ function rg(list){
   const el=document.getElementById('ac-container');
   if(!list.length){el.innerHTML='<div class="empty"><span class="empty-num">漫途</span>此地尚無文章</div>';return;}
   const[first,...rest]=list;
-  const side=rest.slice(0,1),small=rest.slice(1,6);
+  const side=rest.slice(0,1),small=rest.slice(1,7);
   el.innerHTML=`<div class="grid-main">${card(first,1,true)}${side.map((a,i)=>card(a,i+2,false)).join('')}</div>${small.length?`<div class="grid-small">${small.map((a,i)=>card(a,i+3,false)).join('')}</div>`:''}`;
 }
 
