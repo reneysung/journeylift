@@ -36,6 +36,7 @@ const SLUG_REDIRECTS = {
   '-1774011508378': 'tainan-chihkan-old-well-cafe',
   '202610-1774019872644': 'tainan-renovation-cleaning-2026',
   'taipei-renovation-cleaning-2026': 'taipei-renovation-cleaning', // 舊 slug 改名 → 301 保住權重
+  'tainan-wood-flooring': 'tainan-laminate-flooring', // 2026-10-19 台南木地板自蝕：id63 併入 id35
 };
 
 // ── 地區專區（/{key}）：城市底下的旅遊熱區，集中同區文章＋分區導覽 ──
