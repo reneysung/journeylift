@@ -37,6 +37,18 @@ const SLUG_REDIRECTS = {
   '202610-1774019872644': 'tainan-renovation-cleaning-2026',
   'taipei-renovation-cleaning-2026': 'taipei-renovation-cleaning', // 舊 slug 改名 → 301 保住權重
   'tainan-wood-flooring': 'tainan-laminate-flooring', // 2026-10-19 台南木地板自蝕：id63 併入 id35
+  'taipei-chicken-cutlet': 'chicken-cutlet-guide#taipei', // 2026-11-20 雞排四城併入 id517
+  'newtaipei-chicken-cutlet': 'chicken-cutlet-guide#newtaipei', // 2026-11-20 雞排四城併入 id517
+  'taichung-chicken-cutlet': 'chicken-cutlet-guide#taichung', // 2026-11-20 雞排四城併入 id517
+  'tainan-chicken-cutlet': 'chicken-cutlet-guide#tainan', // 2026-11-20 雞排四城併入 id517
+  'tainan-mental-health-clinic': 'mental-health-clinic-guide#tainan', // 2026-11-20 身心科四城併入 id518
+  'taoyuan-mental-health-clinic': 'mental-health-clinic-guide#taoyuan', // 2026-11-20 身心科四城併入 id518
+  'taichung-mental-health-clinic': 'mental-health-clinic-guide#taichung', // 2026-11-20 身心科四城併入 id518
+  'kaohsiung-mental-health-clinic': 'mental-health-clinic-guide#kaohsiung', // 2026-11-20 身心科四城併入 id518
+  'taipei-adult-shop': 'adult-shop-guide#taipei', // 2026-11-20 情趣用品四城併入 id519
+  'taichung-adult-shop': 'adult-shop-guide#taichung', // 2026-11-20 情趣用品四城併入 id519
+  'newtaipei-adult-shop': 'adult-shop-guide#newtaipei', // 2026-11-20 情趣用品四城併入 id519
+  'kaohsiung-adult-shop': 'adult-shop-guide#kaohsiung', // 2026-11-20 情趣用品四城併入 id519
 };
 
 // ── 地區專區（/{key}）：城市底下的旅遊熱區，集中同區文章＋分區導覽 ──
