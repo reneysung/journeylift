@@ -49,6 +49,7 @@ const SLUG_REDIRECTS = {
   'taichung-adult-shop': 'adult-shop-guide#taichung', // 2026-11-20 情趣用品四城併入 id519
   'newtaipei-adult-shop': 'adult-shop-guide#newtaipei', // 2026-11-20 情趣用品四城併入 id519
   'kaohsiung-adult-shop': 'adult-shop-guide#kaohsiung', // 2026-11-20 情趣用品四城併入 id519
+  'taichung-yakiniku-buffet': 'taichung-yakiniku', // 2026-11-23 台中燒肉吃到飽 id141 併入 id45（從未收錄＋同意圖）
 };
 
 // ── 地區專區（/{key}）：城市底下的旅遊熱區，集中同區文章＋分區導覽 ──
